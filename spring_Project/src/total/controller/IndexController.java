@@ -1,6 +1,8 @@
 package total.controller;
 
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
 	@RequestMapping({"/index","/"})
-	public String indexHandle() {
-		
-		return "index";
+	public String indexHandle(Map map) {
+		map.put("body", "index.jsp");
+		return "t_el";
 	}
 }
