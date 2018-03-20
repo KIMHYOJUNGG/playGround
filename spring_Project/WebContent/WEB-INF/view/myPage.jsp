@@ -20,12 +20,15 @@
 		</div>
 	</div>
 
-		<p><h2><a href="">관심 작가</a>의 새 글</h2></p>
+		<p><h3><a href="">관심 작가</a>의 새 글</h3></p>
 		<div class="list-group">
 			<c:forEach items="${article }" var="a" varStatus="vs">
 				<c:choose>
 					<c:when test="${vs.index < 15}">
-						<a href="#" class="list-group-item"><span class="badge">12</span></a>
+						<li  class="list-group-item">
+							<h4 class="list-group-item-heading"></h4>
+      						<p class="list-group-item-text">List Group Item Text</p>
+      					</li>
 					</c:when>
 					<c:otherwise>
 					<a><p>더보기</p></a>
