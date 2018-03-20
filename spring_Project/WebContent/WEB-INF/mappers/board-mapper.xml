@@ -7,29 +7,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="board">
 
- <insert id="create">
- insert into board (bno, title, content, writer) 
- values(board_seq.nextval,#{title},#{content}, #{writer})
- </insert>
+	<insert id="create">
+		insert into board (bno, title, content, writer)
+		values(board_seq.nextval,#{title},#{content}, #{writer})
+	</insert>
 
- <select id="read" resultType="total.domain.BoardVO">
- select 
-   bno, title, content, writer, regdate, viewcnt 
- from 
-   board 
- where bno = #{bno}
- </select>
+	<select id="read" resultType="total.domain.BoardVO">
+		select
+		bno, title, content, writer, regdate, viewcnt
+		from
+		board
+		where bno = #{bno}
+	</select>
 
- <update id="update">
- update board set title =#{title}, content =#{content} 
- where bno = #{bno}
- </update>
+	<update id="update">
+		update board set title =#{title}, content =#{content}
+		where bno = #{bno}
+	</update>
 
- <delete id="delete">
- delete from board where bno = #{bno}
- </delete>
+	<delete id="delete">
+		delete from board where bno = #{bno}
+	</delete>
 
- <select id="listAll" resultType="total.domain.BoardVO">
+	<select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
    bno, title, content, writer, regdate, viewcnt 
@@ -37,8 +37,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    board 
  where bno > 0 
  order by bno desc, regdate desc
- ]]>  
- </select>
- 
-  
+ ]]>
+	</select>
+
+	<select id="following"  resultType="hashmap">
+		select * from board 
+			<if test="following != null">
+				where writer in 
+				<foreach collection="following"  item="f" open="(" close=")" separator=",">#{f}</foreach>
+			</if>
+			order by(regdate) asc
+	</select>
+
 </mapper>
