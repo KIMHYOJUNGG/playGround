@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<insert id="register">
+		insert into member(no,nickname,regdate,id,password,email,welcome) values(member_seq.nextval,#{nickname},sysdate,#{id},#{password},#{email},'안녕')
+	</insert>
+	<select id="selectAll" resultType="hashmap">
+		select * from member;
+	</select>
+	<select id="login" resultType="hashmap">
+		select * from member where id=#{id} and password=#{password}
+	</select>
+</mapper>
