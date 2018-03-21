@@ -21,7 +21,7 @@
 				
 <table class="table table-bordered">
 	<tr>
-		<th style="width: 10px">BNO</th>
+		<th style="width: 10px">NO</th>
 		<th>TITLE</th>
 		<th>WRITER</th>
 		<th>REGDATE</th>
@@ -32,8 +32,8 @@
 <c:forEach items="${list}" var="boardVO">
 
 	<tr>
-		<td>${boardVO.bno}</td>
-		<td><a href='/board/read?bno=${boardVO.bno}'>${boardVO.title}</a></td>
+		<td>${boardVO.no}</td>
+		<td><a href='/board/read?no=${boardVO.no}'>${boardVO.title}</a></td>
 		<td>${boardVO.writer}</td>
 		<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 				value="${boardVO.regdate}" /></td>

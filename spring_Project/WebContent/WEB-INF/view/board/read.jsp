@@ -17,7 +17,7 @@
 
 <form role="form" method="post">
 
-	<input type='hidden' name='bno' value="${boardVO.bno}">
+	<input type='hidden' name='no' value="${boardVO.no}">
 
 </form>
 
@@ -30,7 +30,7 @@
 	<div class="form-group">
 		<label for="exampleInputPassword1">Content</label>
 		<textarea class="form-control" name="content" rows="3"
-			readonly="readonly">${boardVO.content}</textarea>
+			readonly="readonly">${contents}</textarea>
 	</div>
 	<div class="form-group">
 		<label for="exampleInputEmail1">Writer</label> <input type="text"

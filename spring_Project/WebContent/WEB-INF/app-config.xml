@@ -112,7 +112,7 @@
 	</websocket:handlers>
 
 	<mongo:mongo-client host="13.125.137.154" port="27017" id="mongo" />
-	<mongo:db-factory dbname="playGround" mongo-ref="mongo" id="mongoFactory"/>
+	<mongo:db-factory dbname="playGround" mongo-ref="mongo" id="mongoFactory" />
 	<bean class="org.springframework.data.mongodb.core.MongoTemplate" id="mongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoFactory" />
 	</bean>
