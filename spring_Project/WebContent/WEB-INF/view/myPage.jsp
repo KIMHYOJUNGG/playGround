@@ -26,8 +26,8 @@
 				<c:choose>
 					<c:when test="${vs.index < 15}">
 						<li  class="list-group-item">
-							<h4 class="list-group-item-heading"></h4>
-      						<p class="list-group-item-text">List Group Item Text</p>
+							<h4 class="list-group-item-heading">${article.TITLE} </h4>
+      						<p class="list-group-item-text">${article.}${article.WRITER}</p>
       					</li>
 					</c:when>
 					<c:otherwise>

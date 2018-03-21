@@ -25,5 +25,11 @@ public class myPageService {
 		return template.selectList("board.following", data);
 	}
 	
+	public List<Map> getFollowingInfoById(String[] following) {
+		Map data = new HashMap<>();
+			data.put("following", following);
+		return template.selectList("member.getFollowingInfoById",data	);
+	}
+	
 	
 }

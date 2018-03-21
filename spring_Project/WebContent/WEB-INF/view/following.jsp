@@ -6,7 +6,10 @@
 		<h2>나의 관심 작가</h2>
 		<div class="list-group">
 			<c:forEach var="f" items="${ follow}">
-				<a href="#" class="list-group-item"></a> 
+				<li class="list-group-item">
+					<h4 class="list-group-item-heading">${article.TITLE} </h4>
+      				<p class="list-group-item-text">${article.}${article.WRITER}</p>
+				</li> 
 			</c:forEach>	
 		</div>
 	</div>
