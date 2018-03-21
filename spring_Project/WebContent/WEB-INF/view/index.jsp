@@ -2,6 +2,14 @@
 	pageEncoding="EUC-KR"%>
 
 <body class="mainbody">
+	<div class="alert alert-warning alert-dismissible" id="warn1" style="display: none">
+				<a href="javascript:location.reload();" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>경고!</strong> 다른 윈도우 혹은 탭에서 로그인되었습니다. F5를 눌러주세요.
+			</div>
+			<div class="alert alert-warning alert-dismissible" id="warn2" style="display: none">
+				<a href="javascript:location.reload();" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>경고!</strong> 다른 윈도우 혹은 탭에서 로그아웃되었습니다. F5를 눌러주세요.
+			</div>
 	<div align="center">
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Main</a></li>
@@ -114,15 +122,22 @@
 
 		</div>
 	</div>
-
-
-
-
-
-
 	</div>
-
-
 	</div>
-
 </body>
+	<script><%-- WebSocket을 하기 위해선 script처리가 필요하다.--%>
+		var ac = new WebSocket(
+				"ws://${pageContext.request.serverName}/logonWS");
+		ac.onopen = function() {
+			console.log(this);
+		}
+		ac.onmessage = function(rst) {
+			if(rst.data == "로그인"){
+				$("#warn1").show();
+			}
+			if(rst.data == "로그아웃"){
+				$("#warn2").show();
+			}
+			console.log(rst);
+		}
+	</script>

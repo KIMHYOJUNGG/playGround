@@ -41,9 +41,9 @@ public class AdminController {
 	}
 	@RequestMapping("/member")
 	public String MemberSelect(Model model) {
-		System.out.println("리스트가 안뽑히니?");
 		List<Map> list = adminservice.memberSelect();
 		model.addAttribute("list",list);
+		System.out.println(list);
 		return "/admin/admin_main";
 	}
 }

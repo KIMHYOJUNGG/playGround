@@ -106,8 +106,7 @@
 		<websocket:handshake-interceptors>
 			<!-- 웹소켓 연결 시도됐을 때 가로채서 작업하는 객체! httpSession에 담겨있던 값을 고대로 담아서 옮겨줌! 만약 
 				세션에 logon을 add해놨다면 그 값까지도!!!! -->
-			<bean
-				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
 
@@ -116,5 +115,16 @@
 	<bean class="org.springframework.data.mongodb.core.MongoTemplate" id="mongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoFactory" />
 	</bean>
-
+	<!-- Mail Sender Setting -->
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl" id="mailSender">
+		<property name="host" value="smtp.gmail.com"></property><!-- host id or goole smtp -->
+		<property name="username" value="everyonewelcome93@gmail.com"></property><!-- google id -->
+		<property name="password" value="!1q2w3e4r"></property><!-- google password -->
+		<property name="port" value="587"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
 </beans>

@@ -1,5 +1,6 @@
 package total.service;
 
+import java.io.File;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,6 +25,15 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		Map map = template.selectOne("member.login",param);
 		if(map!=null ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public boolean idMember(String id) {
+		Map map = template.selectOne("member.idsearch",id);
+		if(map!=null) {
 			return true;
 		}
 		else {

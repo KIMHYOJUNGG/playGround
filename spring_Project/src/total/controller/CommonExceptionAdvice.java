@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CommonExceptionAdvice {
 
 
-  //@ExceptionHandler(Exception.class)
+/*  //@ExceptionHandler(Exception.class)
   public String common(Exception e) {
 
     System.out.println(e.toString());
@@ -25,7 +25,7 @@ public class CommonExceptionAdvice {
     modelAndView.addObject("exception", ex);
 
     return modelAndView;
-  }
+  }*/
 
 }
 

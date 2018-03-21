@@ -18,16 +18,15 @@
 				<th style="width: 90px;">레벨</th>
 			</tr>
 		</thead>
-		<c:forEach var="m" items=${list }>
-			 <tr>
-			 	<td>${m.nickname }</td>
-			 	<td>${m.regdate }</td>
-			 	<td>${m.id }</td>
-			 	<td>${m.password }</td>
-			 	<td>${m.email }</td>
-			 	<td>${m.redcard }</td>
-			 	<td>${m.report }</td>
-			 	<td>${m.lv }</td>
+		<c:forEach var="m" items="${list }">
+			 <tr align="center">
+			 	<td><a href="/board/selectAll">${m.NICKNAME }</a></td>
+			 	<td>${m.REGDATE }</td>
+			 	<td>${m.ID }</td>
+			 	<td>${m.EMAIL }</td>
+			 	<td>${m.REDCARD }</td>
+			 	<td>${m.REPORT }</td>
+			 	<td>${m.LV }</td>
 			 </tr>
 		</c:forEach>
 	</table>
