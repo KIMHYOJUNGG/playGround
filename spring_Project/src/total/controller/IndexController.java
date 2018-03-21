@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.mongodb.client.FindIterable;
 
 import total.service.IndexService;
-import total.domain.*;
+import total.domain.*;  
 
 @Controller
 public class IndexController {
