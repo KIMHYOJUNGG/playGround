@@ -28,6 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <delete id="delete">
  delete from board where bno = #{bno}
  </delete>
+ 
+ <select id="mainBoardOrder" resultType="hashmap">
+ 	select * from board order by good asc 
+ </select>	
 
  <select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class CommonExceptionAdvice {
 
-
+/*
   //@ExceptionHandler(Exception.class)
   public String common(Exception e) {
 
@@ -26,6 +26,7 @@ public class CommonExceptionAdvice {
 
     return modelAndView;
   }
+  */
 
 }
 
