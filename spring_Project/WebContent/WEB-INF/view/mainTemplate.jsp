@@ -77,6 +77,7 @@
 							Sign Up</a></li>
 					<li><a href="/member/log"><span class="glyphicon glyphicon-log-in"></span>
 							Login</a></li>
+
 					<li><form class="navbar-form navbar-left"
 							action="/action_page.php">
 							<div class="form-group">
