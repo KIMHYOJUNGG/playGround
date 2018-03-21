@@ -13,7 +13,7 @@
 
 				<!-- First Photo Grid-->
 				<div class="w3-row-padding w3-padding-16 w3-center" id="food">
-					<c:forEach var="o" items="${boardNo}" varStatus="vs">
+					<c:forEach var="o" items="${boardNo}"  varStatus="vs">
 					<c:choose>
 					<c:when test="${vs.count <= 8}">
 					<div class="w3-quarter">
