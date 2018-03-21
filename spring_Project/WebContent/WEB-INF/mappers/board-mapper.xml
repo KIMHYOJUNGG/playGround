@@ -8,37 +8,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="board">
 
  <insert id="create">
- insert into board (bno, title, content, writer) 
- values(board_seq.nextval,#{title},#{content}, #{writer})
+ insert into board (no, bno, title, bookname, regdate, type, writer) 
+ values(#{no},#{bno},#{title}, #{bookname}, sysdate, #{type}, #{writer})
  </insert>
-
  <select id="read" resultType="total.domain.BoardVO">
  select 
-   bno, title, content, writer, regdate, viewcnt 
+   no, title, writer, regdate, viewcnt 
  from 
    board 
- where bno = #{bno}
+ where no = #{no}
+ </select>
+ <select id="selectNo" resultType="_int">
+ select board_seq.nextval as no from dual
  </select>
 
  <update id="update">
- update board set title =#{title}, content =#{content} 
- where bno = #{bno}
+ update board set title =#{title}
+ where no = #{no}
  </update>
 
  <delete id="delete">
- delete from board where bno = #{bno}
+ delete from board where no = #{no}
  </delete>
 
  <select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
-   bno, title, content, writer, regdate, viewcnt 
+   no, title, writer, regdate, viewcnt 
  from 
    board 
- where bno > 0 
- order by bno desc, regdate desc
+ where no > 0 
+ order by no desc, regdate desc
  ]]>  
  </select>
- 
   
 </mapper>
