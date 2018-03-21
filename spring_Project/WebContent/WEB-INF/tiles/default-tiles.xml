@@ -17,6 +17,14 @@
 	<definition name="t_el" extends="t_default">
 		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
 	</definition>
+	<!-- 가입 -->
+	<definition name="t_regist" extends="t_default">
+		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
+	</definition>
+	<!-- 로그인 -->
+	<definition name="t_log" extends="t_default">
+		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
+	</definition>
 	
 	<definition name="t_el_title" extends="t_default">
 		<put-attribute name="title" expression="${title}"></put-attribute>

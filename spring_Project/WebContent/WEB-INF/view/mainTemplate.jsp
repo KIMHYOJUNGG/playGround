@@ -73,9 +73,9 @@
      --%>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+					<li><a href="/member/registpage"><span class="glyphicon glyphicon-user"></span>
 							Sign Up</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+					<li><a href="/member/log"><span class="glyphicon glyphicon-log-in"></span>
 							Login</a></li>
 					<li><form class="navbar-form navbar-left"
 							action="/action_page.php">
@@ -93,6 +93,7 @@
 	<div class="container-fluid" style="margin-top: 50px">
 		<tiles:insertAttribute name="body"></tiles:insertAttribute>
 	</div>
+	
 
 </body>
 </html>
