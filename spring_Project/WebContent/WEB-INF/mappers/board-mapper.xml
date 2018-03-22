@@ -42,5 +42,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  order by no desc, regdate desc
  ]]>
 	</select>
+	<select id="following" resultType="hashmap">
+		select * from board
+		<if test="following != null">
+			where writer in
+		</if>
+		<foreach collection="following" item="f" open="(" close=")"  separator=","> #{f}</foreach>
+	</select>
 </mapper>
 

@@ -35,7 +35,12 @@
 			</div>
 		</div>
 		<div align="center" style="padding:15px">
-			<img src="${info.IMAGE }" style="width: 240px; height: 240px;" class="img-circle">
+			<c:if test="${!empty info.IMAGE }">
+				<img src="${info.IMAGE }" style="width: 240px; height: 240px;" class="img-circle">
+			</c:if>
+			<c:if test="${empty info.IMAGE }">
+				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
+			</c:if>
 		</div>
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="image">IMAGE:</label>
@@ -46,7 +51,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="welcome">인사말:</label>
 			<div class="col-sm-10">
-				<textarea class="form-control" rows="5" id="welcome" name="welcome" value="${info.WELCOME }"></textarea>
+				<textarea class="form-control" rows="5" id="welcome" name="welcome">${info.WELCOME }</textarea>
 			</div>
 		</div>
 		
@@ -57,3 +62,9 @@
 		</div>
 	</form>
 </div>
+
+<c:if test="${!empty msg }">
+	<script>
+		window.alert("${msg}");
+	</script>
+</c:if>

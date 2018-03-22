@@ -30,12 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<update id="modifyInfo">
 		update member
-		<set>
-			<if test="password != null"> password = #{password}</if>
-			<if test="nickname != null"> nickname = #{nickname}</if>
-			<if test="email != null">email = #{email}</if>
+		<trim prefix="set" suffixOverrides=",">
+			<if test="password != null"> password = #{password},</if>
+			<if test="nickname != null"> nickname = #{nickname},</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="image != null">image = #{image},</if>
 			<if test="welcome != null">welcome = #{welcome}</if>
-		</set>
+		</trim>
 		where id=#{id}
 	</update>
 
