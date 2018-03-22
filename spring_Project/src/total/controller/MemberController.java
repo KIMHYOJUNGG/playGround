@@ -39,7 +39,7 @@ public class MemberController {
 	@RequestMapping("/registpage")
 	public String memberPage(Map map) {
 		map.put("body", "register.jsp");
-		return "t_regist";
+		return "t_el";
 	}
 
 	// 회원등록
@@ -65,14 +65,14 @@ public class MemberController {
 			model.addAttribute("passwordmsg", "비밀번호를 입력해주세요");
 			model.addAttribute("emailmsg", "이메일을 입력해주세요");
 			map.put("body", "register.jsp");
-			return "t_regist";
+			return "t_el";
 		}
 	}
 	// 로그인
 	@RequestMapping("/log")
 	public String memberLoginPage(Map map) {
 		map.put("body", "login.jsp");
-		return "t_log";
+		return "t_el";
 	}
 	
 	// 로그인 실행
@@ -124,7 +124,7 @@ public class MemberController {
 	@RequestMapping("/idsearch")
 	public String memberIdHandle(Map map) {
 		map.put("body","idsearch.jsp");
-		return "t_log";
+		return "t_el";
 	}
 	
 	// 아이디 찾기
@@ -137,11 +137,11 @@ public class MemberController {
 			String id2 = (String)map.get("ID");
 			boolean rst2 = mailservice.searchId(email,id2,addr);
 			model.addAttribute("idsearch","이메일을 확인해보세요");
-			return "t_log";
+			return "t_el";
 		}
 		else {
 			model.addAttribute("idwarn","해당 이메일이 없습니다.");
-			return "t_log";
+			return "t_el";
 		}
 	}
 	
@@ -149,7 +149,7 @@ public class MemberController {
 	@RequestMapping("/passwordsearch")
 	public String memberPasswordHandle(Map map) {
 		map.put("body", "password.jsp");
-		return "t_log";
+		return "t_el";
 	}
 	
 	// 비밀번호 찾기
@@ -163,11 +163,11 @@ public class MemberController {
 			String email = param.get("email");
 			boolean rst2 = mailservice.searchPassword(email,password,addr);
 			model.addAttribute("idsearch","이메일을 확인해보세요");
-			return "t_log";
+			return "t_el";
 		}
 		else {
 			model.addAttribute("passwordwarn","아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해주세요");
-			return "t_log";
+			return "t_el";
 		}
 	}
 }
