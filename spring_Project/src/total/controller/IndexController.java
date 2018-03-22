@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -27,15 +29,12 @@ public class IndexController {
 		List<Map> boardNo = indexService.boardConnectNo();
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("body","index.jsp");
-		//FindIterable<Document> finds = collection.find(); // = collection.find(new Document());
-		//for (Document doc : finds) {
-			
-			
-		//}
+		
 		return "t_el";
 	}
 	
 	
+
 	
 	
 }
