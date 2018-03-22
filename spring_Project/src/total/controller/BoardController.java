@@ -2,6 +2,8 @@ package total.controller;
 
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 //import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +47,16 @@ public class BoardController {
  
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+  public String registPOST(BoardVO board, RedirectAttributes rttr, HttpSession session) throws Exception {
 
 	  System.out.println("regist post ...........");
 	  System.out.println(board.toString());
 	 
 	  String uuid=service.uuid();
 	  board.setBno(uuid);
+	  board.setWriter((String)session.getAttribute("logon"));
 
-   service.create(board);
+	  service.create(board);
 
     rttr.addFlashAttribute("msg", "success");
     return "redirect:/board/listAll";
