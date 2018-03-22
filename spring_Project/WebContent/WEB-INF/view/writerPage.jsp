@@ -8,19 +8,19 @@
 	
 		<div class="row">
 			<div class="col-sm-3">
-				<img src="cinqueterre.jpg" class="img-circle" alt="cinqueterre"  style="width: 100%">
+				<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 100%">
 			</div>
 			<div class="col-sm-8">
-				<h2>NICKNAME</h2>
+				<h2>${writerInfo.NICKNAME}</h2>
 				<p>
-					글 <span class="badge">0</span> | 책 <span class="badge">0</span> | <a href="${pageContext.request.contextPath }/@NICKNAME/following">관심작가 <span class="badge">0</span></a>
+					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | <a href="${pageContext.request.contextPath }/@NICKNAME/following">관심작가 <span class="badge">0</span></a>
 				</p>
 				<p>
-					<span style="color: gray">WELCOME</span>
+					<span style="color: gray">${writerInfo.WELCOME}</span>
 				</p>
 			</div>
 			<div class="col-sm-1">
-			<c:if test="${logon  != id}">
+			<c:if test="${logon  != id || logon== null}">
 				<button type="button" class="btn btn-info">구독하기</button>
 			</c:if>
 			</div>
@@ -35,31 +35,45 @@
 
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
-			<div class="list-group">
-<%-- 				<c:forEach var="c" items="${contentList}"> --%>
-				<li class="list-group-item">
-						<h3 class="list-group-item-heading"><a href="#">BOOKNAME</a> &nbsp;<span class="badge">TYPE</span></h3>
-<%-- 						<c:if test=""> --%>
-							<a href="#"><p class="list-group-item-text">  TITLE</p>
-							<p class="list-group-item-text">VIEWCNT | REGDATE</p></a>
-<%-- 						</c:if> --%>
-					</li>
-<%-- 					</c:forEach> --%>
-				</div>
+				<c:choose>
+				<c:when test="${!empty contentList }">
+					<div class="list-group">
+						<c:forEach var="c" items="${contentList}">
+						<li class="list-group-item">
+								<h3 class="list-group-item-heading"><a href="#">${c.BOOKNAME}</a> &nbsp;<span class="badge">${c.TYPE}</span></h3>
+									<a href="#"><p class="list-group-item-text">  ${c.TITLE}</p>
+									<p class="list-group-item-text">${c.VIEWCNT} | ${c.REGDATE}</p></a>
+							</li>
+							</c:forEach>
+						</div>
+				</c:when>
+				<c:otherwise>
+					<p>등록된 글이 없습니다.</p>
+					<p>글을 등록해 보세요.</p>
+					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글 쓰러 가기</button></a>
+				</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<div id="menu1" class="tab-pane fade">
-				<div class="list-group">
-<%-- 				<c:forEach var="b" items="${bookList}"> --%>
-				<li class="list-group-item">
-						<h3 class="list-group-item-heading"><a href="#">BOOKNAME</a> &nbsp;<span class="badge">TYPE</span></h3>
-<%-- 						<c:if test="${}"> --%>
-							<p class="list-group-item-text"><a href="#"><span class="badge"> tag</span></a></p>
-							<p class="list-group-item-text">good</p>
-<%-- 						</c:if> --%>
-					</li>
-<%-- 					</c:forEach> --%>
-				</div>
+				<c:choose>
+				<c:when test="${!empty bookList }">
+					<div class="list-group">
+					<c:forEach var="b" items="${bookList}">
+						<li class="list-group-item">
+							<h3 class="list-group-item-heading"><a href="#">BOOKNAME</a> &nbsp;<span class="badge">TYPE</span></h3>
+								<p class="list-group-item-text"><a href="#"><span class="badge"> tag</span></a></p>
+								<p class="list-group-item-text">good</p>
+						</li>
+						</c:forEach>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<p>등록된 책이 없습니다.</p>
+					<p>책을 등록해 보세요.</p>
+					<a href=""><button type="button" class="btn btn-info">책 등록하러 가기</button></a>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 

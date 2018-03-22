@@ -19,10 +19,10 @@ public class MyPageController {
 	@SuppressWarnings("unchecked")
 	public String myPageHandle(Map map, HttpSession session) {
 		String id = (String)session.getAttribute("logon");
-//		map.put("info", myPageService.getInfo(id));
-//		String[] following = myPageService.splitFollowing((Map)map.get("info"));
-//		map.put("article", myPageService.getFollowingOrderByAsc(following) );
-//		map.put("following", myPageService.getFollowingInfoById(following));
+		map.put("info", myPageService.getInfo(id));
+		String[] following = myPageService.splitFollowing((Map)map.get("info"));
+		map.put("article", myPageService.getFollowingOrderByAsc(following) );
+		map.put("following", myPageService.getFollowingInfoById(following));
 		map.put("title", "My Page");
 		map.put("body", "myPage.jsp");
 		return "t_el_title";

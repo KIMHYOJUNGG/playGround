@@ -25,6 +25,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from member where id=#{id} and email=#{email}
 	</select>
 
+	<select id="getFollowingInfoById" resultType="hashmap">
+		select * from member
+		<if test="following != null">
+			where id in
+			<foreach collection="following" item="f" open="(" close=")"
+				separator=","> #{f}</foreach>
+		</if>
+	</select>
+	<update id="modifyInfo">
+		update member
+		<trim prefix="set" suffixOverrides=",">
+			<if test="password != null"> password = #{password},</if>
+			<if test="nickname != null"> nickname = #{nickname},</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="image != null">image = #{image},</if>
+			<if test="welcome != null">welcome = #{welcome}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
 	<!-- 관리자에서의 멤버관리-->
 	<select id="selectAll" resultType="hashmap">
 		select * from member

@@ -24,14 +24,12 @@ public class WriterPageController {
 		map.put("bookList", writerPageService.getBookListById(id));
 		map.put("body", "writerPage.jsp");
 		map.put("title", id+"의 PlayGround");
-		System.out.println("돼???");
 		return "t_el_title";
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/@{id}/following")
 	public String followingPageHandle(@PathVariable String id, Map map) {
-		System.out.println("팔로잉 페이지!");
 		System.out.println(id);
 //		try {
 		map.put("writerInfo", myPageService.getInfo(id));
