@@ -57,15 +57,14 @@ main style --%> .main_keywords {
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown"
-						href="${pageContext.request.contextPath}/myPage">myPage<span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Page 1-1</a></li>
-							<li><a href="#">Page 1-2</a></li>
-							<li><a href="#">Page 1-3</a></li>
-						</ul></li>
+<!-- 					<li class="dropdown"><a class="dropdown-toggle" -->
+<!-- 						data-toggle="dropdown" -->
+<%-- 						href="${pageContext.request.contextPath}/myPage">myPage<span --%>
+<!-- 							class="caret"></span></a> -->
+<!-- 						<ul class="dropdown-menu"> -->
+							<li><a href="${pageContext.request.contextPath}/myPage">myPage</a></li>
+						</ul>
+<!-- 						</li> -->
 					<%-- 
         <li><a href="#">Page 2</a></li>
         <li><a href="#">Page 3</a></li>
