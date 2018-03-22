@@ -17,23 +17,24 @@ public class ModifyInfoService {
 	@Autowired
 	ServletContext application;
 
-	public boolean imgModify(MultipartFile img, String id) {
-		boolean result = false;
+	public String imgModify(MultipartFile img, String id) {
+		String fileName = null;
 		if (!img.isEmpty()) {
-			File saveDir = new File(application.getRealPath("/image/" + id));
+			File saveDir = new File(application.getRealPath("/image/" + id+"/"+id));
 			saveDir.mkdirs();
 			try {
 				img.transferTo(saveDir);
-				result = true;
+				fileName = "/image/"+id+"/"+id;
 			} catch (Exception e) {
 				e.printStackTrace();
-				result = false;
+				fileName = null;
 			}
 		}
-		return result;
+		return fileName;
 	}
 
 	public boolean infoModify(Map param, String id) {
+		param.put("id", id);
 		return template.update("member.modifyInfo", param) == 1;
 	}
 	

@@ -18,8 +18,10 @@ public class MyPageService {
 	public String[] splitFollowing(Map info) {
 		if (info.get("FOLLOW") != null) 
 			return ((String)info.get("FOLLOW")).split(",");
-		else 
+		else {
+			System.out.println("널 리턴하라규");
 			return null;
+		}
 	}
 	
 	public List<Map> getFollowingOrderByAsc(String[] following) {
