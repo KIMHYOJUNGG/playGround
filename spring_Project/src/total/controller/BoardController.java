@@ -1,7 +1,5 @@
 package total.controller;
 
-import java.util.UUID;
-
 //import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import total.domain.BoardVO;
+import total.domain.Criteria;
 //import total.domain.Criteria;
 //import total.domain.PageMaker;
 import total.service.BoardService;
@@ -62,7 +61,15 @@ public class BoardController {
   public String listAll(Model model) throws Exception {
 
 	  System.out.println("show all list......................");
+	 
+	  
+	 for(BoardVO bv: service.listAll()) {
+		 
+		 System.out.println(bv);
+		 
+	 }
     model.addAttribute("list", service.listAll());
+    
     return "board/listAll";
   }
 
@@ -102,6 +109,16 @@ public class BoardController {
     rttr.addFlashAttribute("msg", "success");
 
     return "redirect:/board/listAll";
+  }
+  @RequestMapping(value = "/listCri", method = RequestMethod.GET)
+  public String listAll(Criteria cri, Model model) throws Exception {
+
+    System.out.println("show list Page with Criteria......................");
+
+    model.addAttribute("list", service.listCriteria(cri));
+    
+    return "board/listCri";
+   
   }
 }
 /*create table board(

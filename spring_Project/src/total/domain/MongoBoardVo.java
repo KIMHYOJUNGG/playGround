@@ -17,7 +17,7 @@ public class MongoBoardVo {
 	private String contents;
 	private String image;
 	private String tag;
-	private String coments;
+	private String coments;//배열로 하기
 	public  String getNo() {
 		return no;
 	}

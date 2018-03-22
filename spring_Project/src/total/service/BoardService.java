@@ -160,5 +160,23 @@ public void update(BoardVO vo) throws Exception {
   public List<BoardVO> listAll() throws Exception {
     return session.selectList("board.listAll");
   }
+  
+
+  public List<BoardVO> listPage(int page) throws Exception {
+
+    if (page <= 0) {
+      page = 1;
+    }
+
+    page = (page - 1) * 10;
+
+    return session.selectList("board.listPage", page);
+  }
+  
+
+  public List<BoardVO> listCriteria(total.domain.Criteria cri) throws Exception {
+
+    return session.selectList("board.listCriteria", cri);
+  }
 
 }
