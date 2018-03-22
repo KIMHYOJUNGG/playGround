@@ -1,3 +1,4 @@
+
 package total.controller;
 
 
@@ -25,7 +26,8 @@ public class CommonExceptionAdvice {
     modelAndView.addObject("exception", ex);
 
     return modelAndView;
-  }*/
+  }
+  */
 
 }
 

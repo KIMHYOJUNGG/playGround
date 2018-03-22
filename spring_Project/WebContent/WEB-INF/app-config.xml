@@ -25,10 +25,8 @@
 		설정해야 먼저 검출된다. -->
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<property name="order" value="1"></property>
-
 	</bean>
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-
 		<property name="definitions">
 			<array>
 				<value>/WEB-INF/tiles/*-tiles.xml</value>
@@ -104,17 +102,19 @@
 	<websocket:handlers>
 		<websocket:mapping handler="WSController" path="/logonWS" />
 		<websocket:handshake-interceptors>
-			<!-- 웹소켓 연결 시도됐을 때 가로채서 작업하는 객체! httpSession에 담겨있던 값을 고대로 담아서 옮겨줌! 만약 
-				세션에 logon을 add해놨다면 그 값까지도!!!! -->
 			<bean
 				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
 
 	<mongo:mongo-client host="13.125.137.154" port="27017" id="mongo" />
-	<mongo:db-factory dbname="playGround" mongo-ref="mongo" id="mongoFactory" />
+	<mongo:db-factory dbname="playGround" mongo-ref="mongo" id="mongoFactory"/>
 	<bean class="org.springframework.data.mongodb.core.MongoTemplate" id="mongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoFactory" />
 	</bean>
+
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+  	<property name="uploadTempDir" value="/temp"/>
+  </bean>
 
 </beans>

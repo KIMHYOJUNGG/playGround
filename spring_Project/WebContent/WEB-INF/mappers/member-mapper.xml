@@ -5,12 +5,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="member">
 	<insert id="register">
-		insert into member(no,nickname,regdate,id,password,email,welcome) values(member_seq.nextval,#{nickname},sysdate,#{id},#{password},#{email},'안녕')
+		insert into
+		member(no,nickname,regdate,id,password,email,welcome)
+		values(member_seq.nextval,#{nickname},sysdate,#{id},#{password},#{email},'안녕')
 	</insert>
 	<select id="selectAll" resultType="hashmap">
 		select * from member;
 	</select>
 	<select id="login" resultType="hashmap">
-		select * from member where id=#{id} and password=#{password}
+		select * from member where
+		id=#{id} and password=#{password}
 	</select>
+	<select id="getInfoById" resultType="hashmap">
+		select * from member where
+		id = #{id}
+	</select>
+	<select id="getFollowingInfoById" resultType="hashmap">
+		select * from member
+		<if test="following != null">
+			where id in
+			<foreach collection="following" item="f" open="(" close=")"
+				separator=","> #{f}</foreach>
+		</if>
+	</select>
+	<update id="modifyInfo">
+		update member
+		<set>
+			<if test="password != null"> password = #{password}</if>
+			<if test="nickname != null"> nickname = #{nickname}</if>
+			<if test="email != null">email = #{email}</if>
+			<if test="welcome != null">welcome = #{welcome}</if>
+		</set>
+		where id=#{id}
+	</update>
+
 </mapper>

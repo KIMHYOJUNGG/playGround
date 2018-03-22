@@ -3,7 +3,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
 <meta charset="utf-8">
@@ -22,8 +22,8 @@
 
 
 <style>
-<%-- main style --%>
-.main_keywords {
+<%--
+main style --%> .main_keywords {
 	border-collapse: collapse;
 	height: 200px;
 	width: 30%;
@@ -73,13 +73,11 @@
      --%>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/member/registpage"><span class="glyphicon glyphicon-user"></span>
-							Sign Up</a></li>
-					<li><a href="/member/log"><span class="glyphicon glyphicon-log-in"></span>
-							Login</a></li>
-
-					<li><form class="navbar-form navbar-left"
-							action="/action_page.php">
+					<li><a href="/member/registpage"><span
+							class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+					<li><a href="/member/log"><span
+							class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					<li><form class="navbar-form navbar-left" action="/search">
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Search"
 									name="search">
@@ -94,7 +92,7 @@
 	<div class="container-fluid" style="margin-top: 50px">
 		<tiles:insertAttribute name="body"></tiles:insertAttribute>
 	</div>
-	
+
 
 </body>
 </html>
