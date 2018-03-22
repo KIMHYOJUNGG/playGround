@@ -1,5 +1,6 @@
 package total.service;
 
+import java.io.File;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,5 +30,11 @@ public class MemberService {
 		else {
 			return false;
 		}
+	}
+	public Map idMember(String email) {
+		return template.selectOne("member.idsearch",email);
+	}
+	public Map passwordMember(Map<String,String> param) {
+		return template.selectOne("member.passwordsearch",param);
 	}
 }

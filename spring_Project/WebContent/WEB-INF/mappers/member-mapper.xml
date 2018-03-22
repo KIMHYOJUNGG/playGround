@@ -5,12 +5,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="member">
 	<insert id="register">
-		insert into member(no,nickname,regdate,id,password,email,welcome) values(member_seq.nextval,#{nickname},sysdate,#{id},#{password},#{email},'안녕')
+		insert into member(no,nickname,regdate,id,password,email,image,welcome) values(member_seq.nextval,#{nickname},sysdate,#{id},#{password},#{email},#{image},'안녕')
 	</insert>
-	<select id="selectAll" resultType="hashmap">
-		select * from member;
+	<!-- 중복아이디가 있나 -->
+	<select id="id" resultType="hashmap">
+		select id from member where id=#{id}
 	</select>
 	<select id="login" resultType="hashmap">
-		select * from member where id=#{id} and password=#{password}
+		select * from member where
+		id=#{id} and password=#{password}
+	</select>
+	<!-- 아이디찾기 -->
+	<select id="idsearch" resultType="hashmap">
+		select * from member where email=#{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="passwordsearch" resultType="hashmap">
+		select * from member where id=#{id} and email=#{email}
+	</select>
+
+	<select id="getInfoById" resultType="hashmap">
+		select * from member where id = #{id}
+	</select>
+	<select id="getFollowingInfoById" resultType="hashmap">
+		select * from member
+		<if test="following != null">
+			where id in
+			<foreach collection="following" item="f" open="(" close=")"
+				separator=","> #{f}</foreach>
+		</if>
+	</select>
+	<update id="modifyInfo">
+		update member
+		<trim prefix="set" suffixOverrides=",">
+			<if test="password != null"> password = #{password},</if>
+			<if test="nickname != null"> nickname = #{nickname},</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="image != null">image = #{image},</if>
+			<if test="welcome != null">welcome = #{welcome}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<!-- 관리자에서의 멤버관리-->
+	<select id="selectAll" resultType="hashmap">
+		select * from member
 	</select>
 </mapper>
+

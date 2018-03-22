@@ -1,3 +1,4 @@
+
 package total.controller;
 
 
@@ -8,8 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class CommonExceptionAdvice {
 
-/*
-  //@ExceptionHandler(Exception.class)
+
+/*  //@ExceptionHandler(Exception.class)
+>>>>>>> refs/heads/okt2
   public String common(Exception e) {
 
     System.out.println(e.toString());
@@ -25,7 +27,9 @@ public class CommonExceptionAdvice {
     modelAndView.addObject("exception", ex);
 
     return modelAndView;
-  }*/
+<<<<<<< HEAD
+  }
+  */
 
 }
 
