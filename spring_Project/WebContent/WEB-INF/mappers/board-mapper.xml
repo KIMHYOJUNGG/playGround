@@ -4,7 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-
 <mapper namespace="board">
 
  <insert id="create">
@@ -31,15 +30,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  delete from board where no = #{no}
  </delete>
 
+<select id="mainBoardOrder" resultType="hashmap">
+ 	select * from board order by good asc 
+ </select>
+
  <select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
-   no, title, writer, regdate, viewcnt 
+   no, title, writer, regdate, viewcnt   
  from 
    board 
  where no > 0 
  order by no desc, regdate desc
  ]]>  
  </select>
-  
+   
 </mapper>
+

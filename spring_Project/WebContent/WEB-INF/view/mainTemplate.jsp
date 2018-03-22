@@ -78,7 +78,7 @@
 					<li><a href="/member/log"><span class="glyphicon glyphicon-log-in"></span>
 							Login</a></li>
 					<li><form class="navbar-form navbar-left"
-							action="/action_page.php">
+							action="/search">
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Search"
 									name="search">
