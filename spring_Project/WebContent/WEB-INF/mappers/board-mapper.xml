@@ -49,5 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		<foreach collection="following" item="f" open="(" close=")"  separator=","> #{f}</foreach>
 	</select>
+	<select id="getListById" resultType="hashmap">
+		select * from board where writer =#{writer} order by (regdate) asc
+	</select>
 </mapper>
 
