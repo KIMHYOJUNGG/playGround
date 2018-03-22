@@ -18,7 +18,7 @@
 					<c:when test="${vs.count <= 8}">
 					<div class="w3-quarter">
 							<a href="/board/read?bno=${o.NO}"><img
-								src="/image/Desert.jpg" alt="1" style="width: 80%"></a>
+								src="${vs.count }" alt="1" style="width: 80%"></a>
 							<h3>${o.TITLE }</h3>
 							<p>${o.TITLE }</p>
 						</div>

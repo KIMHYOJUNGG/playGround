@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
+
 import org.bson.Document;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,9 @@ public class BoardService {
 
   @Autowired
  SqlSessionTemplate session;
-@Autowired
-MongoTemplate template;
+  @Autowired
+  MongoTemplate template;
+ 
 public String uuid() {
 
 	UUID uuid = UUID.randomUUID();// 고유 식별문자 생성 (8-4-4-4-12) 절대로 겹치지 않는다.
@@ -96,11 +99,24 @@ public String uuid() {
 	  
 	  Criteria cri=new Criteria("no");
 	  cri.is(no);
-	  
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
 	  System.out.println(mbv.getContents());
 	  return mbv.getContents();
+	  
+  }
+
+public String[] mongoFindImage(Object no) {
+	  
+	  Criteria cri=new Criteria("no");
+	  cri.is(no);
+	  System.out.println("no"+no);
+	  Query query=new Query(cri);
+	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
+	  System.out.println(mbv.getImage().toString());
+	  
+	  
+	  return mbv.getImage()==null ? null : mbv.getImage() ;
 	  
   }
 
