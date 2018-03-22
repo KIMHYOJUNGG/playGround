@@ -28,9 +28,8 @@
 				name='bookname' class="form-control" placeholder="Enter BookName">
 		</div>
 		<div class="form-group">
-			<label for="exampleInputEmail1">Writer</label> 
-			<input type="text"
-				name="writer" class="form-control" placeholder="Enter Writer">
+			<label for="exampleInputEmail1">Writer</label><br/>
+			${logon } 
 		</div> 
 		<div class="form-group">
 			<label for="exampleInputEmail1">Title</label> 

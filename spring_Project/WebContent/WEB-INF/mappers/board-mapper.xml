@@ -42,5 +42,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  order by no desc, regdate desc
  ]]>
 	</select>
+	
+	<select id="boardid" resultType="hashmap">
+		select * from board where writer=#{id} order by red desc
+	</select>
 </mapper>
 

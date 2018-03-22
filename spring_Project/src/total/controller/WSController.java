@@ -1,6 +1,7 @@
 package total.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,9 @@ import total.domain.WebSocketMap;
 public class WSController extends TextWebSocketHandler {
 	@Autowired
 	WebSocketMap wsMap;
+	@Autowired
+	Gson gson;
+	
 
 	
 	/*@PostConstruct

@@ -20,7 +20,7 @@
 		</thead>
 		<c:forEach var="m" items="${list }">
 			 <tr align="center">
-			 	<td><a href="/board/selectAll">${m.NICKNAME }</a></td>
+			 	<td><a href="/admin/listid?id=${m.ID }">${m.NICKNAME }</a></td>
 			 	<td>${m.REGDATE }</td>
 			 	<td>${m.ID }</td>
 			 	<td>${m.EMAIL }</td>

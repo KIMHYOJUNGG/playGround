@@ -106,6 +106,7 @@ public class BoardController {
 
     return "redirect:/board/listAll";
   }
+
 }
 /*create table board(
 bno number(4,0) not null,
