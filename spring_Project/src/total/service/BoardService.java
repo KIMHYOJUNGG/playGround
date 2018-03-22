@@ -2,6 +2,7 @@ package total.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -106,17 +107,18 @@ public String uuid() {
 	  
   }
 
-public String[] mongoFindImage(Object no) {
+public String[] mongoFindImage(Number no) {
 	  
 	  Criteria cri=new Criteria("no");
-	  cri.is(no);
+	  cri.is(no.intValue());
 	  System.out.println("no"+no);
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
-	  System.out.println(mbv.getImage().toString());
-	  
-	  
-	  return mbv.getImage()==null ? null : mbv.getImage() ;
+	  System.out.println(mbv);
+	  String[] list = "/image/Desert.jpg".split(",");
+	  System.out.println(mbv.getImage()==null ? list : mbv.getImage());
+	 
+	  return mbv.getImage()==null ? list : mbv.getImage() ;
 	  
   }
 
