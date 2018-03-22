@@ -28,7 +28,10 @@ public class WriterPageService {
 	}
 	
 	public List<BookVO> getBookListById(String id) {
-		List<BookVO> list = mongo.find(new Query(Criteria.where("id").is(id)), BookVO.class, "book");
+		System.out.println(id);
+		List<BookVO> list = mongo.find(new Query(Criteria.where("writer").is(id)),  BookVO.class, "book");
+		System.out.println(list);
+		System.out.println(list.size());
 		return list;
 	}
 	
