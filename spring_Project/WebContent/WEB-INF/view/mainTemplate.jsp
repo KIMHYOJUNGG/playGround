@@ -78,8 +78,6 @@ main style --%> .main_keywords {
 							class="glyphicon glyphicon-log-in"></span> Login</a></li>
 				</c:if>
 				<c:if test="${logon !=null }">
-					<li><a href="/member/log"><span
-							class="glyphicon glyphicon-log-in"></span> myPage</a></li>
 					<li><a href="/member/logout"><span
 							class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 				</c:if>

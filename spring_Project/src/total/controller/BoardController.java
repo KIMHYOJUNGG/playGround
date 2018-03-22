@@ -1,5 +1,6 @@
 package total.controller;
 
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -28,10 +29,9 @@ public class BoardController {
    BoardService service;
 
   @RequestMapping(value = "/register", method = RequestMethod.GET)
-  public String registerGET(BoardVO board, Model model) throws Exception {
-
-    System.out.println("register get ...........");
-    return "board/register";
+  public String registerGET(BoardVO board, Model model,Map map) throws Exception {
+	 map.put("body", "/board/register.jsp");
+    return "t_el";
   }
 
 /*   @RequestMapping(value = "/register", method = RequestMethod.POST)
