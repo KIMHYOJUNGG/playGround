@@ -21,19 +21,23 @@
 
 				<!-- First Photo Grid-->
 				<div class="w3-row-padding w3-padding-16 w3-center" id="food">
-					<c:forEach var="o" items="${boardNo}"  varStatus="vs">
-					<c:choose>
-					<c:when test="${vs.count <= 8}">
-					<div class="w3-quarter">
-							<a href="/board/read?bno=${o.NO}"><img
-								src="/image/Desert.jpg" alt="1" style="width: 80%"></a>
-							<h3>${o.TITLE }</h3>
-							<p>${o.TITLE }</p>
-						</div>
-						</c:when>
+					<c:forEach var="o" items="${boardNo}" varStatus="vs">
+						<c:choose>
+							<c:when test="${vs.count <= 8}">
+								<div class="w3-quarter">
+									<c:forEach items="${list }" var="l" varStatus="vs">
+										<c:if test="${vs.count <= 1}">
+											<a href="/board/read?no=${o.NO}"><img src="${l[0] }"
+												alt="1" style="width: 80%"></a>
+										</c:if>
+									</c:forEach>
+									<h3>${o.TITLE }</h3>
+									<p>${o.BOOKNAME }</p>
+								</div>
+							</c:when>
 						</c:choose>
 					</c:forEach>
-				
+
 				</div>
 
 			</div>
