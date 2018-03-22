@@ -40,7 +40,8 @@
 					<div class="list-group">
 						<c:forEach var="c" items="${contentList}">
 						<li class="list-group-item">
-								<h3 class="list-group-item-heading"><a href="#">${c.BOOKNAME}</a> &nbsp;<span class="badge">${c.TYPE}</span></h3>
+								<h3 class="list-group-item-heading"><a href="#">${c.BOOKNAME}</a> &nbsp;
+								<a href="${pageContext.request.contextPath }/search?search=${c.TYPE}"><span class="badge">${c.TYPE}</span></a></h3>
 									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}"><p class="list-group-item-text">  ${c.TITLE}</p>
 									<p class="list-group-item-text">${c.VIEWCNT} | ${c.REGDATE}</p></a>
 							</li>
@@ -64,7 +65,7 @@
 							<h3 class="list-group-item-heading"><a href="#">${b.bookName}</a></h3>
 								<p class="list-group-item-text">
 									<c:forEach items="${b.tag }" var="tag">
-										<a href="#"><span class="badge"> ${tag}</span></a>
+										<a href="${pageContext.request.contextPath }/search?search=${tag}"><span class="badge"> ${tag}</span></a>
 									</c:forEach>
 								</p>
 								<p class="list-group-item-text">${b.good}</p>
