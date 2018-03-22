@@ -13,7 +13,7 @@
 			<div class="col-sm-8">
 				<h2>${writerInfo.NICKNAME}</h2>
 				<p>
-					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | <a href="${pageContext.request.contextPath }/@NICKNAME/following">관심작가 <span class="badge">0</span></a>
+					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | <a href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가 <span class="badge">0</span></a>
 				</p>
 				<p>
 					<span style="color: gray">${writerInfo.WELCOME}</span>

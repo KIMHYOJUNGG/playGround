@@ -25,6 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from member where id=#{id} and email=#{email}
 	</select>
 
+	<select id="getInfoById" resultType="hashmap">
+		select * from member where id = #{id}
+	</select>
 	<select id="getFollowingInfoById" resultType="hashmap">
 		select * from member
 		<if test="following != null">

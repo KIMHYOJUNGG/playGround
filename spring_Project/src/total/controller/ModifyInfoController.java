@@ -31,18 +31,20 @@ public class ModifyInfoController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String modifyHandle2(Map map, HttpSession session, @RequestParam Map<String,String> param, @RequestParam("image") MultipartFile img) {
-		if( !img.isEmpty()) {
+	public String modifyHandle2(Map map, HttpSession session, @RequestParam Map<String,String> param, @RequestParam(name="image", required=false) MultipartFile img) {
+		System.out.println(param.size());
+		if( img != null && !img.isEmpty()) {
+			System.out.println("img 있음!!");
 			String fileName = modifyInfoService.imgModify(img, (String)session.getAttribute("logon"));
 			param.put("image", fileName);
 		}
-		for(String s : param.keySet()) {
-			System.out.println(s +"→"+param.get(s)+"/ null?"+(param.get(s) == null));
-		}
-		if(param.get("password").length() <1) {
+		System.out.println("img 통과!");
+		if(param.get("password") != null && param.get("password").length() <1) {
 			param.remove("password");
 		}
+		System.out.println("password 통과!");
 		boolean rst = modifyInfoService.infoModify(param, (String)session.getAttribute("logon"));
+		System.out.println("정보 수정 통과!");
 		if(rst) {
 			map.put("msg", "수정되었습니다.");
 		} else {
