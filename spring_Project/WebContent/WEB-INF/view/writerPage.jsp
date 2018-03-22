@@ -41,7 +41,7 @@
 						<c:forEach var="c" items="${contentList}">
 						<li class="list-group-item">
 								<h3 class="list-group-item-heading"><a href="#">${c.BOOKNAME}</a> &nbsp;<span class="badge">${c.TYPE}</span></h3>
-									<a href="#"><p class="list-group-item-text">  ${c.TITLE}</p>
+									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}"><p class="list-group-item-text">  ${c.TITLE}</p>
 									<p class="list-group-item-text">${c.VIEWCNT} | ${c.REGDATE}</p></a>
 							</li>
 							</c:forEach>
@@ -61,9 +61,13 @@
 					<div class="list-group">
 					<c:forEach var="b" items="${bookList}">
 						<li class="list-group-item">
-							<h3 class="list-group-item-heading"><a href="#">BOOKNAME</a> &nbsp;<span class="badge">TYPE</span></h3>
-								<p class="list-group-item-text"><a href="#"><span class="badge"> tag</span></a></p>
-								<p class="list-group-item-text">good</p>
+							<h3 class="list-group-item-heading"><a href="#">${b.bookName}</a></h3>
+								<p class="list-group-item-text">
+									<c:forEach items="${b.tag }" var="tag">
+										<a href="#"><span class="badge"> ${tag}</span></a>
+									</c:forEach>
+								</p>
+								<p class="list-group-item-text">${b.good}</p>
 						</li>
 						</c:forEach>
 					</div>
