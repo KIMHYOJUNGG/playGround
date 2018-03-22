@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class myPageService {
+public class MyPageService {
 	@Autowired
 	SqlSessionTemplate template;
 	
@@ -16,7 +16,10 @@ public class myPageService {
 	}
 	
 	public String[] splitFollowing(Map info) {
-		return ((String)info.get("FOLLOW")).split(",");
+		if (info.get("FOLLOW") != null) 
+			return ((String)info.get("FOLLOW")).split(",");
+		else 
+			return null;
 	}
 	
 	public List<Map> getFollowingOrderByAsc(String[] following) {

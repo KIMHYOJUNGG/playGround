@@ -3,7 +3,7 @@
 <%@ taglib  uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib  uri="http://java.sun.com/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <title><tiles:getAsString name="title"></tiles:getAsString></title>
   <meta charset="utf-8">
