@@ -2,39 +2,37 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
 <mapper namespace="board">
+	<insert id="create">
+		insert into board (no, bno, title, bookname, regdate, type, writer)
+		values(#{no},#{bno},#{title}, #{bookname}, sysdate, #{type},
+		#{writer})
+	</insert>
+	<select id="read" resultType="total.domain.BoardVO">
+		select
+		no, title, writer, regdate, viewcnt
+		from
+		board
+		where no = #{no}
+	</select>
+	<select id="selectNo" resultType="_int">
+		select board_seq.nextval as no from dual
+	</select>
 
- <insert id="create">
- insert into board (no, bno, title, bookname, regdate, type, writer) 
- values(#{no},#{bno},#{title}, #{bookname}, sysdate, #{type}, #{writer})
- </insert>
- <select id="read" resultType="total.domain.BoardVO">
- select 
-   no, title, writer, regdate, viewcnt 
- from 
-   board 
- where no = #{no}
- </select>
- <select id="selectNo" resultType="_int">
- select board_seq.nextval as no from dual
- </select>
+	<update id="update">
+		update board set title =#{title}
+		where no = #{no}
+	</update>
 
- <update id="update">
- update board set title =#{title}
- where no = #{no}
- </update>
+	<delete id="delete">
+		delete from board where no = #{no}
+	</delete>
 
- <delete id="delete">
- delete from board where no = #{no}
- </delete>
+	<select id="mainBoardOrder" resultType="hashmap">
+		select * from board order by good asc
+	</select>
 
-<select id="mainBoardOrder" resultType="hashmap">
- 	select * from board order by good asc 
- </select>
-
- <select id="listAll" resultType="total.domain.BoardVO">
+	<select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
    no, title, writer, regdate, viewcnt   
@@ -42,8 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    board 
  where no > 0 
  order by no desc, regdate desc
- ]]>  
- </select>
-   
+ ]]>
+	</select>
 </mapper>
 
