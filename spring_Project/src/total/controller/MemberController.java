@@ -2,6 +2,7 @@ package total.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,8 @@ public class MemberController {
 	
 	@Autowired
 	MailService mailservice;
+	
+	// 회원등록 페이지
 	@RequestMapping("/registpage")
 	public String memberPage(Map map) {
 		map.put("body", "register.jsp");
@@ -65,13 +68,14 @@ public class MemberController {
 			return "t_regist";
 		}
 	}
-
+	// 로그인
 	@RequestMapping("/log")
 	public String memberLoginPage(Map map) {
 		map.put("body", "login.jsp");
 		return "t_log";
 	}
-
+	
+	// 로그인 실행
 	@RequestMapping(path = "/loging", method = RequestMethod.POST)
 	public String memberLoginHandle(Model model, @RequestParam Map<String, String> param, HttpSession session) {
 		System.out.println(param);
@@ -98,29 +102,52 @@ public class MemberController {
 	
 	// 아이디 찾기 페이지
 	@RequestMapping("/idsearch")
-	public String memberIdHandle() {
-		return "/idsearch";
+	public String memberIdHandle(Map map) {
+		map.put("body","idsearch.jsp");
+		return "t_log";
 	}
 	
 	// 아이디 찾기
-	@RequestMapping(path="idresult")
-	public String memberIdResultHandle(Model model, @RequestParam String id) {
-		boolean rst = memberservice.idMember(id);
-		if(rst) {
-			boolean rst2 = mailservice.sendId
+	@RequestMapping(path="idresult",method=RequestMethod.POST)
+	public String memberIdResultHandle(Model model, HttpServletRequest req,@RequestParam String email, Map map2) {
+		map2.put("body","login.jsp");
+		String addr = req.getLocalAddr();
+		Map map = memberservice.idMember(email);
+		if(map!=null) {
+			String id2 = (String)map.get("ID");
+			boolean rst2 = mailservice.searchId(email,id2,addr);
+			model.addAttribute("idsearch","이메일을 확인해보세요");
+			return "t_log";
 		}
-		return "/idresult";
+		else {
+			model.addAttribute("idwarn","해당 이메일이 없습니다.");
+			return "t_log";
+		}
 	}
 	
 	// 비밀번호 찾기 페이지
 	@RequestMapping("/passwordsearch")
-	public String memberPasswordHandle() {
-		return "/password";
+	public String memberPasswordHandle(Map map) {
+		map.put("body", "password.jsp");
+		return "t_log";
 	}
 	
 	// 비밀번호 찾기
-	@RequestMapping("/passwordresult")
-	public String memberPasswordResultHandle() {
-		return "/presult";
+	@RequestMapping(path="/passwordresult",method=RequestMethod.POST)
+	public String memberPasswordResultHandle(Model model, HttpServletRequest req,@RequestParam Map<String,String> param, Map map2) {
+		map2.put("body", "login.jsp");
+		String addr = req.getLocalAddr();
+		Map map = memberservice.passwordMember(param);
+		if(map!=null) {
+			String password = (String)map.get("PASSWORD");
+			String email = param.get("email");
+			boolean rst2 = mailservice.searchPassword(email,password,addr);
+			model.addAttribute("idsearch","이메일을 확인해보세요");
+			return "t_log";
+		}
+		else {
+			model.addAttribute("passwordwarn","아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해봇세요");
+			return "t_log";
+		}
 	}
 }

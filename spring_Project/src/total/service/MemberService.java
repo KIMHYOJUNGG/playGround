@@ -31,13 +31,10 @@ public class MemberService {
 			return false;
 		}
 	}
-	public boolean idMember(String id) {
-		Map map = template.selectOne("member.idsearch",id);
-		if(map!=null) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	public Map idMember(String email) {
+		return template.selectOne("member.idsearch",email);
+	}
+	public Map passwordMember(Map<String,String> param) {
+		return template.selectOne("member.passwordsearch",param);
 	}
 }
