@@ -92,22 +92,20 @@ public class BoardController {
     return "t_board";
   }
 
- /* @RequestMapping(value = "/readPage", method = RequestMethod.GET)
+ @RequestMapping(value = "/read", method = RequestMethod.GET)
   public String read(@RequestParam("no") int no, Model model) throws Exception {
 
 	String contents= service.mongoFind(no);
 	List<Map> comments= service.mongoFindComment(no);
     model.addAttribute(service.read(no));
     model.addAttribute("contents",contents);
-<<<<<<< HEAD
     model.addAttribute("body","readPage.jsp");
-=======
     model.addAttribute("comments",comments);
->>>>>>> branch 'master' of https://github.com/KIMHYOJUNGG/playGround
+
     
-   // return "board/read";
+    //return "board/read";
     return "t_board";
-  }*/
+  }
   @RequestMapping(value = "/remove", method = RequestMethod.POST)
   public String remove(@RequestParam("no") int no, RedirectAttributes rttr) throws Exception {
 
@@ -172,13 +170,25 @@ public class BoardController {
   public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 
 	  String contents= service.mongoFind(no);
+	  List<Map> comments= service.mongoFindComment(no);
 	    model.addAttribute(service.read(no));
 	    model.addAttribute("contents",contents);
 	    model.addAttribute("body","readPage.jsp");
-	    
+	    model.addAttribute("comments",comments);
 	   // return "board/read";
+	   // return "t_board";
+	    
+	  /*  
+	    String contents= service.mongoFind(no);
+		List<Map> comments= service.mongoFindComment(no);
+	    model.addAttribute(service.read(no));
+	    model.addAttribute("contents",contents);
+	    model.addAttribute("body","readPage.jsp");
+	    model.addAttribute("comments",comments);*/
+
+	    
+	    //return "board/read";
 	    return "t_board";
-  
   }
   
   @RequestMapping(value = "/removePage", method = RequestMethod.POST)

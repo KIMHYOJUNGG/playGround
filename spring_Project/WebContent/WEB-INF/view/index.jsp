@@ -28,7 +28,7 @@
 								<div class="w3-quarter">
 									<c:forEach items="${list }" var="l" varStatus="vs">
 										<c:if test="${vs.count <= 1}">
-											<a href="/board/read?no=${o.NO}"><img src="${l[0] }"
+											<a href="/board/readPage?no=${o.NO}"><img src="${l[0] }"
 												alt="1" style="width: 80%"></a>
 										</c:if>
 									</c:forEach>
