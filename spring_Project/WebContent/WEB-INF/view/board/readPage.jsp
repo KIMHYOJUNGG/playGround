@@ -42,10 +42,19 @@
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
 		<p>
-		${co.id }      ${co.reply }      ${co.date} 
+		${co.id } &nbsp; &nbsp; &nbsp; ${co.reply } &nbsp; &nbsp; &nbsp; ${co.date}  
 		</p> 
 		</c:forEach>
 	</div>
+	
+	<div class="form-group">
+		<label for="exampleInputEmail1">댓글쓰기</label> 
+		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3"></textarea>
+                <br/>
+		 <button type="button" id="comments-btn" name="comments" class="btn btn-default">댓글쓰기</button>
+	</div>
+	
+	
   </div><!-- /.box-body -->
 
   <div class="box-footer">
@@ -80,6 +89,22 @@ $(document).ready(function(){
 	});
 	
 });
+
+$('#login-btn').click(function() {
+$.ajax({
+    url: "/addComments",
+    type: "POST",
+    data: {   
+        "text" : $('#comments-bts').val(),
+        "id" : "hjk"},
+    success: function(data) {
+        console.log(data);
+    }, error: function() {
+        alert('게시글 등록 실패');
+    }
+	});
+});
+
 </script>
 
 

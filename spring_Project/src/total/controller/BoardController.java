@@ -72,7 +72,7 @@ public class BoardController {
 	  service.create(board);
 
     rttr.addFlashAttribute("msg", "success");
-    return "redirect:/board/listAll";
+    return "redirect:/board/listPage";
   }
   @RequestMapping(value = "/listAll", method = RequestMethod.GET)
   public String listAll(Model model) throws Exception {
