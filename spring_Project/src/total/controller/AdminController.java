@@ -50,7 +50,7 @@ public class AdminController {
 		return "/admin/admin_main";
 	}
 
-	// 자신의 아이디로 게시글목록 보기
+	// 아이디로 게시글목록 보기
 	@RequestMapping(path = "/listid", method = RequestMethod.GET)
 	public String listId(Model model, @RequestParam String id) {
 		List<Map> list = adminservice.boardIdSelect(id);
@@ -60,4 +60,15 @@ public class AdminController {
 		model.addAttribute("boardlist", list);
 		return "/admin/admin_member_board";
 	}
+	
+	// 게시글번호로 해당 게시글 보기
+	  @RequestMapping(value = "/read", method = RequestMethod.GET)
+	  public String read(@RequestParam("no") int no, Model model) throws Exception {
+
+		String contents= adminservice.mongoFind(no);
+	    model.addAttribute("admin",adminservice.read(no));
+	    model.addAttribute("contents",contents);
+	    
+	    return "/admin/admin_member_board_id";
+	  }
 }

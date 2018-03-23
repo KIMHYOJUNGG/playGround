@@ -42,11 +42,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  order by no desc, regdate desc
  ]]>
 	</select>
-
-	
-	<select id="boardid" resultType="hashmap">
-		select * from board where writer=#{id} order by red desc
-	</select>
 	
 	<select id="following" resultType="hashmap">
 		select * from board
@@ -57,6 +52,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getListById" resultType="hashmap">
 		select * from board where writer =#{writer} order by (regdate) asc
+	</select>
+	
+	
+	<!--  관리자 -->
+	
+	<select id="boardid" resultType="hashmap">
+		select * from board where writer=#{id} order by red desc
+	</select>
+	<select id="boardNo" resultType="hashmap">
+		select * from board where no=#{no}
 	</select>
 </mapper>
 

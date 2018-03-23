@@ -24,7 +24,7 @@
 				<tr align="center">
 					<c:choose>
 						<c:when test="${m.RED=='Y'}">
-							<td><a href="">${m.NO }</a></td>
+							<td><a href="/admin/boardno?no=${m.NO }">${m.NO }</a></td>
 						</c:when>
 						<c:otherwise>
 							<td>${m.NO }</td>
@@ -37,11 +37,12 @@
 					<c:choose>
 						<c:when test="${m.RED == 'Y'}">
 							<td style="color: RED">${m.RED }</td>
-						</c:when>
+						</c:when> 
 						<c:otherwise>
 							<td>${m.RED}</td>
 						</c:otherwise>
 					</c:choose>
+					
 				</tr>
 			</c:forEach>
 		</table>
