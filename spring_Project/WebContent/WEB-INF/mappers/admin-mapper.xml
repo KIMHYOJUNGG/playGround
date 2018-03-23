@@ -8,7 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from admin where id=#{id} and password=#{password}
 	</select>
 	<!--  관리자 -->
-	
 	<select id="boardid" resultType="hashmap">
 		select * from board where writer=#{id} order by red desc
 	</select>
@@ -22,7 +21,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		board
 		where no = #{no}
 	</select>
+	<!-- 삭제 -->
 	<delete id="delete">
 		delete from board where no = #{no}
 	</delete>
+	<!-- 레드카드 3이하일 때 -->
+	<update id="updateLv">
+		update member set redcard = redcard+1 where id=#{id}
+	</update>
+	<!-- 레드카드 3일 때 0으로 -->
+	<update id="updateLv2">
+		update member set redcard = 0 where id=#{id}
+	</update>
+	<!-- 유저의 레드카드수 -->
+	<select id="selectRedcard" resultType="hashmap">
+		select * member where id=#{id}
+	</select>
 </mapper>

@@ -76,5 +76,37 @@ public class AdminService {
 		 * 출처: http://souning.tistory.com/68 [-]
 		 */
 	}
+
+	public Map searchId(int no) {
+		return template.selectOne("admin.boardNo",no); 
+	}
+	// 레드카드수 올리기(아직 3이 아닐때)
+	public boolean updateRedCard(String id) {
+		int i = template.update("admin.updateLv",id);
+		if(i!=0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	// 레드카드수 0으로(3일때)
+		public boolean updateRedCard2(String id) {
+			int i = template.update("admin.updateLv2",id);
+			if(i!=0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+			
+		}
+
+	public int selectRedcard(String id) {
+		Map map = template.selectOne("admin.selectRedcard",id);
+		int i = (int) map.get("LV");
+		return i;
+	}
 }
 
