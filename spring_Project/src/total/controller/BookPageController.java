@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import total.domain.BookVO;
 import total.service.BookPageService;
+import total.service.MyPageService;
 
 @Controller
 @RequestMapping("/bookPage")
 public class BookPageController {
 	@Autowired
 	BookPageService bookPageService;
+	@Autowired
+	MyPageService myPageService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String bookPageHandle(Map map) {
@@ -39,8 +42,10 @@ public class BookPageController {
 	@RequestMapping("/{bno}")
 	public String bookPageHandle3(@PathVariable String bno, Map<String, Object> map) {
 		map.put("bookContents", "Y");
+		map.put("bookInfo", bookPageService.getBookInfo(bno));
 		map.put("contentsList", bookPageService.getBookList(bno)); 
 		map.put("boardVOList", bookPageService.getBoardVO(bno));
+		map.put("writerInfo", myPageService.getInfo( (String)((Map)((List)map.get("contentsList")).get(0)).get("WRITER")  ));
 		String title = (String)((Map)((List)map.get("contentsList")).get(0)).get("BOOKNAME");
 		System.out.println(title); 
 		map.put("title", title);

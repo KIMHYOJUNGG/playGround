@@ -68,21 +68,38 @@
 			<div class="col-sm-3">
 				<c:if test="${empty writerInfo.IMAGE }">
 					<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
-			</c:if>
+				</c:if>
+				<c:if test="${!empty writerInfo.IMAGE }">
+					<img src="${writerInfo.IMAGE}" style="width: 240px; height: 240px;" class="img-circle">
+				</c:if>
 			</div>
 			<div class="col-sm-8">
-				<h2>${writerInfo.NICKNAME}</h2>
+				<h2>${bookInfo.bookName}</h2>
 				<p>
-					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | <a href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가 <span class="badge">0</span></a>
+					<span style="font-size:12px; color: gray; font-style: italic;">by</span> <a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>
+					<span style="font-size:12px; color: gray; font-style: italic;"> | view</span> <span class="badge">${bookInfo.good }</span>
 				</p>
 				<p>
-					<span style="color: gray">${writerInfo.WELCOME}</span>
+					<c:forEach items="${bookInfo.tag }" var="t">
+					<span class="badge">${t }</span>
+					</c:forEach>
 				</p>
 			</div>
 			<div class="col-sm-1">
-			<c:if test="${logon  != id || logon== null}">
+			<c:if test="${logon  != writerInfo.ID || logon== null}">
 				<button type="button" class="btn btn-info">구독하기</button>
 			</c:if>
+			<c:if test="${logon == writerInfo.ID }">
+				<c:choose>
+					<c:when test="${!empty contentsList }">
+						<a href="${pageContext.request.contextPath }/board/register?bno=${contentsList[0].BNO}"><button type="button" class="btn btn-info">이어서 쓰기</button></a>
+					</c:when>
+					<c:otherwise>
+						
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+			
 			</div>
 		</div>
 		
@@ -91,27 +108,46 @@
 				<div class="container">
 				<c:if test="${!empty contentsList }">
 					<ul class="list-group">
-
-					<c:forEach items="${contentsList }" var="c" varStatus="vs">
 						<li class="list-group-item">
 							<div class="row">
+					<c:forEach begin="0" end="${fn:length(boardVOList)-1 }" var="i" varStatus="vs">
+						<c:set var="vo" value="${boardVOList[i] }"/>
+											<c:set var="c" value="${contentsList[i] }"/>
 								<div class="col-sm-4">
 									<div class="card">
-										<img class="card-img-top" src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Card image" style="width: 100%">
+									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}">
+										<c:if test="${empty vo.image }">
+											<img class="card-img-top" src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Card image" style="width: 100%">
+										</c:if>
+										<c:if test="${! empty vo.image }">
+											<img class="card-img-top" src="${vo.image }" alt="Card image" style="width: 100%">
+										</c:if>
 										<div class="card-body">
-											<h3 class="card-title">${c.TITLE }</h3>
-											<h4>${c.TYPE } </h4>
+											<h3 class="card-title">${c.TITLE }</h3></a>
+											<h4><a href="${pageContext.request.contextPath }/search?search=${c.TYPE }"><span class="badge">${c.TYPE }</span></a>
+											<span style="color: gray; font-size: 11pt;">좋아요</span> <span class="badge">${c.GOOD }</span></h4>
 											<p>
-											<c:forEach items="${boardVOList}" var="t">
-												<a href="${pageContext.request.contextPath }/search?search=${t.tag[0]}"><span class="badge"> ${t.tag[0]}</span></a>
+											<c:forEach items="${vo.tag}" var="t">
+												<a href="${pageContext.request.contextPath }/search?search=${t}"><span class="badge"> ${t}</span></a>
 											</c:forEach>
 											</p>
 										</div>
 									</div>
 								</div>
-							</div>
-						</li>
+								<c:choose>
+									<c:when test="${vs.count%3 eq 0 }">
+										</div>
+										</li>
+										<c:if test="${!vs.last }">
+											<li class="list-group-item">
+											<div class="row">
+										</c:if>		
+									</c:when>
+									<c:otherwise>
+									</c:otherwise>
+								</c:choose>
 					</c:forEach>
+						</li>
 					</ul>
 				</c:if>
 				<c:if test="${empty contentsList }">

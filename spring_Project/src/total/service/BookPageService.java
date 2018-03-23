@@ -48,12 +48,11 @@ public class BookPageService {
 	public List<MongoBoardVo> getBoardVO(String bno) {
 		List<MongoBoardVo> list = mongo.find(new Query(Criteria.where("bno").is(bno)), MongoBoardVo.class,"board");
 		System.out.println(list.size());
-		for(MongoBoardVo b: list) {
-			System.out.println(b.getBno());
-			System.out.println(b.getTag());
-			System.out.println("------------------");
-		}
 		return list;
+	}
+	
+	public BookVO getBookInfo(String bno) {
+		return mongo.findOne(new Query(Criteria.where("bno").is(bno)), BookVO.class, "book");
 	}
 	
 	

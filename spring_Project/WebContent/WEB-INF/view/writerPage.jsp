@@ -18,7 +18,9 @@
 			<div class="col-sm-8">
 				<h2>${writerInfo.NICKNAME}</h2>
 				<p>
-					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | <a href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가 <span class="badge">0</span></a>
+					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | 
+					<a href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가 <span class="badge">
+					${fn:length(writerFollowing) }</span></a>
 				</p>
 				<p>
 					<span style="color: gray">${writerInfo.WELCOME}</span>
@@ -45,7 +47,7 @@
 					<div class="list-group">
 						<c:forEach var="c" items="${contentList}">
 						<li class="list-group-item">
-								<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="#">${c.BOOKNAME}</a> &nbsp;
+								<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">${c.BOOKNAME}</a> &nbsp;
 								<a href="${pageContext.request.contextPath }/search?search=${c.TYPE}"><span class="badge">${c.TYPE}</span></a></h3>
 									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}"><p class="list-group-item-text" style="margin-bottom: 3px">  ${c.TITLE}</p>
 									<p class="list-group-item-text">${c.VIEWCNT} | ${c.REGDATE}</p></a>

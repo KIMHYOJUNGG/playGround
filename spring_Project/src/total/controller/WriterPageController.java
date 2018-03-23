@@ -21,6 +21,8 @@ public class WriterPageController {
 	public String writerPageHandle(@PathVariable String id, Map map) {
 		map.put("writerInfo", myPageService.getInfo(id));
 		map.put("contentList", writerPageService.getContentsListById(id));
+		String[] following = myPageService.splitFollowing((Map)map.get("writerInfo"));
+		map.put("writerFollowing", myPageService.getFollowingInfoById(following));
 		map.put("bookList", writerPageService.getBookListById(id));
 		map.put("body", "writerPage.jsp");
 		map.put("title", id+"의 PlayGround");
