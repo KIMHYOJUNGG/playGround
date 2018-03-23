@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <c:choose>
-	<c:when test="${empty bno }">
+	<c:when test="${empty book-contents}">
 		<div class="jumbotron" style="background-color: white; margin-bottom: 10px">
 			<div class="container">
 		
@@ -89,17 +89,19 @@
 		<hr/>
 
 				<div class="container">
+				<c:if test="${!empty contentsList }">
 					<ul class="list-group">
 
+					<c:forEach items="${contentsList }" var="c" varStatus="vs">
 						<li class="list-group-item">
 							<div class="row">
 								<div class="col-sm-4">
 									<div class="card">
 										<img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width: 100%">
 										<div class="card-body">
-											<h4 class="card-title">John Doe</h4>
-											<p class="card-text">Some example text some example text.
-												John Doe is an architect and engineer</p>
+											<h4 class="card-title">${c.TITLE }</h4>
+											<p class="card-text"></p>
+											<c:if test=""></c:if>
 											<a href="#" class="btn btn-primary">See Profile</a>
 										</div>
 									</div>
@@ -130,8 +132,16 @@
 								</div>
 							</div>
 						</li>
+					</c:forEach>
 					</ul>
-
+				</c:if>
+				<c:if test="${empty contentsList }">
+					<p>발행된 글이 없습니다.</p>
+					<c:if test="${contentsList.WRITER eq logon }">
+						<p>글을 등록해 보세요!</p>
+						<a href="${pageContext.request.contextPath }/board/register?bno=${contentsList.BNO}"><button type="button" class="btn btn-info">글쓰기</button></a>
+					</c:if>
+				</c:if>
 				</div>
 	</c:otherwise>
 </c:choose>

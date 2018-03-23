@@ -2,16 +2,22 @@ package total.service;
 
 import java.util.*;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import total.domain.BoardVO;
 import total.domain.BookVO;
 
 @Service
 public class BookPageService {
 	@Autowired
 	MongoTemplate mongo;
+	@Autowired
+	SqlSessionTemplate template;
 	
 	public void bookInsert(BookVO vo) {
 		String bno = UUID.randomUUID().toString().split("-")[0];
@@ -32,6 +38,15 @@ public class BookPageService {
 		
 		vo.setTag(copy.toArray(new String[copy.size()]));
 		mongo.insert(vo, "book");
+	}
+	
+	public List<Map> getBookList(String bno) {
+		return template.selectList("board.getListByBno", bno);
+	}
+	
+	public List<BoardVO> getBoardVOforImg(String bno) {
+		List<BoardVO> list = mongo.find(new Query(Criteria.where("bno").is(bno)), BoardVO.class,"board");
+		return list;
 	}
 	
 	
