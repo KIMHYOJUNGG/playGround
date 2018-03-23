@@ -1,3 +1,4 @@
+
 package total.domain;
 
 public class BookVO {
@@ -53,3 +54,4 @@ public class BookVO {
 	
 	
 }
+

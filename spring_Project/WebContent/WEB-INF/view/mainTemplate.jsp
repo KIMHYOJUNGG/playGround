@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
@@ -73,6 +74,7 @@ main style --%> .main_keywords {
      --%>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+
 				<c:if test="${logon == null  }">
 					<li><a href="/member/registpage"><span
 							class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -83,6 +85,7 @@ main style --%> .main_keywords {
 					<li><a href="/member/logout"><span
 							class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 				</c:if>
+
 					<li><form class="navbar-form navbar-left" action="/search">
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Search"

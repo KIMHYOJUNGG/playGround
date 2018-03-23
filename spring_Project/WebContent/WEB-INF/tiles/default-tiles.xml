@@ -7,6 +7,7 @@
 		<put-attribute name="title" value="PlayGround"></put-attribute>
 	</definition>
 	
+
 	<!-- 오버라이드 -->
 	<definition name="t_join" extends="t_default">
 		<put-attribute name="title" value="Sign Up Spring"></put-attribute>
@@ -17,6 +18,11 @@
 	<definition name="t_el" extends="t_default">
 		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
 	</definition>
+	<!-- board tiles -->
+	<definition name="t_board" extends="t_default">
+		<put-attribute name="body" expression="/WEB-INF/view/board/${body}"></put-attribute>
+	</definition>
+	
 	<!-- 가입 -->
 	<definition name="t_regist" extends="t_default">
 		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
@@ -30,5 +36,6 @@
 		<put-attribute name="title" expression="${title}"></put-attribute>
 		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
 	</definition>
+
 
 </tiles-definitions>

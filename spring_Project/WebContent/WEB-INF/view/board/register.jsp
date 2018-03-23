@@ -1,7 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<body>
+
+<%@include file="../include/header.jsp"%>
+
+
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<!-- left column -->
+		<div class="col-md-12">
+			<!-- general form elements -->
+			<div class="box box-primary">
+				<div class="box-header">
+					<h3 class="box-title">REGISTER BOARD</h3>
+				</div>
+				<!-- /.box-header -->
+
+
 <form role="form" method="post">
 	<div class="box-body">
 		<div class="form-group">
@@ -37,4 +53,19 @@
 	</div>
 </form>
 
-</body>
+
+
+			</div>
+			<!-- /.box -->
+		</div>
+		<!--/.col (left) -->
+
+	</div>
+	<!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+  <!-- Bootstrap 3.3.2 JS -->
+
+<%@include file="../include/footer.jsp"%>

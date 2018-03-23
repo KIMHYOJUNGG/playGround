@@ -1,3 +1,4 @@
+
 package total.controller;
 
 
@@ -74,3 +75,4 @@ public class IndexController {
 	
 	
 }
+

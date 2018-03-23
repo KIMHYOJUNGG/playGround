@@ -82,6 +82,11 @@ public class BoardVO {
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;
 	}
+	@Override
+	public String toString() {
+		return "BoardVO [no=" + no + ", bno=" + bno + ", title=" + title + ", type=" + type + ", bookname=" + bookname
+				+ ", writer=" + writer + ", content=" + content + ", regdate=" + regdate + ", viewcnt=" + viewcnt + "]";
+	}
 	
 	
 	

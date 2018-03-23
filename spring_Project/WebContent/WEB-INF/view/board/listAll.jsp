@@ -68,5 +68,6 @@
     }
     
     </script>
+  <!-- Bootstrap 3.3.2 JS -->
 
 <%@include file="../include/footer.jsp"%>

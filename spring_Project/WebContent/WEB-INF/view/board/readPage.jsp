@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp" %>
 
     <!-- Main content -->
@@ -16,7 +16,7 @@
 
  <form role="form" action="modifyPage" method="post">
     
-    <input type='hidden' name='bno' value ="${boardVO.bno}">
+    <input type='hidden' name='no' value ="${boardVO.no}">
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
     
@@ -31,13 +31,21 @@
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
       <textarea class="form-control"  name="content" rows="3" 
-      readonly="readonly">${boardVO.content}</textarea>
+      readonly="readonly">${contents}</textarea>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1" >Writer</label>
       <input type="text" name="writer" class="form-control" 
         value="${boardVO.writer}" readonly="readonly">
     </div>
+    <div class="form-group">
+		<label for="exampleInputEmail1">comments</label> 
+		<c:forEach var="co" items="${comments }" varStatus="vs">
+		<p>
+		${co.id }      ${co.reply }      ${co.date} 
+		</p> 
+		</c:forEach>
+	</div>
   </div><!-- /.box-body -->
 
   <div class="box-footer">

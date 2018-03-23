@@ -17,9 +17,12 @@ public class MongoBoardVo {
 	private String no;
 	private String bno;
 	private String contents;
+
 	private String[] image;
 	private String[] tag;
+
 	private List<Map> comments;
+
 	public  String getNo() {
 		return no;
 	}

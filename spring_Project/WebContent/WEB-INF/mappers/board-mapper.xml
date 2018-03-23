@@ -43,6 +43,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  ]]>
 	</select>
 	
+
+   <select id="listPage" resultType="total.domain.BoardVO">
+ <![CDATA[
+ select 
+   no, title, writer, regdate, viewcnt 
+ from 
+   board 
+ where no > 0 
+ order by no desc, regdate desc
+ limit #{page}, 10
+ ]]>  
+ </select>
+ <select id="listCriteria" resultType="total.domain.BoardVO">
+ <![CDATA[
+   select no, title,  writer, regdate, viewcnt from (select board.*, row_number() over (order by regdate desc,no desc) as row_id from board) 
+   where row_id between  #{pageStart} and #{perPageNum}
+ 
+ 
+ 
+ ]]>  
+ </select>
+  <select id="countPaging" resultType="int">
+ <![CDATA[
+ select 
+   count(no) 
+ from 
+   board 
+ where 
+   no > 0 
+ ]]>
+ </select>
 	<select id="following" resultType="hashmap">
 		select * from board
 		<if test="following != null">
@@ -54,5 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board where writer =#{writer} order by (regdate) asc
 	</select>
 	
+	
 </mapper>
+
 

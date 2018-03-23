@@ -137,7 +137,7 @@ public List<Map> mongoFindComment(Number no) {
 
 public void update(BoardVO vo) throws Exception {
     session.update("board.update", vo);
-    
+   
     //db.person.update({"name" : "고길동"});
     Criteria criteria = new Criteria("no");
     criteria.is(vo.getNo());
@@ -188,6 +188,29 @@ public void update(BoardVO vo) throws Exception {
 
   public List<BoardVO> listAll() throws Exception {
     return session.selectList("board.listAll");
+  }
+  
+
+  public List<BoardVO> listPage(int page) throws Exception {
+
+    if (page <= 0) {
+      page = 1;
+    }
+
+    page = (page - 1) * 10;
+
+    return session.selectList("board.listPage", page);
+  }
+  
+
+  public List<BoardVO> listCriteria(total.domain.Criteria cri) throws Exception {
+
+    return session.selectList("board.listCriteria", cri);
+  }
+ 
+  public int countPaging(total.domain.Criteria cri) throws Exception {
+
+    return session.selectOne("board.countPaging", cri);
   }
 
 }
