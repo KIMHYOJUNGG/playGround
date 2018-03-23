@@ -4,13 +4,19 @@
 <body>
 	<div align="center">
 		<c:if test="${idsearch!=null }">
-			<p>${idsearch }</p>
+			<p style="color: red">${idsearch }</p>
 		</c:if>
 		<c:if test="${idwarn!=null }">
-			<p>${idwarn }</p>
+			<p style="color: red">${idwarn }</p>
 		</c:if>
 		<c:if test="${passwordwarn !=null }">
-			<p>${passwordwarn }
+			<p style="color: red">${passwordwarn }</p>
+		</c:if>
+		<c:if test="${idn!= null }">
+			<p style="color: red">${idn }</p>
+		</c:if>
+		<c:if test="${passn!=null }">
+			<p style="color: red">${passn }</p>
 		</c:if>
 		<form action="/member/loging" method="post"
 			style="width: 330px; text-align: left; line-height: 34px;"
