@@ -1,5 +1,7 @@
 package total.domain;
 
+import java.util.*;
+
 public class MongoBoardVo {
 	/*db.board.insertOne({
 		"no":"글 번호(책 번호_0 .. 책 번호_10 이런 식?)",
@@ -17,7 +19,7 @@ public class MongoBoardVo {
 	private String contents;
 	private String[] image;
 	private String[] tag;
-	private String[] coments;
+	private List<Map> comments;
 	public  String getNo() {
 		return no;
 	}
@@ -48,12 +50,13 @@ public class MongoBoardVo {
 	public void setTag(String[] tag) {
 		this.tag = tag;
 	}
-	public String[] getComents() {
-		return coments;
+	public List<Map> getComments() {
+		return comments;
 	}
-	public void setComents(String[] coments) {
-		this.coments = coments;
+	public void setComments(List<Map> comments) {
+		this.comments = comments;
 	}
+
 
 
 	
