@@ -54,9 +54,7 @@ public class AdminController {
 	@RequestMapping(path = "/listid", method = RequestMethod.GET)
 	public String listId(Model model, @RequestParam String id) {
 		List<Map> list = adminservice.boardIdSelect(id);
-		for(Map map : list) {
-			model.addAttribute("writer",map.get("WRITER"));
-		}
+		model.addAttribute("writerid",id);
 		model.addAttribute("boardlist", list);
 		return "/admin/admin_member_board";
 	}

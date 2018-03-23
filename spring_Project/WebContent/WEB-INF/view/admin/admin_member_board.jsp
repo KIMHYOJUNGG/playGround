@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div align="center">
-		<h2>${writer }님의 게시글목록</h2>
+		<h2>${writerid }님의 게시글목록</h2>
 		<hr/>
 		<table>
 			<thead>
@@ -24,7 +24,7 @@
 				<tr align="center">
 					<c:choose>
 						<c:when test="${m.RED=='Y'}">
-							<td><a href="/admin/boardno?no=${m.NO }">${m.NO }</a></td>
+							<td><a href="/admin/read?no=${m.NO }">${m.NO }</a></td>
 						</c:when>
 						<c:otherwise>
 							<td>${m.NO }</td>

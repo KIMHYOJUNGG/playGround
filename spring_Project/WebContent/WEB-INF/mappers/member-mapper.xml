@@ -11,9 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="id" resultType="hashmap">
 		select id from member where id=#{id}
 	</select>
+	<!-- 로그인 -->
 	<select id="login" resultType="hashmap">
 		select * from member where
 		id=#{id} and password=#{password}
+	</select>
+	<!-- 로그인실패시 -->
+	<select id="idsearch2" resultType="hashmap">
+		select * from member where id=#{id}
 	</select>
 	<!-- 아이디찾기 -->
 	<select id="idsearch" resultType="hashmap">
