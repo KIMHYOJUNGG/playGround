@@ -1,5 +1,12 @@
 package total.controller;
 
+
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
+
+
 //import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +32,11 @@ public class BoardController {
    BoardService service;
 
   @RequestMapping(value = "/register", method = RequestMethod.GET)
-  public String registerGET(BoardVO board, Model model) throws Exception {
 
-    System.out.println("register get ...........");
-    
-    model.addAttribute("body","register.jsp");
-    return "board/register";
+  public String registerGET(BoardVO board, Model model,Map map) throws Exception {
+	 map.put("body", "/board/register.jsp");
+    return "t_el";
+
   }
 
 /*   @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -46,15 +52,16 @@ public class BoardController {
  
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+  public String registPOST(BoardVO board, RedirectAttributes rttr, HttpSession session) throws Exception {
 
 	  System.out.println("regist post ...........");
 	  System.out.println(board.toString());
 	 
 	  String uuid=service.uuid();
 	  board.setBno(uuid);
+	  board.setWriter((String)session.getAttribute("logon"));
 
-   service.create(board);
+	  service.create(board);
 
     rttr.addFlashAttribute("msg", "success");
     return "redirect:/board/listAll";
@@ -112,6 +119,7 @@ public class BoardController {
 
     return "redirect:/board/listAll";
   }
+
   @RequestMapping(value = "/listCri", method = RequestMethod.GET)
   public String listAll(Criteria cri, Model model) throws Exception {
 
@@ -122,6 +130,7 @@ public class BoardController {
     return "board/listCri";
    
   }
+
 }
 /*create table board(
 bno number(4,0) not null,

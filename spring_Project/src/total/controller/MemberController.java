@@ -1,3 +1,5 @@
+
+
 package total.controller;
 
 import java.io.File;
@@ -84,12 +86,13 @@ public class MemberController {
 			if (rst) {
 				session.setAttribute("logon", param.get("id"));
 				List<WebSocketSession> s = wsMap.get(session.getId());
-				System.out.println(wsMap);
-				System.out.println(s);
-				if (s != null) {
+				if (s != null ) {
 					for (WebSocketSession ws : s) {
 						ws.sendMessage(new TextMessage("로그인"));
 					}
+					return "redirect:/index";
+				}
+				else {
 					return "redirect:/index";
 				}
 			}
@@ -99,7 +102,26 @@ public class MemberController {
 			return "/fail";
 		}
 	}
-	
+	// 로그아웃
+		@RequestMapping("/logout")
+		public String logoutHandle(Model model, HttpSession session) {
+			try {
+				session.removeAttribute("logon");
+				List<WebSocketSession> s = wsMap.get(session.getId());
+				if (s != null) {
+					for (WebSocketSession ws : s) {
+						ws.sendMessage(new TextMessage("로그아웃"));
+					}
+					return "redirect:/index";
+
+				}
+				else {
+					return "redirect:/index";
+				}
+			} catch (Exception e) {
+				return "redirect:/";
+			}
+		}
 	// 아이디 찾기 페이지
 	@RequestMapping("/idsearch")
 	public String memberIdHandle(Map map) {
@@ -146,8 +168,9 @@ public class MemberController {
 			return "t_log";
 		}
 		else {
-			model.addAttribute("passwordwarn","아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해봇세요");
+			model.addAttribute("passwordwarn","아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해주세요");
 			return "t_log";
 		}
 	}
 }
+

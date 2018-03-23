@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import total.domain.BoardVO;
+
 @Service
 public class AdminService {
 	@Autowired
@@ -25,5 +27,9 @@ public class AdminService {
 	
 	public List<Map> memberSelect(){
 		return template.selectList("member.selectAll");
+	}
+	
+	public List<Map> boardIdSelect(String id) {
+		return template.selectList("board.boardid",id);
 	}
 }

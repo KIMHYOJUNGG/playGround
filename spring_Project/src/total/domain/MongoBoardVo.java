@@ -15,9 +15,11 @@ public class MongoBoardVo {
 	private String no;
 	private String bno;
 	private String contents;
-	private String image;
-	private String tag;
-	private String coments;//배열로 하기
+
+	private String[] image;
+	private String[] tag;
+	private String[] coments;
+
 	public  String getNo() {
 		return no;
 	}
@@ -36,24 +38,25 @@ public class MongoBoardVo {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getImage() {
+	public String[] getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(String[] image) {
 		this.image = image;
 	}
-	public String getTag() {
+	public String[] getTag() {
 		return tag;
 	}
-	public void setTag(String tag) {
+	public void setTag(String[] tag) {
 		this.tag = tag;
 	}
-	public String getComents() {
+	public String[] getComents() {
 		return coments;
 	}
-	public void setComents(String coments) {
+	public void setComents(String[] coments) {
 		this.coments = coments;
 	}
+
 
 	
 

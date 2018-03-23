@@ -1,7 +1,8 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Karma">
-
 
 <style>
 <%--
@@ -72,10 +72,17 @@ main style --%> .main_keywords {
      --%>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+				<c:if test="${logon == null  }">
 					<li><a href="/member/registpage"><span
 							class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 					<li><a href="/member/log"><span
 							class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				</c:if>
+				<c:if test="${logon !=null }">
+					<li><a href="/member/logout"><span
+							class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+				</c:if>
+
 					<li><form class="navbar-form navbar-left" action="/search">
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Search"
