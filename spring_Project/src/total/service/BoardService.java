@@ -1,6 +1,7 @@
 package total.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,7 +53,7 @@ public String uuid() {
     	"bno":"책 번호(book 컬렉션의 bno)",
     	"contents":"이제 여기가 게시글~ 1000자 맘껏 넘어도 됨ㅋㅋㅋ",
     	"image":["게시글에","들어갈","이미지"],
-    	"tag":["글 태그,"배열"],
+    	"tag":["글 태그","배열"],
     	"comments":[
     		{"id":"댓글 단 사람 id", "reply":"댓글 내용", "date":"댓글 단 시간"},
     		{"id":"댓글 단 사람 id2", "reply":"댓글 내용2", "date":"댓글 단 시간"}
@@ -111,17 +112,27 @@ public String[] mongoFindImage(Number no) {
 	  
 	  Criteria cri=new Criteria("no");
 	  cri.is(no.intValue());
-	  System.out.println("no"+no);
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
-	  System.out.println(mbv);
 	  String[] list = "/image/Desert.jpg".split(",");
-	  System.out.println(mbv.getImage()==null ? list : mbv.getImage());
 	 
 	  return mbv.getImage()==null ? list : mbv.getImage() ;
 	  
   }
 
+public List<Map> mongoFindComment(Number no) {
+	  
+	  Criteria cri=new Criteria("no");
+	  cri.is(no.intValue());
+	  System.out.println("no"+no);
+	  Query query=new Query(cri);
+	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
+	  System.out.println(mbv);
+	  System.out.println(mbv.getComments());
+	 
+	  return mbv.getComments()==null ? null : mbv.getComments() ;
+	  
+}
 
 
 public void update(BoardVO vo) throws Exception {

@@ -1,5 +1,4 @@
 
-
 package total.controller;
 
 
@@ -56,14 +55,14 @@ public class IndexController {
 		model.addAttribute("8",boardService.mongoFindImage(boardNo.get(7).get("NO")));
 		*/
 		List list = new LinkedList<>();
-		list.add(0,boardService.mongoFindImage((Number)(boardNo.get(0).get("NO"))));
-		list.add(1,boardService.mongoFindImage((Number)(boardNo.get(0).get("NO"))));
-		list.add(2,boardService.mongoFindImage(3));
-		list.add(3,boardService.mongoFindImage(4));
-		list.add(4,boardService.mongoFindImage(5));
-		list.add(5,boardService.mongoFindImage(6));
-		list.add(6,boardService.mongoFindImage(7));
-		list.add(7,boardService.mongoFindImage(8));
+		list.add(0,boardService.mongoFindImage(1));
+		list.add(1,boardService.mongoFindImage((Number)(boardNo.get(1).get("NO"))));
+		list.add(2,boardService.mongoFindImage((Number)(boardNo.get(2).get("NO"))));
+		list.add(3,boardService.mongoFindImage((Number)(boardNo.get(3).get("NO"))));
+		list.add(4,boardService.mongoFindImage((Number)(boardNo.get(4).get("NO"))));
+		list.add(5,boardService.mongoFindImage((Number)(boardNo.get(5).get("NO"))));
+		list.add(6,boardService.mongoFindImage((Number)(boardNo.get(6).get("NO"))));
+		list.add(7,boardService.mongoFindImage((Number)(boardNo.get(7).get("NO"))));
 		model.addAttribute("list",list);
 		
 		//application.getRealPath("/image")+"/Desert.jpg";

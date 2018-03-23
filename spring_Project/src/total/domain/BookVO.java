@@ -5,19 +5,17 @@ public class BookVO {
 	private String bno;
 	private String writer;
 	private String bookName;
-	private String[] type;
 	private String[] tag;
 	private int good;
 	
 	public BookVO() {
 		// TODO Auto-generated constructor stub
 	}
-	public BookVO(String bno, String writer, String bookName, String[] type, String[] tag, int good) {
+	public BookVO(String bno, String writer, String bookName, String[] tag, int good) {
 		super();
 		this.bno = bno;
 		this.writer = writer;
 		this.bookName = bookName;
-		this.type = type;
 		this.tag = tag;
 		this.good = good;
 	}
@@ -31,9 +29,7 @@ public class BookVO {
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
 	}
-	public void setType(String[] type) {
-		this.type = type;
-	}
+
 	public void setTag(String[] tag) {
 		this.tag = tag;
 	}
@@ -48,9 +44,6 @@ public class BookVO {
 	}
 	public String getBookName() {
 		return bookName;
-	}
-	public String[] getType() {
-		return type;
 	}
 	public String[] getTag() {
 		return tag;

@@ -25,7 +25,7 @@
 <%--
 main style --%> .main_keywords {
 	border-collapse: collapse;
-	height: 200px;
+	height: 600px;
 	width: 30%;
 	text-align: center;
 }
@@ -36,7 +36,7 @@ main style --%> .main_keywords {
 }
 
 .mainbody {
-	font-family: "Karma", sans-serif
+
 }
 
 .w3-bar-block .w3-bar-item {
@@ -72,6 +72,7 @@ main style --%> .main_keywords {
      --%>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+
 				<c:if test="${logon == null  }">
 					<li><a href="/member/registpage"><span
 							class="glyphicon glyphicon-user"></span> Sign Up</a></li>

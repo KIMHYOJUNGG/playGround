@@ -1,6 +1,8 @@
 package total.controller;
 
 
+import java.util.List;
+
 import java.util.Map;
 import java.util.UUID;
 
@@ -93,10 +95,15 @@ public class BoardController {
  /* @RequestMapping(value = "/readPage", method = RequestMethod.GET)
   public String read(@RequestParam("no") int no, Model model) throws Exception {
 
-	 String contents= service.mongoFind(no);
+	String contents= service.mongoFind(no);
+	List<Map> comments= service.mongoFindComment(no);
     model.addAttribute(service.read(no));
     model.addAttribute("contents",contents);
+<<<<<<< HEAD
     model.addAttribute("body","readPage.jsp");
+=======
+    model.addAttribute("comments",comments);
+>>>>>>> branch 'master' of https://github.com/KIMHYOJUNGG/playGround
     
    // return "board/read";
     return "t_board";
