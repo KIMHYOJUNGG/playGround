@@ -5,11 +5,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="member">
 	<insert id="register">
-		insert into member(no,nickname,regdate,id,password,email,image,welcome) values(member_seq.nextval,#{nickname},sysdate,#{id},#{password},#{email},#{image},'안녕')
+
+		insert into member(no,nickname,regdate,id,password,email,welcome) values(member_seq.nextval,#{nickname},sysdate,#{id},#{password},#{email},'안녕')
 	</insert>
 	<!-- 중복아이디가 있나 -->
 	<select id="id" resultType="hashmap">
 		select id from member where id=#{id}
+	</select>
+	<!-- 로그인 -->
+	<select id="login" resultType="hashmap">
+		select * from member where
+		id=#{id} and password=#{password}
+	</select>
+	<!-- 로그인실패시 -->
+	<select id="idsearch2" resultType="hashmap">
+		select * from member where id=#{id}
+
 	</select>
 	<select id="login" resultType="hashmap">
 		select * from member where

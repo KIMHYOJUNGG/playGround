@@ -57,6 +57,7 @@ main style --%> .main_keywords {
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/">PlayGround</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
+			<c:if test="${logon !=null }">
 				<ul class="nav navbar-nav">
 <!-- 					<li class="dropdown"><a class="dropdown-toggle" -->
 <!-- 						data-toggle="dropdown" -->
@@ -65,6 +66,7 @@ main style --%> .main_keywords {
 <!-- 						<ul class="dropdown-menu"> -->
 							<li><a href="${pageContext.request.contextPath}/myPage">myPage</a></li>
 						</ul>
+			</c:if>
 <!-- 						</li> -->
 					<%-- 
         <li><a href="#">Page 2</a></li>

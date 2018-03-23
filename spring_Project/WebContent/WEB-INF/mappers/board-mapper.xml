@@ -40,9 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    board 
  where no > 0 
  order by no desc, regdate desc
-
  ]]>
 	</select>
+	
 
 	
 	<select id="boardid" resultType="hashmap">
@@ -91,8 +91,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    no > 0 
  ]]>
  </select>
- 
-
+	<select id="following" resultType="hashmap">
+		select * from board
+		<if test="following != null">
+			where writer in
+		</if>
+		<foreach collection="following" item="f" open="(" close=")"  separator=","> #{f}</foreach>
+	</select>
+	<select id="getListById" resultType="hashmap">
+		select * from board where writer =#{writer} order by (regdate) asc
+	</select>
+	
+	
+	<!--  관리자 -->
+	
+	<select id="boardid" resultType="hashmap">
+		select * from board where writer=#{id} order by red desc
+	</select>
+	<select id="boardNo" resultType="hashmap">
+		select * from board where no=#{no}
+	</select>
 </mapper>
 
 

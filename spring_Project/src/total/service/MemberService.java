@@ -1,3 +1,4 @@
+
 package total.service;
 
 import java.io.File;
@@ -37,4 +38,10 @@ public class MemberService {
 	public Map passwordMember(Map<String,String> param) {
 		return template.selectOne("member.passwordsearch",param);
 	}
+
+	public Map selectId(String id) {
+		return template.selectOne("member.idsearch2",id);
+	}
+	
 }
+

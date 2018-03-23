@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -7,7 +8,7 @@
 </head>
 <body>
 	<div align="center">
-		<h2>${writer }님의 게시글목록</h2>
+		<h2>${writerid }님의 게시글목록</h2>
 		<hr/>
 		<table>
 			<thead>
@@ -24,7 +25,7 @@
 				<tr align="center">
 					<c:choose>
 						<c:when test="${m.RED=='Y'}">
-							<td><a href="">${m.NO }</a></td>
+							<td><a href="/admin/read?no=${m.NO }">${m.NO }</a></td>
 						</c:when>
 						<c:otherwise>
 							<td>${m.NO }</td>
@@ -37,14 +38,16 @@
 					<c:choose>
 						<c:when test="${m.RED == 'Y'}">
 							<td style="color: RED">${m.RED }</td>
-						</c:when>
+						</c:when> 
 						<c:otherwise>
 							<td>${m.RED}</td>
 						</c:otherwise>
 					</c:choose>
+					
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 </body>
+
 </html>
