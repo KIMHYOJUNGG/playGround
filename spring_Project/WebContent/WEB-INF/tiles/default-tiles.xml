@@ -7,6 +7,7 @@
 		<put-attribute name="title" value="PlayGround"></put-attribute>
 	</definition>
 	
+<<<<<<< HEAD
 	
 	
 	<!-- 오버라이드 -->
@@ -47,5 +48,35 @@
 		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
 	</definition>
 	
+=======
+	<!-- 오버라이드 -->
+	<definition name="t_join" extends="t_default">
+		<put-attribute name="title" value="Sign Up Spring"></put-attribute>
+		<put-attribute name="main" value="/WEB-INF/view/join.jsp"></put-attribute>
+	</definition>
+	
+	<!-- EL support ${main}정확하게 있어야만 작동 모델에 세팅시켜노은 것을 el로 써먹을수있다.include보다 편하다. -->
+	<definition name="t_el" extends="t_default">
+		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
+	</definition>
+	<!-- board tiles -->
+	<definition name="t_board" extends="t_default">
+		<put-attribute name="body" expression="/WEB-INF/view/board/${body}"></put-attribute>
+	</definition>
+	
+	<!-- 가입 -->
+	<definition name="t_regist" extends="t_default">
+		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
+	</definition>
+	<!-- 로그인 -->
+	<definition name="t_log" extends="t_default">
+		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
+	</definition>
+	
+	<definition name="t_el_title" extends="t_default">
+		<put-attribute name="title" expression="${title}"></put-attribute>
+		<put-attribute name="body" expression="/WEB-INF/view/${body}"></put-attribute>
+	</definition>
+>>>>>>> refs/heads/board
 
 </tiles-definitions>

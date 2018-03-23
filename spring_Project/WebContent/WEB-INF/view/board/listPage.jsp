@@ -34,12 +34,12 @@
 							<th style="width: 40px">VIEWCNT</th>
 						</tr>
 
-						<c:forEach items="${list}" var="boardVO">
+					 	<c:forEach items="${list}" var="boardVO">
 
 							<tr>
-								<td>${boardVO.bno}</td>
+								<td>${boardVO.no}</td>
 								<td><a
-									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }&bno=${boardVO.bno}'>
+									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }&no=${boardVO.no}'>
 										${boardVO.title}</a></td>
 								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
@@ -47,16 +47,13 @@
 								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
 							</tr>
 
-						</c:forEach>
+						</c:forEach> 
 
 					</table>
 				</div>
-				<!-- /.box-body -->
+					<div class="box-footer">
 
-
-				<div class="box-footer">
-
-					<div class="text-center">
+					<%-- <div class="text-center">
 						<ul class="pagination">
 
 							<c:if test="${pageMaker.prev}">
@@ -79,7 +76,7 @@
 
 						</ul>
 					</div>
-
+ --%>
 
 					<div class="text-center">
 						<ul class="pagination">
@@ -104,7 +101,6 @@
 						</ul>
 					</div>
 
-
 				</div>
 				<!-- /.box-footer-->
 			</div>
@@ -125,7 +121,7 @@
 <script>
 	var result = '${msg}';
 
-	if (result == 'SUCCESS') {
+	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
 	

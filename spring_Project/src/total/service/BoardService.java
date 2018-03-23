@@ -126,7 +126,7 @@ public String[] mongoFindImage(Number no) {
 
 public void update(BoardVO vo) throws Exception {
     session.update("board.update", vo);
-    
+   
     //db.person.update({"name" : "고길동"});
     Criteria criteria = new Criteria("no");
     criteria.is(vo.getNo());
@@ -195,6 +195,11 @@ public void update(BoardVO vo) throws Exception {
   public List<BoardVO> listCriteria(total.domain.Criteria cri) throws Exception {
 
     return session.selectList("board.listCriteria", cri);
+  }
+ 
+  public int countPaging(total.domain.Criteria cri) throws Exception {
+
+    return session.selectOne("board.countPaging", cri);
   }
 
 }

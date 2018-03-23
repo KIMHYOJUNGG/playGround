@@ -40,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    board 
  where no > 0 
  order by no desc, regdate desc
+
  ]]>
 	</select>
 
@@ -58,6 +59,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getListById" resultType="hashmap">
 		select * from board where writer =#{writer} order by (regdate) asc
 	</select>
+
+ 
+   <select id="listPage" resultType="total.domain.BoardVO">
+ <![CDATA[
+ select 
+   no, title, writer, regdate, viewcnt 
+ from 
+   board 
+ where no > 0 
+ order by no desc, regdate desc
+ limit #{page}, 10
+ ]]>  
+ </select>
+ <select id="listCriteria" resultType="total.domain.BoardVO">
+ <![CDATA[
+   select no, title,  writer, regdate, viewcnt from (select board.*, row_number() over (order by regdate desc,no desc) as row_id from board) 
+   where row_id between  #{pageStart} and #{perPageNum}
+ 
+ 
+ 
+ ]]>  
+ </select>
+  <select id="countPaging" resultType="int">
+ <![CDATA[
+ select 
+   count(no) 
+ from 
+   board 
+ where 
+   no > 0 
+ ]]>
+ </select>
+ 
+
 </mapper>
 
 
