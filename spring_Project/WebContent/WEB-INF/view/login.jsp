@@ -17,7 +17,7 @@
 			autocomplete="off">
 			<p>
 				<b>ID(*)</b><br /> <small id="checkrst"></small> <input type="text"
-					name="id" id="id" pattern="[a-zA-Z]+">
+					name="id" id="id">
 			</p>
 			<p>
 				<b>PASS(*)</b><br /> <input type="password" name="password"

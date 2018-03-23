@@ -28,6 +28,8 @@ public class BoardController {
   public String registerGET(BoardVO board, Model model) throws Exception {
 
     System.out.println("register get ...........");
+    
+    model.addAttribute("body","register.jsp");
     return "board/register";
   }
 

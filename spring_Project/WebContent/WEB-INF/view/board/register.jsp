@@ -3,6 +3,7 @@
 
 <%@include file="../include/header.jsp"%>
 
+
 <!-- Main content -->
 <section class="content">
 	<div class="row">
@@ -63,5 +64,6 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+  <!-- Bootstrap 3.3.2 JS -->
 
 <%@include file="../include/footer.jsp"%>

@@ -29,7 +29,7 @@
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <body class="skin-blue sidebar-mini">
+  <body class="skin- sidebar-mini">
     <div class="wrapper">
       
       <header class="main-header">
@@ -41,17 +41,20 @@
           <span class="logo-lg"><b>Play</b> Ground</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top" role="navigation">
-          <!-- Sidebar toggle button-->
+        <!-- <nav class="navbar navbar-static-top" role="navigation">
+          Sidebar toggle button
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
+          
+          
+          
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <!-- Messages: style can be found in dropdown.less-->
+              Messages: style can be found in dropdown.less
               <li class="dropdown messages-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-envelope-o"></i>
@@ -60,9 +63,9 @@
                 <ul class="dropdown-menu">
                   <li class="header">You have 4 messages</li>
                   <li>
-                    <!-- inner menu: contains the actual data -->
+                    inner menu: contains the actual data
                     <ul class="menu">
-                      <li><!-- start message -->
+                      <li>start message
                         <a href="#">
                           <div class="pull-left">
                             <img src="/resources/dist/img/user7-128x128.jpg" class="img-circle" alt="User Image"/>
@@ -73,7 +76,7 @@
                           </h4>
                           <p>Why not buy a new awesome theme?</p>
                         </a>
-                      </li><!-- end message -->
+                      </li>end message
                       <li>
                         <a href="#">
                           <div class="pull-left">
@@ -127,7 +130,7 @@
                   <li class="footer"><a href="#">See All Messages</a></li>
                 </ul>
               </li>
-              <!-- Notifications: style can be found in dropdown.less -->
+              Notifications: style can be found in dropdown.less
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-bell-o"></i>
@@ -136,7 +139,7 @@
                 <ul class="dropdown-menu">
                   <li class="header">You have 10 notifications</li>
                   <li>
-                    <!-- inner menu: contains the actual data -->
+                    inner menu: contains the actual data
                     <ul class="menu">
                       <li>
                         <a href="#">
@@ -169,7 +172,7 @@
                   <li class="footer"><a href="#">View all</a></li>
                 </ul>
               </li>
-              <!-- Tasks: style can be found in dropdown.less -->
+              Tasks: style can be found in dropdown.less
               <li class="dropdown tasks-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-flag-o"></i>
@@ -178,9 +181,9 @@
                 <ul class="dropdown-menu">
                   <li class="header">You have 9 tasks</li>
                   <li>
-                    <!-- inner menu: contains the actual data -->
+                    inner menu: contains the actual data
                     <ul class="menu">
-                      <li><!-- Task item -->
+                      <li>Task item
                         <a href="#">
                           <h3>
                             Design some buttons
@@ -192,8 +195,8 @@
                             </div>
                           </div>
                         </a>
-                      </li><!-- end task item -->
-                      <li><!-- Task item -->
+                      </li>end task item
+                      <li>Task item
                         <a href="#">
                           <h3>
                             Create a nice theme
@@ -205,8 +208,8 @@
                             </div>
                           </div>
                         </a>
-                      </li><!-- end task item -->
-                      <li><!-- Task item -->
+                      </li>end task item
+                      <li>Task item
                         <a href="#">
                           <h3>
                             Some task I need to do
@@ -218,8 +221,8 @@
                             </div>
                           </div>
                         </a>
-                      </li><!-- end task item -->
-                      <li><!-- Task item -->
+                      </li>end task item
+                      <li>Task item
                         <a href="#">
                           <h3>
                             Make beautiful transitions
@@ -231,7 +234,7 @@
                             </div>
                           </div>
                         </a>
-                      </li><!-- end task item -->
+                      </li>end task item
                     </ul>
                   </li>
                   <li class="footer">
@@ -239,14 +242,14 @@
                   </li>
                 </ul>
               </li>
-              <!-- User Account: style can be found in dropdown.less -->
+              User Account: style can be found in dropdown.less
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
                   <span class="hidden-xs">Alexander Pierce</span>
                 </a>
                 <ul class="dropdown-menu">
-                  <!-- User image -->
+                  User image
                   <li class="user-header">
                     <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
                     <p>
@@ -254,7 +257,7 @@
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
-                  <!-- Menu Body -->
+                  Menu Body
                   <li class="user-body">
                     <div class="col-xs-4 text-center">
                       <a href="#">Followers</a>
@@ -266,7 +269,7 @@
                       <a href="#">Friends</a>
                     </div>
                   </li>
-                  <!-- Menu Footer-->
+                  Menu Footer
                   <li class="user-footer">
                     <div class="pull-left">
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -277,13 +280,17 @@
                   </li>
                 </ul>
               </li>
-              <!-- Control Sidebar Toggle Button -->
+              Control Sidebar Toggle Button
               <li>
                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
               </li>
             </ul>
           </div>
-        </nav>
+        </nav> -->
+        
+        
+        
+        
       </header>
       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
