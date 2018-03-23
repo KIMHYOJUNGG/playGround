@@ -57,7 +57,7 @@
 		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10" align="right">
-				<button type="submit" class="btn btn-default">Submit</button>
+				<button type="submit" class="btn btn-default">수정</button>
 			</div>
 		</div>
 	</form>
