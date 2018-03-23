@@ -26,9 +26,13 @@ public class AdminController {
 	AdminService adminservice;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String AminHandler() {
+	public String AminHandler(HttpSession session) {
 		System.out.println("admin");
-		return "admin/admin_log";
+		if (session.getAttribute("admin") == null) {
+			return "admin/admin_log";
+		} else {
+			return "redirect:/admin/member";
+		}
 	}
 
 	@RequestMapping(path = "/log", method = RequestMethod.POST)
@@ -43,30 +47,35 @@ public class AdminController {
 	}
 
 	@RequestMapping("/member")
-	public String MemberSelect(Model model) {
-		List<Map> list = adminservice.memberSelect();
-		model.addAttribute("list", list);
-		System.out.println(list);
-		return "/admin/admin_main";
+	public String MemberSelect(Model model, HttpSession session) {
+		if (session.getAttribute("admin") != null) {
+			List<Map> list = adminservice.memberSelect();
+			model.addAttribute("list", list);
+			System.out.println(list);
+			return "/admin/admin_main";
+		}
+		else {
+			return "redirect:/admin";
+		}
 	}
 
 	// 아이디로 게시글목록 보기
 	@RequestMapping(path = "/listid", method = RequestMethod.GET)
 	public String listId(Model model, @RequestParam String id) {
 		List<Map> list = adminservice.boardIdSelect(id);
-		model.addAttribute("writerid",id);
+		model.addAttribute("writerid", id);
 		model.addAttribute("boardlist", list);
 		return "/admin/admin_member_board";
 	}
-	
-	// 게시글번호로 해당 게시글 보기
-	  @RequestMapping(value = "/read", method = RequestMethod.GET)
-	  public String read(@RequestParam("no") int no, Model model) throws Exception {
 
-		String contents= adminservice.mongoFind(no);
-	    model.addAttribute("admin",adminservice.read(no));
-	    model.addAttribute("contents",contents);
-	    
-	    return "/admin/admin_member_board_id";
-	  }
+	// 게시글번호로 해당 게시글 보기
+	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	public String read(@RequestParam("no") int no, Model model) throws Exception {
+
+		String contents = adminservice.mongoFind(no);
+		model.addAttribute("admin", adminservice.read(no));
+		model.addAttribute("contents", contents);
+
+		return "/admin/admin_member_board_id";
+	}
 }
