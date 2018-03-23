@@ -24,7 +24,7 @@
 <%--
 main style --%> .main_keywords {
 	border-collapse: collapse;
-	height: 200px;
+	height: 600px;
 	width: 30%;
 	text-align: center;
 }
@@ -35,7 +35,7 @@ main style --%> .main_keywords {
 }
 
 .mainbody {
-	font-family: "Karma", sans-serif
+
 }
 
 .w3-bar-block .w3-bar-item {
