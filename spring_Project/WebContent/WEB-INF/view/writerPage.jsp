@@ -8,7 +8,12 @@
 	
 		<div class="row">
 			<div class="col-sm-3">
-				<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 100%">
+				<c:if test="${!empty writerInfo.IMAGE }">
+					<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 100%">
+				</c:if>
+				<c:if test="${empty writerInfo.IMAGE }">
+					<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
+			</c:if>
 			</div>
 			<div class="col-sm-8">
 				<h2>${writerInfo.NICKNAME}</h2>
@@ -51,7 +56,7 @@
 				<c:otherwise>
 					<p>등록된 글이 없습니다.</p>
 					<p>글을 등록해 보세요.</p>
-					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글 쓰러 가기</button></a>
+					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글쓰기</button></a>
 				</c:otherwise>
 				</c:choose>
 			</div>
@@ -76,7 +81,7 @@
 				<c:otherwise>
 					<p>등록된 책이 없습니다.</p>
 					<p>책을 등록해 보세요.</p>
-					<a href=""><button type="button" class="btn btn-info">책 등록하러 가기</button></a>
+					<a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-info">책 등록하기</button></a>
 				</c:otherwise>
 				</c:choose>
 			</div>
