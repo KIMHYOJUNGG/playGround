@@ -15,7 +15,7 @@ public class AddCommentsController {
 	@RequestMapping("/addComments")
 	public String addCommentsHandle() {
 		System.out.println("나와라나와라");
-		
+		  
 		return "true";
 	}
 	
