@@ -8,7 +8,12 @@
 	
 		<div class="row">
 			<div class="col-sm-3">
-				<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 100%">
+				<c:if test="${!empty writerInfo.IMAGE }">
+					<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 100%">
+				</c:if>
+				<c:if test="${empty writerInfo.IMAGE }">
+					<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
+			</c:if>
 			</div>
 			<div class="col-sm-8">
 				<h2>${writerInfo.NICKNAME}</h2>
@@ -40,8 +45,9 @@
 					<div class="list-group">
 						<c:forEach var="c" items="${contentList}">
 						<li class="list-group-item">
-								<h3 class="list-group-item-heading"><a href="#">${c.BOOKNAME}</a> &nbsp;<span class="badge">${c.TYPE}</span></h3>
-									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}"><p class="list-group-item-text">  ${c.TITLE}</p>
+								<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="#">${c.BOOKNAME}</a> &nbsp;
+								<a href="${pageContext.request.contextPath }/search?search=${c.TYPE}"><span class="badge">${c.TYPE}</span></a></h3>
+									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}"><p class="list-group-item-text" style="margin-bottom: 3px">  ${c.TITLE}</p>
 									<p class="list-group-item-text">${c.VIEWCNT} | ${c.REGDATE}</p></a>
 							</li>
 							</c:forEach>
@@ -50,7 +56,7 @@
 				<c:otherwise>
 					<p>등록된 글이 없습니다.</p>
 					<p>글을 등록해 보세요.</p>
-					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글 쓰러 가기</button></a>
+					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글쓰기</button></a>
 				</c:otherwise>
 				</c:choose>
 			</div>
@@ -64,7 +70,7 @@
 							<h3 class="list-group-item-heading"><a href="#">${b.bookName}</a></h3>
 								<p class="list-group-item-text">
 									<c:forEach items="${b.tag }" var="tag">
-										<a href="#"><span class="badge"> ${tag}</span></a>
+										<a href="${pageContext.request.contextPath }/search?search=${tag}"><span class="badge"> ${tag}</span></a>
 									</c:forEach>
 								</p>
 								<p class="list-group-item-text">${b.good}</p>
@@ -75,7 +81,7 @@
 				<c:otherwise>
 					<p>등록된 책이 없습니다.</p>
 					<p>책을 등록해 보세요.</p>
-					<a href=""><button type="button" class="btn btn-info">책 등록하러 가기</button></a>
+					<a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-info">책 등록하기</button></a>
 				</c:otherwise>
 				</c:choose>
 			</div>
