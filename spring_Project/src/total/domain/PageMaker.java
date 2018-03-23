@@ -31,11 +31,14 @@ public class PageMaker {
 	private void calcData() {
 
 		endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
-		System.out.println(cri.getPage()+" "+(double) displayPageNum+" "+Math.ceil(cri.getPage() / (double) displayPageNum));
+		System.out.println(cri.getPage() + " " + (double) displayPageNum + " "
+				+ Math.ceil(cri.getPage() / (double) displayPageNum));
 
 		startPage = (endPage - displayPageNum) + 1;
 
-		int tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));
+		int tempEndPage = (int) (Math.ceil(totalCount / 10.0));
+
+		System.out.println(totalCount + "  " + (double) cri.getPerPageNum());
 
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;
@@ -43,9 +46,9 @@ public class PageMaker {
 
 		prev = startPage == 1 ? false : true;
 
-		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
+		next = endPage * 10 >= totalCount ? false : true;
 
-		System.out.println(endPage+" "+startPage+" "+tempEndPage+" "+prev+" "+next+" ");
+		System.out.println(endPage + " " + startPage + " " + tempEndPage + " " + prev + " " + next + " ");
 	}
 
 	public int getTotalCount() {
@@ -84,17 +87,18 @@ public class PageMaker {
 		return uriComponents.toUriString();
 	}
 
-	/*public String makeSearch(int page) {
-
-		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
-				.queryParam("perPageNum", cri.getPerPageNum())
-				.queryParam("searchType", ((SearchCriteria) cri).getSearchType())
-				.queryParam("keyword", encoding(((SearchCriteria) cri).getKeyword())).build();
-
-		return uriComponents.toUriString();
-	}
-*/
-	private String encoding(String keyword) {
+	/*
+	 * public String makeSearch(int page) {
+	 * 
+	 * UriComponents uriComponents =
+	 * UriComponentsBuilder.newInstance().queryParam("page", page)
+	 * .queryParam("perPageNum", cri.getPerPageNum()) .queryParam("searchType",
+	 * ((SearchCriteria) cri).getSearchType()) .queryParam("keyword",
+	 * encoding(((SearchCriteria) cri).getKeyword())).build();
+	 * 
+	 * return uriComponents.toUriString(); }
+	 */
+/*	private String encoding(String keyword) {
 
 		if (keyword == null || keyword.trim().length() == 0) {
 			return "";
@@ -105,5 +109,5 @@ public class PageMaker {
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
-	}
+	}*/
 }

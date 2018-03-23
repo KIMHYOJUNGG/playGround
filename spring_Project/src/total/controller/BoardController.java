@@ -30,7 +30,9 @@ public class BoardController {
   public String registerGET(BoardVO board, Model model) throws Exception {
 
     System.out.println("register get ...........");
-    return "board/register";
+    model.addAttribute("body","register.jsp");
+    //return "board/register";
+    return "t_board";
   }
 
 /*   @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -71,19 +73,23 @@ public class BoardController {
 		 
 	 }
     model.addAttribute("list", service.listAll());
+    model.addAttribute("body","listAll.jsp");
     
-    return "board/listAll";
+    //return "board/listAll";
+    return "t_board";
   }
 
-  @RequestMapping(value = "/read", method = RequestMethod.GET)
+ /* @RequestMapping(value = "/readPage", method = RequestMethod.GET)
   public String read(@RequestParam("no") int no, Model model) throws Exception {
 
 	 String contents= service.mongoFind(no);
     model.addAttribute(service.read(no));
     model.addAttribute("contents",contents);
+    model.addAttribute("body","readPage.jsp");
     
-    return "board/read";
-  }
+   // return "board/read";
+    return "t_board";
+  }*/
   @RequestMapping(value = "/remove", method = RequestMethod.POST)
   public String remove(@RequestParam("no") int no, RedirectAttributes rttr) throws Exception {
 
@@ -99,8 +105,10 @@ public class BoardController {
     String content= service.mongoFind(no);
     model.addAttribute(service.read(no));
     model.addAttribute("content",content);
+    model.addAttribute("body","modify.jsp");
     
-    return "board/modify";
+   // return "board/modify";
+    return "t_board";
   }
   @RequestMapping(value = "/modify", method = RequestMethod.POST)
   public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
@@ -118,23 +126,86 @@ public class BoardController {
     System.out.println("show list Page with Criteria......................");
 
     model.addAttribute("list", service.listCriteria(cri));
+    model.addAttribute("body","listCri.jsp");
     
-    return "board/listCri";
+    //return "board/listCri";
+    return "t_board";
    
   }
   @RequestMapping(value = "/listPage", method = RequestMethod.GET)
-  public void listPage(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+  public String listPage(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 
    System.out.println(cri.toString());
 
     model.addAttribute("list", service.listCriteria(cri));
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
-     pageMaker.setTotalCount(131);
+     //pageMaker.setTotalCount(131);
 
-   // pageMaker.setTotalCount(service.listCountCriteria(cri));
+    pageMaker.setTotalCount(service.countPaging(cri));
 
     model.addAttribute("pageMaker", pageMaker);
+    model.addAttribute("body", "listPage.jsp");
+    return "t_board";
+  }
+  @RequestMapping(value = "/readPage", method = RequestMethod.GET)
+  public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+
+	  String contents= service.mongoFind(no);
+	    model.addAttribute(service.read(no));
+	    model.addAttribute("contents",contents);
+	    model.addAttribute("body","readPage.jsp");
+	    
+	   // return "board/read";
+	    return "t_board";
+  
+  }
+  
+  @RequestMapping(value = "/removePage", method = RequestMethod.POST)
+  public String remove(@RequestParam("no") int no, Criteria cri, RedirectAttributes rttr) throws Exception {
+
+    service.delete(no);
+
+    rttr.addAttribute("page", cri.getPage());
+    rttr.addAttribute("perPageNum", cri.getPerPageNum());
+    rttr.addFlashAttribute("msg", "success");
+
+    return "redirect:/board/listPage";
+    /*
+    rttr.addFlashAttribute("msg", "success");
+
+    return "redirect:/board/listAll";*/
+  }
+  
+  @RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
+  public String modifyPagingGET(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model)
+      throws Exception {
+
+	  String content= service.mongoFind(no);
+	    model.addAttribute(service.read(no));
+	    model.addAttribute("content",content);
+	    model.addAttribute("body","modifyPage.jsp");
+	    
+	   // return "board/modify";
+	    return "t_board";
+    
+    
+    
+  }
+  @RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
+  public String modifyPagingPOST(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model,BoardVO board,
+		  RedirectAttributes rttr  )
+      throws Exception {
+
+
+	  System.out.println("mod post............");
+
+    service.update(board);
+    rttr.addFlashAttribute("msg", "success");
+    rttr.addFlashAttribute("page", cri.getPerPageNum());
+    rttr.addFlashAttribute("perPageNum", cri.getPage());
+
+    return "redirect:/board/listPage";
   }
 }
 /*create table board(
