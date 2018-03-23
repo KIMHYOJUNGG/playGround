@@ -6,6 +6,8 @@
 <title>회원관리</title>
 </head>
 <body>
+<div align="center">
+	<h3>회원목록</h3>
 	<table>
 		<thead>
 			<tr style="background: silver">
@@ -30,5 +32,6 @@
 			 </tr>
 		</c:forEach>
 	</table>
+</div>
 </body>
 </html>

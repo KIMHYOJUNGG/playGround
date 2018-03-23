@@ -83,11 +83,8 @@ public class BoardController {
   }
   @RequestMapping(value = "/remove", method = RequestMethod.POST)
   public String remove(@RequestParam("no") int no, RedirectAttributes rttr) throws Exception {
-
     service.delete(no);
-
     rttr.addFlashAttribute("msg", "success");
-
     return "redirect:/board/listAll";
   }
   @RequestMapping(value = "/modify", method = RequestMethod.GET)
@@ -101,9 +98,7 @@ public class BoardController {
   }
   @RequestMapping(value = "/modify", method = RequestMethod.POST)
   public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
-
 	  System.out.println("mod post............");
-
     service.update(board);
     rttr.addFlashAttribute("msg", "success");
 

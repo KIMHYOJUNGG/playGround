@@ -7,4 +7,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="hashmap">
 		select * from admin where id=#{id} and password=#{password}
 	</select>
+	<!--  관리자 -->
+	
+	<select id="boardid" resultType="hashmap">
+		select * from board where writer=#{id} order by red desc
+	</select>
+	<select id="boardNo" resultType="hashmap">
+		select * from board where no=#{no}
+	</select>
+	<select id="read" resultType="total.domain.BoardVO">
+		select
+		no, title, writer, regdate, viewcnt
+		from
+		board
+		where no = #{no}
+	</select>
+	<delete id="delete">
+		delete from board where no = #{no}
+	</delete>
 </mapper>

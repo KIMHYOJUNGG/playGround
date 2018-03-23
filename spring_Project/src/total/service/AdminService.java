@@ -17,9 +17,10 @@ import total.domain.MongoBoardVo;
 public class AdminService {
 	@Autowired
 	SqlSessionTemplate template;
-	
-	 @Autowired
-	  MongoTemplate session;
+
+	@Autowired
+	MongoTemplate session;
+
 	public boolean loginMember(Map<String, String> param) {
 		// TODO Auto-generated method stub
 		Map map = template.selectOne("admin.login", param);
@@ -30,26 +31,49 @@ public class AdminService {
 			return false;
 		}
 	}
-	
-	public List<Map> memberSelect(){
+
+	public List<Map> memberSelect() {
 		return template.selectList("member.selectAll");
 	}
-	
+
 	public List<Map> boardIdSelect(String id) {
-		return template.selectList("board.boardid",id);
+		return template.selectList("admin.boardid", id);
 	}
-	
+
 	// 해당 no로 게시글 읽기
 	public BoardVO read(Integer no) throws Exception {
-	    return template.selectOne("board.read", no);
+		return template.selectOne("admin.read", no);
 	}
-	 
+
 	public String mongoFind(int no) {
-		Criteria cri=new Criteria("no");
-	  	cri.is(no);
-	  	Query query=new Query(cri);
-		MongoBoardVo mbv=session.findOne(query,MongoBoardVo.class,"board");  
+		Criteria cri = new Criteria("no");
+		cri.is(no);
+		Query query = new Query(cri);
+		MongoBoardVo mbv = session.findOne(query, MongoBoardVo.class, "board");
 		System.out.println(mbv.getContents());
 		return mbv.getContents();
+	}
+
+	public boolean delete(Integer no) throws Exception {
+		template.delete("admin.delete", no);
+
+		Criteria criteria = new Criteria("no");
+		criteria.is(no);
+		Query query = new Query(criteria);
+
+		session.remove(query, "board");
+		return true;
+		/*
+		 * 전체삭제 public void deletePerson(){ mongoTemplate.remove(new Query(),
+		 * "person2"); }
+		 * 
+		 * 부분삭 public void deletePersonByName(String name){ Criteria criteria = new
+		 * Criteria("name"); criteria.is(name); Query query = new Query(criteria);
+		 * 
+		 * mongoTemplate.remove(query, "person2"); } Col
+		 * 
+		 * 
+		 * 출처: http://souning.tistory.com/68 [-]
+		 */
 	}
 }

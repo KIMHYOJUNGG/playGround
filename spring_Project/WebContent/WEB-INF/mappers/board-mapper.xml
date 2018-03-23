@@ -54,14 +54,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board where writer =#{writer} order by (regdate) asc
 	</select>
 	
-	
-	<!--  관리자 -->
-	
-	<select id="boardid" resultType="hashmap">
-		select * from board where writer=#{id} order by red desc
-	</select>
-	<select id="boardNo" resultType="hashmap">
-		select * from board where no=#{no}
-	</select>
 </mapper>
 
