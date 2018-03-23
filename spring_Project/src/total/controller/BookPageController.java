@@ -38,11 +38,13 @@ public class BookPageController {
 	
 	@RequestMapping("/{bno}")
 	public String bookPageHandle3(@PathVariable String bno, Map<String, Object> map) {
-		map.put("book-contents", true);
-		map.put("contentsList", bookPageService.getBookList(bno));
-		map.put("boardVOList", bookPageService.getBoardVOforImg(bno));
-		map.put("title", (((Map)map.get("contentsList")).get("BOOKNAME") ));
-		map.put("body", "bookPage.jpg");
+		map.put("bookContents", "Y");
+		map.put("contentsList", bookPageService.getBookList(bno)); 
+		map.put("boardVOList", bookPageService.getBoardVO(bno));
+		String title = (String)((Map)((List)map.get("contentsList")).get(0)).get("BOOKNAME");
+		System.out.println(title); 
+		map.put("title", title);
+		map.put("body", "bookPage.jsp");
 		return "t_el_title";
 	}
 }

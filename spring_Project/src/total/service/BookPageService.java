@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import total.domain.BoardVO;
 import total.domain.BookVO;
+import total.domain.MongoBoardVo;
 
 @Service
 public class BookPageService {
@@ -44,8 +45,14 @@ public class BookPageService {
 		return template.selectList("board.getListByBno", bno);
 	}
 	
-	public List<BoardVO> getBoardVOforImg(String bno) {
-		List<BoardVO> list = mongo.find(new Query(Criteria.where("bno").is(bno)), BoardVO.class,"board");
+	public List<MongoBoardVo> getBoardVO(String bno) {
+		List<MongoBoardVo> list = mongo.find(new Query(Criteria.where("bno").is(bno)), MongoBoardVo.class,"board");
+		System.out.println(list.size());
+		for(MongoBoardVo b: list) {
+			System.out.println(b.getBno());
+			System.out.println(b.getTag());
+			System.out.println("------------------");
+		}
 		return list;
 	}
 	

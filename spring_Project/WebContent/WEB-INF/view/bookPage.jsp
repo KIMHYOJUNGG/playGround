@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <c:choose>
-	<c:when test="${empty book-contents}">
+	<c:when test="${empty bookContents}">
 		<div class="jumbotron" style="background-color: white; margin-bottom: 10px">
 			<div class="container">
 		
@@ -97,36 +97,15 @@
 							<div class="row">
 								<div class="col-sm-4">
 									<div class="card">
-										<img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width: 100%">
+										<img class="card-img-top" src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Card image" style="width: 100%">
 										<div class="card-body">
-											<h4 class="card-title">${c.TITLE }</h4>
-											<p class="card-text"></p>
-											<c:if test=""></c:if>
-											<a href="#" class="btn btn-primary">See Profile</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="card">
-										<img class="card-img-top" src="img_avatar1.png"
-											alt="Card image" style="width: 100%">
-										<div class="card-body">
-											<h4 class="card-title">John Doe</h4>
-											<p class="card-text">Some example text some example text.
-												John Doe is an architect and engineer</p>
-											<a href="#" class="btn btn-primary">See Profile</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="card">
-										<img class="card-img-top" src="img_avatar1.png"
-											alt="Card image" style="width: 100%">
-										<div class="card-body">
-											<h4 class="card-title">John Doe</h4>
-											<p class="card-text">Some example text some example text.
-												John Doe is an architect and engineer</p>
-											<a href="#" class="btn btn-primary">See Profile</a>
+											<h3 class="card-title">${c.TITLE }</h3>
+											<h4>${c.TYPE } </h4>
+											<p>
+											<c:forEach items="${boardVOList}" var="t">
+												<a href="${pageContext.request.contextPath }/search?search=${t.tag[0]}"><span class="badge"> ${t.tag[0]}</span></a>
+											</c:forEach>
+											</p>
 										</div>
 									</div>
 								</div>
@@ -137,7 +116,7 @@
 				</c:if>
 				<c:if test="${empty contentsList }">
 					<p>발행된 글이 없습니다.</p>
-					<c:if test="${contentsList.WRITER eq logon }">
+					<c:if test="${contentsList.WRITER eq logon}">
 						<p>글을 등록해 보세요!</p>
 						<a href="${pageContext.request.contextPath }/board/register?bno=${contentsList.BNO}"><button type="button" class="btn btn-info">글쓰기</button></a>
 					</c:if>

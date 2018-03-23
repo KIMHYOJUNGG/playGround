@@ -67,7 +67,7 @@
 					<div class="list-group">
 					<c:forEach var="b" items="${bookList}">
 						<li class="list-group-item">
-							<h3 class="list-group-item-heading"><a href="#">${b.bookName}</a></h3>
+							<h3 class="list-group-item-heading"><a href="${pageContext.request.contextPath }/bookPage/${b.bno}">${b.bookName}</a></h3>
 								<p class="list-group-item-text">
 									<c:forEach items="${b.tag }" var="tag">
 										<a href="${pageContext.request.contextPath }/search?search=${tag}"><span class="badge"> ${tag}</span></a>
