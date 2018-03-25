@@ -125,7 +125,8 @@
 										<div class="card-body">
 											<h3 class="card-title">${c.TITLE }</h3></a>
 											<h4><a href="${pageContext.request.contextPath }/search?search=${c.TYPE }"><span class="badge">${c.TYPE }</span></a>
-											<span style="color: gray; font-size: 11pt;">좋아요</span> <span class="badge">${c.GOOD }</span></h4>
+											<span style="color: gray; font-size: 11pt;">GOOD</span> <span class="badge">${c.GOOD }</span>
+											<span style="color: gray; font-size: 11pt;">VIEW</span> <span class="badge">${c.VIEWCNT }</span></h4>
 											<p>
 											<c:forEach items="${vo.tag}" var="t">
 												<a href="${pageContext.request.contextPath }/search?search=${t}"><span class="badge"> ${t}</span></a>

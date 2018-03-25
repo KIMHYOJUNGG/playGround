@@ -61,5 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getListByBno" resultType="hashmap">
 		select * from board where bno = #{bno}
 	</select>
+	<select id="getBookContentsCntById" resultType="hashmap">
+		select bno,count(*) as cnt from board where writer=#{id} group by bno
+	</select>
 </mapper>
 

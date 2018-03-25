@@ -24,6 +24,7 @@ public class WriterPageController {
 		String[] following = myPageService.splitFollowing((Map)map.get("writerInfo"));
 		map.put("writerFollowing", myPageService.getFollowingInfoById(following));
 		map.put("bookList", writerPageService.getBookListById(id));
+		map.put("bookContentsList", writerPageService.getBookContentsCntById(id));
 		map.put("body", "writerPage.jsp");
 		map.put("title", id+"의 PlayGround");
 		return "t_el_title";
@@ -32,7 +33,6 @@ public class WriterPageController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/@{id}/following")
 	public String followingPageHandle(@PathVariable String id, Map map) {
-		System.out.println(id);
 //		try {
 		map.put("writerInfo", myPageService.getInfo(id));
 		String[] following = myPageService.splitFollowing((Map)map.get("writerInfo"));

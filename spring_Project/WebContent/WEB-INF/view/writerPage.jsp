@@ -28,7 +28,43 @@
 			</div>
 			<div class="col-sm-1">
 			<c:if test="${logon  != id || logon== null}">
-				<button type="button" class="btn btn-info">구독하기</button>
+				<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
+				  <!-- Modal -->
+				  <div class="modal fade" id="result"  role="dialog">
+				    <div class="modal-dialog">
+				    
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <h4 class="modal-title" >구독하기</h4>
+				        </div>
+				        <div class="modal-body">
+				          <p id="mbody"></p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				      
+				    </div>
+				  </div>
+				  <script>
+					  	$("#followbt").click(function(){
+							$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
+								}).done(function(rst){
+									var html="";
+									if(rst.result) {
+										html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
+									} else {
+										html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+									}
+										$("#mbody").html(html);
+						  			$("#result").modal();
+								})	;
+				  		});
+				  </script>
+				  
 			</c:if>
 			</div>
 		</div>
@@ -67,15 +103,25 @@
 				<c:choose>
 				<c:when test="${!empty bookList }">
 					<div class="list-group">
-					<c:forEach var="b" items="${bookList}">
+					<c:forEach var="i" begin="0" end="${fn:length(bookList)-1 }">
+						<c:set var="b" value="${bookList[i] }"/>
+						<c:set var="bc" value="${bookContentsList[i] }"/>
 						<li class="list-group-item">
-							<h3 class="list-group-item-heading"><a href="${pageContext.request.contextPath }/bookPage/${b.bno}">${b.bookName}</a></h3>
+							<div class="row">
+								<div class="col-sm-8">
+									<h3 class="list-group-item-heading"><a href="${pageContext.request.contextPath }/bookPage/${b.bno}">${b.bookName}</a></h3>
 								<p class="list-group-item-text">
 									<c:forEach items="${b.tag }" var="tag">
 										<a href="${pageContext.request.contextPath }/search?search=${tag}"><span class="badge"> ${tag}</span></a>
 									</c:forEach>
 								</p>
 								<p class="list-group-item-text">${b.good}</p>
+								</div>
+								<div class="col-sm-4">
+									<h2 style="color: blue">0 <span style="color:blue">contents</span></h2>
+									<p class="list-group-item-text"><a href="${pageContext.request.contextPath }/board/register?${b.bno}"><button type="button" class="btn btn-info">이어쓰기</button></a></p>
+								</div>
+							</div>
 						</li>
 						</c:forEach>
 					</div>
