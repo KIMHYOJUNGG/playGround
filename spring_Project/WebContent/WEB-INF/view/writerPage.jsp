@@ -71,11 +71,22 @@
 		
 		<hr />
 
-		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#home">CONTENTS</a></li>
-			<li><a data-toggle="tab" href="#menu1">BOOK</a></li>
-		</ul>
-
+	<div class="row">
+	  <div class="col-sm-8">
+			<ul class="nav nav-pills">
+				<li class="active"><a data-toggle="pill" href="#home">CONTENTS</a></li>
+				<li><a data-toggle="pill" href="#menu1">BOOK</a></li>
+			</ul>
+			 </div>
+	  <div class="col-sm-4">
+	  	 <div class="btn-group">
+	      <a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-primary">글쓰기</button></a>
+	      <a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-primary">책 등록</button></a>
+		</div> 
+	  </div>
+	 </div>
+	<hr/>	
+	
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
 				<c:choose>
@@ -119,7 +130,9 @@
 								</div>
 								<div class="col-sm-4">
 									<h2 style="color: blue">0 <span style="color:blue">contents</span></h2>
-									<p class="list-group-item-text"><a href="${pageContext.request.contextPath }/board/register?${b.bno}"><button type="button" class="btn btn-info">이어쓰기</button></a></p>
+									<c:if test="${logon eq b.writer }">
+										<p class="list-group-item-text"><a href="${pageContext.request.contextPath }/board/register?${b.bno}"><button type="button" class="btn btn-info">이어쓰기</button></a></p>
+									</c:if>
 								</div>
 							</div>
 						</li>

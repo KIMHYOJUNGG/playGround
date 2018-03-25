@@ -24,10 +24,10 @@ public class MyPageService {
 		}
 	}
 	
-	public List<Map> getFollowingOrderByAsc(String[] following) {
+	public List<Map> getFollowingOrderByDesc(String[] following) {
 		Map data = new HashMap<>();
 			data.put("following", following);
-		return template.selectList("board.following", data);
+		return template.selectList("board.followingArticle", data);
 	}
 	
 	public List<Map> getFollowingInfoById(String[] following) {

@@ -23,7 +23,7 @@
 							글 <span class="badge">${fn:length(contentList) }</span> | 책 <span
 								class="badge">${fn:length(bookList)}</span> | <a
 								href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가
-								<span class="badge">0</span>
+								<span class="badge">${fn:length(writerFollowing) }</span>
 							</a>
 						</p>
 						<p>

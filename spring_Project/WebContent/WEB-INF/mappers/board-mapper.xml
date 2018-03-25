@@ -48,12 +48,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board where writer=#{id} order by red desc
 	</select>
 	
-	<select id="following" resultType="hashmap">
-		select * from board
+	<select id="followingArticle" resultType="hashmap">
+		select * from board 	join member on BOARD.writer = member.id
 		<if test="following != null">
-			where writer in
+			where board.writer in
 		</if>
 		<foreach collection="following" item="f" open="(" close=")"  separator=","> #{f}</foreach>
+		order by(board.regdate) desc
 	</select>
 	<select id="getListById" resultType="hashmap">
 		select * from board where writer =#{writer} order by (regdate) asc

@@ -38,7 +38,7 @@ public class BookVO {
 	public String getBno() {
 		return bno;
 	}
-	public String getId() {
+	public String getWriter() {
 		return writer;
 	}
 	public String getBookName() {

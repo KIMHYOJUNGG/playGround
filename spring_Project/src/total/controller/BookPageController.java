@@ -1,6 +1,7 @@
 package total.controller;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import total.domain.BookVO;
 import total.service.BookPageService;
 import total.service.MyPageService;
+import total.service.WriterPageService;
 
 @Controller
 @RequestMapping("/bookPage")
@@ -21,9 +23,18 @@ public class BookPageController {
 	BookPageService bookPageService;
 	@Autowired
 	MyPageService myPageService;
+	@Autowired
+	WriterPageService writerPageService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String bookPageHandle(Map map) {
+	public String bookPageHandle(Map map, HttpSession session) {
+		String id = (String)session.getAttribute("logon");
+		map.put("writerInfo", myPageService.getInfo(id));
+		map.put("contentList", writerPageService.getContentsListById(id));
+		String[] following = myPageService.splitFollowing((Map)map.get("writerInfo"));
+		map.put("writerFollowing", myPageService.getFollowingInfoById(following));
+		map.put("bookList", writerPageService.getBookListById(id));
+		map.put("bookContentsList", writerPageService.getBookContentsCntById(id));
 		map.put("title", "책 등록");
 		map.put("body", "bookPage.jsp");
 		return "t_el_title";
