@@ -13,14 +13,10 @@
         <div class="box-header">
           <h3 class="box-title">READ BOARD</h3>
         </div><!-- /.box-header -->
-<<<<<<< HEAD
+
 
 <%--  <form role="form" action="modifyPage" method="post">
-    
-=======
-	
- <form role="form" action="modifyPage" method="post">
->>>>>>> refs/heads/index_in_5
+
     <input type='hidden' name='no' value ="${boardVO.no}">
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
@@ -43,13 +39,17 @@
         value="${boardVO.writer}" readonly="readonly">
     </div>
     <div class="form-group">
+    <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
 		<p>
 		${co.id } &nbsp; &nbsp; &nbsp; ${co.reply } &nbsp; &nbsp; &nbsp; ${co.date}  
 		</p> 
 		</c:forEach>
+	</c:if>
 	</div>
+	
+
 	<c:if test="${logon != null }">
 		<label for="exampleInputEmail1">댓글쓰기</label> 
 		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
