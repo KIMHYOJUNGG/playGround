@@ -3,9 +3,11 @@ package total.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,57 +100,74 @@ public class AdminController {
 		}
 	}
 
+	// =========================================================================================================
 	// 관리자가 해당 게시글 삭제
-	@RequestMapping(value = "/remove", method = RequestMethod.POST)
-	public String remove(Model model,@RequestParam("no") int no, RedirectAttributes rttr, Map mapp) throws Exception {
-		mapp.put("body", "/admin/admin_member_board_id.jsp");
-		boolean rst = adminservice.delete(no);
-		if(rst==true) {
-			rttr.addFlashAttribute("adminmsg", "success");
-			Map map = adminservice.searchId(no);
-			System.out.println(map.get("WRITER"));
-			if(map!=null) {
-				String id = (String)map.get("WRITER");
-				boolean rst2 =adminservice.updateRedCard(id);
-				if(rst2) {
-					int count = adminservice.selectRedcard(id);
-					if(count==3) {
-						boolean rst3 = adminservice.updateRedCard2(id);
-						if(rst3) {
-							model.addAttribute("remove","해당 유저의 계정을 정지하였습니다.");
-							System.out.println("계정삭제");
-							return "redirect:/admin/member";
-						}
-						else {
-							model.addAttribute("fail","해당 유저의 REDCARD를 수정하지 못하였습니다.");
-							System.out.println("실패");
-							return "t_el";
-						}
-					}
-					else {
-						model.addAttribute("remove","삭제되었습니다.");
-						System.out.println("계정삭제안함");
-						return "redirect:/admin/member";
-					}
-				}
-				else {
-					model.addAttribute("fail","업데이트에 실패하였습니다.");
-					System.out.println("실패2");
-					return "t_el";
-				}
+	@RequestMapping(path = "/remove", method = RequestMethod.POST)
+	public String removeHandle(Model model, @RequestParam Map param) throws Exception {
+		String id = (String)param.get("id");
+		System.out.println("id 1 = "+id);
+		int no = Integer.parseInt((String)param.get("no"));
+		String title = adminservice.title(no);
+		if (title != null) {
+			model.addAttribute("title", title);
+			boolean rst = adminservice.delete(no);
+			if (rst) {
+				model.addAttribute("id", id);
+				return "redirect:/admin/redcard";
+			} else {
+				model.addAttribute("fail", "삭제에 실패하였습니다.");
+				return "/admin/admin_member_board";
 			}
-			else {
-				model.addAttribute("fail","아이디를 찾지 못하였습니다.");
-				System.out.println("실패3");
-				return "t_el";
-			}
-			
 		}
 		else {
-			model.addAttribute("fail","삭제하지 못하였습니다.");
-			System.out.println("실패4");
-			return "t_el";
+			return"/admin/admin_member_board";
 		}
 	}
-	//+====> service로 
+
+	// 회원의 레드카드 수 변경
+	@RequestMapping(path = "redcard",method=RequestMethod.GET)
+	public String redcardHandle(Model model, @RequestParam Map param) {
+		System.out.println("여기까지??");
+		String id = (String) param.get("id");
+		System.out.println("id 2 = " + id);
+		int i = adminservice.selectRedcard(id);
+		if (i == 3) {
+			System.out.println("레드카드3");
+			boolean rst = adminservice.updateRedCard2(id);
+			if (rst) {
+				model.addAttribute("id", id);
+				System.out.println("title 뽑히나"+param.get("title"));
+				return "redirect:/admin/msg";
+			} else {
+				model.addAttribute("fail", "업데이트 실패(레드카드수3개)");
+				return "/admin/admin_member_board";
+			}
+		} else {
+			System.out.println("레드카드2");
+			boolean rst = adminservice.updateRedCard(id);
+			if (rst) {
+				model.addAttribute("id", id);
+				System.out.println("title 뽑히나"+param.get("title"));
+				return "redirect:/admin/msg";
+			} else {
+				model.addAttribute("fail", "업데이트 실패(레드카드수3개 이하)");
+				return "/admin/admin_member_board";
+			}
+		}
+	}
+
+	// 관리자가 해당 게시글의 유저한테 메세지보냄
+	@RequestMapping(path = "msg", method = RequestMethod.GET)
+	public String msgHandle(Model model, @RequestParam Map param) {
+		System.out.println("타이틀 뽑히나???"+param.get("title"));
+		boolean rst = adminservice.msgSend(param);
+		if (rst) {
+			model.addAttribute("success", "메세지를 보냈습니다.");
+			return "/admin/admin_member_board";
+		} else {
+			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
+			return "/admin/admin_member_board";
+		}
+	}
+
 }

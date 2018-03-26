@@ -13,7 +13,8 @@
 					</div>
 					<!-- /.box-header -->
 					<form role="form" method="post">
-						<input type='hidden' name='no' value="${admin.no}">
+						<input type='hidden' name='no' id='no' value="${admin.no}">
+						<input type='hidden' name='id' id='id' value="${admin.writer }">
 					</form>
 					<div class="box-body">
 						<div class="form-group">

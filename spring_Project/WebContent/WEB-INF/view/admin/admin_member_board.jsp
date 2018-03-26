@@ -9,6 +9,9 @@
 <body>
 	<div align="center">
 		<h2>${writerid }님의 게시글목록</h2>
+		<c:if test="${fail !=null }">
+			${fail }
+		</c:if>
 		<hr/>
 		<table>
 			<thead>
