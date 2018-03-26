@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="follow">
+	<select id="getFollowListById" resultType="hashmap">
+		select * from follow where reader = #{reader}
+	</select>
+	
+	<select id="getFollower" resultType="hashmap">
+		select * from follow where target = #{target}
+	</select>
+	
+	<insert id="addFollow">
+		insert into follow values (follow_seq.nextval, #{reader}, #{target})
+	</insert>
+	
+	<delete id="dropFollow">
+		delete from follow where (reader = #{reader} and target = #{target})
+	</delete>
+
+</mapper>
