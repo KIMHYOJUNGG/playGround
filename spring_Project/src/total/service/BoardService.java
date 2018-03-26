@@ -2,6 +2,7 @@ package total.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -91,6 +93,28 @@ public String uuid() {
 	
   }
 
+  public void addcomments(Integer boardNo,String id,String text,String preco)  {
+	    System.out.println("session boardNo"+boardNo);
+	   //Map map=new HashMap();
+	   //map.put("no",boardNo);
+	   //map.put("comments",);
+	   Criteria criteria = new Criteria("no");
+	   criteria.is(boardNo.intValue());
+	    
+	    Map map=new HashMap();
+	   map.put("id",id);
+	   map.put("reply",text);
+	   map.put("date", new Date());
+	   
+	    Query query = new Query(criteria);
+	       //업데이트 할 항목 정의
+	       Update update = new Update();
+	       update.push("comments", new Document(map) );
+	       System.out.println("map : "+new Document(map));
+	     template.updateFirst(query, update, "board");
+  
+  }
+  
   public BoardVO read(Integer no) throws Exception {
 	  
 	
@@ -114,9 +138,9 @@ public String[] mongoFindImage(Number no) {
 	  cri.is(no.intValue());
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
-	  String[] list = "/image/Desert.jpg".split(",");
-	 
-	  return mbv.getImage()==null ? list : mbv.getImage() ;
+	  String[] list = "/image/Desert.jpg,/image/Desert.jpg".split(",");
+	 System.out.println(mbv.getImage().length==0);
+	  return mbv.getImage().length==0 ? list : mbv.getImage() ;
 	  
   }
 

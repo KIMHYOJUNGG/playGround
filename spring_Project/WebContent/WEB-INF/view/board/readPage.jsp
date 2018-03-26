@@ -13,9 +13,8 @@
         <div class="box-header">
           <h3 class="box-title">READ BOARD</h3>
         </div><!-- /.box-header -->
-
+	
  <form role="form" action="modifyPage" method="post">
-    
     <input type='hidden' name='no' value ="${boardVO.no}">
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
@@ -46,14 +45,20 @@
 		</p> 
 		</c:forEach>
 	</div>
-	
-	<div class="form-group">
+	<c:if test="${logon != null }">
 		<label for="exampleInputEmail1">댓글쓰기</label> 
-		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3"></textarea>
+		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
                 <br/>
-		 <button type="button" id="comments-btn" name="comments" class="btn btn-default">댓글쓰기</button>
+		 <button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button>
+	</c:if>
+	<c:if test="${logon == null }">
+		<label for="exampleInputEmail1">댓글쓰기</label> 
+		  <textarea class="form-control" name="comments" id="commentslog" rows="3" cols="3" placeholder="댓글을 쓸수 있는 권한이 없습니다." ></textarea>
+                <br/>
+		 <button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button>
+	</c:if>
 	</div>
-	
+	<div class="form-group">
 	
   </div><!-- /.box-body -->
 
@@ -90,20 +95,44 @@ $(document).ready(function(){
 	
 });
 
-$('#login-btn').click(function() {
+
+$('#comments-btn').click(function() {
 $.ajax({
     url: "/addComments",
-    type: "POST",
+    method: "post",
     data: {   
-        "text" : $('#comments-bts').val(),
-        "id" : "hjk"},
-    success: function(data) {
-        console.log(data);
+    	"preco": "${comments }",
+        "text" : $("#comments").val(),
+        "boardNo" : "${boardVO.no}",
+        "id" : "${logon}"},
+    success: function() {
+    	location.reload();
+    	$("#comments").val("");
     }, error: function() {
         alert('게시글 등록 실패');
     }
 	});
 });
+
+/*
+var form = {
+	    "id": "hjk",
+	    "text": $('#comments-bts').val(),
+		};
+
+$('#comments-btn').click(function() {
+	$.ajax({
+	    url: "/addComments",
+	    method: "post",
+	    type: "json",
+	    contentType: "application/json",
+	    data: JSON.stringify(form),
+	    success: function(data) {
+	    	alert('게시글 등록 성공');
+	    }
+	});
+});
+*/
 
 </script>
 

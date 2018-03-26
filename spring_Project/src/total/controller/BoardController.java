@@ -167,7 +167,7 @@ public class BoardController {
     return "t_board";
   }
   @RequestMapping(value = "/readPage", method = RequestMethod.GET)
-  public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+  public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model, HttpSession session) throws Exception {
 
 	  String contents= service.mongoFind(no);
 	  List<Map> comments= service.mongoFindComment(no);
@@ -175,6 +175,7 @@ public class BoardController {
 	    model.addAttribute("contents",contents);
 	    model.addAttribute("body","readPage.jsp");
 	    model.addAttribute("comments",comments);
+	    model.addAttribute("logon",session.getAttribute("logon"));
 	   // return "board/read";
 	   // return "t_board";
 	    
