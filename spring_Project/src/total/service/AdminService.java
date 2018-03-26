@@ -54,9 +54,9 @@ public class AdminService {
 		System.out.println(mbv.getContents());
 		return mbv.getContents();
 	}
-	
-	
-//----------- 여기서 부터 삭제 --------------------------------------------------------------
+
+	// ----------- 여기서 부터 삭제
+	// --------------------------------------------------------------
 	public boolean delete(Integer no) throws Exception {
 		int rst = template.delete("admin.delete", no);
 		if (rst != 0) {
@@ -82,9 +82,10 @@ public class AdminService {
 		 */
 	}
 
-	/*public Map searchId(int no) {
-		return template.selectOne("admin.boardNo", no);
-	}*/
+	/*
+	 * public Map searchId(int no) { return template.selectOne("admin.boardNo", no);
+	 * }
+	 */
 
 	// 레드카드 수 알기
 	public int selectRedcard(String id) {
@@ -92,7 +93,7 @@ public class AdminService {
 		int i = Integer.parseInt(map.get("LV").toString());
 		return i;
 	}
-	
+
 	// 레드카드수 올리기(아직 3이 아닐때)
 	public boolean updateRedCard(String id) {
 		int i = template.update("admin.updateLv", id);
@@ -113,25 +114,36 @@ public class AdminService {
 		}
 
 	}
+
 	// 회원한테 msg 보내기
 	public boolean msgSend(Map map) {
 		Map map2 = new HashMap<>();
 		map2.put("id", map.get("id"));
-		map2.put("msg",map.get("title")+"신고되어서 삭제하였습니다.");
-		int i= template.insert("admin.msg",map2);
-		if(i!=0) {
+		map2.put("msg", map.get("title") + "신고되어서 삭제하였습니다.");
+		int i = template.insert("admin.msg", map2);
+		if (i != 0) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
 
 	public String title(int i) {
-		return template.selectOne("admin.selectTitle",i);
+		return template.selectOne("admin.selectTitle", i);
 	}
+
 	// No로 report읽기
 	public List<Map> readNo(int no) {
-		return template.selectList("admin.selectReport",no);
+		return template.selectList("admin.selectReport", no);
+	}
+
+	public boolean reportRemove(Map param) {
+		int no = Integer.parseInt(param.get("no").toString());
+		int i = template.delete("admin.reportRemove", no);
+		if (i != 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

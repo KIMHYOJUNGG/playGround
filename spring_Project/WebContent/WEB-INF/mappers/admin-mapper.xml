@@ -56,4 +56,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectReport" resultType="hashmap">
 		select * from report where no = #{no}
 	</select>
+	
+ 	<!-- 신고글 삭제 -->
+	<delete id="reportRemove">
+		delete from report where no = #{no}
+	</delete> 
 </mapper>

@@ -114,6 +114,7 @@ public class AdminController {
 			boolean rst = adminservice.delete(no);
 			if (rst) {
 				model.addAttribute("id", id);
+				model.addAttribute("no",no);
 				return "redirect:/admin/redcard";
 			} else {
 				model.addAttribute("fail", "삭제에 실패하였습니다.");
@@ -137,6 +138,7 @@ public class AdminController {
 			if (rst) {
 				model.addAttribute("id", id);
 				model.addAttribute("title",param.get("title"));
+				model.addAttribute("no",param.get("no"));
 				System.out.println("title 뽑히나" + param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
@@ -164,7 +166,15 @@ public class AdminController {
 		boolean rst = adminservice.msgSend(param);
 		if (rst) {
 			model.addAttribute("success", "메세지를 보냈습니다.");
-			return "/admin/admin_member_board";
+			boolean rst2 = adminservice.reportRemove(param);
+			if(rst2) {
+				System.out.println("성공");
+				return "/admin/admin_member_board";
+			}
+			else {
+				model.addAttribute("fail","report삭제실패");
+				return "/admin/admin_member_board";
+			}
 		} else {
 			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
 			return "/admin/admin_member_board";
