@@ -1,14 +1,10 @@
 package total.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import javax.servlet.ServletContext;
 
 import org.bson.Document;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import total.domain.BoardVO;
+import total.domain.BookVO;
 import total.domain.MongoBoardVo;
 
 
@@ -31,8 +28,20 @@ public class BoardService {
   @Autowired
   MongoTemplate template;
  
+  public List<BookVO> bookName(String id) {
+	  
+	  Criteria cri=new Criteria("writer");
+	  cri.is(id);
+	  Query query=new Query(cri);
+	  List<BookVO> book=template.find(query,BookVO.class,"book");  
+	  System.out.println(book);
+	  return book;
+  }
 public String uuid() {
 
+	
+	
+	  
 	UUID uuid = UUID.randomUUID();// 고유 식별문자 생성 (8-4-4-4-12) 절대로 겹치지 않는다.
 	System.out.println("uuid.toString()*****************************" + uuid.toString());
 	String authkey = uuid.toString().split("-")[0];

@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import total.domain.BoardVO;
+import total.domain.BookVO;
 import total.domain.Criteria;
 import total.domain.PageMaker;
 import total.domain.ReportVO;
@@ -39,10 +41,12 @@ public class BoardController {
   @RequestMapping(value = "/register", method = RequestMethod.GET)
 
 
-  public String registerGET(BoardVO board, Model model,Map map) throws Exception {
+  public String registerGET(BoardVO board, Model model,Map map,HttpSession session) throws Exception {
 
     System.out.println("register get ...........");
     model.addAttribute("body","register.jsp");
+
+    model.addAttribute("listbook",service.bookName((String)session.getAttribute("logon")));
     //return "board/register";
     return "t_board";
 
@@ -65,9 +69,13 @@ public class BoardController {
 
 	  System.out.println("regist post ...........");
 	  System.out.println(board.toString());
+	  System.out.println(board.getBook());
 	 
-	  String uuid=service.uuid();
-	  board.setBno(uuid);
+	//  book.split(regex)
+	// board.setBno(book.getBno());
+	// board.setBookname(book.getBookName());
+	 // String uuid=service.uuid();
+	 // board.setBno(uuid);
 	  board.setWriter((String)session.getAttribute("logon"));
 
 	  service.create(board);

@@ -113,9 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
-	<select id="getListById" resultType="hashmap">
-		select * from board where writer =#{writer} order by (regdate) asc
-	</select>
+
 	
 	<select id="getListByBno" resultType="hashmap">
 		select * from board where bno = #{bno}
