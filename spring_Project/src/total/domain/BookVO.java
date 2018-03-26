@@ -5,6 +5,7 @@ public class BookVO {
 	private String writer;
 	private String bookName;
 	private String[] tag;
+	private int cnt;
 	private int good;
 	
 	public BookVO() {
@@ -35,6 +36,11 @@ public class BookVO {
 	public void setGood(int good) {
 		this.good = good;
 	}
+	
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
 	public String getBno() {
 		return bno;
 	}
@@ -50,6 +56,11 @@ public class BookVO {
 	public int getGood() {
 		return good;
 	}
+	
+	public int getCnt() {
+		return cnt;
+	}
+	
 	
 	
 }

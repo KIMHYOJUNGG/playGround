@@ -20,14 +20,20 @@
 				<p>
 					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | 
 					<a href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가 <span class="badge">
-					${fn:length(writerFollowing) }</span></a>
+					${fn:length(writerFollowing) }</span></a> |
+					구독자  <span class="badge">${fn:length(follower)}</span>
 				</p>
 				<p>
 					<span style="color: gray">${writerInfo.WELCOME}</span>
 				</p>
 			</div>
 			<div class="col-sm-1">
-			<c:if test="${logon  != id || logon== null}">
+			<c:if test="${logon  != writerInfo.ID || logon== null}">
+				<c:forEach items="${follower }" var="fer">
+					<c:set var="fan" value="${fer.READER eq logon}"/>
+				</c:forEach>
+				<c:choose>
+				<c:when test="${fan ne true}">
 				<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
 				  <!-- Modal -->
 				  <div class="modal fade" id="result"  role="dialog">
@@ -43,7 +49,7 @@
 				          <p id="mbody"></p>
 				        </div>
 				        <div class="modal-footer">
-				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				          <button type="button" class="btn btn-default" data-dismiss="modal" id="rClose">Close</button>
 				        </div>
 				      </div>
 				      
@@ -63,12 +69,88 @@
 						  			$("#result").modal();
 								})	;
 				  		});
+					  	
+					  	$("#rClose").click(function(){
+					  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
+					  	});
 				  </script>
-				  
+				  </c:when>
+				  <c:otherwise>
+				  	<button type="button" class="btn btn-info"  id="canclebt">구독취소</button>
+					  	<!-- Modal -->
+					  <div class="modal fade" id="cancle"  role="dialog">
+					    <div class="modal-dialog">
+					    
+					      <!-- Modal content-->
+					      <div class="modal-content">
+					        <div class="modal-header">
+					          <button type="button" class="close" data-dismiss="modal">&times;</button>
+					          <h4 class="modal-title" >구독취소</h4>
+					        </div>
+					        <div class="modal-body">
+					          <p id="cancleBody"></p>
+					        </div>
+					        <div class="modal-footer">
+					          <button type="button" class="btn btn-default" data-dismiss="modal" id="cClose">Close</button>
+					        </div>
+					      </div>
+					      
+					    </div>
+					  </div>
+					  <script>
+						  	$("#canclebt").click(function(){
+								$.get("${pageContext.request.contextPath}/follow/cancle",  {"target": "${writerInfo.ID}"
+									}).done(function(rst){
+										var html="";
+										if(rst.result) {
+											html = "${writerInfo.NICKNAME} 님을 관심 작가에서 삭제하였습니다. "
+										} else {
+											html = "<span style='color: red'>관심 작가 삭제실패. 다시 시도해 주세요.</span> "
+										}
+											$("#cancleBody").html(html);
+							  			$("#cancle").modal();
+									})	;
+					  		});
+						  	
+						  	$("#cClose").click(function(){
+						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
+						  	});
+					  </script>
+				  </c:otherwise>
+				  </c:choose>
 			</c:if>
 			</div>
 		</div>
-		
+
+		<c:if test="${! empty msg }">
+			<!-- Modal -->
+			<div class="modal fade" id="bookRegister" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">책 등록하기</h4>
+						</div>
+						<div class="modal-body">
+							<p id="mbody2"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<script>
+				$("#mbody2").html("${msg}");
+				$("#bookRegister").modal();
+			</script>
+		</c:if>
+
 		<hr />
 
 	<div class="row">
@@ -79,10 +161,12 @@
 			</ul>
 			 </div>
 	  <div class="col-sm-4">
+	  	<c:if test="${logon eq writerInfo.ID }">
 	  	 <div class="btn-group">
 	      <a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-primary">글쓰기</button></a>
 	      <a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-primary">책 등록</button></a>
 		</div> 
+		</c:if>
 	  </div>
 	 </div>
 	<hr/>	
@@ -129,7 +213,7 @@
 								<p class="list-group-item-text">${b.good}</p>
 								</div>
 								<div class="col-sm-4">
-									<h2 style="color: blue">0 <span style="color:blue">contents</span></h2>
+									<h2 style="color: blue">${b.cnt } <span style="color:blue">contents</span></h2>
 									<c:if test="${logon eq b.writer }">
 										<p class="list-group-item-text"><a href="${pageContext.request.contextPath }/board/register?${b.bno}"><button type="button" class="btn btn-info">이어쓰기</button></a></p>
 									</c:if>

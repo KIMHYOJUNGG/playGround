@@ -13,7 +13,6 @@
 			<c:if test="${empty info.IMAGE }">
 				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 			</c:if>
-<%-- 			<img src="${info.IMAGE}" class="img-responsive img-circle" style="width: 100%" alt="Image"> --%>
 			<p>${info.NICKNAME} 님</p>
 		</div>
 		<div class="col-sm-8">

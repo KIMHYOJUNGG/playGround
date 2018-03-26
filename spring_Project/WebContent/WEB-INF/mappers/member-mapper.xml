@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from member
 		<if test="following != null">
 			where id in
-			<foreach collection="following" item="f" open="(" close=")"
-				separator=","> #{f}</foreach>
+			<foreach collection="following" item="target" open="(" close=")"
+				separator=","> #{target}</foreach>
 		</if>
 	</select>
 	<update id="modifyInfo">
@@ -52,9 +52,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAll" resultType="hashmap">
 		select * from member
 	</select>
-	
-	<update id="addFollowing">
-		update member set follow = #{follow} where id=#{id}
-	</update>
+
 </mapper>
 

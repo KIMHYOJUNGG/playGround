@@ -20,7 +20,7 @@ public class MyPageController {
 	public String myPageHandle(Map map, HttpSession session) {
 		String id = (String)session.getAttribute("logon");
 		map.put("info", myPageService.getInfo(id));
-		String[] following = myPageService.splitFollowing((Map)map.get("info"));
+		List<String> following = myPageService.getMyFollowingList(id);
 		map.put("article", myPageService.getFollowingOrderByDesc(following) );
 		map.put("following", myPageService.getFollowingInfoById(following));
 		map.put("title", "My Page");

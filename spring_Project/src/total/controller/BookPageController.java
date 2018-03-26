@@ -31,8 +31,7 @@ public class BookPageController {
 		String id = (String)session.getAttribute("logon");
 		map.put("writerInfo", myPageService.getInfo(id));
 		map.put("contentList", writerPageService.getContentsListById(id));
-		String[] following = myPageService.splitFollowing((Map)map.get("writerInfo"));
-		map.put("writerFollowing", myPageService.getFollowingInfoById(following));
+		map.put("writerFollowing", myPageService.getFollowingInfoById(myPageService.getMyFollowingList(id)));
 		map.put("bookList", writerPageService.getBookListById(id));
 		map.put("bookContentsList", writerPageService.getBookContentsCntById(id));
 		map.put("title", "책 등록");
@@ -42,12 +41,11 @@ public class BookPageController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String bookPageHandle2(BookVO vo, Map map, HttpSession session) {
-		vo.setId((String)session.getAttribute("logon") );
-		bookPageService.bookInsert(vo);
-		map.put("title", (String)session.getAttribute("logon")+"의 PlayGround");
-		map.put("body", "writerPage.jsp");
-//		map.put("msg", "등록되었습니다.\r\n글을 등록해 보세요!");
-		return "t_el_title";
+		String id = (String)session.getAttribute("logon");
+		vo.setId(id );
+		String bno =  bookPageService.bookInsert(vo);
+//		map.put("no", bno);
+		return "redirect:board/register";
 	}
 	
 	@RequestMapping("/{bno}")
@@ -56,10 +54,9 @@ public class BookPageController {
 		map.put("bookInfo", bookPageService.getBookInfo(bno));
 		map.put("contentsList", bookPageService.getBookList(bno)); 
 		map.put("boardVOList", bookPageService.getBoardVO(bno));
-		map.put("writerInfo", myPageService.getInfo( (String)((Map)((List)map.get("contentsList")).get(0)).get("WRITER")  ));
-		String title = (String)((Map)((List)map.get("contentsList")).get(0)).get("BOOKNAME");
-		System.out.println(title); 
-		map.put("title", title);
+		BookVO book = bookPageService.getWriterInfoByBno(bno);
+		map.put("writerInfo", myPageService.getInfo( book.getWriter() ));
+		map.put("title", book.getBookName());
 		map.put("body", "bookPage.jsp");
 		return "t_el_title";
 	}

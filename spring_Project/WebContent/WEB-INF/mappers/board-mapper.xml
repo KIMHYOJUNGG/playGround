@@ -52,9 +52,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board 	join member on BOARD.writer = member.id
 		<if test="following != null">
 			where board.writer in
+			<foreach collection="following" item="target" open="(" close=")"  separator=","> #{target}</foreach>
+			order by(board.regdate) desc
 		</if>
-		<foreach collection="following" item="f" open="(" close=")"  separator=","> #{f}</foreach>
-		order by(board.regdate) desc
 	</select>
 	<select id="getListById" resultType="hashmap">
 		select * from board where writer =#{writer} order by (regdate) asc
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board where bno = #{bno}
 	</select>
 	<select id="getBookContentsCntById" resultType="hashmap">
-		select bno,count(*) as cnt from board where writer=#{id} group by bno
+		select bno, bookname, count(*) as cnt from board where writer=#{id} group by bno, bookname order by (bookname)
 	</select>
 </mapper>
 

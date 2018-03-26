@@ -11,15 +11,12 @@ public class FollowService {
 	@Autowired
 	SqlSessionTemplate template;
 	
-	public boolean addFollowing(String follow, String target, String id) {
-		Map data = new HashMap<>();
-		if(follow != null) 
-			data.put("follow", follow+","+target);
-		else
-			data.put("follow", target);
-		data.put("id", id);
-		System.out.println("follow? "+data.get("follow"));
-		return template.update("member.addFollowing", data) == 1;
+	public boolean addFollowing(Map data) {
+		return template.insert("follow.addFollow", data) == 1;
+	}
+	
+	public boolean dropFollowing(Map data) {
+		return template.delete("follow.dropFollow", data) == 1;
 	}
 	
 }

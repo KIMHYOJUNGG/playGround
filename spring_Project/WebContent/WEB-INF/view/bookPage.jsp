@@ -153,9 +153,9 @@
 				</c:if>
 				<c:if test="${empty contentsList }">
 					<p>발행된 글이 없습니다.</p>
-					<c:if test="${contentsList.WRITER eq logon}">
+					<c:if test="${writerInfo.ID eq logon}">
 						<p>글을 등록해 보세요!</p>
-						<a href="${pageContext.request.contextPath }/board/register?bno=${contentsList.BNO}"><button type="button" class="btn btn-info">글쓰기</button></a>
+						<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글쓰기</button></a>
 					</c:if>
 				</c:if>
 				</div>
