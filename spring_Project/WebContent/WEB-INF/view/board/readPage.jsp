@@ -51,7 +51,11 @@
     <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
     <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
+    
+   
+    <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
+  </c:if>
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
   </div>
 <div class="container" >
@@ -72,6 +76,7 @@
     <input type='hidden' name='no' value ="${boardVO.no}">
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
+    <input type='hidden' name='writer' value ="${boardVO.writer}">
     <div class="form-group">
       <label for="exampleInputEmail1">Reason</label>
       <input type="text" name='reason' class="form-control" 

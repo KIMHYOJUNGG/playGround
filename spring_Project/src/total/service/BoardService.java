@@ -37,7 +37,12 @@ public String uuid() {
 	System.out.println("uuid.toString()*****************************" + uuid.toString());
 	String authkey = uuid.toString().split("-")[0];
 
+	
+
+	
 	return authkey;
+	
+	
 }
 
   public void create(BoardVO vo) throws Exception {

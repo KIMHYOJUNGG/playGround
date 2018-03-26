@@ -9,6 +9,7 @@ public class ReportVO {
 	private int no;
 	private String reason;
 	private String readcheck;
+	private String writer;
 	/* create table report(
 			 no number(4,0) not null,
 			 bno number(4,0) not null,
@@ -46,9 +47,16 @@ public class ReportVO {
 	public void setReadcheck(String readcheck) {
 		this.readcheck = readcheck;
 	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	@Override
 	public String toString() {
-		return "ReportVO [rno=" + rno + ", no=" + no + ", reason=" + reason + ", readcheck=" + readcheck + "]";
+		return "ReportVO [rno=" + rno + ", no=" + no + ", reason=" + reason + ", readcheck=" + readcheck + ", writer="
+				+ writer + "]";
 	}
 	
 	
