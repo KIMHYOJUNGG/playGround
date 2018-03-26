@@ -7,8 +7,8 @@
 </head>
 <body>
 	<div align="left">
-		<h2><a href ="/admin/read?no=${no}">${title }신고이유</a></h2>
-		<hr/>
+		<h2>${title }신고이유</h2>
+		<hr />
 		<table>
 			<thead>
 				<tr style="background: silver">
@@ -20,7 +20,7 @@
 			<c:forEach var="m" items="${reportlist }">
 				<tr align="center">
 					<td>${m.NO }</td>
-					<td>${m.REASEON }</td>
+					<td>${m.REASON }</td>
 					<td>${m.READCHECK }</td>
 				</tr>
 			</c:forEach>

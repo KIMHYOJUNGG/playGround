@@ -40,7 +40,9 @@
 					<td>${m.TYPE }</td>
 					<c:choose>
 						<c:when test="${m.RED == 'Y'}">
-							<td style="color: RED">${m.RED }</td>
+							<td style="color: RED">${m.RED }
+							<a href="/admin/readRed?no=${m.NO }"><small>신고글보기</small></a>
+							</td>
 						</c:when> 
 						<c:otherwise>
 							<td>${m.RED}</td>
@@ -54,3 +56,6 @@
 </body>
 
 </html>
+<script>
+	
+</script>

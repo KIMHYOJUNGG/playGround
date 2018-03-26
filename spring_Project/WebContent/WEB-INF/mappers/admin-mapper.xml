@@ -51,4 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectTitle" resultType="string">
 		select title from board where no=#{no}
 	</select>
+	
+	<!-- 신고이유보기 -->
+	<select id="selectReport" resultType="hashmap">
+		select * from report where no = #{no}
+	</select>
 </mapper>

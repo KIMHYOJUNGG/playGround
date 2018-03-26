@@ -73,19 +73,20 @@ public class AdminController {
 			return "redirect:/admin";
 		}
 	}
+
 	// 신고글 보기
-		@RequestMapping(value = "/read", method = RequestMethod.GET)
-		public String readRed(@RequestParam("no") int no, Model model, HttpSession session, Map map) throws Exception {
-			map.put("body", "/admin/admin_member_board_id.jsp");
-			if (session.getAttribute("admin") != null) {
-				String contents = adminservice.mongoFind(no);
-				model.addAttribute("admin", adminservice.read(no));
-				model.addAttribute("contents", contents);
-				return "t_el";
-			} else {
-				return "redirect:/admin";
-			}
+	@RequestMapping(value = "/readRed", method = RequestMethod.GET)
+	public String readRed(@RequestParam("no") int no, Model model, HttpSession session) throws Exception {
+		if (session.getAttribute("admin") != null) {
+			BoardVO vo = adminservice.read(no);
+			model.addAttribute("title",vo.getTitle() );
+			model.addAttribute("reportlist",adminservice.readNo(no));
+			return "/admin/admin_member_red";
+		} else {
+			return "redirect:/admin";
 		}
+	}
+
 	// 게시글번호로 해당 게시글 보기
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, Model model, HttpSession session, Map map) throws Exception {
@@ -104,9 +105,9 @@ public class AdminController {
 	// 관리자가 해당 게시글 삭제
 	@RequestMapping(path = "/remove", method = RequestMethod.POST)
 	public String removeHandle(Model model, @RequestParam Map param) throws Exception {
-		String id = (String)param.get("id");
-		System.out.println("id 1 = "+id);
-		int no = Integer.parseInt((String)param.get("no"));
+		String id = (String) param.get("id");
+		System.out.println("id 1 = " + id);
+		int no = Integer.parseInt((String) param.get("no"));
 		String title = adminservice.title(no);
 		if (title != null) {
 			model.addAttribute("title", title);
@@ -118,14 +119,13 @@ public class AdminController {
 				model.addAttribute("fail", "삭제에 실패하였습니다.");
 				return "/admin/admin_member_board";
 			}
-		}
-		else {
-			return"/admin/admin_member_board";
+		} else {
+			return "/admin/admin_member_board";
 		}
 	}
 
 	// 회원의 레드카드 수 변경
-	@RequestMapping(path = "redcard",method=RequestMethod.GET)
+	@RequestMapping(path = "redcard", method = RequestMethod.GET)
 	public String redcardHandle(Model model, @RequestParam Map param) {
 		System.out.println("여기까지??");
 		String id = (String) param.get("id");
@@ -136,7 +136,8 @@ public class AdminController {
 			boolean rst = adminservice.updateRedCard2(id);
 			if (rst) {
 				model.addAttribute("id", id);
-				System.out.println("title 뽑히나"+param.get("title"));
+				model.addAttribute("title",param.get("title"));
+				System.out.println("title 뽑히나" + param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
 				model.addAttribute("fail", "업데이트 실패(레드카드수3개)");
@@ -147,7 +148,7 @@ public class AdminController {
 			boolean rst = adminservice.updateRedCard(id);
 			if (rst) {
 				model.addAttribute("id", id);
-				System.out.println("title 뽑히나"+param.get("title"));
+				System.out.println("title 뽑히나" + param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
 				model.addAttribute("fail", "업데이트 실패(레드카드수3개 이하)");
@@ -159,7 +160,7 @@ public class AdminController {
 	// 관리자가 해당 게시글의 유저한테 메세지보냄
 	@RequestMapping(path = "msg", method = RequestMethod.GET)
 	public String msgHandle(Model model, @RequestParam Map param) {
-		System.out.println("타이틀 뽑히나???"+param.get("title"));
+		System.out.println("타이틀 뽑히나???" + param.get("title"));
 		boolean rst = adminservice.msgSend(param);
 		if (rst) {
 			model.addAttribute("success", "메세지를 보냈습니다.");

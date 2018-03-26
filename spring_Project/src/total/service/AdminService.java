@@ -130,4 +130,8 @@ public class AdminService {
 	public String title(int i) {
 		return template.selectOne("admin.selectTitle",i);
 	}
+	// No로 report읽기
+	public List<Map> readNo(int no) {
+		return template.selectList("admin.selectReport",no);
+	}
 }
