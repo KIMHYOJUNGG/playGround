@@ -1,5 +1,6 @@
 package total.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,16 +54,20 @@ public class AdminService {
 		System.out.println(mbv.getContents());
 		return mbv.getContents();
 	}
-
+	
+	
+//----------- 여기서 부터 삭제 --------------------------------------------------------------
 	public boolean delete(Integer no) throws Exception {
-		template.delete("admin.delete", no);
-
-		Criteria criteria = new Criteria("no");
-		criteria.is(no);
-		Query query = new Query(criteria);
-
-		session.remove(query, "board");
-		return true;
+		int rst = template.delete("admin.delete", no);
+		if (rst != 0) {
+			Criteria criteria = new Criteria("no");
+			criteria.is(no);
+			Query query = new Query(criteria);
+			session.remove(query, "board");
+			return true;
+		} else {
+			return false;
+		}
 		/*
 		 * 전체삭제 public void deletePerson(){ mongoTemplate.remove(new Query(),
 		 * "person2"); }
@@ -77,36 +82,52 @@ public class AdminService {
 		 */
 	}
 
-	public Map searchId(int no) {
-		return template.selectOne("admin.boardNo",no); 
+	/*public Map searchId(int no) {
+		return template.selectOne("admin.boardNo", no);
+	}*/
+
+	// 레드카드 수 알기
+	public int selectRedcard(String id) {
+		Map map = template.selectOne("admin.selectRedcard", id);
+		int i = Integer.parseInt(map.get("LV").toString());
+		return i;
 	}
+	
 	// 레드카드수 올리기(아직 3이 아닐때)
 	public boolean updateRedCard(String id) {
-		int i = template.update("admin.updateLv",id);
+		int i = template.update("admin.updateLv", id);
+		if (i != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// 레드카드수 0으로(3일때)
+	public boolean updateRedCard2(String id) {
+		int i = template.update("admin.updateLv2", id);
+		if (i != 0) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	// 회원한테 msg 보내기
+	public boolean msgSend(Map map) {
+		Map map2 = new HashMap<>();
+		map2.put("id", map.get("id"));
+		map2.put("msg",map.get("title")+"신고되어서 삭제하였습니다.");
+		int i= template.insert("admin.msg",map2);
 		if(i!=0) {
 			return true;
 		}
 		else {
 			return false;
 		}
-		
 	}
-	// 레드카드수 0으로(3일때)
-		public boolean updateRedCard2(String id) {
-			int i = template.update("admin.updateLv2",id);
-			if(i!=0) {
-				return true;
-			}
-			else {
-				return false;
-			}
-			
-		}
 
-	public int selectRedcard(String id) {
-		Map map = template.selectOne("admin.selectRedcard",id);
-		int i = (int) map.get("LV");
-		return i;
+	public String title(int i) {
+		return template.selectOne("admin.selectTitle",i);
 	}
 }
-
