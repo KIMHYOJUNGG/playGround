@@ -18,7 +18,7 @@
 		<div class="col-sm-8">
 			<div class="list-group">
 				<a href="${pageContext.request.contextPath }/modifyInfo" class="list-group-item">개인정보 수정</a> 
-				<a href="#" class="list-group-item active">우편함 <span>메세지 ${fn:length(msg) } 건</span></a> 
+				<a href="#" class="list-group-item active">우편함 <span>메세지 ${fn:length(getMsg) } 건</span></a> 
 				<a href="${pageContext.request.contextPath }/@${logon}" class="list-group-item">연재 중인 글</a>
 <!-- 				<a href="#" class="list-group-item">내가 출간한 글</a> -->
 			</div>
@@ -26,7 +26,7 @@
 	</div>
 	
 	<hr/>
-
+	
 	<div class="container">
 		<h2>메세지</h2>
 		<p></p>
@@ -48,15 +48,46 @@
 						<c:forEach var="msg" items="${getMsg }">
 							<tr>
 								<td><input type="checkbox" class="msgcbx"  value="${msg.NO }"></td>
-								<td><a href="javascript:void(0);" onclick="sendMsg(${msg.SENDID})">${msg.SENDID }</a></td>
-								<td><a href="javascript:void(0);" onclick="readMsg(${msg.NO})">${msg.TITLE }</a></td>
+								<td><a href="javascript:void(0);" onclick="sendMsg('${msg.SENDID}')">${msg.SENDID }</a></td>
+								<td><a href="javascript:void(0);" onclick="readMsg('${msg.NO}')">${msg.TITLE }</a></td>
 								<td>${msg.REGDATE }</td>
 							</tr>
 						</c:forEach>
+						
+						<script>
+							function sendMsg(sendid){
+								$("#msgHead").html("메세지 보내기");
+								$("#msgModal").modal();
+								console.log(sendid);
+							}
+							
+							function readMsg(no) {
+								console.log(no);
+							}
+						</script>
 					</c:otherwise>
 				</c:choose>
 			</tbody>
 		</table>
 	</div>
+	
+	<div class="modal fade" id="msgModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="msgHead"></h4>
+				</div>
+				<div class="modal-body">
+					<p  id="msgBody"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
 
+		</div>
+	</div>
 </div>
+
