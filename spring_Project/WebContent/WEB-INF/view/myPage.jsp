@@ -18,7 +18,7 @@
 		<div class="col-sm-8">
 			<div class="list-group">
 				<a href="${pageContext.request.contextPath }/modifyInfo" class="list-group-item">개인정보 수정</a> 
-				<a href="#" class="list-group-item">우편함 <span>신고 0 건 | 메세지 0 건</span></a> 
+				<a href="#" class="list-group-item">우편함 <span>메세지 0 건</span></a> 
 				<a href="${pageContext.request.contextPath }/@${logon}" class="list-group-item">연재 중인 글</a>
 <!-- 				<a href="#" class="list-group-item">내가 출간한 글</a> -->
 			</div>
