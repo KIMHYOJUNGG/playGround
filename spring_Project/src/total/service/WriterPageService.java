@@ -1,4 +1,3 @@
-
 package total.service;
 
 import java.util.*;
@@ -6,6 +5,7 @@ import java.util.*;
 import org.bson.Document;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -29,12 +29,31 @@ public class WriterPageService {
 	}
 	
 	public List<BookVO> getBookListById(String id) {
-		System.out.println(id);
-		List<BookVO> list = mongo.find(new Query(Criteria.where("writer").is(id)),  BookVO.class, "book");
-		System.out.println(list);
-		System.out.println(list.size());
+		List<BookVO> list = mongo.find(new Query(Criteria.where("writer").is(id)).with(new Sort("bookName", "1")),  BookVO.class, "book");
 		return list;
 	}
 	
+	public List<Map> getBookContentsCntById(String id) {
+		return template.selectList("board.getBookContentsCntById", id);
+	}
+	
+	public List<BookVO> mergeBookListAndCnt(List<Map> bookContentsList, List<BookVO> bookList) {
+		System.out.println("mergeBookListAndCnt");
+		System.out.println(bookContentsList.size());
+		System.out.println(bookList.size());
+		for(BookVO b : bookList) {
+			for( Map m : bookContentsList) {
+				if( m.containsValue(b.getBno()) ) {
+					b.setCnt( ((Number)m.get("CNT")).intValue() );
+					System.out.println( "bookList"+b.getBno()+" : "+b.getCnt());
+					break;
+				}
+			}
+		}
+		return bookList;
+	}
+	
+	public List<Map> getFollower (String id) {
+		return template.selectList("follow.getFollower", id);
+	}
 }
-

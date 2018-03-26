@@ -42,9 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  order by no desc, regdate desc
  ]]>
 	</select>
-	
 
-   <select id="listPage" resultType="total.domain.BoardVO">
+	  <select id="listPage" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
    no, title, writer, regdate, viewcnt 
@@ -74,19 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    no > 0 
  ]]>
  </select>
-	<select id="following" resultType="hashmap">
-		select * from board
-		<if test="following != null">
-			where writer in
-		</if>
-		<foreach collection="following" item="f" open="(" close=")"  separator=","> #{f}</foreach>
-	</select>
-	<select id="getListById" resultType="hashmap">
-		select * from board where writer =#{writer} order by (regdate) asc
-	</select>
-	
-	
-	<!--  관리자 -->
+		<!--  관리자 -->
 	
 	<select id="boardid" resultType="hashmap">
 		select * from board where writer=#{id} order by red desc
@@ -94,6 +81,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="boardNo" resultType="hashmap">
 		select * from board where no=#{no}
 	</select>
-</mapper>
 
+	<select id="following" resultType="hashmap">
+		select * from board
+		<if test="following != null">
+			where writer in
+		</if>
+		<foreach collection="following" item="f" open="(" close=")"
+			separator=","> #{f}</foreach>
+	</select>
+	
+	<select id="getListById" resultType="hashmap">
+		select * from board where
+		writer =#{writer} order by (regdate) asc
+	</select>
+	
+	<select id="followingArticle" resultType="hashmap">
+		select * from board 	join member on BOARD.writer = member.id
+		<if test="following != null">
+			where board.writer in
+			<foreach collection="following" item="target" open="(" close=")"  separator=","> #{target}</foreach>
+			order by(board.regdate) desc
+		</if>
+	</select>
+	
+	<select id="getListById" resultType="hashmap">
+		select * from board where writer =#{writer} order by (regdate) asc
+	</select>
+	
+	<select id="getListByBno" resultType="hashmap">
+		select * from board where bno = #{bno}
+	</select>
+	
+	<select id="getBookContentsCntById" resultType="hashmap">
+		select bno, bookname, count(*) as cnt from board where writer=#{id} group by bno, bookname order by (bookname)
+	</select>
+</mapper>
 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="container text-center">
 	<br>
@@ -12,7 +13,6 @@
 			<c:if test="${empty info.IMAGE }">
 				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 			</c:if>
-<%-- 			<img src="${info.IMAGE}" class="img-responsive img-circle" style="width: 100%" alt="Image"> --%>
 			<p>${info.NICKNAME} 님</p>
 		</div>
 		<div class="col-sm-8">
@@ -28,19 +28,21 @@
 		<p><h3><a href="${pageContext.request.contextPath }/@${logon }/following">관심 작가</a>의 새 글</h3></p>
 		<div class="list-group">
 			<c:if test="${!empty article }">
-			<c:forEach items="${article }" var="a" varStatus="vs">
-				<c:choose>
-					<c:when test="${vs.index < 15}">
+			<c:forEach  var="ai" begin="0" end="${fn:length(article) >= 15 ? 14 : fn:length(article)-1}">
 						<li  class="list-group-item">
-							<h4 class="list-group-item-heading">{article.TITLE} </h4>
-      						<p class="list-group-item-text">{article.WRITER}</p>
+							<h4 class="list-group-item-heading">
+							<a href="${pageContext.request.contextPath }/search?search=${article[ai].TYPE}"><span class="badge">${article[ai].TYPE }</span></a>
+							<a href="${pageContext.request.contextPath }/board/read?no=${article[ai].NO}">${article[ai].TITLE} 
+							<span style="font-size:12px; color: gray;">${article[ai].REGDATE }</span>
+							</a></h4>
+   							<p class="list-group-item-text">
+   							<span style="font-size:12px; color: gray; font-style: italic;">by</span> 
+   							<a href="${pageContext.request.contextPath }/@${article[ai].WRITER}">${article[ai].NICKNAME}</a></p>
       					</li>
-					</c:when>
-					<c:otherwise>
-					<a><p>더보기</p></a>
-					</c:otherwise>
-				</c:choose>
 			</c:forEach> 
+				<c:if test="${fn:length(article) > 15 }">
+					<a><p>더보기</p></a>
+				</c:if>
 			</c:if>
 			
 			<c:if test="${empty article }">
