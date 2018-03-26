@@ -13,6 +13,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <!-- jQuery 2.1.4 -->
+<!--     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
@@ -42,7 +44,7 @@ main style --%> .main_keywords {
 .w3-bar-block .w3-bar-item {
 	padding: 20px
 }
-</style>
+</style>collapse navbar-collapse
 </head>
 <body>
 

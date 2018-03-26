@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 
-<%@include file="../include/header.jsp"%>
+<%-- <%@include file="../include/header.jsp"%> --%>
 
 
 <!-- Main content -->
@@ -19,9 +19,19 @@
 
 
 <form role="form" method="post">
-	<div class="box-body">
+
+<!-- <div class="form-group">
+  <label for="usr">Name:</label>
+  <input type="text" class="form-control" id="usr">
+</div>
+<div class="form-group">
+  <label for="pwd">Password:</label>
+  <input type="password" class="form-control" id="pwd">
+</div>  -->
+
+	<!-- <div class="box-body"> -->
 		<div class="form-group">
-			<label for="exampleInputEmail1">Type</label> 
+			<label for="usr">Type</label> 
 			<input type="text"
 				name='type' class="form-control" placeholder="Enter Type">
 		</div>
@@ -32,7 +42,9 @@
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Writer</label><br/>
-			${logon } 
+			<input type="text"
+				name='bookname' class="form-control" readonly="readonly" value="${logon!=null?logon:"" } ">
+			
 		</div> 
 		<div class="form-group">
 			<label for="exampleInputEmail1">Title</label> 
@@ -41,10 +53,16 @@
 		</div>
 		
 		<div class="form-group">
-			<label for="exampleInputPassword1">Content</label>
-			<textarea class="form-control" name="content" rows="3"
+			<label for="comment">Content</label>
+			<textarea class="form-control" name="content" rows="5"
 				placeholder="Enter ..."></textarea>
 		</div>
+		
+	<!-- 	<div class="form-group">
+  <label for="comment">Comment:</label>
+  <textarea class="form-control" rows="5" id="comment"></textarea>
+</div>  -->
+		
 	</div>
 	<!-- /.box-body -->
 
@@ -55,7 +73,7 @@
 
 
 
-			</div>
+			<!-- </div> -->
 			<!-- /.box -->
 		</div>
 		<!--/.col (left) -->
@@ -67,5 +85,5 @@
 </div>
 <!-- /.content-wrapper -->
   <!-- Bootstrap 3.3.2 JS -->
-
-<%@include file="../include/footer.jsp"%>
+<%-- 
+<%@include file="../include/footer.jsp"%> --%>

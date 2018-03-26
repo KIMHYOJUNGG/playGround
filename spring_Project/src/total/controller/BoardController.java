@@ -2,12 +2,9 @@ package total.controller;
 
 
 import java.util.List;
-
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
-
 
 //import javax.inject.Inject;
 
@@ -23,9 +20,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import total.domain.BoardVO;
 import total.domain.Criteria;
 import total.domain.PageMaker;
+import total.domain.ReportVO;
 //import total.domain.Criteria;
 //import total.domain.PageMaker;
 import total.service.BoardService;
+import total.service.ReportService;
 
 @Controller
 @RequestMapping("/board/*")
@@ -34,6 +33,8 @@ public class BoardController {
 
   @Autowired
    BoardService service;
+  @Autowired
+  ReportService rservice;
 
   @RequestMapping(value = "/register", method = RequestMethod.GET)
 
@@ -73,6 +74,22 @@ public class BoardController {
 
     rttr.addFlashAttribute("msg", "success");
     return "redirect:/board/listPage";
+
+  }
+  @RequestMapping(value = "/report", method = RequestMethod.GET)
+  public String reportGET(ReportVO report, RedirectAttributes rttr, HttpSession session) throws Exception {
+	  
+	  System.out.println("report get ...........");
+	  System.out.println(report.toString());
+	  
+	 /* String uuid=service.uuid();
+	  report.setBno(uuid);
+	  report.setWriter((String)session.getAttribute("logon"));*/
+	  
+	  rservice.create(report);
+	  
+	  rttr.addFlashAttribute("msg", "success");
+	  return "redirect:/board/listPage";
   }
   @RequestMapping(value = "/listAll", method = RequestMethod.GET)
   public String listAll(Model model) throws Exception {

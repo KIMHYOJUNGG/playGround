@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
 
-<%-- <%@include file="../include/header.jsp"%> --%>
+<%@include file="../include/header.jsp"%>
 
 <!-- Main content -->
 <section class="content">
@@ -16,6 +16,40 @@
 				<div class="box-header with-border">
 					<h3 class="box-title">Board List</h3>
 				</div>
+				
+				
+					<div class='box-body'>
+
+					<select name="searchType">
+						<option value="n"
+							<c:out value="${cri.searchType == null?'selected':''}"/>>
+							---</option>
+						<option value="t"
+							<c:out value="${cri.searchType eq 't'?'selected':''}"/>>
+							Title</option>
+						<option value="c"
+							<c:out value="${cri.searchType eq 'c'?'selected':''}"/>>
+							Content</option>
+						<option value="w"
+							<c:out value="${cri.searchType eq 'w'?'selected':''}"/>>
+							Writer</option>
+						<option value="tc"
+							<c:out value="${cri.searchType eq 'tc'?'selected':''}"/>>
+							Title OR Content</option>
+						<option value="cw"
+							<c:out value="${cri.searchType eq 'cw'?'selected':''}"/>>
+							Content OR Writer</option>
+						<option value="tcw"
+							<c:out value="${cri.searchType eq 'tcw'?'selected':''}"/>>
+							Title OR Content OR Writer</option>
+					</select> <input type="text" name='keyword' id="keywordInput"
+						value='${cri.keyword }'>
+					<button id='searchBtn'>Search</button>
+					<button id='newBtn'>New Board</button>
+
+				</div>
+				
+				
 				<div class='box-body'>
 					<button id='newBtn'>New Board</button>
 				</div>
@@ -78,24 +112,27 @@
 					</div>
  --%>
 
+<a href="list?page=1&amp;perPageNum=10&amp;searchType&amp;keyword=">1</a>
+
 					<div class="text-center">
 						<ul class="pagination">
 
 							<c:if test="${pageMaker.prev}">
-								<li><a href="${pageMaker.startPage - 1}">&laquo;</a></li>
+								<li><a
+									href="list${pageMaker.makeSearch(pageMaker.startPage - 1) }">&laquo;</a></li>
 							</c:if>
 
 							<c:forEach begin="${pageMaker.startPage }"
 								end="${pageMaker.endPage }" var="idx">
 								<li
 									<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-									<a href="${idx}">${idx}</a>
+									<a href="list${pageMaker.makeSearch(idx)}">${idx}</a>
 								</li>
 							</c:forEach>
 
 							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 								<li><a
-									href="${pageMaker.endPage +1}">&raquo;</a></li>
+									href="list${pageMaker.makeSearch(pageMaker.endPage +1) }">&raquo;</a></li>
 							</c:if>
 
 						</ul>
@@ -139,4 +176,4 @@
 	
 </script>
 
-<%-- <%@include file="../include/footer.jsp"%> --%>
+<%@include file="../include/footer.jsp"%>

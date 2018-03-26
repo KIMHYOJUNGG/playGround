@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="../include/header.jsp" %>
+<%-- <%@include file="../include/header.jsp" %> --%>
 
     <!-- Main content -->
     <section class="content">
@@ -14,13 +14,12 @@
           <h3 class="box-title">READ BOARD</h3>
         </div><!-- /.box-header -->
 
- <form role="form" action="modifyPage" method="post">
+<%--  <form role="form" action="modifyPage" method="post">
     
     <input type='hidden' name='no' value ="${boardVO.no}">
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
-    
- </form>   
+    </form> --%>
     
   <div class="box-body">
     <div class="form-group">
@@ -52,8 +51,42 @@
     <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
     <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
+<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
   </div>
+<div class="container" >
+ 
+  <!-- Trigger the modal with a button -->
 
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">신고하기</h4>
+        </div>
+        <div class="modal-body">
+         <form role="form" action="modifyPage" method="post">
+           
+    <input type='hidden' name='no' value ="${boardVO.no}">
+    <input type='hidden' name='page' value ="${cri.page}">
+    <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Reason</label>
+      <input type="text" name='reason' class="form-control" 
+         placeholder="신고하는 이유를 적어주세요." >
+    </div>
+ </form>   
+        </div>
+        <div class="modal-footer">
+        <button type="submit" class="btn btn-danger reportBtn">신고하기 </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 $(document).ready(function(){
@@ -78,6 +111,12 @@ $(document).ready(function(){
 		formObj.attr("action", "/board/listPage");
 		formObj.submit();
 	});
+	$(".reportBtn").on("click", function(){
+		formObj.attr("method", "get");
+		formObj.attr("action", "/board/report");
+		formObj.submit();
+	});
+	
 	
 });
 </script>
@@ -91,6 +130,15 @@ $(document).ready(function(){
       </div>   <!-- /.row -->
     </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-    
-<%@include file="../include/footer.jsp" %>
-  
+<%--     
+<%@include file="../include/footer.jsp" %> --%>
+
+
+
+
+
+
+
+
+
+
