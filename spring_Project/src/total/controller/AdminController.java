@@ -71,7 +71,19 @@ public class AdminController {
 			return "redirect:/admin";
 		}
 	}
-
+	// 신고글 보기
+		@RequestMapping(value = "/read", method = RequestMethod.GET)
+		public String readRed(@RequestParam("no") int no, Model model, HttpSession session, Map map) throws Exception {
+			map.put("body", "/admin/admin_member_board_id.jsp");
+			if (session.getAttribute("admin") != null) {
+				String contents = adminservice.mongoFind(no);
+				model.addAttribute("admin", adminservice.read(no));
+				model.addAttribute("contents", contents);
+				return "t_el";
+			} else {
+				return "redirect:/admin";
+			}
+		}
 	// 게시글번호로 해당 게시글 보기
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, Model model, HttpSession session, Map map) throws Exception {
