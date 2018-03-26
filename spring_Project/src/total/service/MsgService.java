@@ -12,7 +12,7 @@ public class MsgService {
 	SqlSessionTemplate template;
 	
 	public List<Map> getMsgById(String id) {
-		return null;
+		return template.selectList("getBox.getMsgById", id);
 	}
 	
 }
