@@ -1,0 +1,191 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<div class="container text-center">
+	<br>
+	<div class="row">
+		<div class="col-sm-4">
+			<c:if test="${!empty info.IMAGE }">
+				<img src="${info.IMAGE }" style="width: 240px; height: 240px;" class="img-circle">
+			</c:if>
+			<c:if test="${empty info.IMAGE }">
+				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
+			</c:if>
+			<p>${info.NICKNAME} 님</p>
+		</div>
+		<div class="col-sm-8">
+			<div class="list-group">
+				<a href="${pageContext.request.contextPath }/modifyInfo" class="list-group-item"><b>개인정보 수정</b></a> 
+				<a href="${pageContext.request.contextPath }/message" class="list-group-item"><b>우편함</b> <span>새 메세지 ${newMsgCnt} 건</span></a>
+				<a href="${pageContext.request.contextPath }/message/sendBox" class="list-group-item active"><b>보낸 메세지</b></a> 
+				<a href="${pageContext.request.contextPath }/@${logon}" class="list-group-item"><b>연재 중인 글</b></a>
+<!-- 				<a href="#" class="list-group-item">내가 출간한 글</a> -->
+			</div>
+		</div>
+	</div>
+	
+	<hr/>
+	
+	<div class="container">
+		<h2>보낸 메세지함</h2>
+		<p></p>
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center"><input type="checkbox"  id="topcbx"></th>
+					<th style="text-align: center">받는 사람</th>
+					<th style="text-align: center">제   목</th>
+					<th style="text-align: center">보낸 날짜</th>
+					<th style="text-align: center">수신여부</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${empty sendBox }">
+						<td colspan="4">보낸 메세지가 없습니다.</td>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="msg" items="${sendBox }">
+							<tr>
+								<td><input type="checkbox" class="msgcbx"  value="${msg.NO }"></td>
+								<td style="width: 20%"><a href="javascript:void(0);" onclick="sendMsg('${msg.GETID}')">${msg.GETID }</a></td>
+								<td style="width: 40%"><a href="javascript:void(0);" onclick="readMsg('${msg.NO}')">${msg.TITLE }</a></td>
+								<td style="width: 20%">${msg.REGDATE }</td>
+								<td>${msg.READCHECK == 'Y' ? '읽음' : '읽지 않음'}</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				<tr>
+					<td colspan="5"  align="center"><button type="button" class="btn btn-success" onclick="sendMsg()">메세지 보내기</button>
+							 <button type="button" class="btn btn-info" onclick="del()">삭제</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script>
+		function sendMsg(sendid) {
+			$("#getid").val(sendid);
+			$("#sendModal").modal();
+		}
+
+		function readMsg(no) {
+			$.get("${pageContext.request.contextPath }/message/get", {
+				"no" : no
+			}, function(msg) {
+				$("#to").html(msg.GETID);
+				$("#time").html(msg.REGDATE);
+				$("#title2").html(msg.TITLE);
+				$("#msgBody2").html(msg.MSG);
+				$("#readModal").modal();
+			});
+		}
+		
+		function del() {
+			console.log("del 호출");
+			var dels = [];
+			var cnt = 0;
+			$(".msgcbx:checked").each(function(){
+				cnt += dels.push($(this).val());
+			});
+			console.log(dels);
+			$.get("${pageContext.request.contextPath }/message/sendBoxDel", {
+				"no" : dels
+			}, function(obj){
+				console.log("get 진행..."+obj);
+				if (obj.rst) {
+					window.alert("총 "+cnt+" 건이 삭제되었습니다.");
+				} else {
+					window.alert("삭제 실패. \r\n다시 시도해 주세요.");
+				}
+					location.reload();
+			});
+		}
+		
+		$("#topcbx").click(function() {
+			if($(this).prop("checked")) {
+				$(".msgcbx").prop("checked", true);
+			} else {
+				$(".msgcbx").prop("checked", false);
+			}
+		});
+	</script>
+
+	<div class="modal fade" id="sendModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="sendHead">메세지 보내기</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" action="${pageContext.request.contextPath }/message/send" method="post">
+						<div class="form-group text-right">
+							<label for="getid" class="control-label col-sm-2"> 받을 사람</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control " id="getid" name="getid" required>
+								</div>
+						</div>
+						<div class="form-group">
+							<label for="msgtitle" class="control-label col-sm-2">제목</label> 
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="msgtitle" name="title" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="msgBody" class="control-label col-sm-2">내용</label> 
+							<div class="col-sm-10">
+								<textarea class="form-control" id="msgBody"  rows="15" name="msg" required></textarea>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-default" >보내기</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="readModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="readHead">보낸 메세지</h4>
+				</div>
+				<div class="modal-body">
+				 <form class="form-horizontal" >
+						<div class="form-group">
+							<label class="control-label col-sm-3" for="to">받는 사람:</label>
+							<div class="col-sm-3">
+								<p id="to" style="color: gray"></p>
+							</div>
+							<label class="control-label col-sm-3" for="time">보낸 시간:</label>
+							<div class="col-sm-3">
+								<p id="time" style="color: gray"></p>
+							</div>
+						</div>
+						<div class="form-group">
+						<label class="control-label col-sm-2" for="title2">제목:</label>
+						<div class="col-sm-10">
+							<p id="title2"></p>
+						</div>
+					</div>
+					<div class="form-group">	
+						<label class="control-label col-sm-2" for="msgBody2"> 본문:</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" rows="15" id="msgBody2"></textarea>
+						</div>
+					</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.reload()">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
