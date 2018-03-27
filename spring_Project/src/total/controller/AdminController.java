@@ -42,27 +42,19 @@ public class AdminController {
 		boolean rst = adminservice.loginMember(param);
 		if (rst) {
 			session.setAttribute("admin", param.get("id"));
-			return "redirect:/admin/getMessageCnt";
+			return "redirect:/admin/member";
 		} else {
 			return "/admin/admin_fail";
 		}
-	}
-	// 받은 메세지함 개수
-	@RequestMapping("/getMessageCnt")
-	public String getMessageCnt(Model model) {
-		String count = adminservice.getMessageCnt();
-		model.addAttribute("gcnt",count);
-		return "redirect:/admin/member";
 	}
 	// 회원목록
 	@RequestMapping("/member")
 	public String MemberSelect(Model model, HttpSession session,@RequestParam Map param) {
 		if (session.getAttribute("admin") != null) {
 			List<Map> list = adminservice.memberSelect();
-			String count = (String)param.get("gcnt");
-			model.addAttribute("gcnt",count);
+			int cnt = adminservice.getMessageCnt();
+			model.addAttribute("gcnt",cnt);
 			model.addAttribute("list", list);
-			System.out.println(list);
 			return "/admin/admin_main";
 		} else {
 			return "redirect:/admin";
