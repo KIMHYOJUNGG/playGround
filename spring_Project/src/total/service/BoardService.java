@@ -22,12 +22,15 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.MongoGridFSException;
 
 import total.domain.BoardVO;
@@ -185,42 +188,26 @@ public List<Map> mongoFindComment(Number no) {
 	  
 }
 
-public String mongoSearch(String word) {
-      Criteria cri=new Criteria("contents");
-	  cri.regex("^"+word);
+public List<Map> mongoSearch(String word) {
+	 
+      Criteria cri=new Criteria();
+      cri.orOperator(Criteria.where("contents").regex("^"+word),Criteria.where("tag").regex("^"+word));
+	  //cri.regex("^"+word);
 	  Query query=new Query(cri);
 	  List<MongoBoardVo> mbv=template.find(query,MongoBoardVo.class,"board");  
-	  for(MongoBoardVo vo : mbv	) {
-		  System.out.println("no : "+vo.getNo());
-	  }
 	    
-	  
-	  /*
-	  MatchOperation match = Aggregation.match(cri);
-	  Aggregation aggregation = Aggregation.newAggregation(match);
-	  AggregationResults<MongoBoardVo> mbv=template.aggregate(aggregation,"board",MongoBoardVo.class);  
-	  System.out.println(mbv);
-	 
-	  List<MongoBoardVo> list = mbv.getMappedResults();
-	  
-	  for(MongoBoardVo vo : list) {
-		  System.out.println("no : "+ vo.getNo());
+	  List<Map> list = new ArrayList<>();
+	  Map map = new HashMap<>();
+	  for(MongoBoardVo vo : mbv	) {
+		  map.put("no", vo.getNo());
+		  map.put("bno", vo.getBno());
+		  map.put("contents", vo.getContents());
+		  map.put("tag", vo.getTag());
+		  
 	  }
-	  UnwindOperation unwind = Aggregation.unwind("favoriteItems");
-      GroupOperation group = Aggregation.group("favoriteItems").count().as("likes");
-      SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "likes");
-
-      Aggregation aggregation = newAggregation(unwind, group, sort);
-      DBObject result = mongoTemplate.aggregate(aggregation, "users", LikedItem.class).getRawResults();
-	  */
-	  
-	  /*
-	   AggregationOptions options = newAggregationOptions().cursor(new BasicDBObject()).build();
-	   Aggregation aggregation = newAggregation(unwind, group).withOptions(options);
-	   System.out.println(mongoTemplate.aggregate(aggregation, "users", LikedItem.class).getRawResults());
-	   Aggregation aggregation = newAggregation(unwind, group).withOptions(newAggregationOptions().cursor(new BasicDBObject()).build());
-	   */
-	  return "";
+	  list.add(map);
+	  System.out.println(list.add(map)); 
+	  return list;
 	  
 	  
 	  

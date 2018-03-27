@@ -18,8 +18,7 @@ public class SearchController {
 	
 	@RequestMapping("/search")
 	public String searchHandle(Map map,@RequestParam String word ) {
-		System.out.println("search : "+word);
-		System.out.println(boardService.mongoSearch(word));
+		map.put("searchResult",boardService.mongoSearch(word));
 		map.put("body", "/board/listAll.jsp");
 		return "t_el";
 	}
