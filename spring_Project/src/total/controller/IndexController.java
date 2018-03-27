@@ -2,6 +2,7 @@
 package total.controller;
 
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,10 @@ public class IndexController {
 		model.addAttribute("8",boardService.mongoFindImage(boardNo.get(7).get("NO")));
 		*/
 		List list = new LinkedList<>();
-		list.add(0,boardService.mongoFindImage(1));
+		for(int i=0;i>(boardNo.size() < 8 ? boardNo.size() : 8);i++) {
+		list.add(i,boardService.mongoFindImage((Number)(boardNo.get(i).get("NO"))));
+		System.out.println(Arrays.toString(boardService.mongoFindImage((Number)(boardNo.get(i).get("NO")))));
+		/*
 		list.add(1,boardService.mongoFindImage((Number)(boardNo.get(1).get("NO"))));
 		list.add(2,boardService.mongoFindImage((Number)(boardNo.get(2).get("NO"))));
 		list.add(3,boardService.mongoFindImage((Number)(boardNo.get(3).get("NO"))));
@@ -63,6 +67,8 @@ public class IndexController {
 		list.add(5,boardService.mongoFindImage((Number)(boardNo.get(5).get("NO"))));
 		list.add(6,boardService.mongoFindImage((Number)(boardNo.get(6).get("NO"))));
 		list.add(7,boardService.mongoFindImage((Number)(boardNo.get(7).get("NO"))));
+		*/
+		}
 		model.addAttribute("list",list);
 		
 		//application.getRealPath("/image")+"/Desert.jpg";

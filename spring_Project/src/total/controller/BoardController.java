@@ -82,21 +82,8 @@ public class BoardController {
 
     rttr.addFlashAttribute("msg", "success");
     return "redirect:/board/listPage";
-  }
-  @RequestMapping(value = "/report", method = RequestMethod.GET)
-  public String reportGET(ReportVO report, RedirectAttributes rttr, HttpSession session) throws Exception {
-	  
-	  System.out.println("report get ...........");
-	  System.out.println(report.toString());
-	  
-	 /* String uuid=service.uuid();
-	  report.setBno(uuid);
-	  report.setWriter((String)session.getAttribute("logon"));*/
-	  
-	  rservice.create(report);
-	  
-	  rttr.addFlashAttribute("msg", "success");
-	  return "redirect:/board/listPage";
+
+
   }
   @RequestMapping(value = "/listAll", method = RequestMethod.GET)
   public String listAll(Model model) throws Exception {
@@ -132,11 +119,8 @@ public class BoardController {
   }
   @RequestMapping(value = "/remove", method = RequestMethod.POST)
   public String remove(@RequestParam("no") int no, RedirectAttributes rttr) throws Exception {
-
     service.delete(no);
-
     rttr.addFlashAttribute("msg", "success");
-
     return "redirect:/board/listAll";
   }
   @RequestMapping(value = "/modify", method = RequestMethod.GET)
@@ -152,9 +136,7 @@ public class BoardController {
   }
   @RequestMapping(value = "/modify", method = RequestMethod.POST)
   public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
-
 	  System.out.println("mod post............");
-
     service.update(board);
     rttr.addFlashAttribute("msg", "success");
 
@@ -191,7 +173,7 @@ public class BoardController {
     return "t_board";
   }
   @RequestMapping(value = "/readPage", method = RequestMethod.GET)
-  public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+  public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model, HttpSession session) throws Exception {
 
 	  String contents= service.mongoFind(no);
 	  List<Map> comments= service.mongoFindComment(no);
@@ -199,6 +181,7 @@ public class BoardController {
 	    model.addAttribute("contents",contents);
 	    model.addAttribute("body","readPage.jsp");
 	    model.addAttribute("comments",comments);
+	    model.addAttribute("logon",session.getAttribute("logon"));
 	   // return "board/read";
 	   // return "t_board";
 	    

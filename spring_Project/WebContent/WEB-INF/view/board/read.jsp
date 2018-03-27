@@ -41,12 +41,16 @@
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
 		<p>
-		${co.id }      ${co.reply }      ${co.date} 
+		${co.id } &nbsp; &nbsp; &nbsp; ${co.reply } &nbsp; &nbsp; &nbsp; ${co.date} 
 		</p> 
 		</c:forEach>
 	</div>
+	
 
 </div>
+
+
+
 <!-- /.box-body -->
 
 <div class="box-footer">
@@ -56,7 +60,7 @@
 </div>
 
 
-				<script>
+<script>
 				
 $(document).ready(function(){
 	
@@ -80,6 +84,8 @@ $(document).ready(function(){
 	});
 	
 });
+
+
 
 </script>
 

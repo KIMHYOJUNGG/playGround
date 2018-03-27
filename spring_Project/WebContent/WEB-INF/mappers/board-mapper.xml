@@ -73,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    no > 0 
  ]]>
  </select>
+
 		<!--  관리자 -->
 	
 	<select id="boardid" resultType="hashmap">
@@ -81,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="boardNo" resultType="hashmap">
 		select * from board where no=#{no}
 	</select>
+
 
 	<update id="boardRedCard">
 	update board set red='Y' where no=#{no}
@@ -99,10 +101,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			separator=","> #{f}</foreach>
 	</select>
 	
+
 	<select id="getListById" resultType="hashmap">
 		select * from board where
 		writer =#{writer} order by (regdate) asc
 	</select>
+	
+
+
 	
 	<select id="followingArticle" resultType="hashmap">
 		select * from board 	join member on BOARD.writer = member.id
@@ -111,6 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<foreach collection="following" item="target" open="(" close=")"  separator=","> #{target}</foreach>
 			order by(board.regdate) desc
 		</if>
+
 	</select>
 	
 

@@ -2,15 +2,20 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <body class="mainbody">
-	<div class="alert alert-warning alert-dismissible" id="warn1" style="display: none">
-				<a href="javascript:location.reload();" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>경고!</strong> 다른 윈도우 혹은 탭에서 로그인되었습니다. F5를 눌러주세요.
-			</div>
-			<div class="alert alert-warning alert-dismissible" id="warn2" style="display: none">
-				<a href="javascript:location.reload();" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>경고!</strong> 다른 윈도우 혹은 탭에서 로그아웃되었습니다. F5를 눌러주세요.
-			</div>
+	<div class="alert alert-warning alert-dismissible" id="warn1"
+		style="display: none">
+		<a href="javascript:location.reload();" class="close"
+			data-dismiss="alert" aria-label="close">&times;</a> <strong>경고!</strong>
+		다른 윈도우 혹은 탭에서 로그인되었습니다. F5를 눌러주세요.
+	</div>
+	<div class="alert alert-warning alert-dismissible" id="warn2"
+		style="display: none">
+		<a href="javascript:location.reload();" class="close"
+			data-dismiss="alert" aria-label="close">&times;</a> <strong>경고!</strong>
+		다른 윈도우 혹은 탭에서 로그아웃되었습니다. F5를 눌러주세요.
+	</div>
 	<div align="center">
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Main</a></li>
@@ -26,6 +31,11 @@
 						<c:choose>
 							<c:when test="${vs.count <= 8}">
 								<div class="w3-quarter">
+									<c:if test="${empty list}">
+										<a href="/board/readPage?no=${o.NO}"><img
+											src="${pageContext.request.contextPath }/image/Desert.jpg"
+											alt="1" style="width: 80%"></a>
+									</c:if>
 									<c:forEach items="${list }" var="l" varStatus="vs">
 										<c:if test="${vs.count <= 1}">
 											<a href="/board/readPage?no=${o.NO}"><img src="${l[0] }"
@@ -91,20 +101,18 @@
 	</div>
 	</div>
 </body>
-	<script><%-- WebSocket을 하기 위해선 script처리가 필요하다.--%>
-		var ac = new WebSocket(
-				"ws://${pageContext.request.serverName}/logonWS");
-		ac.onopen = function() {
-			console.log(this);
+<script><%-- WebSocket을 하기 위해선 script처리가 필요하다.--%>
+	var ac = new WebSocket("ws://${pageContext.request.serverName}/logonWS");
+	ac.onopen = function() {
+		console.log(this);
+	}
+	ac.onmessage = function(rst) {
+		if (rst.data == "로그인") {
+			$("#warn1").show();
 		}
-		ac.onmessage = function(rst) {
-			if(rst.data == "로그인"){
-				$("#warn1").show();
-			}
-			if(rst.data == "로그아웃"){
-				$("#warn2").show();
-			}
-			console.log(rst);
+		if (rst.data == "로그아웃") {
+			$("#warn2").show();
 		}
-
-	</script>
+		console.log(rst);
+	}
+</script>
