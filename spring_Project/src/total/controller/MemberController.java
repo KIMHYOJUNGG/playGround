@@ -97,6 +97,8 @@ public class MemberController {
 		map.put("body", "login.jsp");
 		return "t_el";
 	}
+	
+	
 
 	// 로그인 실행
 	@RequestMapping(path = "/loging", method = RequestMethod.POST)
@@ -111,9 +113,17 @@ public class MemberController {
 					for (WebSocketSession ws : s) {
 						ws.sendMessage(new TextMessage("로그인"));
 					}
-					return "redirect:/index";
+					if(session.getAttribute("NO") != null) {
+						return "redirect:/board/readPage?no="+session.getAttribute("NO");
+					}else {
+						return "redirect:/index";
+					}
 				} else {
-					return "redirect:/index";
+					if(session.getAttribute("NO") != null) {
+						return "redirect:/board/readPage?no="+session.getAttribute("NO");
+					}else {
+						return "redirect:/index";
+					}
 				}
 			}
 			throw new Exception();

@@ -20,14 +20,15 @@ public class AddCommentsController {
 	@Autowired
 	BoardService boardService;
 	
-	@RequestMapping(path="/addComments", method = RequestMethod.POST)
+	@RequestMapping(path="/addComments", method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	@ResponseBody
 	public String addCommentsHandle(@RequestParam String id , @RequestParam String text , @RequestParam int boardNo, @RequestParam String preco) {
 		//session.setAttribute("boardNo",boardNo);
 		//session.setAttribute("boardNo",preco);
 		boardService.addcomments(boardNo,id,text,preco);
 		System.out.println("id : "+id +"text : "+ text + "boardNo : "+boardNo+"preco :"+preco);
 		
-		return "true";
+		return "{\"result\":true}";
 	}
 	
 }
