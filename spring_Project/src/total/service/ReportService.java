@@ -22,9 +22,8 @@ public class ReportService {
 		
 		  System.out.println("connect...");
 	    session.insert("report.insert", vo);
-	    
-		
-		
+		session.update("member.updateReport",vo.getWriter());
+		session.update("board.boardRedCard",vo.getNo());
 		
 	  }
 	  

@@ -60,5 +60,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAll" resultType="hashmap">
 		select * from member where id!='admin' order by report desc
 	</select>
+	
+	
+	<!-- 멥버 report 바꾸기  -->
+	<update id="updateReport">
+	 update member set report='Y' where id=#{writer}
+	</update>
 </mapper>
 

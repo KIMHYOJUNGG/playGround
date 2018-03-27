@@ -42,9 +42,11 @@
     <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
+
 		<p>
 		${co.id } &nbsp; &nbsp; &nbsp; ${co.reply } &nbsp; &nbsp; &nbsp; ${co.date}  
 		</p> 
+
 		</c:forEach>
 	</c:if>
 	</div>
@@ -68,10 +70,16 @@
   </div><!-- /.box-body -->
 
   <div class="box-footer">
+   <c:if test="${sessionScope.logon== boardVO.writer}" >
     <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
+    </c:if>
     <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
+    
+   
+    <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
+  </c:if>
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
   </div>
 <div class="container" >
@@ -90,8 +98,15 @@
          <form role="form" action="modifyPage" method="post">
            
     <input type='hidden' name='no' value ="${boardVO.no}">
+    <input type='hidden' name='btitle' value ="${boardVO.title}">
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
+    <input type='hidden' name='writer' value ="${boardVO.writer}">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Title</label>
+      <input type="text" name='title' class="form-control" 
+         placeholder="신고하는 제목을 적어주세요." >
+    </div>
     <div class="form-group">
       <label for="exampleInputEmail1">Reason</label>
       <input type="text" name='reason' class="form-control" 

@@ -23,6 +23,7 @@ public class BoardVO {
 	private String bno;
 	private String title;
 	private String type;
+	private String book;
 	private String bookname;
 	private String writer;
 	private String content;
@@ -51,6 +52,12 @@ public class BoardVO {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getBook() {
+		return book;
+	}
+	public void setBook(String book) {
+		this.book = book;
 	}
 	public String getBookname() {
 		return bookname;
@@ -84,10 +91,11 @@ public class BoardVO {
 	}
 	@Override
 	public String toString() {
-		return "BoardVO [no=" + no + ", bno=" + bno + ", title=" + title + ", type=" + type + ", bookname=" + bookname
-				+ ", writer=" + writer + ", content=" + content + ", regdate=" + regdate + ", viewcnt=" + viewcnt + "]";
+		return "BoardVO [no=" + no + ", bno=" + bno + ", title=" + title + ", type=" + type + ", book=" + book
+				+ ", bookname=" + bookname + ", writer=" + writer + ", content=" + content + ", regdate=" + regdate
+				+ ", viewcnt=" + viewcnt + "]";
 	}
-	
+
 	
 	
 	

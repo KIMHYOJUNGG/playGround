@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <insert id="insert" >
 
 
-insert into report (rno, no, reason )
-values(report_seq.nextval,#{no},#{reason})
+insert into report (rno, no, title, btitle, reason )
+values(report_seq.nextval,#{no}, #{title}, #{btitle},#{reason})
 </insert>
 
 
