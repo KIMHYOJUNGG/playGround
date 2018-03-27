@@ -30,8 +30,8 @@
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
-      <textarea class="form-control"  name="content" rows="3" 
-      readonly="readonly">${contents}</textarea>
+     <!--  <textarea class="form-control"  name="content" rows="3" 
+      readonly="readonly"> --> ${contents}
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1" >Writer</label>

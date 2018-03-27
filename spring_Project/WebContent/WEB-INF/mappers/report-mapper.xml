@@ -10,7 +10,12 @@ insert into report (rno, no, title, btitle, reason )
 values(report_seq.nextval,#{no}, #{title}, #{btitle},#{reason})
 </insert>
 
+<delete id="delete" >
 
+delete from report where no=#{no}
+
+
+</delete>
 
 
 </mapper>

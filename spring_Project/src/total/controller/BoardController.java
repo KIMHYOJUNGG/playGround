@@ -1,9 +1,12 @@
 package total.controller;
 
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 //import javax.inject.Inject;
@@ -39,12 +42,22 @@ public class BoardController {
   ReportService rservice;
 
   @RequestMapping(value = "/register", method = RequestMethod.GET)
-  public String registerGET(BoardVO board, Model model,Map map,HttpSession session) throws Exception {
-
+  public String registerGET(BoardVO board, Model model,Map map,HttpSession session,HttpServletResponse resp,HttpServletRequest req ) throws Exception {
+	  resp.setContentType("text/html;charset=utf-8");
+	  PrintWriter out=resp.getWriter();
+	 String cp=req.getContextPath();
+	 System.out.println(cp);
     System.out.println("register get ...........");
     model.addAttribute("body","register.jsp");
-
-    model.addAttribute("listbook",service.bookName((String)session.getAttribute("logon")));
+    List<BookVO> book=service.bookName((String)session.getAttribute("logon"));
+    if(book.isEmpty()) {
+    	out.println("<script>window.alert(\"북네임을 설정해주세요.!\"); location.href=\""+cp+"/bookPage\";</script>"); //한글
+    	out.close();
+    	   //대부분이 html로 전송한다.
+    	  
+    }
+    model.addAttribute("listbook",book);
+    
     //return "board/register";
     return "t_board";
 

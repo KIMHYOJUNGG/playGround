@@ -4,6 +4,8 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
+	config.allowedContent = true;
+	config.enterMode = CKEDITOR.ENTER_BR;
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
@@ -16,5 +18,4 @@ CKEDITOR.editorConfig = function( config ) {
         ['Image','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
         ['Styles','Format','Font','FontSize','TextColor','BGColor','Maximize', 'ShowBlocks']
     ];
-	config.allowedContent = true;
 };

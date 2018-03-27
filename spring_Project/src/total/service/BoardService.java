@@ -203,6 +203,7 @@ public void update(BoardVO vo) throws Exception {
  }
 
   public void delete(Integer no) throws Exception {
+	  session.delete("report.delete",no);
     session.delete("board.delete", no);
     
     Criteria criteria = new Criteria("no");

@@ -25,6 +25,8 @@ public class AddCommentsController {
 	public String addCommentsHandle(@RequestParam String id , @RequestParam String text , @RequestParam int boardNo, @RequestParam String preco) {
 		//session.setAttribute("boardNo",boardNo);
 		//session.setAttribute("boardNo",preco);
+		System.out.println("e댓글 작동확인");
+		//System.out.println(id +"  "+ text+"   "+ boardNo+"    "+preco);
 		boardService.addcomments(boardNo,id,text,preco);
 		System.out.println("id : "+id +"text : "+ text + "boardNo : "+boardNo+"preco :"+preco);
 		
