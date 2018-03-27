@@ -40,16 +40,18 @@
     <div class="form-group">
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
-		<p>
-		${co.id }      ${co.reply }      ${co.date} 
-		</p> 
+		<input type="text" name='title' class="form-control" 
+         value="${co.id }      ${co.reply }      ${co.date} " readonly="readonly">
+	
 		</c:forEach>
 	</div>
   </div><!-- /.box-body -->
 
   <div class="box-footer">
+   <c:if test="${sessionScope.logon== boardVO.writer}" >
     <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
+    </c:if>
     <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
     
    
@@ -74,9 +76,15 @@
          <form role="form" action="modifyPage" method="post">
            
     <input type='hidden' name='no' value ="${boardVO.no}">
+    <input type='hidden' name='btitle' value ="${boardVO.title}">
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
     <input type='hidden' name='writer' value ="${boardVO.writer}">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Title</label>
+      <input type="text" name='title' class="form-control" 
+         placeholder="신고하는 제목을 적어주세요." >
+    </div>
     <div class="form-group">
       <label for="exampleInputEmail1">Reason</label>
       <input type="text" name='reason' class="form-control" 

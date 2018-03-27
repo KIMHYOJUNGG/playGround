@@ -7,6 +7,8 @@ public class ReportVO {
 	
 	private int rno;
 	private int no;
+	private String title;
+	private String btitle;
 	private String reason;
 	private String readcheck;
 	private String writer;
@@ -35,6 +37,18 @@ public class ReportVO {
 	public void setNo(int no) {
 		this.no = no;
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getBtitle() {
+		return btitle;
+	}
+	public void setBtitle(String btitle) {
+		this.btitle = btitle;
+	}
 	public String getReason() {
 		return reason;
 	}
@@ -55,8 +69,8 @@ public class ReportVO {
 	}
 	@Override
 	public String toString() {
-		return "ReportVO [rno=" + rno + ", no=" + no + ", reason=" + reason + ", readcheck=" + readcheck + ", writer="
-				+ writer + "]";
+		return "ReportVO [rno=" + rno + ", no=" + no + ", title=" + title + ", btitle=" + btitle + ", reason=" + reason
+				+ ", readcheck=" + readcheck + ", writer=" + writer + "]";
 	}
 	
 	

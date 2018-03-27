@@ -69,11 +69,11 @@ public class BoardController {
 
 	  System.out.println("regist post ...........");
 	  System.out.println(board.toString());
-	  System.out.println(board.getBook());
+	 String[] book=board.getBook().split(",");
 	 
-	//  book.split(regex)
-	// board.setBno(book.getBno());
-	// board.setBookname(book.getBookName());
+	 board.setBno(book[0]);
+	board.setBookname(book[1]);
+	System.out.println(board.toString());
 	 // String uuid=service.uuid();
 	 // board.setBno(uuid);
 	  board.setWriter((String)session.getAttribute("logon"));
