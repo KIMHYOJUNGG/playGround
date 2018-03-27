@@ -27,32 +27,40 @@ public class AdminController {
 
 	@Autowired
 	AdminService adminservice;
-
+	// 로그인창 보내기
 	@RequestMapping(method = RequestMethod.GET)
 	public String AminHandler(HttpSession session) {
-		System.out.println("admin");
 		if (session.getAttribute("admin") == null) {
 			return "admin/admin_log";
 		} else {
 			return "redirect:/admin/member";
 		}
 	}
-
+	// 로그인 실행
 	@RequestMapping(path = "/log", method = RequestMethod.POST)
 	public String AdminLogin(Model model, @RequestParam Map<String, String> param, HttpSession session) {
 		boolean rst = adminservice.loginMember(param);
 		if (rst) {
 			session.setAttribute("admin", param.get("id"));
-			return "redirect:/admin/member";
+			return "redirect:/admin/getMessageCnt";
 		} else {
 			return "/admin/admin_fail";
 		}
 	}
-
+	// 받은 메세지함 개수
+	@RequestMapping("/getMessageCnt")
+	public String getMessageCnt(Model model) {
+		String count = adminservice.getMessageCnt();
+		model.addAttribute("gcnt",count);
+		return "redirect:/admin/member";
+	}
+	// 회원목록
 	@RequestMapping("/member")
-	public String MemberSelect(Model model, HttpSession session) {
+	public String MemberSelect(Model model, HttpSession session,@RequestParam Map param) {
 		if (session.getAttribute("admin") != null) {
 			List<Map> list = adminservice.memberSelect();
+			String count = (String)param.get("gcnt");
+			model.addAttribute("gcnt",count);
 			model.addAttribute("list", list);
 			System.out.println(list);
 			return "/admin/admin_main";
@@ -101,12 +109,13 @@ public class AdminController {
 		}
 	}
 
+	
+	
 	// =========================================================================================================
 	// 관리자가 해당 게시글 삭제
 	@RequestMapping(path = "/remove", method = RequestMethod.POST)
 	public String removeHandle(Model model, @RequestParam Map param) throws Exception {
 		String id = (String) param.get("id");
-		System.out.println("id 1 = " + id);
 		int no = Integer.parseInt((String) param.get("no"));
 		String title = adminservice.title(no);
 		if (title != null) {
@@ -128,29 +137,27 @@ public class AdminController {
 	// 회원의 레드카드 수 변경
 	@RequestMapping(path = "redcard", method = RequestMethod.GET)
 	public String redcardHandle(Model model, @RequestParam Map param) {
-		System.out.println("여기까지??");
 		String id = (String) param.get("id");
+		int no = Integer.parseInt(param.get("no").toString());
 		System.out.println("id 2 = " + id);
 		int i = adminservice.selectRedcard(id);
-		if (i == 3) {
-			System.out.println("레드카드3");
+		System.out.println("레드카드수 : "+i );
+		if (i==2 ) {
 			boolean rst = adminservice.updateRedCard2(id);
 			if (rst) {
 				model.addAttribute("id", id);
 				model.addAttribute("title",param.get("title"));
-				model.addAttribute("no",param.get("no"));
-				System.out.println("title 뽑히나" + param.get("title"));
+				System.out.println(param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
 				model.addAttribute("fail", "업데이트 실패(레드카드수3개)");
 				return "/admin/admin_member_board";
 			}
 		} else {
-			System.out.println("레드카드2");
 			boolean rst = adminservice.updateRedCard(id);
 			if (rst) {
 				model.addAttribute("id", id);
-				System.out.println("title 뽑히나" + param.get("title"));
+				model.addAttribute("title",param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
 				model.addAttribute("fail", "업데이트 실패(레드카드수3개 이하)");
@@ -162,23 +169,15 @@ public class AdminController {
 	// 관리자가 해당 게시글의 유저한테 메세지보냄
 	@RequestMapping(path = "msg", method = RequestMethod.GET)
 	public String msgHandle(Model model, @RequestParam Map param) {
-		System.out.println("타이틀 뽑히나???" + param.get("title"));
+		System.out.println(param);
 		boolean rst = adminservice.msgSend(param);
 		if (rst) {
 			model.addAttribute("success", "메세지를 보냈습니다.");
-			boolean rst2 = adminservice.reportRemove(param);
-			if(rst2) {
 				System.out.println("성공");
 				return "/admin/admin_member_board";
-			}
-			else {
-				model.addAttribute("fail","report삭제실패");
-				return "/admin/admin_member_board";
-			}
 		} else {
 			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
 			return "/admin/admin_member_board";
 		}
 	}
-
 }

@@ -4,8 +4,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-	<!-- 해당회원한테 메세지 -->
+	<!-- 해당회원한테 보낸 메세지 -->
 	<insert id="msg">
-		insert into message(no,id,msg,regdate) values(message_seq.nextval,#{id},#{msg},sysdate)
+		insert into sendmessage(no,sendid,title,msg,getid,regdate) values(sendmessage_seq.nextval,'admin',#{title},#{msg},#{id},sysdate)
 	</insert>
+	<!-- 해당 회원한테 받은 메세지-->
+	<insert id="msg2">
+		insert into getmessage(no,sendid,title,msg,getid,regdate) values(getmessage_seq.nextval,'admin',#{title},#{msg},#{id},sysdate)
+	</insert>
+	<!-- 해원한테서 받은 메세지함 보기  -->
+	<select id="getMessage" resultType="hashmap">
+		select * from getmessage where sendid != 'admin'
+	</select>
+	<!-- 해원한테 보낸 메세지함 보기-->
+	<select id="sendMessage" resultType="hashmap">
+		select * from sendmessage where sendid != 'admin'
+	</select>
+	<!-- 해원한테서 받은 메세지함 개수 -->
+	<select id="getMessageCnt" resultType="String">
+		select count(*) from getmessage where sendid != 'admin' and readcheck = 'N'
+	</select>
 </mapper>

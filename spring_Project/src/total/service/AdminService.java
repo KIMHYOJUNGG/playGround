@@ -55,6 +55,7 @@ public class AdminService {
 		return mbv.getContents();
 	}
 
+	
 	// ----------- 여기서 부터 삭제
 	// --------------------------------------------------------------
 	public boolean delete(Integer no) throws Exception {
@@ -90,7 +91,7 @@ public class AdminService {
 	// 레드카드 수 알기
 	public int selectRedcard(String id) {
 		Map map = template.selectOne("admin.selectRedcard", id);
-		int i = Integer.parseInt(map.get("LV").toString());
+		int i = Integer.parseInt(map.get("REDCARD").toString());
 		return i;
 	}
 
@@ -119,10 +120,17 @@ public class AdminService {
 	public boolean msgSend(Map map) {
 		Map map2 = new HashMap<>();
 		map2.put("id", map.get("id"));
+		map2.put("title","게시글이 삭제되었습니다.");
 		map2.put("msg", map.get("title") + "신고되어서 삭제하였습니다.");
 		int i = template.insert("admin.msg", map2);
 		if (i != 0) {
-			return true;
+			int j = template.insert("admin.msg2",map2);
+			if(j!=0) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -137,13 +145,16 @@ public class AdminService {
 		return template.selectList("admin.selectReport", no);
 	}
 
-	public boolean reportRemove(Map param) {
-		int no = Integer.parseInt(param.get("no").toString());
+	public boolean reportRemove(int no) {
 		int i = template.delete("admin.reportRemove", no);
 		if (i != 0) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public String getMessageCnt() {
+		return template.selectOne("admin.getMessageCnt");
 	}
 }
