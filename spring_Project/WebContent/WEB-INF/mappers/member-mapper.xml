@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 관리자에서의 멤버관리-->
 	<select id="selectAll" resultType="hashmap">
-		select * from member
+		select * from member where id!='admin' order by report desc
 	</select>
 	
 	

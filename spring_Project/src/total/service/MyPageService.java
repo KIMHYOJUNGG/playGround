@@ -16,7 +16,6 @@ public class MyPageService {
 	}
 
 	public List<String> getMyFollowingList(String id) {
-		System.out.println("getMyFollowingList");
 		List<Map> raw = template.selectList("follow.getFollowListById", id);
 		List<String> follow = null;
 		for (Map r : raw) {
@@ -32,10 +31,8 @@ public class MyPageService {
 
 	public List<Map> getFollowingOrderByDesc(List following) {
 		if (following != null) {
-			System.out.println("getFollowingOrderByDesc");
 			Map data = new HashMap<>();
 			data.put("following", following);
-			System.out.println(data.get("following") == null);
 			return template.selectList("board.followingArticle", data);
 		} else {
 			return null;

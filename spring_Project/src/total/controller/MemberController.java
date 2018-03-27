@@ -61,72 +61,89 @@ public class MemberController {
 			}
 			throw new Exception();
 		} catch (Exception e) {
-/*			if(param.get("password") != null && param.get("email")!=null) {
-				System.out.println("작동안하냐?");
-				model.addAttribute("idmsg", "아이디를 입력해주세요");
-			}
-			else if(param.get("id") != null && param.get("email")!=null) {
-				System.out.println("이건왜하냐?");
-				model.addAttribute("passwordmsg", "비밀번호를 입력해주세요");
-			}
-			else if(param.get("id") != null && param.get("password")!=null) {
-				System.out.println("이건뭐야?");
-				model.addAttribute("emailmsg", "이메일을 입력해주세요");
-			}*/
+			/*
+			 * if(param.get("password") != null && param.get("email")!=null) {
+			 * System.out.println("작동안하냐?"); model.addAttribute("idmsg", "아이디를 입력해주세요"); }
+			 * else if(param.get("id") != null && param.get("email")!=null) {
+			 * System.out.println("이건왜하냐?"); model.addAttribute("passwordmsg",
+			 * "비밀번호를 입력해주세요"); } else if(param.get("id") != null &&
+			 * param.get("password")!=null) { System.out.println("이건뭐야?");
+			 * model.addAttribute("emailmsg", "이메일을 입력해주세요"); }
+			 */
 			map.put("body", "register.jsp");
 			return "t_el";
 		}
 	}
+
 	// 아이디 체크
-	@RequestMapping(path="checkid", method=RequestMethod.GET)
+	@RequestMapping(path = "checkid", method = RequestMethod.GET)
 	@ResponseBody
-	public boolean memberCheckid(Model model,@RequestParam String id,Map map,HttpServletRequest req) {
+	public boolean memberCheckid(Model model, @RequestParam String id, Map map, HttpServletRequest req) {
 		Map map2 = memberservice.selectId(id);
 		map.put("body", "register.jsp");
-		boolean rst=true;
-		if(map2==null) {
-			rst=false;
+		boolean rst = true;
+		if (map2 == null) {
+			rst = false;
 		}
 		System.out.println(req.getPathInfo());
 		return rst;
 	}
 
 	// 로그인
-	@RequestMapping("/log")
-	public String memberLoginPage(Map map) {
+	@RequestMapping(path = "/log", method = RequestMethod.GET)
+	public String memberLoginPage(Model model, Map map, @RequestParam(required=false) Map mapp) {
+		if (mapp != null) {
+			String uri = (String)mapp.get("uri");
+			String no=(String)mapp.get("no");
+			model.addAttribute("uri", uri);
+			model.addAttribute("no",no);
+			System.out.println("uri="+uri);
+			System.out.println("no="+no);
+		}
 		map.put("body", "login.jsp");
 		return "t_el";
 	}
-	
-	
 
 	// 로그인 실행
 	@RequestMapping(path = "/loging", method = RequestMethod.POST)
 	public String memberLoginHandle(Model model, @RequestParam Map<String, String> param, HttpSession session,
 			Map mapp) {
 		boolean rst = memberservice.loginMember(param);
+		System.out.println("uri2 = "+param.get("uri"));
+		System.out.println("no2 = " + param.get("no"));
 		try {
-			if (rst) {
-				session.setAttribute("logon", param.get("id"));
-				List<WebSocketSession> s = wsMap.get(session.getId());
-				if (s != null) {
-					for (WebSocketSession ws : s) {
-						ws.sendMessage(new TextMessage("로그인"));
-					}
-					if(session.getAttribute("NO") != null) {
-						return "redirect:/board/readPage?no="+session.getAttribute("NO");
-					}else {
-						return "redirect:/index";
-					}
-				} else {
-					if(session.getAttribute("NO") != null) {
-						return "redirect:/board/readPage?no="+session.getAttribute("NO");
-					}else {
-						return "redirect:/index";
+			if (param.get("uri") != null && param.get("no") !=null) {
+				if (rst) {
+					String uri = (String)param.get("uri");
+					String no = (String)param.get("no");
+					session.setAttribute("logon", param.get("id"));
+					List<WebSocketSession> s = wsMap.get(session.getId());
+					if (s != null) {
+						for (WebSocketSession ws : s) {
+							ws.sendMessage(new TextMessage("로그인"));
+						}
+						return "redirect:/" + uri+"?no="+no;
+					} else {
+							return "redirect:/"+ uri+"?no="+no;
 					}
 				}
+				throw new Exception();
 			}
-			throw new Exception();
+			else{
+				if (rst) {
+					session.setAttribute("logon", param.get("id"));
+					List<WebSocketSession> s = wsMap.get(session.getId());
+					if (s != null) {
+						for (WebSocketSession ws : s) {
+							ws.sendMessage(new TextMessage("로그인"));
+						}
+							return "redirect:/index";
+					} else {
+							return "redirect:/index";
+					}
+				}
+				throw new Exception();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			mapp.put("body", "login.jsp");
@@ -211,4 +228,3 @@ public class MemberController {
 		}
 	}
 }
-

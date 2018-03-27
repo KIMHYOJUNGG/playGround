@@ -180,7 +180,7 @@
 						<li class="list-group-item">
 								<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">${c.BOOKNAME}</a> &nbsp;
 								<a href="${pageContext.request.contextPath }/search?search=${c.TYPE}"><span class="badge">${c.TYPE}</span></a></h3>
-									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}"><p class="list-group-item-text" style="margin-bottom: 3px">  ${c.TITLE}</p>
+									<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><p class="list-group-item-text" style="margin-bottom: 3px">  ${c.TITLE}</p>
 									<p class="list-group-item-text">${c.VIEWCNT} | ${c.REGDATE}</p></a>
 							</li>
 							</c:forEach>

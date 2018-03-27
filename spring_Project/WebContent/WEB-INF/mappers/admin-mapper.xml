@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="admin">
 	<select id="login" resultType="hashmap">
-		select * from admin where id=#{id} and password=#{password}
+		select * from member where id=#{id} and password=#{password}
 	</select>
 	<!--  관리자 -->
 	<select id="boardid" resultType="hashmap">
@@ -35,8 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 레드카드 3일 때 0으로 -->
 	<update id="updateLv2">
-		update member set redcard = 0, lv=2 where id=#{id}
+		update member set redcard = 0, lv=2, stoptime=sysdate where id=#{id}
 	</update>
+	
 	<!--  시간이 지남으로써 다시 lv =0으로 -->
 	<update id="updateLv4">
 		update member set lv =0 where id=#{id}
@@ -61,4 +62,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="reportRemove">
 		delete from report where no = #{no}
 	</delete> 
+	
+	
 </mapper>

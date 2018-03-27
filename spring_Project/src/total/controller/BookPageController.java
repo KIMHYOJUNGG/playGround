@@ -55,7 +55,8 @@ public class BookPageController {
 		map.put("contentsList", bookPageService.getBookList(bno)); 
 		map.put("boardVOList", bookPageService.getBoardVO(bno));
 		BookVO book = bookPageService.getWriterInfoByBno(bno);
-		map.put("writerInfo", myPageService.getInfo( book.getWriter() ));
+		map.put("writerInfo", myPageService.getInfo(book.getWriter()));
+		map.put("follower", writerPageService.getFollower(book.getWriter()));
 		map.put("title", book.getBookName());
 		map.put("body", "bookPage.jsp");
 		return "t_el_title";
