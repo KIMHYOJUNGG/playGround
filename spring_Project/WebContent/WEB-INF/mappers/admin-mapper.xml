@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 레드카드 3일 때 0으로 -->
 	<update id="updateLv2">
-		update member set redcard = 0, lv=2 where id=#{id}
+		update member set redcard = 0, lv=2, stoptime=sysdate where id=#{id}
 	</update>
 	
 	<!--  시간이 지남으로써 다시 lv =0으로 -->
