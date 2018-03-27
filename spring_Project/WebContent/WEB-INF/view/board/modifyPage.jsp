@@ -34,7 +34,37 @@
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Content</label>
-							<textarea class="form-control" name="content" rows="3">${content}</textarea>
+							<textarea class="form-control" name="content" rows="3" id="ck">${content}</textarea>
+							<script type="text/javascript">
+							$(function() {
+								CKEDITOR.replace('ck', {
+									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
+									height : '500px', // 입력창의 높이
+								filebrowserUploadUrl :'/image'
+								
+								});
+								
+							
+							});
+							
+							var editor = CKEDITOR.instances['ckeditor_textarea_id'];
+
+							 if (editor) {
+
+							     editor.on('blur', function(event) {
+
+							         // Do something, Example: disable toolbar:
+
+							        //$("#cke_top_" + event.editor.name).css("display", "none");
+
+							         var a = CKEDITOR.instances.ckeditor_textarea_id.getData();       //이건 현재 웹에디터에 입력된 test를 가져온다. setData()로 데이터를 입력할 수 있다.
+
+							         alert(a);
+
+							     });
+
+							 }
+						</script>
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Writer</label> <input type="text"

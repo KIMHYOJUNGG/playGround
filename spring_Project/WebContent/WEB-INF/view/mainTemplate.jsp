@@ -6,6 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="../../resources/ckeditor/ckeditor.js"></script>
+
+
+
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
