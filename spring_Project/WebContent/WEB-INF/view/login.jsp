@@ -22,6 +22,10 @@
 		<form action="/member/loging" method="post"
 			style="width: 330px; text-align: left; line-height: 34px;"
 			autocomplete="off">
+			<c:if test="${uri!=null &&no!=null }">
+				<input type="hidden" name="uri" value="${uri }"/>
+				<input type="hidden" name="no" value="${no }"/>
+			</c:if>
 			<p>
 				<b>ID(*)</b><br /> <small id="checkrst"></small> <input type="text"
 					name="id" id="id" pattern="[a-zA-Z]+">

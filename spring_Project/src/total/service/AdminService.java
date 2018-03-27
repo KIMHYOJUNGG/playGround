@@ -69,24 +69,8 @@ public class AdminService {
 		} else {
 			return false;
 		}
-		/*
-		 * 전체삭제 public void deletePerson(){ mongoTemplate.remove(new Query(),
-		 * "person2"); }
-		 * 
-		 * 부분삭 public void deletePersonByName(String name){ Criteria criteria = new
-		 * Criteria("name"); criteria.is(name); Query query = new Query(criteria);
-		 * 
-		 * mongoTemplate.remove(query, "person2"); } Col
-		 * 
-		 * 
-		 * 출처: http://souning.tistory.com/68 [-]
-		 */
-	}
 
-	/*
-	 * public Map searchId(int no) { return template.selectOne("admin.boardNo", no);
-	 * }
-	 */
+	}
 
 	// 레드카드 수 알기
 	public int selectRedcard(String id) {
@@ -156,6 +140,16 @@ public class AdminService {
 
 	public int getMessageCnt() {
 		return template.selectOne("admin.getMessageCnt");
+	}
+
+	public boolean deletereport(int no) {
+		int i = template.delete("admin.reportRemove",no);
+		if(i!=0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }

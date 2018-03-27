@@ -27,6 +27,7 @@ public class AdminController {
 
 	@Autowired
 	AdminService adminservice;
+
 	// 로그인창 보내기
 	@RequestMapping(method = RequestMethod.GET)
 	public String AminHandler(HttpSession session) {
@@ -36,6 +37,7 @@ public class AdminController {
 			return "redirect:/admin/member";
 		}
 	}
+
 	// 로그인 실행
 	@RequestMapping(path = "/log", method = RequestMethod.POST)
 	public String AdminLogin(Model model, @RequestParam Map<String, String> param, HttpSession session) {
@@ -47,13 +49,14 @@ public class AdminController {
 			return "/admin/admin_fail";
 		}
 	}
+
 	// 회원목록
 	@RequestMapping("/member")
-	public String MemberSelect(Model model, HttpSession session,@RequestParam Map param) {
+	public String MemberSelect(Model model, HttpSession session, @RequestParam Map param) {
 		if (session.getAttribute("admin") != null) {
 			List<Map> list = adminservice.memberSelect();
 			int cnt = adminservice.getMessageCnt();
-			model.addAttribute("gcnt",cnt);
+			model.addAttribute("gcnt", cnt);
 			model.addAttribute("list", list);
 			return "/admin/admin_main";
 		} else {
@@ -79,8 +82,8 @@ public class AdminController {
 	public String readRed(@RequestParam("no") int no, Model model, HttpSession session) throws Exception {
 		if (session.getAttribute("admin") != null) {
 			BoardVO vo = adminservice.read(no);
-			model.addAttribute("title",vo.getTitle() );
-			model.addAttribute("reportlist",adminservice.readNo(no));
+			model.addAttribute("title", vo.getTitle());
+			model.addAttribute("reportlist", adminservice.readNo(no));
 			return "/admin/admin_member_red";
 		} else {
 			return "redirect:/admin";
@@ -101,12 +104,26 @@ public class AdminController {
 		}
 	}
 
-	
-	
 	// =========================================================================================================
-	// 관리자가 해당 게시글 삭제
+	// 게시글 삭제전 report
 	@RequestMapping(path = "/remove", method = RequestMethod.POST)
 	public String removeHandle(Model model, @RequestParam Map param) throws Exception {
+		String id = (String) param.get("id");
+		int no = Integer.parseInt((String) param.get("no"));
+		boolean rst = adminservice.deletereport(no);
+		if (rst) {
+			model.addAttribute("id", id);
+			model.addAttribute("no", no);
+			return "redirect:/admin/removebd";
+		} else {
+			model.addAttribute("fail", "리포트삭제실패");
+			return "/admin/admin_member_board";
+		}
+	}
+
+	// 관리자가 해당 게시글 삭제
+	@RequestMapping(path = "/removebd", method = RequestMethod.GET)
+	public String removebdHandle(Model model, @RequestParam Map param) throws Exception {
 		String id = (String) param.get("id");
 		int no = Integer.parseInt((String) param.get("no"));
 		String title = adminservice.title(no);
@@ -115,7 +132,7 @@ public class AdminController {
 			boolean rst = adminservice.delete(no);
 			if (rst) {
 				model.addAttribute("id", id);
-				model.addAttribute("no",no);
+				model.addAttribute("no", no);
 				return "redirect:/admin/redcard";
 			} else {
 				model.addAttribute("fail", "삭제에 실패하였습니다.");
@@ -133,12 +150,12 @@ public class AdminController {
 		int no = Integer.parseInt(param.get("no").toString());
 		System.out.println("id 2 = " + id);
 		int i = adminservice.selectRedcard(id);
-		System.out.println("레드카드수 : "+i );
-		if (i==2 ) {
+		System.out.println("레드카드수 : " + i);
+		if (i == 2) {
 			boolean rst = adminservice.updateRedCard2(id);
 			if (rst) {
 				model.addAttribute("id", id);
-				model.addAttribute("title",param.get("title"));
+				model.addAttribute("title", param.get("title"));
 				System.out.println(param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
@@ -149,7 +166,7 @@ public class AdminController {
 			boolean rst = adminservice.updateRedCard(id);
 			if (rst) {
 				model.addAttribute("id", id);
-				model.addAttribute("title",param.get("title"));
+				model.addAttribute("title", param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
 				model.addAttribute("fail", "업데이트 실패(레드카드수3개 이하)");
@@ -165,8 +182,8 @@ public class AdminController {
 		boolean rst = adminservice.msgSend(param);
 		if (rst) {
 			model.addAttribute("success", "메세지를 보냈습니다.");
-				System.out.println("성공");
-				return "/admin/admin_member_board";
+			System.out.println("성공");
+			return "/admin/admin_member_board";
 		} else {
 			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
 			return "/admin/admin_member_board";

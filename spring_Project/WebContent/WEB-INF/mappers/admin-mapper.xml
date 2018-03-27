@@ -62,4 +62,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="reportRemove">
 		delete from report where no = #{no}
 	</delete> 
+	
+	
 </mapper>
