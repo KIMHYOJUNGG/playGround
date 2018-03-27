@@ -3,30 +3,31 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="getBox">
-
+<mapper namespace="sendBox">
+	
 	<select id="getMsgById" resultType="hashmap">
-		select * from getmessage where getid=#{getid} order by (regdate) desc
+		select * from sendmessage where sendid=#{sendid} order by (regdate) desc
 	</select>
 	
 	<select id="getOneByNo" resultType="hashmap">
-		select * from getmessage where no = #{no}
+		select * from sendmessage where no = #{no}
 	</select>
 	
-	<select id="getNewMsgCntById" resultType="Integer">
-		select count(*) from getmessage where (getid=#{getid} and readcheck ='N')
+	<select id="selectNo" resultType="_int">
+		select message_seq.nextval as no from dual
 	</select>
 	
 	<insert id="send">
-		insert into getmessage values(#{no}, #{sendid}, #{title}, #{msg}, 'N', sysdate, #{getid})
+		insert into sendmessage values(#{no}, #{sendid}, #{title}, #{msg}, 'N', sysdate, #{getid})
 	</insert>
 	
 	<update id="updateReadCheck">
-		update getmessage set readcheck = 'Y' where no = #{no}
+		update sendmessage set readcheck = 'Y' where no = #{no}
 	</update>
-
+	
 	<delete id="delMsgByNo">
-		delete from getmessage where no in
+		delete from sendmessage where no in
 		<foreach collection="no" item="n" open="(" close=")" separator=",">#{n}</foreach>
 	</delete>
+	
 </mapper>

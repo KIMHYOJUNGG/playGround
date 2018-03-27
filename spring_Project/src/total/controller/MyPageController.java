@@ -26,8 +26,9 @@ public class MyPageController {
 		map.put("info", myPageService.getInfo(id));
 		List<String> following = myPageService.getMyFollowingList(id);
 		map.put("article", myPageService.getFollowingOrderByDesc(following) );
-		map.put("following", myPageService.getFollowingInfoById(following));
-		map.put("getMsg", msgService.getMsgById(id));
+//		map.put("following", myPageService.getFollowingInfoById(following));
+		map.put("newMsgCnt", msgService.getNewMsgCntByIdFromGetBox(id));
+		map.put("getMsg", msgService.getMsgByIdFromGetBox(id));
 		map.put("title", "My Page");
 		map.put("body", "myPage.jsp");
 		return "t_el_title";
