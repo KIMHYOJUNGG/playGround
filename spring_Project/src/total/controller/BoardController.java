@@ -39,8 +39,6 @@ public class BoardController {
   ReportService rservice;
 
   @RequestMapping(value = "/register", method = RequestMethod.GET)
-
-
   public String registerGET(BoardVO board, Model model,Map map,HttpSession session) throws Exception {
 
     System.out.println("register get ...........");
@@ -50,6 +48,16 @@ public class BoardController {
     //return "board/register";
     return "t_board";
 
+  }
+  @RequestMapping(value = "/report", method = RequestMethod.GET)
+  public String reportPOST(ReportVO report,RedirectAttributes rttr,HttpSession session) throws Exception {
+	  
+	  System.out.println("report get ...........");
+	  rservice.create(report);
+
+	    rttr.addFlashAttribute("msg", "success");
+	    return "redirect:/board/listPage";
+	  
   }
 
 /*   @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -85,6 +93,7 @@ public class BoardController {
 
 
   }
+
   @RequestMapping(value = "/listAll", method = RequestMethod.GET)
   public String listAll(Model model) throws Exception {
 

@@ -28,8 +28,8 @@
 					</div>
 
 					<div class="form-group">
-						<label for="exampleInputEmail1">bookname</label><br /> 
-						<select name="book">
+						<label for="exampleInputEmail1">bookname</label><br /> <select
+							name="book">
 
 							<c:forEach items="${listbook}" var="bookVO">
 
@@ -61,10 +61,34 @@
 							name='title' class="form-control" placeholder="Enter Title">
 					</div>
 
+
 					<div class="form-group">
 						<label for="comment">Content</label>
-						<textarea class="form-control" name="content" rows="5"
+						<textarea class="form-control" id="ck" name="content" rows="200"
 							placeholder="Enter ..."></textarea>
+						<script type="text/javascript">
+							$(function() {
+								CKEDITOR.replace('ck', {
+									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
+									height : '500px', // 입력창의 높이
+								filebrowserUploadUrl :'/image'
+								
+								});
+								
+							
+							});
+							
+							
+							var editor = CKEDITOR.instances['ckeditor_textarea_id'];
+
+
+
+
+
+							
+
+
+						</script>
 					</div>
 
 					<!-- 	<div class="form-group">
