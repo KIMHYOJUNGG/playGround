@@ -26,7 +26,6 @@ public class AddCommentsController {
 		//session.setAttribute("boardNo",boardNo);
 		//session.setAttribute("boardNo",preco);
 		boardService.addcomments(boardNo,id,text,preco);
-		System.out.println("id : "+id +"text : "+ text + "boardNo : "+boardNo+"preco :"+preco);
 		
 		return "{\"result\":true}";
 	}
