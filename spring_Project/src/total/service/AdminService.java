@@ -154,7 +154,8 @@ public class AdminService {
 		}
 	}
 
-	public String getMessageCnt() {
+	public int getMessageCnt() {
 		return template.selectOne("admin.getMessageCnt");
 	}
+
 }

@@ -8,20 +8,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="msg">
 		insert into sendmessage(no,sendid,title,msg,getid,regdate) values(sendmessage_seq.nextval,'admin',#{title},#{msg},#{id},sysdate)
 	</insert>
+	
 	<!-- 해당 회원한테 받은 메세지-->
 	<insert id="msg2">
 		insert into getmessage(no,sendid,title,msg,getid,regdate) values(getmessage_seq.nextval,'admin',#{title},#{msg},#{id},sysdate)
 	</insert>
-	<!-- 해원한테서 받은 메세지함 보기  -->
-	<select id="getMessage" resultType="hashmap">
-		select * from getmessage where sendid != 'admin'
-	</select>
-	<!-- 해원한테 보낸 메세지함 보기-->
-	<select id="sendMessage" resultType="hashmap">
-		select * from sendmessage where sendid != 'admin'
-	</select>
+	
 	<!-- 해원한테서 받은 메세지함 개수 -->
-	<select id="getMessageCnt" resultType="String">
+	<select id="getMessageCnt" resultType="int">
 		select count(*) from getmessage where sendid != 'admin' and readcheck = 'N'
 	</select>
+	
+	<!-- 해원한테서 받은 메세지함 제목 보기  -->
+	<select id="getMessage" resultType="hashmap">
+		select sendid, title from getmessage where sendid != 'admin'
+	</select>
+	
+	<!-- 해당해원한테서 받은 메세지 내용보기 -->
+	<select id="getMessageId" resultType="hashmap">
+		select * from getmessage where sendid != 'admin' and title = #{title}
+	</select>
+	
+	<!-- 본 메세지 no 카운트로 -->
+	<update id="updateRead">
+		update getmessage set readcheck='Y' where title = #{title} and sendid = #{sendid}
+	</update>
+	
+	<!-- 해원한테 보낸 메세지함 보기-->
+	<select id="sendMessage" resultType="hashmap">
+		select * from sendmessage 
+	</select>
+	
+
 </mapper>

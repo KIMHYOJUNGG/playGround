@@ -8,7 +8,7 @@
 <body>
 <div align="center">
 	<h2>회원목록입니다
-	<div align="right"><small style="font-size: 15px"><a href="/admin/getmessage">메시지</a>( ${gcnt } )</small></div></h2>
+	<div align="right"><small style="font-size: 15px"><a href="/admin/getmessage?gcnt=${gcnt }">메시지</a>( ${gcnt } )</small></div></h2>
 	<hr/>
 	<table>
 		<thead>
