@@ -34,16 +34,16 @@
 							<th style="width: 40px">VIEWCNT</th>
 						</tr>
 
-					 	<c:forEach items="${list}" var="boardVO">
+					 	<c:forEach items="${searchResult}" var="boardVO">
 
 							<tr>
 								<td>${boardVO.no}</td>
 								<td><a
-									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }&no=${boardVO.no}'>
+									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }?no=${boardVO.title}'>
 										${boardVO.title}</a></td>
-								<td>${boardVO.writer}</td>
+								<td>${boardVO.tag}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-										value="${boardVO.regdate}" /></td>
+										value="${boardVO.date}" /></td>
 								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
 							</tr>
 

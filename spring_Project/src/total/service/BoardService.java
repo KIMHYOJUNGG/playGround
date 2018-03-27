@@ -19,19 +19,10 @@ import org.bson.Document;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.MatchOperation;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.MongoGridFSException;
 
 import total.domain.BoardVO;
 import total.domain.BookVO;
@@ -195,7 +186,7 @@ public List<Map> mongoSearch(String word) {
 	  //cri.regex("^"+word);
 	  Query query=new Query(cri);
 	  List<MongoBoardVo> mbv=template.find(query,MongoBoardVo.class,"board");  
-	    
+	  
 	  List<Map> list = new ArrayList<>();
 	  Map map = new HashMap<>();
 	  for(MongoBoardVo vo : mbv	) {
@@ -203,6 +194,11 @@ public List<Map> mongoSearch(String word) {
 		  map.put("bno", vo.getBno());
 		  map.put("contents", vo.getContents());
 		  map.put("tag", vo.getTag());
+		  List<Map> search =session.selectList("search.boardNo",vo.getNo());
+		  map.put("title", search.get(2));
+		  map.put("date", search.get(3));
+		  map.put("writer", search.get(6));
+		  map.put("view", search.get(8));
 		  
 	  }
 	  list.add(map);
