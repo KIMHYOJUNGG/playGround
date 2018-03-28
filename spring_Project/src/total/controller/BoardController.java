@@ -199,6 +199,7 @@ public class BoardController {
 
 	  String contents= service.mongoFind(no);
 	  List<Map> comments= service.mongoFindComment(no);
+	 System.out.println(service.read(no));
 	    model.addAttribute(service.read(no));
 	    model.addAttribute("contents",contents);
 	    model.addAttribute("body","readPage.jsp");
@@ -206,6 +207,7 @@ public class BoardController {
 	    model.addAttribute("logon",session.getAttribute("logon"));
 	    session.setAttribute("NO", no);
 	    System.out.println("sessionNo---"+session.getAttribute("NO"));
+	    
 	   // return "board/read";
 	   // return "t_board";
 	    

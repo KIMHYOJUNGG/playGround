@@ -28,16 +28,20 @@
       <input type="text" name='title' class="form-control" 
          value="${boardVO.title}" readonly="readonly">
     </div>
+  <div class="box-body">
+    <div class="form-group">
+      <label for="exampleInputEmail1">BookName</label><br/>
+      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}">${boardVO.bookname}</a>
+    </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
      <!--  <textarea class="form-control"  name="content" rows="3" 
       readonly="readonly"> --> ${contents}
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1" >Writer</label>
-      <input type="text" name="writer" class="form-control" 
-        value="${boardVO.writer}" readonly="readonly">
-    </div>
+      <label for="exampleInputEmail1" >Writer</label></br>
+       <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> ${boardVO.writer}</a>
+      </div>
     <div class="form-group">
     <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
