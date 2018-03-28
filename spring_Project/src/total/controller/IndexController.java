@@ -40,34 +40,13 @@ public class IndexController {
 		List<Map> boardNo = indexService.boardConnectNo();
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("body","index.jsp");
-		System.out.println("getno"+boardNo.get(0).get("NO"));
-		System.out.println("NO왜안나옴?"+boardNo.get(0).get("NO"));  
-		System.out.println("=="+boardService.mongoFindImage((Number)(boardNo.get(0).get("NO"))) );
 		
-		/*
-		System.out.println(boardService.mongoFindImage(boardNo.get(1).get("NO")));
-		model.addAttribute("1",boardService.mongoFindImage(boardNo.get(0).get("NO")));			// 사진 배열이니까 배열에서 0번째꺼 가지고 와야함 
-		model.addAttribute("2",boardService.mongoFindImage(boardNo.get(1).get("NO")));
-		model.addAttribute("3",boardService.mongoFindImage(boardNo.get(2).get("NO")));
-		model.addAttribute("4",boardService.mongoFindImage(boardNo.get(3).get("NO")));
-		model.addAttribute("5",boardService.mongoFindImage(boardNo.get(4).get("NO")));
-		model.addAttribute("6",boardService.mongoFindImage(boardNo.get(5).get("NO")));
-		model.addAttribute("7",boardService.mongoFindImage(boardNo.get(6).get("NO")));
-		model.addAttribute("8",boardService.mongoFindImage(boardNo.get(7).get("NO")));
-		*/
+		
 		List list = new LinkedList<>();
 		for(int i=0;i>(boardNo.size() < 8 ? boardNo.size() : 8);i++) {
 		list.add(i,boardService.mongoFindImage((Number)(boardNo.get(i).get("NO"))));
-		System.out.println(Arrays.toString(boardService.mongoFindImage((Number)(boardNo.get(i).get("NO")))));
-		/*
-		list.add(1,boardService.mongoFindImage((Number)(boardNo.get(1).get("NO"))));
-		list.add(2,boardService.mongoFindImage((Number)(boardNo.get(2).get("NO"))));
-		list.add(3,boardService.mongoFindImage((Number)(boardNo.get(3).get("NO"))));
-		list.add(4,boardService.mongoFindImage((Number)(boardNo.get(4).get("NO"))));
-		list.add(5,boardService.mongoFindImage((Number)(boardNo.get(5).get("NO"))));
-		list.add(6,boardService.mongoFindImage((Number)(boardNo.get(6).get("NO"))));
-		list.add(7,boardService.mongoFindImage((Number)(boardNo.get(7).get("NO"))));
-		*/
+		//System.out.println(Arrays.toString(boardService.mongoFindImage((Number)(boardNo.get(i).get("NO")))));
+	
 		}
 		model.addAttribute("list",list);
 		

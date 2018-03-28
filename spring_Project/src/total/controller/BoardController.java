@@ -206,8 +206,6 @@ public class BoardController {
 	    model.addAttribute("comments",comments);
 	    model.addAttribute("logon",session.getAttribute("logon"));
 	    session.setAttribute("NO", no);
-	    System.out.println("sessionNo---"+session.getAttribute("NO"));
-	    
 	   // return "board/read";
 	   // return "t_board";
 	    
