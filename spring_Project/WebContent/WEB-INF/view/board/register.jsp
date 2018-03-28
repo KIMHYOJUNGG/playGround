@@ -37,7 +37,7 @@
 									${bookVO.bookName }</option>
 
 
-							</c:forEach>s
+							</c:forEach>
 
 
 						</select>

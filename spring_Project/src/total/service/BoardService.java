@@ -203,11 +203,11 @@ public List<Map> mongoSearch(String word) {
 	  Map map= new HashMap<>();
 	  Map result = session.selectOne("search.boardNo", no);
 	  //System.out.println("result : "+result);
-	  map.put("no", result.get("NO"));
-	  map.put("title", result.get("TITLE"));
-	  map.put("date", result.get("REGDATE"));
-	  map.put("writer", result.get("WRITER"));
-	  map.put("view", result.get("VIEWCNT"));
+	  map.put("NO", result.get("NO"));
+	  map.put("TITLE", result.get("TITLE"));
+	  map.put("REGDATE", result.get("REGDATE"));
+	  map.put("WRITER", result.get("WRITER"));
+	  map.put("VIEWCNT", result.get("VIEWCNT"));
 	  
 	  list.add(map); 
 	  }
@@ -217,6 +217,23 @@ public List<Map> mongoSearch(String word) {
 	  
 }
 
+public List<Map> mongokeyword(String type) {
+	List<Map> list = session.selectList("search.type",type); 
+	System.out.println("list :" +list);
+	return list;
+	
+	
+	
+	/*
+      Criteria cri=new Criteria("type");
+	  cri.is(type);
+	  Query query=new Query(cri);
+	  List<MongoBoardVo> mbv=template.find(query,MongoBoardVo.class,"board");  
+	  System.out.println(mbv);
+	  return mbv;
+	  */
+	  
+}
 
 public void update(BoardVO vo) throws Exception {
     session.update("board.update", vo);
