@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="../../resources/ckeditor/ckeditor.js"></script>
-
-
+ <script type="text/javascript" src="../../resources/ckeditor/ckeditor.js"></script> 
+<!--  <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script> 
+ -->
 
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
 <meta charset="utf-8">

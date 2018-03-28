@@ -1,54 +1,56 @@
 package total.controller;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import total.service.FileService;
-
 @Controller
-@RequestMapping("/image")
 public class boardUploardController {
-
 	
-	@Autowired
-	FileService fileService;
 
-	@RequestMapping( method=RequestMethod.POST)
-	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws    Exception {
-
-			
-
-		response.setCharacterEncoding("UTF-8");
-
-		response.setContentType("text/html;charset-utf-8");
-
+	@RequestMapping("/imageUpload")
+	public void procFileUpload(HttpServletRequest request,HttpServletResponse response, 
+			MultipartFile upload) throws Exception{ 
 		
+		HttpSession session = request.getSession(); 
+		String path = session.getServletContext().getRealPath("/WEB-INF/view/image/"); // 웹서비스 root 경로
 
-		try {
-
-			fileService.ckeditorImageUpload(request, response, upload);
-
+		//반드시 변수명을 upload로 해야 한다.
+		//String path=request.getRealPath("/WEB-INF/view/image/");
+		System.out.println(path);
+	  
+	response.setCharacterEncoding("utf-8");
+	response.setContentType("text/html; charset=utf-8");
+	
+	String fileName=upload.getOriginalFilename();
+	byte[] bytes=upload.getBytes();
+	String uploadPath=path;
+	OutputStream out=new FileOutputStream(
+			new File(uploadPath+fileName));
+System.out.println(uploadPath+fileName);
+	out.write(bytes);
+	String callback=request.getParameter("CKEditorFuncNum");
+	PrintWriter printWriter=response.getWriter();
+	String fileUrl=
+			request.getContextPath()+"/WEB-INF/view/image/"+fileName;
+	System.out.println(request.getContextPath()+"/image/"+fileName);
+	printWriter.println(
+			"<script>window.parent.CKEDITOR.tools.callFunction("
+			+callback+",'"+fileUrl+"','이미지가 업로드되었습니다.')"+"</script>");
+	printWriter.flush();
 			
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
-
+	
+			
 	}
-
-
-
 	
 	
 	

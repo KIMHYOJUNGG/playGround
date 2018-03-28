@@ -71,23 +71,14 @@
 								CKEDITOR.replace('ck', {
 									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
 									height : '500px', // 입력창의 높이
-								filebrowserUploadUrl :'/image'
+								filebrowserUploadUrl :'/imageUpload.do'
 								
 								});
 								
 							
 							});
 							
-							
-							var editor = CKEDITOR.instances['ckeditor_textarea_id'];
-
-
-
-
-
-							
-
-
+		
 						</script>
 					</div>
 

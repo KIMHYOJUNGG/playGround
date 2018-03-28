@@ -54,8 +54,6 @@
 		</c:forEach>
 	</c:if>
 	</div>
-	
-
 	<c:if test="${logon != null  }">
 		<label for="exampleInputEmail1">댓글쓰기</label> 
 		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
@@ -80,8 +78,6 @@
     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
     </c:if>
     <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
-    
-   
     <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
   </c:if>
