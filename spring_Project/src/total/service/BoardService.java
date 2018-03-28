@@ -1,15 +1,6 @@
 package total.service;
 
-import java.util.ArrayList;
-
-import java.util.Arrays;
-import java.util.Date;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import java.util.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -182,30 +173,47 @@ public List<Map> mongoFindComment(Number no) {
 public List<Map> mongoSearch(String word) {
 	 
       Criteria cri=new Criteria();
-      cri.orOperator(Criteria.where("contents").regex("^"+word),Criteria.where("tag").regex("^"+word));
+      cri.orOperator(Criteria.where("contents").regex(word),Criteria.where("tag").regex(word));
 	  //cri.regex("^"+word);
 	  Query query=new Query(cri);
 	  List<MongoBoardVo> mbv=template.find(query,MongoBoardVo.class,"board");  
 	  
+	  Map m =  new HashMap<>();
+	  m.put("word1", "%"+word+"%");
+	  m.put("word2", "%"+word+"%");
+	  m.put("word3", "%"+word+"%");
+	  List<Map> oracle = session.selectList("search.word",m);
+	  //System.out.println("oracle:"+ oracle);
+	  
+	  Set set =new TreeSet<>();
+	  
 	  List<Map> list = new ArrayList<>();
-	  Map map = new HashMap<>();
-	  for(MongoBoardVo vo : mbv	) {
-		  map.put("no", vo.getNo());
-		  map.put("bno", vo.getBno());
-		  map.put("contents", vo.getContents());
-		  map.put("tag", vo.getTag());
-		  List<Map> search =session.selectList("search.boardNo",vo.getNo());
-		  map.put("title", search.get(2));
-		  map.put("date", search.get(3));
-		  map.put("writer", search.get(6));
-		  map.put("view", search.get(8));
-		  
+	  
+	  for(Map ora : oracle) {
+		  set.add(ora.get("NO").toString());
 	  }
-	  list.add(map);
-	  System.out.println(list.add(map)); 
+	  
+	  for(MongoBoardVo vo : mbv	) {
+		  //System.out.println("vo : "+vo.getNo());
+		  set.add(vo.getNo());
+	  }
+	  //System.out.println("set :" + set);
+	  
+	  for(Object no : set) {
+	  Map map= new HashMap<>();
+	  Map result = session.selectOne("search.boardNo", no);
+	  //System.out.println("result : "+result);
+	  map.put("no", result.get("NO"));
+	  map.put("title", result.get("TITLE"));
+	  map.put("date", result.get("REGDATE"));
+	  map.put("writer", result.get("WRITER"));
+	  map.put("view", result.get("VIEWCNT"));
+	  
+	  list.add(map); 
+	  }
+	  
+	  //System.out.println("list :"+list);
 	  return list;
-	  
-	  
 	  
 }
 

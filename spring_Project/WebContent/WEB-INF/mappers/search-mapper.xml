@@ -5,9 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="search">
 	
-	<!-- 중복아이디가 있나 -->
 	<select id="boardNo" resultType="hashmap">
-		select * from board where no={#no}
+		select * from board where no= #{no}
+	</select>
+	
+	
+	<select id="word" resultType="hashmap">
+	select * from board where title like #{word1} or  BOOKNAME like #{word2} or TYPE like #{word3}
 	</select>
 	
 </mapper>

@@ -27,7 +27,7 @@
 				<div class="box-body">
 					<table class="table table-bordered">
 						<tr>
-							<th style="width: 10px">BNO</th>
+							<th style="width: 10px">NO</th>
 							<th>TITLE</th>
 							<th>WRITER</th>
 							<th>REGDATE</th>
@@ -35,18 +35,16 @@
 						</tr>
 
 					 	<c:forEach items="${searchResult}" var="boardVO">
-
 							<tr>
 								<td>${boardVO.no}</td>
 								<td><a
-									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }?no=${boardVO.title}'>
+									href='/board/readPage?no=${boardVO.no}'>
 										${boardVO.title}</a></td>
-								<td>${boardVO.tag}</td>
+								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 										value="${boardVO.date}" /></td>
-								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
+								<td><span class="badge bg-red">${boardVO.view }</span></td>
 							</tr>
-
 						</c:forEach> 
 
 					</table>

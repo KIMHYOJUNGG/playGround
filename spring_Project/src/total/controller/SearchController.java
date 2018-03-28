@@ -20,6 +20,14 @@ public class SearchController {
 	public String searchHandle(Map map,@RequestParam String word ) {
 		map.put("searchResult",boardService.mongoSearch(word));
 		map.put("body", "/board/listPage.jsp");
+		/*
+		List<Map> list = boardService.mongoSearch(word);
+		for(Map m : list) {
+			m.get("no");
+			
+		}
+		*/
+		
 		return "t_el";
 	}
 	
