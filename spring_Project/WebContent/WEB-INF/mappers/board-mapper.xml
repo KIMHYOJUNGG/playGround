@@ -125,7 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="getWritersRegdate" resultType="hashmap">
-		select writer, max(regdate)  from board where in
+		select writer, max(regdate) as regdate from board where writer in
 		<foreach collection="writers"  item="w" open="(" close=")" separator=",">#{w}</foreach>
 		group by writer
 	</select>

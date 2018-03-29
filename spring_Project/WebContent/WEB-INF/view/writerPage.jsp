@@ -104,25 +104,35 @@
 										<textarea class="form-control" id="msgBody" rows="15" name="msg"  style="resize: none; overflow-y: scroll;" required></textarea>
 									</div>
 								</div>
-								<button type="submit" class="btn btn-default"
-									formaction="${pageContext.request.contextPath }/message/send">보내기</button>
+								<button type="submit" class="btn btn-default" formaction="${pageContext.request.contextPath }/message/send">보내기</button>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-
+			<script>
+				 function sendMsg(getid){
+						$("#getid").val(getid);
+						$("#sendModal").modal();
+					}
+			</script>
 			<c:choose>
 				<c:when test="${fan ne true}">
-				<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
-				  <!-- Modal -->
+					<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
+				  </c:when>
+				  <c:otherwise>
+				  	<button type="button" class="btn btn-info"  id="canclebt">구독취소</button>
+				  </c:otherwise>
+				  </c:choose>
+			</c:if>
+			</div>
+			 <!-- Modal -->
 				  <div class="modal fade" id="result"  role="dialog">
 				    <div class="modal-dialog">
 				    
 				      <!-- Modal content-->
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				          <h4 class="modal-title" >구독하기</h4>
 				        </div>
 				        <div class="modal-body">
@@ -135,41 +145,14 @@
 				      
 				    </div>
 				  </div>
-				  <script>
-					  function sendMsg(getid){
-							$("#getid").val(getid);
-							$("#sendModal").modal();
-						}
 				  
-					  	$("#followbt").click(function(){
-							$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
-								}).done(function(rst){
-									var html="";
-									if(rst.result) {
-										html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
-									} else {
-										html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
-									}
-										$("#mbody").html(html);
-						  			$("#result").modal();
-								})	;
-				  		});
-					  	
-					  	$("#rClose").click(function(){
-					  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
-					  	});
-				  </script>
-				  </c:when>
-				  <c:otherwise>
-				  	<button type="button" class="btn btn-info"  id="canclebt">구독취소</button>
-					  	<!-- Modal -->
+				  	<!-- Modal -->
 					  <div class="modal fade" id="cancle"  role="dialog">
 					    <div class="modal-dialog">
 					    
 					      <!-- Modal content-->
 					      <div class="modal-content">
 					        <div class="modal-header">
-					          <button type="button" class="close" data-dismiss="modal">&times;</button>
 					          <h4 class="modal-title" >구독취소</h4>
 					        </div>
 					        <div class="modal-body">
@@ -183,6 +166,25 @@
 					    </div>
 					  </div>
 					  <script>
+						  	$("#followbt").click(function(){
+								$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
+									}).done(function(rst){
+										var html="";
+										if(rst.result) {
+											html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
+										} else {
+											html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+										}
+											$("#mbody").html(html);
+							  			$("#result").modal();
+									})	;
+					  		});
+						  	
+						  	$("#rClose").click(function(){
+						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
+						  	});
+
+					  
 						  	$("#canclebt").click(function(){
 								$.get("${pageContext.request.contextPath}/follow/cancle",  {"target": "${writerInfo.ID}"
 									}).done(function(rst){
@@ -201,10 +203,7 @@
 						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
 						  	});
 					  </script>
-				  </c:otherwise>
-				  </c:choose>
-			</c:if>
-			</div>
+					  
 			<p></p>
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#home">CONTENTS</a></li>
