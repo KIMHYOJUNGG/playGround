@@ -19,9 +19,10 @@ public class KeyWordController {
 	public String KeyWordHandle(Map map,@RequestParam String type ) {
 		// type이 세계여생인것들 찾기
 		List<Map> list = boardService.mongokeyword(type);
-		System.out.println(list);
-		map.put("searchResult", list);
-		map.put("body", "/board/listPage.jsp");
+		Set tag = boardService.mongoTag(type);
+		map.put("list", list);
+		map.put("tag", tag);
+		map.put("body", "/board/listAll.jsp");
 		
 		
 		

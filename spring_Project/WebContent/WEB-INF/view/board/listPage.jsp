@@ -34,16 +34,16 @@
 							<th style="width: 40px">VIEWCNT</th>
 						</tr>
 
-					 	<c:forEach items="${searchResult}" var="boardVO">
+					 	<c:forEach items="${list}" var="boardVO">
 							<tr>
-								<td>${boardVO.NO}</td>
+								<td>${boardVO.no}</td>
 								<td><a
-									href='/board/readPage?no=${boardVO.NO}'>
-										${boardVO.TITLE}</a></td>
-								<td>${boardVO.WRITER}</td>
+									href='/board/readPage?no=${boardVO.no}'>
+										${boardVO.title}</a></td>
+								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-										value="${boardVO.REGDATE}" /></td>
-								<td><span class="badge bg-red">${boardVO.VIEWCNT }</span></td>
+										value="${boardVO.regdate}" /></td>
+								<td><span class="badge bg-red">${boardVO.viewcnt}</span></td>
 							</tr>
 						</c:forEach> 
 

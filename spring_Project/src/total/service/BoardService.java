@@ -222,18 +222,46 @@ public List<Map> mongokeyword(String type) {
 	System.out.println("list :" +list);
 	return list;
 	
-	
-	
-	/*
-      Criteria cri=new Criteria("type");
-	  cri.is(type);
+
+}
+
+public Set mongoTag(String type) {
+	  List tag = new LinkedList<>();
+	  Set set = new HashSet<>();
+	  Map m = new HashMap<>();
+	  List<Map> list = session.selectList("search.type", type);
+	  for(Map map : list) {
+	  System.out.println("No : "+map.get("NO"));
+	  Number no = (Number) map.get("NO");
+	  Criteria cri=new Criteria("no");
+	  cri.is(no.intValue());
 	  Query query=new Query(cri);
-	  List<MongoBoardVo> mbv=template.find(query,MongoBoardVo.class,"board");  
-	  System.out.println(mbv);
-	  return mbv;
+	  List<MongoBoardVo> mbv =template.find(query,MongoBoardVo.class,"board");  
+	  System.out.println("mbv : "+mbv);
+	  for(String t :mbv.get(0).getTag()) {
+		  tag.add(t);
+		  set.add(t);
+		  m.put(t, 0);
+	  	}
+	  
+	  }
+	 
+	/*  
+	  System.out.println("tag :"+tag.size()+"/"+tag);
+	  for(Object t : tag) {
+		  if() {
+			   
+			  
+		  }
+	  }
 	  */
 	  
+	return set;
+	
+	
+	  
 }
+
 
 public void update(BoardVO vo) throws Exception {
     session.update("board.update", vo);
