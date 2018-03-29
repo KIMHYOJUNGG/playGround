@@ -1,34 +1,35 @@
 package total.controller;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import total.domain.MongoBoardVo;
 import total.service.BoardService;
 
 @Controller
-public class KeyWordController {
+public class TagController {
+
 	@Autowired
 	BoardService boardService;
 	
-	@RequestMapping("/keyword")
-	public String KeyWordHandle(Map map,@RequestParam String type ) {
-		// type이 세계여생인것들 찾기
-		List<Map> list = boardService.mongokeyword(type);  
-		List<Map> tag = boardService.mongoTag(type);
-		map.put("searchList",boardService.mongoSearch(type));
+	@RequestMapping("/tag")
+	public String KeyWordHandle(Map map,@RequestParam String tag ) {
+		List<Map> list = boardService.mongokeyword(tag);
+		List<Map> t = boardService.mongoTagAnd(tag);
+		map.put("searchList",boardService.mongoSearch(tag));
 		map.put("list", list);
-		map.put("tag", tag);
+		map.put("tag", t);
 		map.put("body", "/board/listAll.jsp");
 		
 		
 		
 		return "t_el";
+  
 	}
-	
-	
+
 }
+

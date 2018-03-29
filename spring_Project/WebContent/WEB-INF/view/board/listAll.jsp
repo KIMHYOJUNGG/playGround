@@ -52,7 +52,7 @@
 						</tr>
 
 
-						<c:forEach items="${list}" var="boardVO">
+						<c:forEach items="${searchList}" var="boardVO">
 							<tr>
 								<td>${boardVO.NO}</td>
 								<td><a href='/board/readPage?no=${boardVO.NO}'>
@@ -81,7 +81,7 @@
 </div>
 <!-- /.content-wrapper -->
 <c:forEach items="${tag }" var="tag">
-<button class="button button">${tag }</button>
+<button class="button button" onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')" >${tag }</button>
 </c:forEach>
 
 <script>
