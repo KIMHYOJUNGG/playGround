@@ -16,14 +16,18 @@ public class AdminMsgService {
 	@Autowired
 	MongoTemplate session;
 
-	public List<Map> message() {
+	public List<Map> getmessage() {
 		return template.selectList("admin.getMessage");
 	}
 
-	public Map messageId(Map map) {
-		int rst = template.update("admin.updateRead",map);
+	public List<Map> sendmessage(){
+		return template.selectList("admin.sendMessage");
+	}
+	
+	public Map getmessageId(Map map) {
+		int rst = template.update("admin.updategetRead",map);
 		if(rst!=0) {
-			return template.selectOne("admin.getMessageId",map.get("title"));
+			return template.selectOne("admin.getMessageId",map);
 		}
 		else {
 			Map map2 = new HashMap<>();

@@ -4,14 +4,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-	<!-- 해당회원한테 보낸 메세지 -->
+	<!-- 메세지 번호 -->
+	<select id="selectNo" resultType="int">
+		select message_seq.nextval from dual
+	</select>
+	
+	<!-- 해당회원한테 보낼 메세지 저장 -->
 	<insert id="msg">
-		insert into sendmessage(no,sendid,title,msg,getid,regdate) values(sendmessage_seq.nextval,'admin',#{title},#{msg},#{id},sysdate)
+		insert into sendmessage(no,sendid,title,msg,getid,regdate) values(#{no},'admin',#{title},#{msg},#{id},sysdate)
 	</insert>
 	
-	<!-- 해당 회원한테 받은 메세지-->
+	<!-- 어드민한테서 받은 메세지 저장-->
 	<insert id="msg2">
-		insert into getmessage(no,sendid,title,msg,getid,regdate) values(getmessage_seq.nextval,'admin',#{title},#{msg},#{id},sysdate)
+		insert into getmessage(no,sendid,title,msg,getid,regdate) values(#{no},'admin',#{title},#{msg},#{id},sysdate)
 	</insert>
 	
 	<!-- 해원한테서 받은 메세지함 개수 -->
@@ -19,25 +24,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from getmessage where sendid != 'admin' and readcheck = 'N'
 	</select>
 	
+	<!-- 해원한테서 보낸 메세지함 개수 -->
+	<select id="sendMessageCnt" resultType="int">
+		select count(*) from sendmessage where getid != 'admin' and readcheck = 'N'
+	</select>
+	
 	<!-- 해원한테서 받은 메세지함 제목 보기  -->
 	<select id="getMessage" resultType="hashmap">
-		select sendid, title from getmessage where sendid != 'admin'
+		select no, sendid, title from getmessage where sendid != 'admin'
+	</select>
+	
+	<!-- 해원한테 보낸 메세지함 제목보기 -->
+	<select id="sendMessage" resultType="hashmap">
+		select no, getdid, title form sendmessage where getid =='admin'
 	</select>
 	
 	<!-- 해당해원한테서 받은 메세지 내용보기 -->
 	<select id="getMessageId" resultType="hashmap">
-		select * from getmessage where sendid != 'admin' and title = #{title}
+		select * from getmessage where sendid = #{sendid} and title = #{title}
 	</select>
 	
-	<!-- 본 메세지 no 카운트로 -->
-	<update id="updateRead">
+	<!-- 본 받은 메세지 no 카운트로 -->
+	<update id="updategetRead">
 		update getmessage set readcheck='Y' where title = #{title} and sendid = #{sendid}
 	</update>
 	
-	<!-- 해원한테 보낸 메세지함 보기-->
-	<select id="sendMessage" resultType="hashmap">
-		select * from sendmessage 
-	</select>
+	<!-- 본 보낸 메세지 no 카운트로 -->
+	<update id="updatesendRead">
+		update sendmessage set readcheck='Y' where title = #{title} and getid = admin
+	</update>
 	
 
 </mapper>

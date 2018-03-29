@@ -58,6 +58,9 @@ public class AdminController {
 			int cnt = adminservice.getMessageCnt();
 			model.addAttribute("gcnt", cnt);
 			model.addAttribute("list", list);
+			if(param.get("success")!=null) {
+				model.addAttribute("success",param.get("success"));
+			}
 			return "/admin/admin_main";
 		} else {
 			return "redirect:/admin";
@@ -181,12 +184,12 @@ public class AdminController {
 		System.out.println(param);
 		boolean rst = adminservice.msgSend(param);
 		if (rst) {
-			model.addAttribute("success", "메세지를 보냈습니다.");
+			model.addAttribute("success", param.get("title")+"을 삭제하였습니다.");
 			System.out.println("성공");
-			return "/admin/admin_member_board";
+			return "redirect:/admin/member";
 		} else {
 			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
-			return "/admin/admin_member_board";
+			return "redirect:/admin/member";
 		}
 	}
 }

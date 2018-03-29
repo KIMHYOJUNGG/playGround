@@ -102,10 +102,12 @@ public class AdminService {
 
 	// 회원한테 msg 보내기
 	public boolean msgSend(Map map) {
+		int no = template.selectOne("admin.selectNo");
 		Map map2 = new HashMap<>();
+		map2.put("no",no);
 		map2.put("id", map.get("id"));
-		map2.put("title","게시글이 삭제되었습니다.");
-		map2.put("msg", map.get("title") + "신고되어서 삭제하였습니다.");
+		map2.put("title","신고된게시물이 삭제되었습니다.");
+		map2.put("msg", map.get("title") + " 부적절한 게시글이므로 삭제하였습니다.");
 		int i = template.insert("admin.msg", map2);
 		if (i != 0) {
 			int j = template.insert("admin.msg2",map2);
@@ -150,6 +152,10 @@ public class AdminService {
 		else {
 			return false;
 		}
+	}
+
+	public int sendMessageCnt() {
+		return template.selectOne("admin.sendMessageCnt");
 	}
 
 }

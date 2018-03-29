@@ -1,9 +1,12 @@
 package total.service;
 
+import java.util.Map;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -62,6 +65,23 @@ public class MailService {
 			message.setSubject("회원의 비밀번호정보입니다.");
 			String content = "회원의 password는"+password+ "가 되겠습니다.<br/>";
 			content+="<a href=\"http://"+addr+"/member/log\">로그인</a>";
+			message.setContent(content, "text/html;charset=utf-8");
+			// content 설정을 text/plain;charset=utf-8로 보내면 HTML로 보낼 수 도 있지만 html형식을 String으로 짜야 한다는 번거로움이 있다.
+			
+			mailSender.send(message);
+			return true;
+		}catch(MessagingException e) {// 사용자 이메일 주소가 없을 시 MessagingException
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public boolean confirm(String target,String num) {
+		MimeMessage message = mailSender.createMimeMessage();
+		try {
+			message.setRecipient(RecipientType.TO, new InternetAddress(target));
+			message.setFrom(new InternetAddress("admin@spring.io"));
+			message.setSubject("요청하신 이메일 인증키입니다.");
+			String content = num;
 			message.setContent(content, "text/html;charset=utf-8");
 			// content 설정을 text/plain;charset=utf-8로 보내면 HTML로 보낼 수 도 있지만 html형식을 String으로 짜야 한다는 번거로움이 있다.
 			

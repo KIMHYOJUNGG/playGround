@@ -42,6 +42,11 @@ public class MemberService {
 	public Map selectId(String id) {
 		return template.selectOne("member.idsearch2",id);
 	}
+
+	public int updateLv(String id) {
+		// TODO Auto-generated method stub
+		return template.update("member.updateLv",id);
+	}
 	
 }
 

@@ -55,7 +55,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		where id=#{id}
 	</update>
-
+	<update id="updateLv">
+		update member set lv=1 where id=#{id}
+	</update>
 	<!-- 관리자에서의 멤버관리-->
 	<select id="selectAll" resultType="hashmap">
 		select * from member where id!='admin' order by report desc
