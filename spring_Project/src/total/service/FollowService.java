@@ -28,19 +28,24 @@ public class FollowService {
 	
 	public List<Map> getFollowingBookList(List<String> writers) {
 		List<Map> fbList = new ArrayList<>();
-		for(String w : writers) {
-			Map<String, Object> map = new HashMap<>();
-			map.put("writer", w);
-			map.put("list", mongo.find(new Query(Criteria.where("writer").is(w)), BookVO.class, "book"));
-			fbList.add(map);
+			if(writers != null) {
+			for(String w : writers) {
+				Map<String, Object> map = new HashMap<>();
+				map.put("writer", w);
+				map.put("list", mongo.find(new Query(Criteria.where("writer").is(w)), BookVO.class, "book"));
+				fbList.add(map);
+			}
 		}
 		return fbList;
 	}
 	
 	public List<Map> getWritersRegdate(List<String> writers) {
-		Map data = new HashMap<>();
-			data.put("writers", writers);
-		return template.selectList("board.getWritersRegdate", data);
+		if(writers != null) {
+			Map data = new HashMap<>();
+				data.put("writers", writers);
+			return template.selectList("board.getWritersRegdate", data);
+		} else 
+			return null;
 	}
 	
 }
