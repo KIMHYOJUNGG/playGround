@@ -31,6 +31,7 @@
 	<div class="container">
 		<h2>메세지</h2>
 		<p></p>
+		<div class="table-responsive">
 		<table class="table">
 			<thead >
 				<tr>
@@ -65,7 +66,7 @@
 				</tr>
 			</tbody>
 		</table>
-						
+		</div>
 						<script>
 							function sendMsg(sendid){
 								$("#getid").val(sendid);

@@ -13,7 +13,7 @@
 }
 </style>
 <div class="container text-center">
-	<h2>${writerInfo.NICKNAME }님의관심 작가</h2>
+	<h2>${writerInfo.NICKNAME }님의 관심 작가</h2>
 	<c:choose>
 		<c:when test="${!empty  writerFollowing}">
 			<div class="list-group">
@@ -129,7 +129,8 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-		관심 작가가 없습니다.
+		<hr/>
+		<p>관심 작가가 없습니다.</p>
 		</c:otherwise>
 	</c:choose>
 </div>

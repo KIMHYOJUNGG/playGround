@@ -48,8 +48,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="tag">TAG:</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="tag"
-							placeholder="#태그#입력" name="tag">
+						<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" onkeyup="checkTag()">
 					</div>
 				</div>
 				<div class="form-group" align="right">
@@ -59,10 +58,30 @@
 				</div>
 			</form>
 		</div>
+		<script>
+			function checkTag() {
+				var tag = $("#tag").val();
+				console.log($("#tag").val());
+				if(tag.charCodeAt(tag.length-1) == 32) {
+					if(tag.charCodeAt(tag.length-2)!=35){
+						$("#tag").val(tag.substr(0, tag.length-1)+"#");
+					}	else {
+						$("#tag").val(tag.substr(0, tag.length-1));
+					}
+				}
+				if(tag.indexOf("　") != -1){
+					if(tag.charCodeAt(tag.indexOf("　")-1) != 35){
+						$("#tag").val(tag.replace("　", "#"));
+					} else {
+						$("#tag").val(tag.substr(0,tag.indexOf("　")) );
+					}
+				}
+			}
+		</script>
 	</c:when>
 	<c:otherwise>
 		<div class="jumbotron" style="background-color: white">
-	<div class="container">
+			<div class="container">
 
 				<div class="row">
 					<div class="col-sm-3">
@@ -119,7 +138,7 @@
 
 										</div>
 									</div>
-									<script>
+					<script>
 					  	$("#followbt").click(function(){
 							$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
 								}).done(function(rst){

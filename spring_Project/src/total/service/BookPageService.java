@@ -67,10 +67,6 @@ public class BookPageService {
 	public BookVO getBookInfo(String bno) {
 		return mongo.findOne(new Query(Criteria.where("bno").is(bno)), BookVO.class, "book");
 	}
-
-	public BookVO getWriterInfoByBno(String bno) {
-		return mongo.findOne(new Query(Criteria.where("bno").is(bno)), BookVO.class, "book");
-	}
 	
 	public boolean delContentsFromBoard(int[] no) {
 		Map data = new HashMap<>();

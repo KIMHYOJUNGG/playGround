@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<div class="container">
+<div class="container" style="padding: 0px">
 	<h3>책 정보 수정</h3>
 	<form class="form-horizontal"  method="post">
 		<div class="form-group">
@@ -16,7 +16,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="tag">TAG:</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" value="#${fn:join(bookInfo.tag,'#') }" >
+				<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" value="#${fn:join(bookInfo.tag,'#') }"  onkeyup="checkTag()">
 			</div>
 		</div>
 		<div class="form-group" align="right">
@@ -27,15 +27,35 @@
 		</div>
 	</form>
 	<hr/>
-	
+	<script>
+			function checkTag() {
+				var tag = $("#tag").val();
+				console.log($("#tag").val());
+				if(tag.charCodeAt(tag.length-1) == 32) {
+					if(tag.charCodeAt(tag.length-2)!=35){
+						$("#tag").val(tag.substr(0, tag.length-1)+"#");
+					}	else {
+						$("#tag").val(tag.substr(0, tag.length-1));
+					}
+				}
+				if(tag.indexOf("　") != -1){
+					if(tag.charCodeAt(tag.indexOf("　")-1) != 35){
+						$("#tag").val(tag.replace("　", "#"));
+					} else {
+						$("#tag").val(tag.substr(0,tag.indexOf("　")) );
+					}
+				}
+			}
+		</script>
+	<div class="table-responsive">
 	<table class="table">
 			<thead >
 				<tr>
 					<th style="text-align: center; width: 10%"><input type="checkbox"  id="topcbx"></th>
 					<th style="text-align: center; width: 40%">글 제목</th>
-					<th style="text-align: center; width: 10%">분류</th>
-					<th style="text-align: center; width: 10%">Good</th>
-					<th style="text-align: center; width: 10%">View</th>
+					<th style="text-align: center;">분류</th>
+					<th style="text-align: center;">Good</th>
+					<th style="text-align: center;">View</th>
 					<th style="text-align: center; width: 20%">등록일</th>
 				</tr>
 			</thead>
@@ -47,22 +67,22 @@
 					<c:otherwise>
 						<c:forEach var="cts" items="${contentsList }">
 							<tr>
-								<td><input type="checkbox" class="ctscbx"  value="${cts.NO }"></td>
-								<td style="width: 40%"><a href="${pageContext.request.contextPath }/board/readPage?no=${cts.NO}">${cts.TITLE }</a></td>
-								<td style="width: 10%">${cts.TYPE }</td>
-								<td style="width: 10%">${msg.GOOD }</td>
-								<td style="width: 10%">${msg.VIEW }</td>
-								<td style="width: 20%"><fmt:formatDate value="${cts.REGDATE }" pattern="yy/MM/dd HH:mm"/>
+								<td align="center"><input type="checkbox" class="ctscbx"  value="${cts.NO }"></td>
+								<td><a href="${pageContext.request.contextPath }/board/readPage?no=${cts.NO}">${cts.TITLE }</a></td>
+								<td>${cts.TYPE }</td>
+								<td>${msg.GOOD }</td>
+								<td>${msg.VIEW }</td>
+								<td><fmt:formatDate value="${cts.REGDATE }" pattern="yy/MM/dd HH:mm"/>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
 				<tr>
-						<td colspan="6"><button type="button" class="btn btn-info" onclick="del()">삭제</button></td>
+						<td colspan="6" align="right"><button type="button" class="btn btn-info" onclick="del()">삭제</button></td>
 				</tr>
 			</tbody>
 	</table>
-	
+	</div>
 	<script>
 		$("#topcbx").prop("checked", false);
 	
@@ -111,5 +131,5 @@
 			}
 		}
 	</script>
-		
+</div>
 		

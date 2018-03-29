@@ -31,6 +31,7 @@
 	<div class="container">
 		<h2>보낸 메세지함</h2>
 		<p></p>
+		<div class="table-responsive">
 		<table class="table">
 			<thead>
 				<tr>
@@ -64,6 +65,7 @@
 				</tr>
 			</tbody>
 		</table>
+		</div>
 	</div>
 
 	<script>

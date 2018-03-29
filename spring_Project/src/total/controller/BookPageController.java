@@ -52,16 +52,21 @@ public class BookPageController {
 	
 	@RequestMapping("/{bno}")
 	public String bookPageHandle3(@PathVariable String bno, Map<String, Object> map) {
-		map.put("bookContents", "Y");
-		map.put("bookInfo", bookPageService.getBookInfo(bno));
-		map.put("contentsList", bookPageService.getBookList(bno)); 
-		map.put("boardVOList", bookPageService.getBoardVO(bno));
-		BookVO book = bookPageService.getWriterInfoByBno(bno);
-		map.put("writerInfo", myPageService.getInfo(book.getWriter()));
-		map.put("follower", writerPageService.getFollower(book.getWriter()));
-		map.put("title", book.getBookName());
-		map.put("body", "bookPage.jsp");
-		return "t_el_title";
+		BookVO book = bookPageService.getBookInfo(bno);
+		if(book != null) {
+			map.put("bookContents", "Y");
+			map.put("bookInfo", bookPageService.getBookInfo(bno));
+			map.put("contentsList", bookPageService.getBookList(bno)); 
+			map.put("boardVOList", bookPageService.getBoardVO(bno));
+			map.put("writerInfo", myPageService.getInfo(book.getWriter()));
+			map.put("follower", writerPageService.getFollower(book.getWriter()));
+			map.put("title", book.getBookName());
+			map.put("body", "bookPage.jsp");
+			
+			return "t_el_title";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
 	@RequestMapping(path="/{bno}/modify", method=RequestMethod.GET)

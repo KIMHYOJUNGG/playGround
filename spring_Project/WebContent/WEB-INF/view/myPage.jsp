@@ -57,9 +57,9 @@
    							<a href="${pageContext.request.contextPath }/@${article[ai].WRITER}">${article[ai].NICKNAME}</a></p>
       					</li>
 			</c:forEach> 
-				<c:if test="${fn:length(article) > 15 }">
-					<a><p>더보기</p></a>
-				</c:if>
+<%-- 				<c:if test="${fn:length(article) > 15 }"> --%>
+<!-- 					<button class="btn btn-info" onclick="more()">더보기</button> -->
+<%-- 				</c:if> --%>
 			</c:if>
 			
 			<c:if test="${empty article }">
