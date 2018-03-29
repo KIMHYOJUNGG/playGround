@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <div class="container text-center">
 	<h2>${writerInfo.NICKNAME }님의 관심 작가</h2>
@@ -40,18 +41,61 @@
 											<h3>
 											<c:forEach var="book" items="${list }" varStatus="vs">
 												<a href="${pageContext.request.contextPath }/bookPage/${book.bno}">${book.bookName }</a>
-												<c:if test="${!vs.last }">/ </c:if>
+												<c:if test="${!vs.last }"> / </c:if>
 											</c:forEach>
 											</h3>
 										</c:if>
 									</c:forEach>
 								</div>
 								<div style="height: 20%">
-									<h3>${f.NICKNAME}</h3>
+								<c:forEach var="map" items="${regList }" varStatus="vs">
+									<c:if test="${map.WRITER eq f.ID }">
+										<h3>최근 글 등록일 <span style="color: gray"><fmt:formatDate  value="${ map.REGDATE}" pattern="yy/MM/dd hh:mm"/></span></h3>
+									</c:if>
+								</c:forEach>
 								</div>
 								<div style="height: 20%">
 									<p class="list-group-item-text"><button class="btn btn-info"  id="canclebt">구독 취소</button></p>
 								</div>
+									<!-- Modal -->
+								  <div class="modal fade" id="cancle"  role="dialog">
+								    <div class="modal-dialog">
+								    
+								      <!-- Modal content-->
+								      <div class="modal-content">
+								        <div class="modal-header">
+								          <button type="button" class="close" data-dismiss="modal">&times;</button>
+								          <h4 class="modal-title" >구독취소</h4>
+								        </div>
+								        <div class="modal-body">
+								          <p id="cancleBody"></p>
+								        </div>
+								        <div class="modal-footer">
+								          <button type="button" class="btn btn-default" data-dismiss="modal" id="cClose">Close</button>
+								        </div>
+								      </div>
+								      
+								    </div>
+								  </div>
+								  <script>
+									  	$("#canclebt").click(function(){
+											$.get("${pageContext.request.contextPath}/follow/cancle",  {"target": "${writerInfo.ID}"
+												}).done(function(rst){
+													var html="";
+													if(rst.result) {
+														html = "${writerInfo.NICKNAME} 님을 관심 작가에서 삭제하였습니다. "
+													} else {
+														html = "<span style='color: red'>관심 작가 삭제실패. 다시 시도해 주세요.</span> "
+													}
+														$("#cancleBody").html(html);
+										  			$("#cancle").modal();
+												})	;
+								  		});
+									  	
+									  	$("#cClose").click(function(){
+									  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
+									  	});
+								  </script>
 							</div>
 						</div>
 					</li>

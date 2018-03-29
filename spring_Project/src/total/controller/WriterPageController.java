@@ -39,6 +39,7 @@ public class WriterPageController {
 		map.put("writerFollowing", myPageService.getFollowingInfoById(myPageService.getMyFollowingList(id)));
 		List<String> writers = myPageService.getMyFollowingList(id);
 		map.put("followingBookList", followService.getFollowingBookList(writers));
+		map.put("regList", followService.getWritersRegdate(writers));
 		map.put("body", "following.jsp");
 		return  "t_el";
 	}

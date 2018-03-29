@@ -34,8 +34,13 @@ public class FollowService {
 			map.put("list", mongo.find(new Query(Criteria.where("writer").is(w)), BookVO.class, "book"));
 			fbList.add(map);
 		}
-		
-		
 		return fbList;
 	}
+	
+	public List<Map> getWritersRegdate(List<String> writers) {
+		Map data = new HashMap<>();
+			data.put("writers", writers);
+		return template.selectList("board.getWritersRegdate", data);
+	}
+	
 }

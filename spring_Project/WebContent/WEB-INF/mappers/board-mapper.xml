@@ -102,7 +102,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
-
 	
 	<select id="getListByBno" resultType="hashmap">
 		select * from board where bno = #{bno} order by (regdate) desc
@@ -124,5 +123,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delBookByBno">
 		delete from board where bno = #{bno}
 	</delete>
+	
+	<select id="getWritersRegdate" resultType="hashmap">
+		select writer, max(regdate)  from board where in
+		<foreach collection="writers"  item="w" open="(" close=")" separator=",">#{w}</foreach>
+		group by writer
+	</select>
 	
 </mapper>
