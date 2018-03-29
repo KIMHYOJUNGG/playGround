@@ -23,8 +23,9 @@
 			</p>
 			<p>
 				<b>EMAIL(*)</b><br /> <input type="email" name="email"
-					onblur="checkemail()"><br /> <small><input
-					type="checkbox" id="checkemail" name="checkmail" value='1'/>이메일 인증을 하겠습니다.</small>
+					onblur="checkemail()"><br /> <small> 
+					<input type="checkbox" id="checkemail" name="checkemail" />이메일 인증을 하겠습니다.
+				</small>
 			</p>
 			<p>
 				<button id="sbt" type="submit" style="width: 100%; height: 30px;">가
@@ -71,5 +72,10 @@
 			xhr.send();
 		}
 	}
+	
+	if (document.getElementById("checkemail").checked) {
+		console.log(document.getElementById("checkemail").checked);
+		document.getElementById("checkemail").value = 1;
+	} 
 </script>
 

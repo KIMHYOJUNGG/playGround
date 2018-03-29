@@ -50,7 +50,7 @@ public class MemberController {
 	public String memberRegistHandle(Model model, HttpServletRequest req, @RequestParam Map<String, Object> param,
 			HttpSession session, Map map) {
 		try {
-			if (Integer.parseInt(param.get("checkmail").toString()) == 1) {
+			if (param.get("checkemail")!=null) {
 				System.out.println("일단 이쪽이니?");
 				boolean rst = memberservice.registerMember(param);
 				if (rst) {
@@ -62,12 +62,16 @@ public class MemberController {
 					return "/registpage";
 				}
 			} else {
-				if (param != null || !param.equals("")) {
+				if (param != null) {
+					System.out.println("여기로 가?");
+					System.out.println("param"+param);
 					boolean rst = memberservice.registerMember(param);
+					
 					if (rst) {
 						session.setAttribute("logon", param.get("id"));
 						return "redirect:/index";
 					} else {
+						System.out.println("이거야");
 						return "/registpage";
 					}
 				}
@@ -83,6 +87,8 @@ public class MemberController {
 			 * != null) { System.out.println("이건뭐야?"); model.addAttribute("emailmsg",
 			 * "이메일을 입력해주세요"); }
 			 */
+			e.printStackTrace();
+			System.out.println("저거야");
 			map.put("body", "register.jsp");
 			return "t_el";
 		}
