@@ -31,6 +31,7 @@
 	<div class="container">
 		<h2>보낸 메세지함</h2>
 		<p></p>
+		<div class="table-responsive">
 		<table class="table">
 			<thead>
 				<tr>
@@ -64,6 +65,7 @@
 				</tr>
 			</tbody>
 		</table>
+		</div>
 	</div>
 
 	<script>
@@ -89,7 +91,7 @@
 			var dels = [];
 			var cnt = 0;
 			$(".msgcbx:checked").each(function(){
-				cnt += dels.push($(this).val());
+				cnt = dels.push($(this).val());
 			});
 			console.log(dels);
 			$.get("${pageContext.request.contextPath }/message/sendBoxDel", {
@@ -139,7 +141,7 @@
 						<div class="form-group">
 							<label for="msgBody" class="control-label col-sm-2">내용</label> 
 							<div class="col-sm-10">
-								<textarea class="form-control" id="msgBody"  rows="15" name="msg" required></textarea>
+								<textarea class="form-control" id="msgBody"  rows="15" name="msg" style="resize: none; overflow-y: scroll;" required></textarea>
 							</div>
 						</div>
 						<button type="submit" class="btn btn-default" >보내기</button>

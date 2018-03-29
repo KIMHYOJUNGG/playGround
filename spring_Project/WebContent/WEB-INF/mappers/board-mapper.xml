@@ -90,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getListById" resultType="hashmap">
 		select * from board where
-		writer =#{writer} order by (regdate) asc
+		writer =#{writer} order by (regdate) desc
 	</select>
 
 	<select id="followingArticle" resultType="hashmap">
@@ -102,14 +102,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
-
 	
 	<select id="getListByBno" resultType="hashmap">
-		select * from board where bno = #{bno}
+		select * from board where bno = #{bno} order by (regdate) desc
 	</select>
 	
 	<select id="getBookContentsCntById" resultType="hashmap">
-		select bno, bookname, count(*) as cnt from board where writer=#{id} group by bno, bookname order by (bookname)
+		select bno, bookname, count(*) as cnt from board where  
+		<choose><when test="id != null">writer=#{id}</when>
+		<when test="bno != null">bno = #{bno}</when>
+		</choose>
+		group by bno, bookname order by (bookname)
 	</select>
+	
+	<delete id="delContentByNo">
+		delete from board where no in
+		<foreach collection="no" item="n" open="(" close=")" separator=",">#{n}</foreach>
+	</delete>
+	
+	<delete id="delBookByBno">
+		delete from board where bno = #{bno}
+	</delete>
+	
+	<select id="getWritersRegdate" resultType="hashmap">
+		select writer, max(regdate) as regdate from board where writer in
+		<foreach collection="writers"  item="w" open="(" close=")" separator=",">#{w}</foreach>
+		group by writer
+	</select>
+	
 </mapper>
-

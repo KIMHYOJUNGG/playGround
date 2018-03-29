@@ -41,4 +41,19 @@
 		<url-pattern>/*</url-pattern><!--/와 .jsp둘다 경로를 잡겠다는 뜻  -->
 
 	</filter-mapping>
+	
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>total.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/board/modifyPage</url-pattern>
+		<url-pattern>/board/register</url-pattern>
+		<url-pattern>/message</url-pattern>
+		<url-pattern>/modifyInfo</url-pattern>
+		<url-pattern>/myPage</url-pattern>
+		<url-pattern>/sendMessage</url-pattern>
+	</filter-mapping>
+	
 </web-app>

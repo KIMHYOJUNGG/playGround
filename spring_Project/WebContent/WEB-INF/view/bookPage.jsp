@@ -48,8 +48,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="tag">TAG:</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="tag"
-							placeholder="#태그#입력" name="tag">
+						<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" onkeyup="checkTag()">
 					</div>
 				</div>
 				<div class="form-group" align="right">
@@ -59,61 +58,87 @@
 				</div>
 			</form>
 		</div>
+		<script>
+			function checkTag() {
+				var tag = $("#tag").val();
+				console.log($("#tag").val());
+				if(tag.charCodeAt(tag.length-1) == 32) {
+					if(tag.charCodeAt(tag.length-2)!=35){
+						$("#tag").val(tag.substr(0, tag.length-1)+"#");
+					}	else {
+						$("#tag").val(tag.substr(0, tag.length-1));
+					}
+				}
+				if(tag.indexOf("　") != -1){
+					if(tag.charCodeAt(tag.indexOf("　")-1) != 35){
+						$("#tag").val(tag.replace("　", "#"));
+					} else {
+						$("#tag").val(tag.substr(0,tag.indexOf("　")) );
+					}
+				}
+			}
+		</script>
 	</c:when>
 	<c:otherwise>
 		<div class="jumbotron" style="background-color: white">
-	<div class="container">
-	
-		<div class="row">
-			<div class="col-sm-3">
-				<c:if test="${empty writerInfo.IMAGE }">
-					<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
-				</c:if>
-				<c:if test="${!empty writerInfo.IMAGE }">
-					<img src="${writerInfo.IMAGE}" style="width: 240px; height: 240px;" class="img-circle">
-				</c:if>
-			</div>
-			<div class="col-sm-8">
-				<h2>${bookInfo.bookName}</h2>
-				<p>
-					<span style="font-size:12px; color: gray; font-style: italic;">by</span> <a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>
-					<span style="font-size:12px; color: gray; font-style: italic;"> | view</span> <span class="badge">${bookInfo.good }</span>
-				</p>
-				<p>
-					<c:forEach items="${bookInfo.tag }" var="t">
-					<span class="badge">${t }</span>
-					</c:forEach>
-				</p>
-			</div>
-			<div class="col-sm-1">
-			<c:if test="${logon  != writerInfo.ID || logon== null}">
-				<c:forEach items="${follower }" var="fer">
-					<c:set var="fan" value="${fer.READER eq logon}"/>
-				</c:forEach>
-				<c:choose>
-				<c:when test="${fan ne true}">
-				<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
-				  <!-- Modal -->
-				  <div class="modal fade" id="result"  role="dialog">
-				    <div class="modal-dialog">
-				    
-				      <!-- Modal content-->
-				      <div class="modal-content">
-				        <div class="modal-header">
-				          <button type="button" class="close" data-dismiss="modal">&times;</button>
-				          <h4 class="modal-title" >구독하기</h4>
-				        </div>
-				        <div class="modal-body">
-				          <p id="mbody"></p>
-				        </div>
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-default" data-dismiss="modal" id="rClose">Close</button>
-				        </div>
-				      </div>
-				      
-				    </div>
-				  </div>
-				  <script>
+			<div class="container">
+
+				<div class="row">
+					<div class="col-sm-3">
+						<c:if test="${empty writerInfo.IMAGE }">
+							<img
+								src="${pageContext.request.contextPath }/image/default_profile.png"
+								style="width: 240px; height: 240px;" class="img-circle">
+						</c:if>
+						<c:if test="${!empty writerInfo.IMAGE }">
+							<img src="${writerInfo.IMAGE}"
+								style="width: 240px; height: 240px;" class="img-circle">
+						</c:if>
+					</div>
+					<div class="col-sm-8">
+						<h2>${bookInfo.bookName}</h2>
+						<p>
+							<span style="font-size: 12px; color: gray; font-style: italic;">by</span>
+							<a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>
+							<span style="font-size: 12px; color: gray; font-style: italic;">
+								| view</span> <span class="badge">${bookInfo.good }</span>
+						</p>
+						<p>
+							<c:forEach items="${bookInfo.tag }" var="t">
+								<span class="badge">${t }</span>
+							</c:forEach>
+						</p>
+					</div>
+					<div class="col-sm-1">
+						<c:if test="${logon  != writerInfo.ID || logon== null}">
+							<c:forEach items="${follower }" var="fer">
+								<c:set var="fan" value="${fer.READER eq logon}" />
+							</c:forEach>
+							<c:choose>
+								<c:when test="${fan ne true}">
+									<button type="button" class="btn btn-info" id="followbt">구독하기</button>
+									<!-- Modal -->
+									<div class="modal fade" id="result" role="dialog">
+										<div class="modal-dialog">
+
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">구독하기</h4>
+												</div>
+												<div class="modal-body">
+													<p id="mbody"></p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal" id="rClose">Close</button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+					<script>
 					  	$("#followbt").click(function(){
 							$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
 								}).done(function(rst){
@@ -132,66 +157,47 @@
 					  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
 					  	});
 				  </script>
-				  </c:when>
-				  <c:otherwise>
-				  	<button type="button" class="btn btn-info"  id="canclebt">구독취소</button>
-					  	<!-- Modal -->
-					  <div class="modal fade" id="cancle"  role="dialog">
-					    <div class="modal-dialog">
-					    
-					      <!-- Modal content-->
-					      <div class="modal-content">
-					        <div class="modal-header">
-					          <button type="button" class="close" data-dismiss="modal">&times;</button>
-					          <h4 class="modal-title" >구독취소</h4>
-					        </div>
-					        <div class="modal-body">
-					          <p id="cancleBody"></p>
-					        </div>
-					        <div class="modal-footer">
-					          <button type="button" class="btn btn-default" data-dismiss="modal" id="cClose">Close</button>
-					        </div>
-					      </div>
-					      
-					    </div>
-					  </div>
-					  <script>
-						  	$("#canclebt").click(function(){
-								$.get("${pageContext.request.contextPath}/follow/cancle",  {"target": "${writerInfo.ID}"
-									}).done(function(rst){
-										var html="";
-										if(rst.result) {
-											html = "${writerInfo.NICKNAME} 님을 관심 작가에서 삭제하였습니다. "
-										} else {
-											html = "<span style='color: red'>관심 작가 삭제실패. 다시 시도해 주세요.</span> "
-										}
-											$("#cancleBody").html(html);
-							  			$("#cancle").modal();
-									})	;
-					  		});
-						  	
-						  	$("#cClose").click(function(){
-						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
-						  	});
-					  </script>
-				  </c:otherwise>
-				  </c:choose>
-			</c:if>
-			<c:if test="${logon == writerInfo.ID }">
-				<c:choose>
-					<c:when test="${!empty contentsList }">
-						<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">이어서 쓰기</button></a>
-					</c:when>
-					<c:otherwise>
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-info" id="canclebt">구독취소</button>
+									<!-- Modal -->
+									<div class="modal fade" id="cancle" role="dialog">
+										<div class="modal-dialog">
+
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">구독취소</h4>
+												</div>
+												<div class="modal-body">
+													<p id="cancleBody"></p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal" id="cClose">Close</button>
+												</div>
+											</div>
+
+										</div>
+									</div>
 						
-					</c:otherwise>
-				</c:choose>
-			</c:if>
-			
-			</div>
-		</div>
-		
-		<hr/>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+
+					</div>
+				</div>
+
+				<c:if test="${logon == writerInfo.ID }">
+					<div align="right">
+						<div class="btn-group">
+							<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">이어서 쓰기</button></a>
+							<a href="${pageContext.request.contextPath }/bookPage/${bookInfo.bno}/modify"><button type="button" class="btn btn-info">책 정보 수정</button></a>
+							<a><button type="button" class="btn btn-info"  onclick="bookDel('${bookInfo.bno}')">책 삭제</button></a>
+						</div>
+					</div>
+				</c:if>
 
 				<div class="container">
 				<c:if test="${!empty contentsList }">
@@ -249,3 +255,38 @@
 				</div>
 	</c:otherwise>
 </c:choose>
+
+						<script>
+							  	$("#canclebt").click(function(){
+									$.get("${pageContext.request.contextPath}/follow/cancle",  {"target": "${writerInfo.ID}"
+										}).done(function(rst){
+											var html="";
+											if(rst.result) {
+												html = "${writerInfo.NICKNAME} 님을 관심 작가에서 삭제하였습니다. "
+											} else {
+												html = "<span style='color: red'>관심 작가 삭제실패. 다시 시도해 주세요.</span> "
+											}
+												$("#cancleBody").html(html);
+								  			$("#cancle").modal();
+										})	;
+						  		});
+							  	
+							  	$("#cClose").click(function(){
+							  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
+															});
+							  	
+								function bookDel(bno) {
+									var ans = window.confirm("삭제시 책에 등록된 모든 게시글이 함께 삭제됩니다.\r\n정말 삭제하시겠습니까?");
+									if(ans) {
+										$.get("${pageContext.request.contextPath}/bookPage/"+bno+"/del",{"bno" : bno}
+											,function(obj){
+												if(obj.rst) {
+													window.alert("삭제되었습니다.");
+													location.assign("${pageContext.request.contextPath}/@${bookInfo.writer}");
+												} else {
+													window.alert("삭제 실패. \r\n다시 시도해 주세요.");
+												}
+											});
+									}
+								}
+							</script>

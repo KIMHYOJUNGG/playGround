@@ -17,27 +17,44 @@ public class ModifyInfoService {
 	@Autowired
 	ServletContext application;
 
+	public String makeFileName(String origin) {
+		int idx = origin.lastIndexOf(".");
+		String fname = origin.substring(0, idx);
+		String type = origin.substring(idx);
+		return fname +" "+ System.currentTimeMillis() +type;
+	}
+
 	public String imgModify(MultipartFile img, String id) {
 		String fileName = null;
+		String saveName = null;
 		if (!img.isEmpty()) {
-			File saveDir = new File(application.getRealPath("/image/" + id+"/"+id));
-			saveDir.mkdirs();
+			fileName = makeFileName(img.getOriginalFilename());
+			File parent = new File(application.getRealPath("/image/" + id));
+			if (parent.exists()) {
+				File[] olds = parent.listFiles();
+				if (olds != null) {
+					for (File o : olds) {
+						o.delete();
+					}
+				}
+			} else {
+				parent.mkdirs();
+			}
+			File saveDir = new File(parent, fileName);
 			try {
 				img.transferTo(saveDir);
-				fileName = "/image/"+id+"/"+id;
+				saveName = "/image/" + id + "/" + fileName;
 			} catch (Exception e) {
 				e.printStackTrace();
-				fileName = null;
+				saveName = null;
 			}
 		}
-		return fileName;
+		return saveName;
 	}
 
 	public boolean infoModify(Map param, String id) {
 		param.put("id", id);
 		return template.update("member.modifyInfo", param) == 1;
 	}
-	
-	
-	
+
 }
