@@ -4,6 +4,8 @@ package total.controller;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,8 +43,14 @@ public class BoardController {
   @Autowired
   ReportService rservice;
 
+ 
+
   @RequestMapping(value = "/register", method = RequestMethod.GET)
   public String registerGET(BoardVO board, Model model,Map map,HttpSession session,HttpServletResponse resp,HttpServletRequest req ) throws Exception {
+
+String[] type="세계여행,글쓰기,문화·예술,그림·웹툰,직장인 현실조언,건축·설계,시사·이슈,스타트업 경험담,인문학·철학,IT트렌드,육아이야기,쉽게읽는 역사,사진·촬영,요리·레시피,우리집 반려동물,건강·운동,사랑·이별,디자인 스토리".split(",");
+System.out.println(type);
+	  
 	  resp.setContentType("text/html;charset=utf-8");
 	  PrintWriter out=resp.getWriter();
 	 String cp=req.getContextPath();
@@ -56,6 +64,7 @@ public class BoardController {
     	   //대부분이 html로 전송한다.
     	  
     }
+    model.addAttribute("type",type);
     model.addAttribute("listbook",book);
     
     //return "board/register";
@@ -88,6 +97,7 @@ public class BoardController {
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public String registPOST(BoardVO board, RedirectAttributes rttr, HttpSession session) throws Exception {
 
+	  
 	  System.out.println("regist post ...........");
 	  System.out.println(board.toString());
 	 String[] book=board.getBook().split(",");
@@ -99,7 +109,7 @@ public class BoardController {
 	 // board.setBno(uuid);
 	  board.setWriter((String)session.getAttribute("logon"));
 
-	  service.create(board);
+	  service.create(board,session);
 
     rttr.addFlashAttribute("msg", "success");
     return "redirect:/board/listPage";

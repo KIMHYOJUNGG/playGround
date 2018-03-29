@@ -35,8 +35,23 @@
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
-     <!--  <textarea class="form-control"  name="content" rows="3" 
-      readonly="readonly"> --> ${contents}
+       <textarea class="form-control"  name="content" rows="3" id="ck" 
+      readonly="readonly">${contents}</textarea>
+      <script type="text/javascript">
+							$(function() {
+								CKEDITOR.replace('ck', {
+									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
+									height : '500px' // 입력창의 높이
+							
+								
+								});
+								
+							
+							});
+							
+		
+						</script>
+      
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1" >Writer</label></br>

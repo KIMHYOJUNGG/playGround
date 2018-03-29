@@ -1,6 +1,8 @@
 package total.service;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import total.domain.BoardVO;
 import total.domain.BookVO;
@@ -54,8 +57,17 @@ public String uuid() {
 	
 }
 
-  public void create(BoardVO vo) throws Exception {
+
+  public void create(BoardVO vo,HttpSession sessions) throws Exception {
 	  
+	  System.out.println(vo.getTag());
+	  String[] tag=vo.getTag().trim().split("#");
+	  
+	  for(String s : tag) {
+		  System.out.println(s);
+	  }
+	  System.out.println(Arrays.toString(tag));
+	  System.out.println(vo.getContent());
 	  int no= session.selectOne("board.selectNo");
 	  vo.setNo(no);
     session.insert("board.create", vo);
@@ -77,13 +89,16 @@ public String uuid() {
    */
 	System.out.println("connect...");
 	
-	
+	List<String> path=(List)sessions.getAttribute("imgpath");
+	for(String s: path) {
+	System.out.println(s);
+	}
 	Map map=new HashMap();
 	map.put("no",no);
 	map.put("bno",vo.getBno());
 	map.put("contents", vo.getContent());
-	map.put("image",new ArrayList<>());
-	map.put("tag",new ArrayList<>());
+	map.put("image",new ArrayList<>(path));
+	map.put("tag",new ArrayList<>(Arrays.asList(tag)));
 	map.put("comments",new ArrayList<>());
 	
 	
