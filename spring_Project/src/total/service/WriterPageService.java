@@ -34,7 +34,9 @@ public class WriterPageService {
 	}
 	
 	public List<Map> getBookContentsCntById(String id) {
-		return template.selectList("board.getBookContentsCntById", id);
+		Map data = new HashMap<>();
+			data.put("id", id);
+		return template.selectList("board.getBookContentsCntById", data);
 	}
 	
 	public List<BookVO> mergeBookListAndCnt(List<Map> bookContentsList, List<BookVO> bookList) {

@@ -20,6 +20,7 @@
 				<a href="${pageContext.request.contextPath }/modifyInfo" class="list-group-item"><b>개인정보 수정</b></a> 
 				<a href="${pageContext.request.contextPath }/message" class="list-group-item " ><b>우편함 </b><span>새 메세지 ${newMsgCnt } 건</span></a> 
 				<a href="${pageContext.request.contextPath }/@${logon}" class="list-group-item"><b>연재 중인 글</b></a>
+				<a href="${pageContext.request.contextPath }/@${logon}/following" class="list-group-item"><b>관심 작가 관리</b></a>
 <!-- 				<a href="#" class="list-group-item">내가 출간한 글</a> -->
 			</div>
 		</div>

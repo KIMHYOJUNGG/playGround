@@ -151,7 +151,6 @@ public String[] mongoFindImage(Number no) {
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
 	  String[] list = "/image/Desert.jpg,/image/Desert.jpg".split(",");
-	 System.out.println(mbv.getImage().length==0);
 	  return mbv.getImage().length==0 ? list : mbv.getImage() ;
 	  
   }
