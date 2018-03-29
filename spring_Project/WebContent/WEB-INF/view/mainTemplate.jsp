@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <script type="text/javascript" src="../../resources/ckeditor/ckeditor.js"></script> 
+ <script src="../../resources/ckeditor/ckeditor.js"></script> 
 <!--  <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script> 
  -->
 
