@@ -36,7 +36,8 @@
   
     <div class="form-group">
       <label for="exampleInputEmail1">BookName</label><br/>
-      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}">${boardVO.bookname}</a>
+      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
+         value="${boardVO.bookname}" readonly="readonly"></a>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
@@ -60,7 +61,9 @@
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1" >Writer</label></br>
-       <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> ${boardVO.writer}</a>
+      
+       <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
+         value="${boardVO.writer}" readonly="readonly"></a>
       </div>
     <div class="form-group">
     <c:if test="${ !empty comments  }">
