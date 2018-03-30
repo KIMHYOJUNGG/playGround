@@ -23,7 +23,7 @@ public class MemberService {
 		}
 	}
 
-	public boolean loginMember(Map<String, String> param) {
+	public int loginMember(Map<String, String> param) {
 		Map map = template.selectOne("member.login",param);
 		if(map!=null ) {
 			int i = template.update("member.update",param);
@@ -33,15 +33,17 @@ public class MemberService {
 				Date b = (Date) map2.get("LOGINTIME");
 				long date1 = a.getTime();
 				long date2 = b.getTime();
-				if((double)date2-(double)date1 >0.125) {
+				if((double)date2-(double)date1 >(1000*60*60*3)) {
 					template.update("admin.updateLv4",param);
 					System.out.println("업뎃완료");
+					return 1;
 				}
+				return 2;
 			}
-			return true;
+			return 3;
 		}
 		else {
-			return false;
+			return 4;
 		}
 	}
 	public Map idMember(String email) {
@@ -60,5 +62,8 @@ public class MemberService {
 		return template.update("member.updateLv",id);
 	}
 	
+	public Map emailMember(String id) {
+		return template.selectOne("member.member",id);
+	}
 }
 

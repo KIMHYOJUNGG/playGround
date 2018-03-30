@@ -109,7 +109,7 @@ public class AdminService {
 	public boolean updateMemberreport(String id)
 	{
 		List<Map> list = template.selectList("admin.board", id);
-		if (list == null) {
+		if (list.size()==0) {
 			template.update("admin.report", id);
 			return true;
 		}

@@ -3,7 +3,7 @@
 <!-- 회원가입 -->
 <body>
 	<div align="center">
-		<form action="/member/regist" method="post"
+		<form action="/member/regist"  role="form" method="post"
 			style="width: 330px; text-align: left; line-height: 34px;"
 			autocomplete="off">
 			<div style="margin-top: 20px;">
@@ -77,12 +77,13 @@
 			console.log(document.getElementById("checkemail").checked);
 			document.getElementById("checkemail").value = 1;
 		}
-/* 		else{
-			var s = window.confirm("이메일 인증을 안하시겠습니까?");
+ 		else{
+			var formObj = $("form[role='form']");
+			var s = window.confirm("이메일 인증을 안해?");
 			if(s){
-				
+				formObj.submit();
 			}
-		} */
+		} 
 	});
 </script>
 

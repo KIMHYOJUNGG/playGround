@@ -198,7 +198,10 @@ public class AdminController {
 		String id = (String)param.get("id");
 		boolean rst = adminservice.modify(param);
 		if(rst) {
-			adminservice.updateMemberreport(id);
+			System.out.println("아이디 가 있냐 "+id);
+			boolean rst2 = adminservice.updateMemberreport(id);
+			System.out.println(rst2);
+			System.out.println("이거 실행되냐");
 			return "redirect:/admin/member";
 		}
 		else {

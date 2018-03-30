@@ -152,11 +152,7 @@ public class MemberController {
 
 	// 로그인
 	@RequestMapping(path = "/log", method = RequestMethod.GET)
-	public String memberLoginPage(Model model, Map map,HttpSession session) {
-		if (session.getAttribute("uri") != null) {
-			String uri = (String)session.getAttribute("uri");
-			model.addAttribute("uri", uri);		
-		}
+	public String memberLoginPage(Model model, Map map) {
 		map.put("body", "login.jsp");
 		return "t_el";
 	}
@@ -165,21 +161,27 @@ public class MemberController {
 	@RequestMapping(path = "/loging", method = RequestMethod.POST)
 	public String memberLoginHandle(Model model, @RequestParam Map<String, String> param, HttpSession session,
 			Map mapp) {
-		boolean rst = memberservice.loginMember(param);
-		System.out.println("uri2 = " + param.get("uri"));
+		String id = (String)param.get("id");
+		int i = memberservice.loginMember(param);
+		boolean rst = i<4;
 		try {
-			if (param.get("uri") != null) {
+			if (session.getAttribute("uri") != null) {
 				if (rst) {
-					String uri = (String) param.get("uri");
+					String uri = (String)session.getAttribute("uri");
 					session.setAttribute("logon", param.get("id"));
 					List<WebSocketSession> s = wsMap.get(session.getId());
 					if (s != null) {
 						for (WebSocketSession ws : s) {
 							ws.sendMessage(new TextMessage("로그인"));
 						}
-						return "redirect:/" + uri;
+						if(i==1) {
+							Map map = memberservice.emailMember(id);
+							model.addAttribute("email",map.get("EMAIL"));
+							return uri;
+						}
+						return uri;
 					} else {
-						return "redirect:/" + uri;
+						return uri;
 					}
 				}
 				throw new Exception();
