@@ -83,6 +83,10 @@ public class AdminService {
 	public boolean updateRedCard(String id) {
 		int i = template.update("admin.updateLv", id);
 		if (i != 0) {
+			Map map = template.selectOne("member.member",id);
+			if(map.get("STOPTIME")!=null) {
+				template.update("admin.updateStoptime",id);
+			}
 			return true;
 		} else {
 			return false;
@@ -93,6 +97,10 @@ public class AdminService {
 	public boolean updateRedCard2(String id) {
 		int i = template.update("admin.updateLv2", id);
 		if (i != 0) {
+			Map map = template.selectOne("member.member",id);
+			if(map.get("STOPTIME")!=null) {
+				template.update("admin.updateStoptime",id);
+			}
 			return true;
 		} else {
 			return false;
