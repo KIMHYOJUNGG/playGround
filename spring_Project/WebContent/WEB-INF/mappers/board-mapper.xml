@@ -4,19 +4,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 	<insert id="create">
-		insert into board (no, bno, title, bookname, regdate, type, writer)
-		values(#{no},#{bno},#{title}, #{bookname}, sysdate, #{type},
+		insert into board (no, bno, title, bookname, regdate,
+		type, writer)
+		values(#{no},#{bno},#{title}, #{bookname}, sysdate,
+		#{type},
 		#{writer})
 	</insert>
 	<select id="read" resultType="total.domain.BoardVO">
 		select
-		no, bookname, bno,title, writer, regdate, viewcnt
+		no, bookname, bno,title,
+		writer, regdate, viewcnt
 		from
 		board
 		where no = #{no}
 	</select>
 	<select id="selectNo" resultType="_int">
-		select board_seq.nextval as no from dual
+		select board_seq.nextval as no
+		from dual
 	</select>
 
 	<update id="update">
@@ -29,7 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<select id="mainBoardOrder" resultType="hashmap">
-		select * from board order by good asc
+		select * from board order
+		by good asc
 	</select>
 
 	<select id="listAll" resultType="total.domain.BoardVO">
@@ -43,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  ]]>
 	</select>
 
-	  <select id="listPage" resultType="total.domain.BoardVO">
+	<select id="listPage" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
    no, title, writer, regdate, viewcnt 
@@ -52,40 +57,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  where no > 0 
  order by no desc, regdate desc
  limit #{page}, 10
- ]]>  
- </select>
- <select id="listCriteria" resultType="total.domain.BoardVO">
- <![CDATA[
-   select no, title,  writer, regdate, viewcnt from (select board.*, row_number() over (order by regdate desc,no desc) as row_id from board) 
-   where row_id between  #{pageStart} and #{perPageNum}
- 
- 
- 
- ]]>  
- </select>
-  <select id="countPaging" resultType="int">
- <![CDATA[
- select 
-   count(no) 
- from 
-   board 
- where 
-   no > 0 
  ]]>
- </select>
+	</select>
 
-		<!--  관리자 -->
-	
+	<!--where(안쪽에 설정된 if에서 하나라도 맞아서 sql문이 나오면, where 가 자동으로 붙음. 발생한 sql 시작이 
+		and 나 or로 시작하면 and 나 or를 없애줌 ) , set, (trim) -->
+	<select id="findlog_2" resultType="hashmap">
+		select * from history
+		<where>
+			<if test="limit != null">
+				limit =#{limit}
+			</if>
+
+			<if test="max != null">
+				and max= #{max}
+			</if>
+		</where>
+	</select>
+
+	<select id="listCriteria" resultType="total.domain.BoardVO">
+
+		select no, title, writer, regdate, viewcnt from (select board.*,
+		row_number() over (order by regdate desc,no desc)
+		as row_id from board
+		<where>
+		
+		<if test="type!=null">
+		type=#{type}
+		
+		</if>
+		</where>
+		)
+		<where>
+		
+			<if test="pageStart !=null and perPageNum != null">
+				(row_id between #{pageStart} and #{perPageNum})
+			</if>
+			<if test="type != null">
+				and type=#{type}
+
+			</if>
+
+		</where>
+	</select>
+
+	<select id="countPaging" resultType="int">
+		select
+		count(no)
+		from
+		board
+		<where>
+			no &gt; 0
+			<if test="type!=null">
+				and type=#{type}
+			</if>
+		</where>
+	</select>
+
+	<!-- 관리자 -->
+
 	<select id="boardid" resultType="hashmap">
-		select * from board where writer=#{id} order by red desc
+		select * from board where
+		writer=#{id} order by red desc
 	</select>
 	<select id="boardNo" resultType="hashmap">
-		select * from board where no=#{no}
+		select * from board where
+		no=#{no}
 	</select>
 
 
 	<update id="boardRedCard">
-	update board set red='Y' where no=#{no}
+		update board set red='Y' where no=#{no}
 	</update>
 
 	<select id="getListById" resultType="hashmap">
@@ -94,40 +136,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="followingArticle" resultType="hashmap">
-		select * from board 	join member on BOARD.writer = member.id
+		select * from board join member on BOARD.writer = member.id
 		<if test="following != null">
 			where board.writer in
-			<foreach collection="following" item="target" open="(" close=")"  separator=","> #{target}</foreach>
+			<foreach collection="following" item="target" open="(" close=")"
+				separator=","> #{target}</foreach>
 			order by(board.regdate) desc
 		</if>
 	</select>
-	
-	
+
+
 	<select id="getListByBno" resultType="hashmap">
-		select * from board where bno = #{bno} order by (regdate) desc
+		select * from board where
+		bno = #{bno} order by (regdate) desc
 	</select>
-	
+
 	<select id="getBookContentsCntById" resultType="hashmap">
-		select bno, bookname, count(*) as cnt from board where  
-		<choose><when test="id != null">writer=#{id}</when>
-		<when test="bno != null">bno = #{bno}</when>
+		select bno, bookname, count(*) as cnt from board where
+		<choose>
+			<when test="id != null">writer=#{id}</when>
+			<when test="bno != null">bno = #{bno}</when>
 		</choose>
 		group by bno, bookname order by (bookname)
 	</select>
-	
+
+
 	<delete id="delContentByNo">
 		delete from board where no in
-		<foreach collection="no" item="n" open="(" close=")" separator=",">#{n}</foreach>
+		<foreach collection="no" item="n" open="(" close=")"
+			separator=",">#{n}</foreach>
 	</delete>
-	
+
 	<delete id="delBookByBno">
 		delete from board where bno = #{bno}
 	</delete>
-	
+
 	<select id="getWritersRegdate" resultType="hashmap">
 		select writer, max(regdate) as regdate from board where writer in
-		<foreach collection="writers"  item="w" open="(" close=")" separator=",">#{w}</foreach>
+		<foreach collection="writers" item="w" open="(" close=")"
+			separator=",">#{w}</foreach>
 		group by writer
 	</select>
-	
+
+	<update id="increaseViewcnt">
+		update board set viewcnt=viewcnt+1
+		where no=#{no}
+	</update>
+
 </mapper>
