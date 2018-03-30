@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="mainBoardOrder" resultType="hashmap">
 		select * from board order
-		by good asc
+		by good desc
 	</select>
 
 	<select id="listAll" resultType="total.domain.BoardVO">
@@ -81,15 +81,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		row_number() over (order by regdate desc,no desc)
 		as row_id from board
 		<where>
-		
-		<if test="type!=null">
-		type=#{type}
-		
-		</if>
+
+			<if test="type!=null">
+				type=#{type}
+
+			</if>
 		</where>
 		)
 		<where>
-		
+
 			<if test="pageStart !=null and perPageNum != null">
 				(row_id between #{pageStart} and #{perPageNum})
 			</if>
@@ -183,4 +183,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where no=#{no}
 	</update>
 
+	<select id="levelCheck" resultType="_int">
+		select lv from member id= #{id}
+
+
+	</select>
 </mapper>

@@ -100,6 +100,10 @@
 	</div>
 	</div>
 	</div>
+
+
+	
+	
 </body>
 <script><%-- WebSocket을 하기 위해선 script처리가 필요하다.--%>
 	var ac = new WebSocket("ws://${pageContext.request.serverName}/logonWS");

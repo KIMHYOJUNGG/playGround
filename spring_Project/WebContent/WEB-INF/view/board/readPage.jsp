@@ -13,14 +13,127 @@
         <div class="box-header">
           <h3 class="box-title">READ BOARD</h3>
         </div><!-- /.box-header -->
+    <!--     <font size="5px;">
+							하트 <span id="heart2d335d4abbcb">
+							<a href="javascript:like('2d335d4abbcb','t');"> 
+							<span class="glyphicon glyphicon-heart-empty"></span></a></span> 
+							<span id="count2d335d4abbcb">2</span> 댓글 <a href="/boarddetail?pk=2d335d4abbcb">
+								<span class="glyphicon glyphicon-user"></span>
+						</a> 
+								
+						0
+						
+								
+							 &nbsp;
+					</font> -->
+					<font size="5px;" style="color:red;">
+<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" class="glyphicon glyphicon-heart-empty"></span>
+        </a>
+</font>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+<c:choose>
+				<c:when test="${fan ne true}">
+					<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
+				  </c:when>
+				  <c:otherwise>
+				  	<button type="button" class="btn btn-info"  id="canclebt">구독취소</button>
+				  </c:otherwise>
+				  </c:choose>
+			
 
 
-<%--  <form role="form" action="modifyPage" method="post">
 
-    <input type='hidden' name='no' value ="${boardVO.no}">
-    <input type='hidden' name='page' value ="${cri.page}">
-    <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
-    </form> --%>
+ <!-- Modal -->
+				  <div class="modal fade" id="result"  role="dialog">
+				    <div class="modal-dialog">
+				    
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <h4 class="modal-title" >구독하기</h4>
+				        </div>
+				        <div class="modal-body">
+				          <p id="mbody"></p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal" id="rClose">Close</button>
+				        </div>
+				      </div>
+				      
+				    </div>
+				  </div>
+				  
+				  	<!-- Modal -->
+					  <div class="modal fade" id="cancle"  role="dialog">
+					    <div class="modal-dialog">
+					    
+					      <!-- Modal content-->
+					      <div class="modal-content">
+					        <div class="modal-header">
+					          <h4 class="modal-title" >구독취소</h4>
+					        </div>
+					        <div class="modal-body">
+					          <p id="cancleBody"></p>
+					        </div>
+					        <div class="modal-footer">
+					          <button type="button" class="btn btn-default" data-dismiss="modal" id="cClose">Close</button>
+					        </div>
+					      </div>
+					      
+					    </div>
+					  </div>
+					  <script>
+						  	$("#followbt").click(function(){
+								$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
+									}).done(function(rst){
+										var html="";
+										if(rst.result) {
+											html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
+										} else {
+											html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+										}
+											$("#mbody").html(html);
+							  			$("#result").modal();
+									})	;
+					  		});
+						  	
+						  	$("#rClose").click(function(){
+						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
+						  	});
+
+					  
+						  	$("#canclebt").click(function(){
+								$.get("${pageContext.request.contextPath}/follow/cancle",  {"target": "${writerInfo.ID}"
+									}).done(function(rst){
+										var html="";
+										if(rst.result) {
+											html = "${writerInfo.NICKNAME} 님을 관심 작가에서 삭제하였습니다. "
+										} else {
+											html = "<span style='color: red'>관심 작가 삭제실패. 다시 시도해 주세요.</span> "
+										}
+											$("#cancleBody").html(html);
+							  			$("#cancle").modal();
+									})	;
+					  		});
+						  	
+						  	$("#cClose").click(function(){
+						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
+						  	});
+					  </script>
+
+
+
+
+
+
+
+
     
   <div class="box-body">
     <div class="form-group">

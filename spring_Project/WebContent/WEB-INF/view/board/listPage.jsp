@@ -46,7 +46,8 @@
 
 
 							</c:forEach>
-						
+						<a href="/board/listPage"><button type="button"  
+						class="btn btn-info btn-sm bb">전체목록</button></a>
 
 					</div>
 					
@@ -77,7 +78,7 @@
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 										value="${boardVO.regdate}" /></td>
 
-								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
+							 <td><span class="badge">${boardVO.viewcnt }</span></td> 
 
 							</tr>
 
