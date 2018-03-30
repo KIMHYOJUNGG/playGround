@@ -24,11 +24,16 @@
     
   <div class="box-body">
     <div class="form-group">
+      <label for="exampleInputEmail1">조회수</label>
+      <input type="text" name='title' class="form-control" 
+         value="${boardVO.viewcnt}" readonly="readonly">
+    </div>
+    <div class="form-group">
       <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 
          value="${boardVO.title}" readonly="readonly">
     </div>
-  <div class="box-body">
+  
     <div class="form-group">
       <label for="exampleInputEmail1">BookName</label><br/>
       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}">${boardVO.bookname}</a>

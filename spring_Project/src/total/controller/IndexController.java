@@ -37,6 +37,7 @@ public class IndexController {
 	
 	@RequestMapping({"/index","/"})
 	public String indexHandle(Model model) {
+		System.out.println("index");
 		List<Map> boardNo = indexService.boardConnectNo();
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("body","index.jsp");
