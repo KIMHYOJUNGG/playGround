@@ -64,7 +64,7 @@
 			<div id="home" class="tab-pane fade in active">
 				<div class="container-fluid text-center">
 					<h2>NOW</h2>
-					<br>
+					<br>  
 					<br>
 					<!-- First Photo Grid-->
 					<div class="w3-row-padding w3-padding-16 w3-center" id="food">
