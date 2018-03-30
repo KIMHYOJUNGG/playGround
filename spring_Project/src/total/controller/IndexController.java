@@ -41,7 +41,6 @@ public class IndexController {
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("body", "index.jsp");
 
-		System.out.println("img : " + boardService.mongoFindImage((Number) (boardNo.get(0).get("NO"))));
 		for (String s : boardService.mongoFindImage((Number) (boardNo.get(0).get("NO")))) {
 			System.out.println("s :"+s);
 		}
@@ -52,7 +51,13 @@ public class IndexController {
 				list.put(i, s);
 			}
 		}
-		System.out.println("list: " + list);
+		
+		int cnt =0;
+		for(Map m :boardNo) {
+		m.put("IMAGE",list.get(0+cnt));
+		cnt += 1;
+		}
+		System.out.println("list: " + boardNo);
 		model.addAttribute("list", list);
 		// application.getRealPath("/image")+"/Desert.jpg";
 		return "t_el";

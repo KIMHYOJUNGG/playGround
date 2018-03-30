@@ -31,15 +31,14 @@
 						<c:choose>
 							<c:when test="${vs.count <= 8}">
 								<div class="w3-quarter">
-									<c:if test="${empty list}">
+									<c:if test="${o.IMAGE == null}">
 										<a href="/board/readPage?no=${o.NO}"><img
 											src="${pageContext.request.contextPath }/image/Desert.jpg"
 											alt="1" style="width: 80%"></a>
 									</c:if>
-									<c:forEach items="${list }" var="l" varStatus="vs">
-											<a href="/board/readPage?no=${o.NO}"><img src="${l.value}"
-												alt="1" style="width: 80%"></a>
-									</c:forEach>
+									<a href="/board/readPage?no=${o.NO}"><img
+											src="${o.IMAGE }"
+											alt="1" style="width: 80%"></a>
 									<h3>${o.TITLE }</h3>
 									<p>${o.BOOKNAME }</p>
 								</div>
