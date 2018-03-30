@@ -4,6 +4,7 @@ public class Criteria {
 
   private int page;
   private int perPageNum;
+  private String type;
  /* private int endRowId;
   private int startRowId;*/
 
@@ -15,6 +16,14 @@ public class Criteria {
 	int startRowId = endRowId - 9;*/
   }
 
+  public void setType(String type) {
+	  
+	  this.type=type;
+	  
+  }
+  public String getType() {
+	  return this.type;
+  }
   public void setPage(int page) {
 
     if (page <= 0) {
@@ -52,9 +61,10 @@ public class Criteria {
 	
   }
 
-  @Override
-  public String toString() {
-    return "Criteria [page=" + page + ", "
-        + "perPageNum=" + perPageNum + "]";
-  }
+@Override
+public String toString() {
+	return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", type=" + type + "]";
+}
+
+  
 }
