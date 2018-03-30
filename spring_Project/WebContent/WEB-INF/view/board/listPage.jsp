@@ -34,7 +34,7 @@
 							<th style="width: 40px">VIEWCNT</th>
 						</tr>
 
-					 	<c:forEach items="${searchResult}" var="boardVO">
+					 	<c:forEach items="${list}" var="boardVO">
 							<tr>
 								<td>${boardVO.no}</td>
 								<td><a
@@ -42,8 +42,8 @@
 										${boardVO.title}</a></td>
 								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-										value="${boardVO.date}" /></td>
-								<td><span class="badge bg-red">${boardVO.view }</span></td>
+										value="${boardVO.regdate}" /></td>
+								<td><span class="badge bg-red">${boardVO.viewcnt}</span></td>
 							</tr>
 						</c:forEach> 
 
