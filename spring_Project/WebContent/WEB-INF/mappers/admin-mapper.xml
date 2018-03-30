@@ -67,5 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from report where no = #{no}
 	</delete> 
 	
-	
+	<!-- 신고글이 더이상 없을시의 report변경-->
+	<select id="board" resultType="hashmap">
+		select * from board where writer =#{id} and red='Y';
+	</select>
+	<update id="report">
+		update member set report='N' where id=#{id}
+	</update>
 </mapper>

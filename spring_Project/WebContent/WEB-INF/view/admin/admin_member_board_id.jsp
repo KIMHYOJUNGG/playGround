@@ -36,6 +36,7 @@
 					<!-- /.box-body -->
 
 					<div class="box-footer">
+					 	<button type="submit" class="btn btn-modify">Modify</button>
 						<button type="submit" class="btn btn-danger">REMOVE</button>
 					</div>
 					<script>
@@ -44,6 +45,10 @@
 							console.log(formObj);
 							$(".btn-danger").on("click", function() {
 								formObj.attr("action", "/admin/remove");
+								formObj.submit();
+							});
+							$(".btn-modify").on("click", function() {
+								formObj.attr("action", "/admin/modify");
 								formObj.submit();
 							});
 						});

@@ -151,15 +151,12 @@ public class AdminController {
 	public String redcardHandle(Model model, @RequestParam Map param) {
 		String id = (String) param.get("id");
 		int no = Integer.parseInt(param.get("no").toString());
-		System.out.println("id 2 = " + id);
 		int i = adminservice.selectRedcard(id);
-		System.out.println("레드카드수 : " + i);
 		if (i == 2) {
 			boolean rst = adminservice.updateRedCard2(id);
 			if (rst) {
 				model.addAttribute("id", id);
 				model.addAttribute("title", param.get("title"));
-				System.out.println(param.get("title"));
 				return "redirect:/admin/msg";
 			} else {
 				model.addAttribute("fail", "업데이트 실패(레드카드수3개)");
@@ -190,6 +187,20 @@ public class AdminController {
 		} else {
 			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
 			return "redirect:/admin/member";
+		}
+	}
+	
+	// 해당 게시글에 이상없을 때
+	@RequestMapping(path="/modify",method=RequestMethod.POST)
+	public String modifyHandle(Model model, @RequestParam Map param) {
+		boolean rst = adminservice.modify(param);
+		if(rst) {
+			return "redirect:/admin/member";
+		}
+		else {
+			model.addAttribute("fail","실패");
+			System.out.println("실패했네 수정");
+			return "/admin/member";
 		}
 	}
 }
