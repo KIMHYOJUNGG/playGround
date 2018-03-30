@@ -108,8 +108,8 @@ public class AdminService {
 	// 더이상의 신고글이 없을 때
 	public boolean updateMemberreport(String id)
 	{
-		Map map2 = template.selectOne("admin.board", id);
-		if (map2 == null) {
+		List<Map> list = template.selectList("admin.board", id);
+		if (list == null) {
 			template.update("admin.report", id);
 			return true;
 		}

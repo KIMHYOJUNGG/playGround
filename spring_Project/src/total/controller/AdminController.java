@@ -184,6 +184,7 @@ public class AdminController {
 		if (rst) {
 			model.addAttribute("success", param.get("title")+"을 삭제하였습니다.");
 			System.out.println("리포트수정됬냐"+rst2);
+			adminservice.updateMemberreport(id);
 			return "redirect:/admin/member";
 		} else {
 			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
