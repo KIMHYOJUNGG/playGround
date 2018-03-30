@@ -68,12 +68,12 @@
 
 					<table class="main_keyword">
 						<tr class="main_tr">
-							<th class="main_th"><a href="">세계여행</a></th>
-							<th class="main_th"><a href="">글쓰기</a></th>
-							<th class="main_th"><a href="">문화·예술</a></th>
-							<td class="main_td"><a href="">그림·웹툰</a></td>
-							<td class="main_td"><a href="">직장인 현실조언</a></td>
-							<td class="main_td"><a href="">건축·설계</a></td>
+							<th class="main_th"><a href="${pageContext.request.contextPath }/keyword?type=세계여행">세계여행</a></th>
+							<th class="main_th"><a href="${pageContext.request.contextPath }/keyword?type=글쓰기">글쓰기</a></th>
+							<th class="main_th"><a href="${pageContext.request.contextPath }/keyword?type=문화·예술">문화·예술</a></th>
+							<td class="main_td"><a href="${pageContext.request.contextPath }/keyword?type=그림·웹툰">그림·웹툰</a></td>
+							<td class="main_td"><a href="${pageContext.request.contextPath }/keyword?type=직장인 현실조언">직장인 현실조언</a></td>
+							<td class="main_td"><a href="${pageContext.request.contextPath }/keyword?type=건축·설계">건축·설계</a></td>
 						</tr>
 						<tr class="main_tr">
 							<th class="main_th"><a href="">시사·이슈</a></th>
