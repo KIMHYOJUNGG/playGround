@@ -9,6 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board where no= #{no}
 	</select>
 	
+	<select id="type" resultType="hashmap">
+		select * from board where type= #{type}
+	</select>
 	
 	<select id="word" resultType="hashmap">
 	select * from board where title like #{word1} or  BOOKNAME like #{word2} or TYPE like #{word3}
