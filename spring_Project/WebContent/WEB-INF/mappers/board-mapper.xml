@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="mainBoardOrder" resultType="hashmap">
 		select * from board order
-		by good asc
+		by good desc
 	</select>
 
 	<select id="listAll" resultType="total.domain.BoardVO">
