@@ -57,7 +57,7 @@
 								<td>${boardVO.NO}</td>
 								<td><a href='/board/readPage?no=${boardVO.NO}'>
 										${boardVO.TITLE}</a></td>
-								<td>${boardVO.WRITER}</td>
+								<td><a href="${pageContext.request.contextPath }/@${boardVO.WRITER}" >${boardVO.WRITER}</a></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 										value="${boardVO.REGDATE}" /></td>
 								<td><span class="badge bg-red">${boardVO.VIEWCNT }</span></td>

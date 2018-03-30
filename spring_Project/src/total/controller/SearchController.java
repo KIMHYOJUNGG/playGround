@@ -20,7 +20,7 @@ public class SearchController {
 	public String searchHandle(Map map,@RequestParam String word ) {
 		map.put("searchList",boardService.mongoSearch(word));
 		List<Map> list = boardService.mongokeyword(word);
-		List<Map> t = boardService.mongoTag(word);
+		List<Map> t = boardService.mongoTagSearch(word);
 		map.put("searchList",boardService.mongoSearch(word));
 		map.put("list", list);
 		map.put("tag", t);
