@@ -1,6 +1,8 @@
 package total.service;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import total.domain.BoardVO;
 import total.domain.BookVO;
@@ -54,8 +57,21 @@ public String uuid() {
 	
 }
 
-  public void create(BoardVO vo) throws Exception {
+
+  @SuppressWarnings({ "unchecked", "unused" })
+public void create(BoardVO vo,HttpSession sessions) throws Exception {
 	  
+	  System.out.println(vo.getTag());
+	  String[] tag=vo.getTag().split("#");
+	
+	  for(String s : tag) {
+		  System.out.println(s);
+	  }
+	  
+	  List<String> imgpath=(List)sessions.getAttribute("imgpath");
+	 
+	  System.out.println(Arrays.toString(tag));
+	  System.out.println(vo.getContent());
 	  int no= session.selectOne("board.selectNo");
 	  vo.setNo(no);
     session.insert("board.create", vo);
@@ -82,8 +98,24 @@ public String uuid() {
 	map.put("no",no);
 	map.put("bno",vo.getBno());
 	map.put("contents", vo.getContent());
-	map.put("image",new ArrayList<>());
+	if(imgpath==null){
+		
+		map.put("image",new ArrayList<>());
+		
+		
+	}else{
+		
+		map.put("image",imgpath);
+		
+	}
+	if(tag==null){
+		System.out.println("tag is null");
 	map.put("tag",new ArrayList<>());
+	}else{
+		  List<String> listtag=new ArrayList<>(Arrays.asList(tag));
+		  listtag.remove(0);
+		map.put("tag", listtag);
+	}
 	map.put("comments",new ArrayList<>());
 	
 	
@@ -294,6 +326,22 @@ public void update(BoardVO vo) throws Exception {
   public int countPaging(total.domain.Criteria cri) throws Exception {
 
     return session.selectOne("board.countPaging", cri);
+  }
+  public void increaseViewcnt(int no, HttpSession sessions)throws Exception{
+	 
+	  long update_time=0;
+	  if(sessions.getAttribute("update_time_"+no)!=null){
+		  update_time=
+				  (long)sessions.getAttribute("update_time_"+no);
+		  
+		  
+	  }
+	  long current_time=System.currentTimeMillis();
+	  if(current_time-update_time>5*1000){
+		  session.update("board.increaseViewcnt",no);
+	sessions.setAttribute("update_time_"+no, current_time);	  
+	  }
+		  
   }
 
 }

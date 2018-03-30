@@ -114,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 		group by bno, bookname order by (bookname)
 	</select>
+
 	
 	<delete id="delContentByNo">
 		delete from board where no in
@@ -129,5 +130,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<foreach collection="writers"  item="w" open="(" close=")" separator=",">#{w}</foreach>
 		group by writer
 	</select>
-	
+
+	<update id="increaseViewcnt">
+	update board set viewcnt=viewcnt+1
+	where no=#{no}
+	</update>
+
 </mapper>
