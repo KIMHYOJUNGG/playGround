@@ -83,18 +83,10 @@ public class AdminService {
 		Map map = template.selectOne("member.member", id);
 		if (map.get("STOPTIME") != null) {
 			template.update("admin.updateStoptime", id);
-			Map map2 = template.selectOne("admin.board", id);
-			if (map2 == null) {
-				template.update("admin.report", id);
-			}
 			return true;
 		} else {
 			int i = template.update("admin.updateLv", id);
 			if (i != 0) {
-				Map map2 = template.selectOne("admin.board", id);
-				if (map2 == null) {
-					template.update("admin.report", id);
-				}
 				return true;
 			} else {
 				return false;
@@ -106,17 +98,25 @@ public class AdminService {
 	public boolean updateRedCard2(String id) {
 		int i = template.update("admin.updateLv2", id);
 		if (i != 0) {
-			Map map2 = template.selectOne("admin.board", id);
-			if (map2 == null) {
-				template.update("admin.report", id);
-			}
 			return true;
 		} else {
 			return false;
 		}
 
+	} 
+	
+	// 더이상의 신고글이 없을 때
+	public boolean updateMemberreport(String id)
+	{
+		Map map2 = template.selectOne("admin.board", id);
+		if (map2 == null) {
+			template.update("admin.report", id);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
-
 	// 회원한테 msg 보내기
 	public boolean msgSend(Map map) {
 		int no = template.selectOne("admin.selectNo");
@@ -176,13 +176,17 @@ public class AdminService {
 	// 게시글에 이상없을 때의 report수정겸
 	public boolean modify(Map param) {
 		int no = Integer.parseInt(param.get("no").toString());
-		String id = (String)param.get("id");
 		int i = template.delete("admin.reportRemove",no);
-		if(i != 0) {
-			template.update("admin.report",id);
+		int i2 = template.update("admin.boardred",no);
+		if(i != 0 && i2 !=0) {
+			System.out.println("여기까지 감?");
 			return true;
 		}
-		return false;
+		else {
+			System.out.println(i + "  i2 = " + i2);
+			System.out.println("여기임?");
+			return false;
+		}
 	}
 
 }

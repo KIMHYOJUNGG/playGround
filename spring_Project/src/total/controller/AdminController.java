@@ -178,11 +178,12 @@ public class AdminController {
 	// 관리자가 해당 게시글의 유저한테 메세지보냄
 	@RequestMapping(path = "msg", method = RequestMethod.GET)
 	public String msgHandle(Model model, @RequestParam Map param) {
-		System.out.println(param);
+		String id = (String)param.get("id");
 		boolean rst = adminservice.msgSend(param);
+		boolean rst2= adminservice.updateMemberreport(id);
 		if (rst) {
 			model.addAttribute("success", param.get("title")+"을 삭제하였습니다.");
-			System.out.println("성공");
+			System.out.println("리포트수정됬냐"+rst2);
 			return "redirect:/admin/member";
 		} else {
 			model.addAttribute("fail", "메세지를 보내지 못했습니다.");
@@ -193,14 +194,16 @@ public class AdminController {
 	// 해당 게시글에 이상없을 때
 	@RequestMapping(path="/modify",method=RequestMethod.POST)
 	public String modifyHandle(Model model, @RequestParam Map param) {
+		String id = (String)param.get("id");
 		boolean rst = adminservice.modify(param);
 		if(rst) {
+			adminservice.updateMemberreport(id);
 			return "redirect:/admin/member";
 		}
 		else {
 			model.addAttribute("fail","실패");
 			System.out.println("실패했네 수정");
-			return "/admin/member";
+			return "/admin/admin_main";
 		}
 	}
 }
