@@ -31,23 +31,31 @@
 <%--
 main style --%> .main_keywords {
 	border-collapse: collapse;
-	height: 600px;
-	width: 30%;
+	height: 200px;
+	width: 800px;
 	text-align: center;
+    padding: 100px;
 }
 
-.main_keyword, .main_td, .main_th {
-	border: 2px solid gray;
+.main_keyword, .main_td, .main_th , main_tr{
+	border: 2px solid #c0c0c1;
 	text-align: center;
+	height: 100px;
+	width: 800px;
+	font-weight: bold;
+
 }
 
+/*
 .mainbody {
 
 }
 
 .w3-bar-block .w3-bar-item {
-	padding: 20px
+	padding: 50px
 }
+*/
+
 </style>collapse navbar-collapse
 </head>
 <body>
