@@ -30,6 +30,7 @@ public class BoardVO {
 	private String content;
 	private Date regdate;
 	private int viewcnt;
+	private int good;
 	public int getNo() {
 		return no;
 	}
@@ -96,12 +97,19 @@ public class BoardVO {
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;
 	}
+	public int getGood() {
+		return good;
+	}
+	public void setGood(int good) {
+		this.good = good;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [no=" + no + ", bno=" + bno + ", tag=" + tag + ", title=" + title + ", type=" + type + ", book="
 				+ book + ", bookname=" + bookname + ", writer=" + writer + ", content=" + content + ", regdate="
-				+ regdate + ", viewcnt=" + viewcnt + "]";
+				+ regdate + ", viewcnt=" + viewcnt + ", good=" + good + "]";
 	}
+	
 
 	
 
