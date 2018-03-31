@@ -40,15 +40,15 @@
 		if (document.getElementById("password").value == null) {
 			document.getElementById("rgd2").style.color = "red";
 			document.getElementById("rgd2").innerHTML = "<small>비밀번호 입력바랍니다..</small>";
-			document.getElementById("bt").disabled = true;
+			document.getElementById("sbt").disabled = true;
 		} else if (document.getElementById("repass").value != document
 				.getElementById("password").value) {
 			document.getElementById("rgd2").style.color = "red";
 			document.getElementById("rgd2").innerHTML = "<small>비밀번호가 다릅니다.</small>";
-			document.getElementById("bt").disabled = true;
+			document.getElementById("sbt").disabled = true;
 		} else {
 			document.getElementById("rgd2").innerHTML = null;
-			document.getElementById("bt").disabled = false;
+			document.getElementById("sbt").disabled = false;
 		}
 	}
 	document.getElementById("id").onblur = function() {
@@ -61,11 +61,11 @@
 					if (obj == false) {
 						document.getElementById("checkrst").innerHTML = "사용가능합니다.";
 						document.getElementById("checkrst").style.color = "green";
-						document.getElementById("bt").disabled = false;
+						document.getElementById("sbt").disabled = false;
 					} else {
 						document.getElementById("checkrst").innerHTML = "이미 사용중인 아이디 입니다.";
 						document.getElementById("checkrst").style.color = "red";
-						document.getElementById("bt").disabled = true;
+						document.getElementById("sbt").disabled = true;
 					}
 				}
 			}
@@ -73,9 +73,15 @@
 		}
 	}
 	
-	if (document.getElementById("checkemail").checked) {
-		console.log(document.getElementById("checkemail").checked);
-		document.getElementById("checkemail").value = 1;
-	} 
+	
+	if(document.getElementById("sbt").click){
+		if (document.getElementById("checkemail").checked) {
+			console.log(document.getElementById("checkemail").checked);
+			document.getElementById("checkemail").value = 1;
+		} 
+		else{
+			window.confirm("인증을 받지 않으실겁니까?");
+		}
+	}
 </script>
 
