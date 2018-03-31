@@ -25,25 +25,36 @@ public class AdminmsgController {
 
 	@Autowired
 	AdminMsgService adminmsgservice;
-	
+
+	// 받은 메세지함 보기
 	@RequestMapping("/getmessage")
 	public String GetMessage(Model model, HttpSession session, @RequestParam Map param) {
+		int scnt = adminservice.sendMessageCnt();
 		int gcnt = Integer.parseInt(param.get("gcnt").toString());
-		List<Map> list = adminmsgservice.message();
-		model.addAttribute("getmessage",list);
-		model.addAttribute("gcnt",gcnt);
-		return "/admin/admin_message";
+		List<Map> list = adminmsgservice.getmessage();
+		model.addAttribute("getmessage", list);
+		model.addAttribute("gcnt2", gcnt);
+		model.addAttribute("scnt", scnt);
+		return "/admin/admin_getmessage";
 	}
-	
-	@RequestMapping("/getmessageid")
+
+	// 보낸 메세지함 보기
+	@RequestMapping("/sendmessage")
+	public String SendMessage(Model model, HttpSession session, @RequestParam Map param) {
+		int scnt = Integer.parseInt(param.get("gcnt").toString());
+		int gcnt = adminservice.getMessageCnt();
+		List<Map> list = adminmsgservice.sendmessage();
+		model.addAttribute("getmessage", list);
+		model.addAttribute("gcnt", gcnt);
+		model.addAttribute("scnt2", scnt);
+		return "/admin/admin_sendmessage";
+	}
+
+	// 받은 메세지함에서 본메일 체크
+	@RequestMapping("/getmessageCheck")
 	public String GetMessageId(Model model, HttpSession session, @RequestParam Map param) {
-		Map map = adminmsgservice.messageId(param);
-		if(!map.containsKey("fail")) {
-			model.addAttribute("msgId",map);
-			return "/admin/admin_messageId";
-		}
-		else {
-			return "/admin/admin_fail";
-		}
+		Map map = adminmsgservice.getmessageId(param);
+		model.addAttribute("msgId", map);
+		return "/admin/admin_messageId";
 	}
 }

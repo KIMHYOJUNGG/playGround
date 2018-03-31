@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,27 +50,45 @@ public class MemberController {
 	public String memberRegistHandle(Model model, HttpServletRequest req, @RequestParam Map<String, Object> param,
 			HttpSession session, Map map) {
 		try {
-			if (param != null || !param.equals("")) {
-				param.put("image", "/image/default.jsp");
+			if (param.get("checkemail")!=null) {
+				System.out.println("일단 이쪽이니?");
 				boolean rst = memberservice.registerMember(param);
 				if (rst) {
-					session.setAttribute("logon", param.get("id"));
-					return "redirect:/index";
+					System.out.println("여기니?");
+					model.addAttribute("id", param.get("id"));
+					model.addAttribute("email", param.get("email"));
+					return "redirect:/member/confirmpage";
 				} else {
 					return "/registpage";
 				}
+			} else {
+				if (param != null) {
+					System.out.println("여기로 가?");
+					System.out.println("param"+param);
+					boolean rst = memberservice.registerMember(param);
+					
+					if (rst) {
+						session.setAttribute("logon", param.get("id"));
+						return "redirect:/index";
+					} else {
+						System.out.println("이거야");
+						return "/registpage";
+					}
+				}
+				throw new Exception();
 			}
-			throw new Exception();
 		} catch (Exception e) {
 			/*
-			 * if(param.get("password") != null && param.get("email")!=null) {
+			 * if (param.get("password") != null && param.get("email") != null) {
 			 * System.out.println("작동안하냐?"); model.addAttribute("idmsg", "아이디를 입력해주세요"); }
-			 * else if(param.get("id") != null && param.get("email")!=null) {
+			 * else if (param.get("id") != null && param.get("email") != null) {
 			 * System.out.println("이건왜하냐?"); model.addAttribute("passwordmsg",
-			 * "비밀번호를 입력해주세요"); } else if(param.get("id") != null &&
-			 * param.get("password")!=null) { System.out.println("이건뭐야?");
-			 * model.addAttribute("emailmsg", "이메일을 입력해주세요"); }
+			 * "비밀번호를 입력해주세요"); } else if (param.get("id") != null && param.get("password")
+			 * != null) { System.out.println("이건뭐야?"); model.addAttribute("emailmsg",
+			 * "이메일을 입력해주세요"); }
 			 */
+			e.printStackTrace();
+			System.out.println("저거야");
 			map.put("body", "register.jsp");
 			return "t_el";
 		}
@@ -89,16 +108,54 @@ public class MemberController {
 		return rst;
 	}
 
+	// 이메일인증 번호 보내주기
+	@RequestMapping("/confirmpage")
+	public String emailConfirm(Model model, HttpSession session, HttpServletRequest req, @RequestParam Map param,
+			Map map) {
+		System.out.println("여기로 왔니??????? confirm");
+		UUID uuid = UUID.randomUUID();
+		String[] uuids = uuid.toString().split("-");
+		String num = uuids[0];
+		map.put("body", "confirmpage.jsp");
+		boolean rst = mailservice.confirm((String) param.get("email"), num);
+		if (rst) {
+			System.out.println("이메일 인증번호 갔니?");
+			session.setAttribute("num", num);
+			model.addAttribute("email",param.get("email"));
+			model.addAttribute("id", param.get("id"));
+			return "t_el";
+		} else {
+			model.addAttribute("emailfail", "가입실패");
+			return "redirect:/registpage";
+		}
+	}
+
+	// 이메일 인증으로 인한 레벨 증가
+	@RequestMapping("confirm")
+	public String confirm(@RequestParam Map param, HttpSession session, Model model, Map map) {
+		map.put("body", "confirmpage.jsp");
+		if ((session.getAttribute("num").toString()).equals(param.get("num2").toString())) {
+			int i = memberservice.updateLv((String)param.get("id"));
+			if(i!=0) {
+				session.setAttribute("logon", param.get("id"));
+				return "redirect:/index";
+			}
+			else {
+				model.addAttribute("emailfail", "일치하지 않습니다. 재전송바랍니다.");
+				return "t_el";
+			}
+		} else {
+			model.addAttribute("emailfail", "일치하지 않습니다. 재전송바랍니다.");
+			return "t_el";
+		}
+	}
+
 	// 로그인
 	@RequestMapping(path = "/log", method = RequestMethod.GET)
-	public String memberLoginPage(Model model, Map map, @RequestParam(required=false) Map mapp) {
-		if (mapp != null) {
-			String uri = (String)mapp.get("uri");
-			String no=(String)mapp.get("no");
-			model.addAttribute("uri", uri);
-			model.addAttribute("no",no);
-			System.out.println("uri="+uri);
-			System.out.println("no="+no);
+	public String memberLoginPage(Model model, Map map,HttpSession session) {
+		if (session.getAttribute("uri") != null) {
+			String uri = (String)session.getAttribute("uri");
+			model.addAttribute("uri", uri);		
 		}
 		map.put("body", "login.jsp");
 		return "t_el";
@@ -109,27 +166,24 @@ public class MemberController {
 	public String memberLoginHandle(Model model, @RequestParam Map<String, String> param, HttpSession session,
 			Map mapp) {
 		boolean rst = memberservice.loginMember(param);
-		System.out.println("uri2 = "+param.get("uri"));
-		System.out.println("no2 = " + param.get("no"));
+		System.out.println("uri2 = " + param.get("uri"));
 		try {
-			if (param.get("uri") != null && param.get("no") !=null) {
+			if (param.get("uri") != null) {
 				if (rst) {
-					String uri = (String)param.get("uri");
-					String no = (String)param.get("no");
+					String uri = (String) param.get("uri");
 					session.setAttribute("logon", param.get("id"));
 					List<WebSocketSession> s = wsMap.get(session.getId());
 					if (s != null) {
 						for (WebSocketSession ws : s) {
 							ws.sendMessage(new TextMessage("로그인"));
 						}
-						return "redirect:/" + uri+"?no="+no;
+						return "redirect:/" + uri;
 					} else {
-							return "redirect:/"+ uri+"?no="+no;
+						return "redirect:/" + uri;
 					}
 				}
 				throw new Exception();
-			}
-			else{
+			} else {
 				if (rst) {
 					session.setAttribute("logon", param.get("id"));
 					List<WebSocketSession> s = wsMap.get(session.getId());
@@ -137,9 +191,9 @@ public class MemberController {
 						for (WebSocketSession ws : s) {
 							ws.sendMessage(new TextMessage("로그인"));
 						}
-							return "redirect:/index";
+						return "redirect:/index";
 					} else {
-							return "redirect:/index";
+						return "redirect:/index";
 					}
 				}
 				throw new Exception();

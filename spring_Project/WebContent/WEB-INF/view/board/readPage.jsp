@@ -24,23 +24,46 @@
     
   <div class="box-body">
     <div class="form-group">
+      <label for="exampleInputEmail1">조회수</label>
+      <input type="text" name='title' class="form-control" 
+         value="${boardVO.viewcnt}" readonly="readonly">
+    </div>
+    <div class="form-group">
       <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 
          value="${boardVO.title}" readonly="readonly">
     </div>
-  <div class="box-body">
+  
     <div class="form-group">
       <label for="exampleInputEmail1">BookName</label><br/>
-      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}">${boardVO.bookname}</a>
+      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
+         value="${boardVO.bookname}" readonly="readonly"></a>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
-     <!--  <textarea class="form-control"  name="content" rows="3" 
-      readonly="readonly"> --> ${contents}
+       <textarea class="form-control"  name="content" rows="3" id="ck" 
+      readonly="readonly">${contents}</textarea>
+      <script type="text/javascript">
+							$(function() {
+								CKEDITOR.replace('ck', {
+									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
+									height : '500px' // 입력창의 높이
+							
+								
+								});
+								
+							
+							});
+							
+		
+						</script>
+      
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1" >Writer</label></br>
-       <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> ${boardVO.writer}</a>
+      
+       <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
+         value="${boardVO.writer}" readonly="readonly"></a>
       </div>
     <div class="form-group">
     <c:if test="${ !empty comments  }">

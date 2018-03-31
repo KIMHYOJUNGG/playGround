@@ -47,7 +47,8 @@
 							
 							});
 							
-							var editor = CKEDITOR.instances['ckeditor_textarea_id'];
+						</script>
+<!-- 							var editor = CKEDITOR.instances['ckeditor_textarea_id'];
 
 							 if (editor) {
 
@@ -63,8 +64,7 @@
 
 							     });
 
-							 }
-						</script>
+							 } -->
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Writer</label> <input type="text"
