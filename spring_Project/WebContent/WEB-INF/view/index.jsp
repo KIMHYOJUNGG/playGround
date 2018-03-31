@@ -27,16 +27,27 @@
 	}
 }
 
-.carousel-indicators li {
-      border-color: #f4511e;
+  .carousel-inner img {
+      width: 40%; /* Set width to 100% */
+      height: 40%;
+      margin: auto;
   }
-  .carousel-indicators li.active {
-      background-color: #f4511e;
+  .carousel-caption h3 {
+      color: #fff !important;
   }
-   .carousel-control.right, .carousel-control.left {
-      background-image: none;
-      color: #f4511e;
+  @media (max-width: 400px) {
+    .carousel-caption {
+      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+  } 
+  
+
+  .col-sm-4 {
+      padding: 110px;
+
   }
+  
+
 </style>
 </head>
 <body class="mainbody">
@@ -61,6 +72,141 @@
 	--%>
 	
 		<div class="tab-content">
+		
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="3"></li>
+      <li data-target="#myCarousel" data-slide-to="4"></li>
+      
+    
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="New York" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>New York</h3>
+          <p>The atmosphere in New York is lorem ipsum.</p>
+        </div>      
+      </div>
+
+      <div class="item">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Chicago" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>Chicago</h3>
+          <p>Thank you, Chicago - A night we won't forget.</p>
+        </div>      
+      </div>
+    
+      <div class="item">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Los Angeles" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>LA</h3>
+          <p>Even though the traffic was a mess, we had the best time playing at Venice Beach!</p>
+        </div>      
+      </div>
+      
+        <div class="item">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Los Angeles" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>LA</h3>
+          <p>Even though the traffic was a mess, we had the best time playing at Venice Beach!</p>
+        </div>      
+      </div> 
+      
+       <div class="item">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Los Angeles" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>LA</h3>
+          <p>Even though the traffic was a mess, we had the best time playing at Venice Beach!</p>
+        </div>      
+      </div> 
+      
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div class="container-fluid text-center bg-grey">
+  <h2>Portfolio</h2><br>
+  <h4>What we have created</h4>
+  <div class="row text-center">
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Paris"  width="300" height="200">
+        <p><strong>Paris</strong></p>
+        <p>Yes, we built Paris</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="New York"  width="300" height="200">
+        <p><strong>New York</strong></p>
+        <p>We built New York</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
+        <p><strong>San Francisco</strong></p>
+        <p>Yes, San Fran is ours</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
+        <p><strong>San Francisco</strong></p>
+        <p>Yes, San Fran is ours</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row text-center">
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Paris"  width="300" height="200">
+        <p><strong>Paris</strong></p>
+        <p>Yes, we built Paris</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="New York"  width="300" height="200">
+        <p><strong>New York</strong></p>
+        <p>We built New York</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
+        <p><strong>San Francisco</strong></p>
+        <p>Yes, San Fran is ours</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="thumbnail">
+        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
+        <p><strong>San Francisco</strong></p>
+        <p>Yes, San Fran is ours</p>
+      </div>
+    </div>
+  </div>
+</div>
+		
 			<div id="home" class="tab-pane fade in active">
 				<div class="container-fluid text-center">
 					<h2>NOW</h2>
@@ -99,59 +245,76 @@
 			<div class="container-fluid text-center">
 				<h2>KEYWORD</h2>
 				<br>
+				<br>
+				<br>
 				<div class="row">
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=세계여행">세계여행</a>
 						</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=글쓰기">글쓰기</a>
 						</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=문화·예술">문화·예술</a>
+						</h4>
+					</div>
+					<div class="col-sm-3">
+						<h4>
+							<a href="${pageContext.request.contextPath }/keyword?type=사랑·이별">사랑·이별</a>
 						</h4>
 					</div>
 
 				</div>
 				<br> <br>
 				<div class="row">
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a
 								href="${pageContext.request.contextPath }/keyword?type=직장인 현실조언">직장인
 								현실조언</a>
 						</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=건축·설계">건축·설계</a>
 						</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">시사·이슈</a>
+						</h4>
+					</div>
+					<div class="col-sm-3">
+						<h4>
+							<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는 역사</a>
 						</h4>
 					</div>
 				</div>
 				<br> <br>
 				<div class="row">
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=육아이야기">육아이야기</a>
 						</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=요리·레시피">요리·레시피</a>
 						</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<h4>
 							<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">건강·운동</a>
+						</h4>
+					</div>
+					<div class="col-sm-3">
+						<h4>
+							<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집 반려동물</a>
 						</h4>
 					</div>
 
@@ -260,38 +423,7 @@
 	</div>
 	</div>
 	
-	<h2>What our customers say</h2>
-<div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
 
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-    <h4>"This company is the best. I am so happy with the result!"<br><span style="font-style:normal;">Michael Roe, Vice President, Comment Box</span></h4>
-    </div>
-    <div class="item">
-      <h4>"One word... WOW!!"<br><span style="font-style:normal;">John Doe, Salesman, Rep Inc</span></h4>
-    </div>
-    <div class="item">
-      <h4>"Could I... BE any more happy with this company?"<br><span style="font-style:normal;">Chandler Bing, Actor, FriendsAlot</span></h4>
-    </div>
-  </div>
-
-  <!-- Left and right controls -->
-  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
 </body>
 <script><%-- WebSocket을 하기 위해선 script처리가 필요하다.--%>
 	var ac = new WebSocket("ws://${pageContext.request.serverName}/logonWS");
