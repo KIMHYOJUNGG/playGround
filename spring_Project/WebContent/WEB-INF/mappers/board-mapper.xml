@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="listCriteria" resultType="total.domain.BoardVO">
 
-		select no, title, writer, regdate, viewcnt from (select board.*,
+		select no, title, writer, regdate, viewcnt,good from (select board.*,
 		row_number() over (order by regdate desc,no desc)
 		as row_id from board
 		<where>

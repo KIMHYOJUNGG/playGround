@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="good">
+<insert id="insert">
+insert into good values(good_seq.nextval,#{targetboard},#{wholike})
+
+</insert>
+
+<delete id="delete">
+
+		delete from good where (targetboard = #{targetboard} and wholike = #{wholike})
+
+</delete>
+<select id="find" resultType="total.domain.GoodVO">
+select wholike,targetboard from good where wholike=#{wholike} and targetboard=#{targetboard}
+
+</select>
+<update id="updatePlus" >
+update board set good=good+1
+		where no = #{no}
+</update>
+<update id="updateMin" >
+update board set good=good-1
+		where no = #{no}
+</update>
+</mapper>

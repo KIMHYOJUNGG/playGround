@@ -1,11 +1,8 @@
 package total.controller;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,21 +13,23 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import total.domain.BoardVO;
 import total.domain.BookVO;
 import total.domain.Criteria;
+import total.domain.GoodVO;
 import total.domain.PageMaker;
 import total.domain.ReportVO;
 //import total.domain.Criteria;
 //import total.domain.PageMaker;
 import total.service.BoardService;
+import total.service.GoodService;
 import total.service.ReportService;
 
 @Controller
@@ -41,11 +40,14 @@ public class BoardController {
 	BoardService service;
 	@Autowired
 	ReportService rservice;
+	@Autowired
+	GoodService gservice;
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String registerGET(BoardVO board, Model model, Map map, HttpSession session, HttpServletResponse resp,
 			HttpServletRequest req) throws Exception {
-
+		String id=(String)session.getAttribute("logon");
+		session.setAttribute("imgpath", null);
 		String[] type = "세계여행,글쓰기,문화·예술,그림·웹툰,직장인 현실조언,건축·설계,시사·이슈,스타트업 경험담,인문학·철학,IT트렌드,육아이야기,쉽게읽는 역사,사진·촬영,요리·레시피,우리집 반려동물,건강·운동,사랑·이별,디자인 스토리"
 				.split(",");
 		System.out.println(type);
@@ -56,9 +58,9 @@ public class BoardController {
 		System.out.println(cp);
 		System.out.println("register get ...........");
 		model.addAttribute("body", "register.jsp");
-		List<BookVO> book = service.bookName((String) session.getAttribute("logon"));
+		List<BookVO> book = service.bookName(id);
 		if (book.isEmpty()) {
-			String id=(String)session.getAttribute("logon");
+			
 			if(id!=null){
 			out.println("<script>window.alert(\"북네임을 설정해주세요.!\"); location.href=\"" + cp + "/bookPage\";</script>"); // 한글
 			out.close();
@@ -80,6 +82,7 @@ public class BoardController {
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
 	public String reportPOST(ReportVO report, RedirectAttributes rttr, HttpSession session) throws Exception {
 
+		
 		System.out.println("report get ...........");
 		rservice.create(report);
 
@@ -222,16 +225,21 @@ public class BoardController {
 	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model,
 			HttpSession session) throws Exception {
-
+		String id=(String)session.getAttribute("logon");
+		GoodVO good=new GoodVO();
+		good.setTargetboard(no);
+		good.setWholike(id);
+		boolean b=gservice.find(good);
+		model.addAttribute("like",b);
 		service.increaseViewcnt(no, session);
 		String contents = service.mongoFind(no);
 		List<Map> comments = service.mongoFindComment(no);
-		System.out.println(service.read(no));
+		//System.out.println(service.read(no));
 		model.addAttribute(service.read(no));
 		model.addAttribute("contents", contents);
 		model.addAttribute("body", "readPage.jsp");
 		model.addAttribute("comments", comments);
-		model.addAttribute("logon", session.getAttribute("logon"));
+		model.addAttribute("logon", id);
 		session.setAttribute("NO", no);
 		// return "board/read";
 		// return "t_board";
@@ -291,6 +299,26 @@ public class BoardController {
 		rttr.addFlashAttribute("perPageNum", cri.getPage());
 
 		return "redirect:/board/listPage";
+	}
+
+	@RequestMapping(path="/like",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String likeHandle(GoodVO good, HttpSession session) throws Exception {
+		System.out.println("likeHandle");
+		String id = (String)session.getAttribute("logon");
+		good.setWholike(id);
+		boolean rst = gservice.create(good);
+		return "{\"result\":"+rst+"}";
+	}
+	
+	@RequestMapping(path="/cancle", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String cancleHandle(GoodVO good, HttpSession session) throws Exception {
+		System.out.println("cancleHandle");
+		String id = (String)session.getAttribute("logon");
+		good.setWholike(id);
+		boolean rst = gservice.delete(good);
+		return "{\"result\":"+rst+"}";
 	}
 
 }

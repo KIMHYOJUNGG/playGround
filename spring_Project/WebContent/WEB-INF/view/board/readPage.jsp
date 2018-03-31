@@ -26,18 +26,30 @@
 								
 							 &nbsp;
 					</font> -->
-					<font size="5px;" style="color:red;">
+					
+					<font size="5px;" style="color:red;" id="heart">
+					<c:if test="${like eq false }">
+					
 <a href="#">
-          <span data-toggle="tooltip" title="좋아요!" class="glyphicon glyphicon-heart-empty"></span>
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span>
         </a>
+        			<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span>
+        </a>
+					</c:if>
+					<c:if test="${like eq true}">
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span>
+        </a>
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span>
+        </a>
+					</c:if>
 </font>
-<script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-});
-</script>
+        <span id="info"></span>
 
-<c:choose>
+<%-- 
+				<c:choose>
 				<c:when test="${fan ne true}">
 					<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
 				  </c:when>
@@ -45,86 +57,62 @@ $(document).ready(function(){
 				  	<button type="button" class="btn btn-info"  id="canclebt">구독취소</button>
 				  </c:otherwise>
 				  </c:choose>
-			
+			 --%>
 
 
 
- <!-- Modal -->
-				  <div class="modal fade" id="result"  role="dialog">
-				    <div class="modal-dialog">
-				    
-				      <!-- Modal content-->
-				      <div class="modal-content">
-				        <div class="modal-header">
-				          <h4 class="modal-title" >구독하기</h4>
-				        </div>
-				        <div class="modal-body">
-				          <p id="mbody"></p>
-				        </div>
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-default" data-dismiss="modal" id="rClose">Close</button>
-				        </div>
-				      </div>
-				      
-				    </div>
-				  </div>
-				  
-				  	<!-- Modal -->
-					  <div class="modal fade" id="cancle"  role="dialog">
-					    <div class="modal-dialog">
-					    
-					      <!-- Modal content-->
-					      <div class="modal-content">
-					        <div class="modal-header">
-					          <h4 class="modal-title" >구독취소</h4>
-					        </div>
-					        <div class="modal-body">
-					          <p id="cancleBody"></p>
-					        </div>
-					        <div class="modal-footer">
-					          <button type="button" class="btn btn-default" data-dismiss="modal" id="cClose">Close</button>
-					        </div>
-					      </div>
-					      
-					    </div>
-					  </div>
 					  <script>
-						  	$("#followbt").click(function(){
-								$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
+					  $(document).ready(function(){
+						  $('[data-toggle="tooltip"]').tooltip();   
+						  
+					  });
+					  
+					  
+					  
+						  	$("#good").click(function(){
+								$.get("${pageContext.request.contextPath}/board/like",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
 										var html="";
+										var html2="";
 										if(rst.result) {
-											html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
+											html = "${boardVO.no}게시물을 좋아합니다. ";
+										$("#good").hide();
+										$("#bad").show();
+											//html2="<a href=\"#\"><span data-toggle=\"tooltip\" title=\"좋아요취소!\" id=\"good\" class=\"glyphicon glyphicon-heart\"></span></a>";
 										} else {
-											html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+											html = "좋아요 실패. 다시 시도해 주세요. "
 										}
-											$("#mbody").html(html);
-							  			$("#result").modal();
+											$("#info").html(html);
+											//$("#heart").html(html2);
 									})	;
+							
+								    $('[data-toggle="tooltip"]').tooltip();   
+								
 					  		});
 						  	
-						  	$("#rClose").click(function(){
-						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
-						  	});
+						  
 
 					  
-						  	$("#canclebt").click(function(){
-								$.get("${pageContext.request.contextPath}/follow/cancle",  {"target": "${writerInfo.ID}"
+						  	$("#bad").click(function(){
+								$.get("${pageContext.request.contextPath}/board/cancle",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
 										var html="";
 										if(rst.result) {
-											html = "${writerInfo.NICKNAME} 님을 관심 작가에서 삭제하였습니다. "
+											html = "${boardVO.no}게시물 좋아요를 취소합니다. ";
+											$("#good").show();
+											$("#bad").hide();
+												//html2="<a href=\"#\"><span data-toggle=\"tooltip\" title=\"좋아요!\" id=\"good\" class=\"glyphicon glyphicon-heart-empty\"></span></a>";
 										} else {
-											html = "<span style='color: red'>관심 작가 삭제실패. 다시 시도해 주세요.</span> "
+											html = "좋아요 취소 실패. 다시 시도해 주세요.";
 										}
-											$("#cancleBody").html(html);
-							  			$("#cancle").modal();
+											$("#info").html(html);
+											//$("#heart").html(html2);
+							  			
 									})	;
+								 $('[data-toggle="tooltip"]').tooltip();   
 					  		});
 						  	
-						  	$("#cClose").click(function(){
-						  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
-						  	});
+						  
 					  </script>
 
 

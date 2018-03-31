@@ -53,7 +53,7 @@ public class boardUploardController {
 	String uploadPath=saveDir.getPath();
 	OutputStream out=new FileOutputStream(
 			new File(uploadPath+"\\"+fileName));
-System.out.println(uploadPath+"\\"+fileName);
+    System.out.println(uploadPath+"\\"+fileName);
 	out.write(bytes);
 	String callback=request.getParameter("CKEditorFuncNum");
 	System.out.println(callback);

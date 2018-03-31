@@ -116,6 +116,7 @@ public void create(BoardVO vo,HttpSession sessions) throws Exception {
 		  List<String> listtag=new ArrayList<>(Arrays.asList(tag));
 		  listtag.remove(0);
 		map.put("tag", listtag);
+		sessions.setAttribute("imgpath", null);
 	}
 	map.put("comments",new ArrayList<>());
 	
