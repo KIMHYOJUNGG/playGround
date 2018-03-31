@@ -26,27 +26,33 @@
 	}
 }
 
-  .carousel-inner img {
-      width: 40%; /* Set width to 100% */
-      height: 40%;
-      margin: auto;
-  }
-  .carousel-caption h3 {
-      color: #fff !important;
-  }
-  @media (max-width: 400px) {
-    .carousel-caption {
-      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
-    }
-  } 
-  
+.carousel-inner img {
+	width: 40%; /* Set width to 100% */
+	height: 40%;
+	margin: auto;
+}
 
-  .col-sm-4 {
-      padding: 110px;
+.carousel-caption h3 {
+	color: #fff !important;
+}
 
-  }
-  
+@media ( max-width : 400px) {
+	.carousel-caption {
+		display: none;
+		/* Hide the carousel text when the screen is less than 600 pixels wide */
+	}
+}
 
+.container-fluid {
+	
+}
+
+@media screen and (max-width: 768px) {
+	.col-sm-3 {
+		text-align: center;
+		margin: 25px 0;
+	}
+}
 </style>
 </head>
 <body class="mainbody">
@@ -69,200 +75,152 @@
 			<li><a data-toggle="tab" href="#menu1">Keyword</a></li>
 		</ul>
 	--%>
-	
+
 		<div class="tab-content">
-		
-		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-      <li data-target="#myCarousel" data-slide-to="3"></li>
-      <li data-target="#myCarousel" data-slide-to="4"></li>
-      
-    
-    </ol>
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="New York" width="1200" height="700">
-        <div class="carousel-caption">
-          <h3>New York</h3>
-          <p>The atmosphere in New York is lorem ipsum.</p>
-        </div>      
-      </div>
+			<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
 
-      <div class="item">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Chicago" width="1200" height="700">
-        <div class="carousel-caption">
-          <h3>Chicago</h3>
-          <p>Thank you, Chicago - A night we won't forget.</p>
-        </div>      
-      </div>
-    
-      <div class="item">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Los Angeles" width="1200" height="700">
-        <div class="carousel-caption">
-          <h3>LA</h3>
-          <p>Even though the traffic was a mess, we had the best time playing at Venice Beach!</p>
-        </div>      
-      </div>
-      
-        <div class="item">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Los Angeles" width="1200" height="700">
-        <div class="carousel-caption">
-          <h3>LA</h3>
-          <p>Even though the traffic was a mess, we had the best time playing at Venice Beach!</p>
-        </div>      
-      </div> 
-      
-       <div class="item">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Los Angeles" width="1200" height="700">
-        <div class="carousel-caption">
-          <h3>LA</h3>
-          <p>Even though the traffic was a mess, we had the best time playing at Venice Beach!</p>
-        </div>      
-      </div> 
-      
-    </div>
 
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-</div>
+				</ol>
 
-<!-- Container (Portfolio Section) -->
-<div class="container-fluid text-center bg-grey">
-  <h2>Portfolio</h2><br>
-  <h4>What we have created</h4>
-  <div class="row text-center">
-    <div class="col-sm-3">
-      <div class="thumbnail">
-      <c:forEach var="o" items="${boardNo}" varStatus="vs">
-							<c:choose>
-								<c:when test="${vs.count <= 8}">
-									<div class="w3-quarter">
-										<c:if test="${empty list}">
-											<a href="/board/readPage?no=${o.NO}"><img
-												src="${pageContext.request.contextPath }/image/Desert.jpg"
-												alt="1" style="width: 80%"></a>
-										</c:if>
-										<c:forEach items="${list }" var="l" varStatus="vs">
-											<c:if test="${vs.count <= 1}">
-													<a href="/board/readPage?no=${o.NO}"><img src="${l[0] }" alt="Paris"  width="300" height="200"></a>
-											</c:if>
-										</c:forEach>
-        <p><strong>${o.TITLE }</strong></p>
-        <p>${o.BOOKNAME }</p>
-									</div>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="thumbnail">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="New York"  width="300" height="200">
-        <p><strong>New York</strong></p>
-        <p>We built New York</p>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="thumbnail">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
-        <p><strong>San Francisco</strong></p>
-        <p>Yes, San Fran is ours</p>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="thumbnail">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
-        <p><strong>San Francisco</strong></p>
-        <p>Yes, San Fran is ours</p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="row text-center">
-    <div class="col-sm-3">
-      <div class="thumbnail">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Paris"  width="300" height="200">
-        <p><strong>Paris</strong></p>
-        <p>Yes, we built Paris</p>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="thumbnail">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="New York"  width="300" height="200">
-        <p><strong>New York</strong></p>
-        <p>We built New York</p>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="thumbnail">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
-        <p><strong>San Francisco</strong></p>
-        <p>Yes, San Fran is ours</p>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="thumbnail">
-        <img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="San Francisco" width="300" height="200">
-        <p><strong>San Francisco</strong></p>
-        <p>Yes, San Fran is ours</p>
-      </div>
-    </div>
-  </div>
-</div>
-		
-			<div id="home" class="tab-pane fade in active">
-				<div class="container-fluid text-center">
-					<h2>NOW</h2>
-					<br>  
-					<br>
-					<!-- First Photo Grid-->
-					<div class="w3-row-padding w3-padding-16 w3-center" id="food">
-						<c:forEach var="o" items="${boardNo}" varStatus="vs">
-							<c:choose>
-								<c:when test="${vs.count <= 8}">
-									<div class="w3-quarter">
-										<c:if test="${empty list}">
-											<a href="/board/readPage?no=${o.NO}"><img
-												src="${pageContext.request.contextPath }/image/Desert.jpg"
-												alt="1" style="width: 80%"></a>
-										</c:if>
-										<c:forEach items="${list }" var="l" varStatus="vs">
-											<c:if test="${vs.count <= 1}">
-												<a href="/board/readPage?no=${o.NO}"><img src="${l[0] }"
-													alt="1" style="width: 80%"></a>
-											</c:if>
-										</c:forEach>
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+				<%--
+					<c:forEach var="o" items="${boardNo}" varStatus="vs">
+						<c:choose>
+							<c:when test="${vs.count <= 5}">
+								<div class="item active">
+									<c:if test="${o.IMAGE == null}">
+										<a href="/board/readPage?no=${o.NO}"><img
+											src="${pageContext.request.contextPath }/image/Desert.jpg"
+											alt="1" width="1200" height="700"></a>
+									</c:if>
+									<a href="/board/readPage?no=${o.NO}"><img
+										src="
+												${o.IMAGE }" alt="Paris" width="1200"
+										height="700"></a>
+									<div class="carousel-caption">
 										<h3>${o.TITLE }</h3>
 										<p>${o.BOOKNAME }</p>
 									</div>
-								</c:when>
-							</c:choose>
-						</c:forEach>
 
+								</div>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</div>
+ --%>
+				
+				<div class="item">
+					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
+						alt="Chicago" width="1200" height="700">
+					<div class="carousel-caption">
+						<h3>Chicago</h3>
+						<p>Thank you, Chicago - A night we won't forget.</p>
 					</div>
 				</div>
+
+				<div class="item">
+					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
+						alt="Los Angeles" width="1200" height="700">
+					<div class="carousel-caption">
+						<h3>LA</h3>
+						<p>Even though the traffic was a mess, we had the best time
+							playing at Venice Beach!</p>
+					</div>
+				</div>
+
+				<div class="item">
+					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
+						alt="Los Angeles" width="1200" height="700">
+					<div class="carousel-caption">
+						<h3>LA</h3>
+						<p>Even though the traffic was a mess, we had the best time
+							playing at Venice Beach!</p>
+					</div>
+				</div>
+
+				<div class="item">
+					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
+						alt="Los Angeles" width="1200" height="700">
+					<div class="carousel-caption">
+						<h3>LA</h3>
+						<p>Even though the traffic was a mess, we had the best time
+							playing at Venice Beach!</p>
+					</div>
+				</div>
+				<div class="item">
+					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
+						alt="Los Angeles" width="1200" height="700">
+					<div class="carousel-caption">
+						<h3>LA</h3>
+						<p>Even though the traffic was a mess, we had the best time
+							playing at Venice Beach!</p>
+					</div>
+				</div>
+</div>
+
 			</div>
+
+				<!-- Left and right controls -->
+				<a class="left carousel-control" href="#myCarousel" role="button"
+					data-slide="prev"> <span
+					class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a> <a class="right carousel-control" href="#myCarousel" role="button"
+					data-slide="next"> <span
+					class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+			
+			<!-- Container (Portfolio Section) -->
+			<div class="container-fluid text-center bg-grey">
+				<h2>Portfolio</h2>
+				<br>
+				<h4>What we have created</h4>
+				<div class="row text-center">
+					<c:forEach var="o" items="${boardNo}" varStatus="vs">
+						<c:choose>
+							<c:when test="${vs.count <= 8}">
+								<div class="col-sm-3">
+									<div class="thumbnail">
+										<div class="w3-quarter">
+											<c:if test="${o.IMAGE == null}">
+												<a href="/board/readPage?no=${o.NO}"><img
+													src="${pageContext.request.contextPath }/image/Desert.jpg"
+													alt="1" width="400" height="300"></a>
+											</c:if>
+											<a href="/board/readPage?no=${o.NO}"><img
+												src="
+												${o.IMAGE }" alt="Paris" width="400"
+												height="300"></a>
+											<p>
+												<strong>${o.TITLE }</strong>
+											</p>
+											<p>${o.BOOKNAME }</p>
+										</div>
+									</div>
+								</div>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</div>
+			</div>
+
 
 			<br> <br> <br> <br> <br>
 			<!-- Container (Services Section) -->
 			<div class="container-fluid text-center">
 				<h2>KEYWORD</h2>
-				<br>
-				<br>
-				<br>
+				<br> <br> <br>
 				<div class="row">
 					<div class="col-sm-3">
 						<h4>
@@ -307,7 +265,8 @@
 					</div>
 					<div class="col-sm-3">
 						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는 역사</a>
+							<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는
+								역사</a>
 						</h4>
 					</div>
 				</div>
@@ -330,7 +289,8 @@
 					</div>
 					<div class="col-sm-3">
 						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집 반려동물</a>
+							<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집
+								반려동물</a>
 						</h4>
 					</div>
 
@@ -438,7 +398,7 @@
 	</div>
 	</div>
 	</div>
-	
+
 
 </body>
 <script><%-- WebSocket을 하기 위해선 script처리가 필요하다.--%>
@@ -455,7 +415,7 @@
 		}
 		console.log(rst);
 	}
-	</script>
+</script>
 <%-- 
 
 				<!-- First Photo Grid-->
