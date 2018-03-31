@@ -22,7 +22,8 @@ public class AddCommentsController {
 	
 	@RequestMapping(path="/addComments", method = RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String addCommentsHandle(@RequestParam String id , @RequestParam String text , @RequestParam int boardNo, @RequestParam String preco) {
+	public String addCommentsHandle(@RequestParam String id , 
+			@RequestParam String text , @RequestParam int boardNo, @RequestParam String preco) throws Exception{
 		//session.setAttribute("boardNo",boardNo);
 		//session.setAttribute("boardNo",preco);
 		System.out.println("e댓글 작동확인");

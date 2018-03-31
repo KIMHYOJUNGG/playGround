@@ -24,6 +24,7 @@ import total.domain.BoardVO;
 import total.domain.BookVO;
 import total.domain.Criteria;
 import total.domain.GoodVO;
+import total.domain.MongoBoardVo;
 import total.domain.PageMaker;
 import total.domain.ReportVO;
 //import total.domain.Criteria;
@@ -144,10 +145,10 @@ public class BoardController {
 	public String read(@RequestParam("no") int no, Model model,HttpSession session) throws Exception {
 
 		service.increaseViewcnt(no, session);
-		String contents = service.mongoFind(no);
+		MongoBoardVo mbv= service.mongoFind(no);
 		List<Map> comments = service.mongoFindComment(no);
 		model.addAttribute(service.read(no));
-		model.addAttribute("contents", contents);
+		model.addAttribute("mbv", mbv);
 		model.addAttribute("body", "readPage.jsp");
 		model.addAttribute("comments", comments);
 
@@ -165,9 +166,9 @@ public class BoardController {
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modifyGET(int no, Model model) throws Exception {
 
-		String content = service.mongoFind(no);
+		MongoBoardVo mbv = service.mongoFind(no);
 		model.addAttribute(service.read(no));
-		model.addAttribute("content", content);
+		model.addAttribute("mbv", mbv);
 		model.addAttribute("body", "modify.jsp");
 
 		// return "board/modify";
@@ -225,36 +226,42 @@ public class BoardController {
 	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model,
 			HttpSession session) throws Exception {
-		String id=(String)session.getAttribute("logon");
-		GoodVO good=new GoodVO();
-		good.setTargetboard(no);
-		good.setWholike(id);
-		boolean b=gservice.find(good);
-		model.addAttribute("like",b);
-		service.increaseViewcnt(no, session);
-		String contents = service.mongoFind(no);
-		List<Map> comments = service.mongoFindComment(no);
-		//System.out.println(service.read(no));
-		model.addAttribute(service.read(no));
-		model.addAttribute("contents", contents);
-		model.addAttribute("body", "readPage.jsp");
-		model.addAttribute("comments", comments);
-		model.addAttribute("logon", id);
-		session.setAttribute("NO", no);
-		// return "board/read";
-		// return "t_board";
-
-		/*
-		 * String contents= service.mongoFind(no); List<Map> comments=
-		 * service.mongoFindComment(no); model.addAttribute(service.read(no));
-		 * model.addAttribute("contents",contents);
-		 * model.addAttribute("body","readPage.jsp");
-		 * model.addAttribute("comments",comments);
-		 */
-
-		// return "board/read";
-		return "t_board";
-	}
+		
+		
+			String id=(String)session.getAttribute("logon");
+			if(id!=null){
+				GoodVO good=new GoodVO();
+				good.setTargetboard(no);
+				good.setWholike(id);
+				boolean b=gservice.find(good);
+				model.addAttribute("like",b);
+			}
+			service.increaseViewcnt(no, session);
+			MongoBoardVo mbv= service.mongoFind(no);
+			List<Map> comments = service.mongoFindComment(no);
+			//System.out.println(service.read(no));
+			model.addAttribute(service.read(no));
+			model.addAttribute("mbv", mbv);
+			model.addAttribute("body", "readPage.jsp");
+			model.addAttribute("comments", comments);
+			model.addAttribute("logon", id);
+			session.setAttribute("NO", no);
+			// return "board/read";
+			// return "t_board";
+			
+			/*
+			 * String contents= service.mongoFind(no); List<Map> comments=
+			 * service.mongoFindComment(no); model.addAttribute(service.read(no));
+			 * model.addAttribute("contents",contents);
+			 * model.addAttribute("body","readPage.jsp");
+			 * model.addAttribute("comments",comments);
+			 */
+			
+			// return "board/read";
+			return "t_board";
+		
+			
+		}
 
 	@RequestMapping(value = "/removePage", method = RequestMethod.POST)
 	public String remove(@RequestParam("no") int no, Criteria cri, RedirectAttributes rttr) throws Exception {
@@ -276,10 +283,13 @@ public class BoardController {
 	@RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
 	public String modifyPagingGET(@RequestParam("no") int no, @ModelAttribute("cri") Criteria cri, Model model)
 			throws Exception {
-
-		String content = service.mongoFind(no);
+		String[] type = "세계여행,글쓰기,문화·예술,그림·웹툰,직장인 현실조언,건축·설계,시사·이슈,스타트업 경험담,인문학·철학,IT트렌드,육아이야기,쉽게읽는 역사,사진·촬영,요리·레시피,우리집 반려동물,건강·운동,사랑·이별,디자인 스토리"
+				.split(",");
+		System.out.println(type);
+		model.addAttribute("type",type);
+		MongoBoardVo mbv= service.mongoFind(no);
 		model.addAttribute(service.read(no));
-		model.addAttribute("content", content);
+		model.addAttribute("mbv", mbv);
 		model.addAttribute("body", "modifyPage.jsp");
 
 		// return "board/modify";

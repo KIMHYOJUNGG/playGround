@@ -98,7 +98,7 @@
 									}).done(function(rst){
 										var html="";
 										if(rst.result) {
-											html = "${boardVO.no}게시물 좋아요를 취소합니다. ";
+											html = "${boardVO.no}게시물 좋아요를 취소했습니다. ";
 											$("#good").show();
 											$("#bad").hide();
 												//html2="<a href=\"#\"><span data-toggle=\"tooltip\" title=\"좋아요!\" id=\"good\" class=\"glyphicon glyphicon-heart-empty\"></span></a>";
@@ -129,21 +129,30 @@
       <input type="text" name='title' class="form-control" 
          value="${boardVO.viewcnt}" readonly="readonly">
     </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Title</label>
-      <input type="text" name='title' class="form-control" 
-         value="${boardVO.title}" readonly="readonly">
-    </div>
   
+    <div class="form-group">
+      <label for="exampleInputEmail1">Type</label><br/>
+      <input type="text" name='type' class="form-control" 
+         value="${boardVO.type}" readonly="readonly">
+    </div>
+    <div class="form-group">
+							<label for="exampleInputEmail1">Tag</label> <input type="text"
+								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly">
+						</div>
     <div class="form-group">
       <label for="exampleInputEmail1">BookName</label><br/>
       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.bookname}" readonly="readonly"></a>
     </div>
     <div class="form-group">
+      <label for="exampleInputEmail1">Title</label>
+      <input type="text" name='title' class="form-control" 
+         value="${boardVO.title}" readonly="readonly">
+    </div>
+    <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
        <textarea class="form-control"  name="content" rows="3" id="ck" 
-      readonly="readonly">${contents}</textarea>
+      readonly="readonly">${mbv.contents}</textarea>
       <script type="text/javascript">
 							$(function() {
 								CKEDITOR.replace('ck', {

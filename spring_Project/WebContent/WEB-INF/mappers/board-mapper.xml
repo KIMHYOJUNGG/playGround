@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="read" resultType="total.domain.BoardVO">
 		select
 		no, bookname, bno,title,
-		writer, regdate, viewcnt
+		writer, regdate, viewcnt,type
 		from
 		board
 		where no = #{no}
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="update">
-		update board set title =#{title}
+		update board set title =#{title} ,type=#{type}
 		where no = #{no}
 	</update>
 
@@ -74,7 +74,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 	</select>
-
 	<select id="listCriteria" resultType="total.domain.BoardVO">
 
 		select no, title, writer, regdate, viewcnt,good from (select board.*,

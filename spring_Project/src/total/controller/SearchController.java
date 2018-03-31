@@ -17,7 +17,7 @@ public class SearchController {
 	
 	
 	@RequestMapping("/search")
-	public String searchHandle(Map map,@RequestParam String word ) {
+	public String searchHandle(Map map,@RequestParam String word )throws Exception {
 		map.put("searchList",boardService.mongoSearch(word));
 		List<Map> list = boardService.mongokeyword(word);
 		List<Map> t = boardService.mongoTagSearch(word);

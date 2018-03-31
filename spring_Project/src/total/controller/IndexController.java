@@ -36,7 +36,7 @@ public class IndexController {
 
 	
 	@RequestMapping({"/index","/"})
-	public String indexHandle(Model model) {
+	public String indexHandle(Model model) throws Exception{
 		System.out.println("index");
 		List<Map> boardNo = indexService.boardConnectNo();
 		model.addAttribute("boardNo", boardNo);

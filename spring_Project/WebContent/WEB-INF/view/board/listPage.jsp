@@ -17,7 +17,7 @@
 					<h3 class="box-title">Board List</h3>
 				</div>
 				<div class='box-body'>
-					<a href="/board/register"><button id='newBtn'>New Board</button></a>
+					<a href="/board/register"><button class='btn btn-primary'>New Board</button></a>
 				</div>
 				
 			<%-- 		<div class="form-group">
@@ -38,7 +38,7 @@
 				 --%>
 				
 				
-					<div >
+					<div class="container">
 					<c:forEach items="${type}" var="v">
 
 						<a href="/board/listPage?type=${v }"><button type="button"  
@@ -58,7 +58,7 @@
 					<h3 class="box-title">LIST PAGING</h3>
 				</div>
 				<div class="box-body">
-					<table class="table table-bordered">
+					<table class="table table-bordered table-hover">
 						<tr>
 							<th style="width: 10px">BNO</th>
 							<th>TITLE</th>
