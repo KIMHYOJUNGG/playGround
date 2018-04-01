@@ -4,11 +4,11 @@
 <body>
 	<div align="center">
 		<form action="/member/regist"  role="form" method="post"
-			style="width: 330px; text-align: left; line-height: 34px;"
+			style="width: 400px; text-align: left; line-height: 34px;"
 			autocomplete="off">
 			<div style="margin-top: 20px;">
 				<span>ID(*)</span> <small id="checkrst"></small><br /> <input
-					type="text" name="id" id="id" placeholder="아이디" pattern="[a-zA-Z]+">
+					type="text" name="id" id="id" placeholder="아이디" pattern="[a-zA-Z]+" >
 			</div>
 			<p>
 				<b>PASS(*)</b><br /> <input type="password" name="password"
@@ -19,13 +19,16 @@
 				id="repass" onblur="checkps();"><br /> <span id="rgd2"></span>
 			<p>
 			<p>
-				<b>NICKNAME(*)</b><br /> <input type="nickname" name="nickname">
+				<b>NICKNAME(*)</b><br /> <input type="nickname" name="nickname" id="nick" onblur="nickCheck()">
+				<small><span class="nname"></span></small>
 			</p>
 			<p>
-				<b>EMAIL(*)</b><br /> <input type="email" name="email"
-					onblur="checkemail()"><br /> <small> <input
+			
+				<b>EMAIL(*)</b><small> <input
 					type="checkbox" id="checkemail" name="checkemail" />이메일 인증을 하겠습니다.
-				</small>
+				</small><br /> 
+				<input type="email" name="email" id="email" onblur="emailCheck()" ><small><span class="ename"></span></small><br/>
+					
 			</p>
 			<p>
 				<button id="sbt" type="submit" style="width: 100%; height: 30px;">가
@@ -52,7 +55,12 @@
 		}
 	}
 	document.getElementById("id").onblur = function() {
-		if (this.value.length != 0) {
+		if(this.value == ""){
+			$(".checkrst").html("아이디를 입력하세요.");
+			$(".checkrst").css("color", "red");
+			document.getElementById("sbt").disabled = true;
+		}
+		else{
 			var xhr = new XMLHttpRequest();
 			xhr.open("get", "/member/checkid?id=" + this.value, true);
 			xhr.onreadystatechange = function() {
@@ -85,5 +93,23 @@
 			}
 		} 
 	});
+	
+	function nickCheck(){
+		var nick =  $("#nick").val();
+		if(nick == ""){
+			$(".nname").html("닉네임을 입력하세요.");
+			$(".nname").css("color", "red");
+			document.getElementById("sbt").disabled = true;
+		} 
+	}
+	function emailCheck(){
+		var email = $("#email").val();
+		if(email == ""){
+			$(".ename").html("이메일을 입력해주세요")
+			$(".ename").css("color", "red");
+			document.getElementById("sbt").disabled = true;
+		}
+	}
+
 </script>
 
