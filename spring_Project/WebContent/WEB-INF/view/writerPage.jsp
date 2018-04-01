@@ -73,7 +73,9 @@
 		
 			<c:if test="${logon  != writerInfo.ID || logon== null}">
 				<c:forEach items="${follower }" var="fer">
-					<c:set var="fan" value="${fer.READER eq logon}"/>
+					<c:if test="${fer.READER eq logon}">
+						<c:set var="fan" value="true" />
+					</c:if>
 				</c:forEach>
 				<button type="button" class="btn btn-info"  id="sendMsg" onclick="sendMsg('${writerInfo.ID}')"><span class="glyphicon glyphicon-envelope"></span></button>
 
@@ -297,11 +299,7 @@
 					</c:if>
 				</c:otherwise>
 				</c:choose>
-				</div>
-			</div>
-			
-							
-			
+
 			<div id="menu1" class="tab-pane fade">
 				<c:choose>
 				<c:when test="${!empty bookList }">

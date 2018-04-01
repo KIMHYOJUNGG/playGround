@@ -232,10 +232,12 @@
 								</script>
 						<c:if test="${logon  != writerInfo.ID || logon== null}">
 							<c:forEach items="${follower }" var="fer">
-								<c:set var="fan" value="${fer.READER eq logon}" />
+								<c:if test="${fer.READER eq logon}">
+									<c:set var="fan" value="true" />
+								</c:if>
 							</c:forEach>
 							<c:choose>
-								<c:when test="${fan ne true}">
+								<c:when test="${fan != true}">
 									<button type="button" class="btn btn-info" id="followbt">구독하기</button>
 									<!-- Modal -->
 									<div class="modal fade" id="result" role="dialog">

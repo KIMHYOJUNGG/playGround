@@ -108,6 +108,7 @@
 	        } else {
 	            alert('잘못된 형식의 이메일 주소입니다.');
 	            $(this).focus();
+	            $("#btn").prop("disabled", true);
 	            return false;
 	        }
 	    });
