@@ -1,6 +1,8 @@
 package total.service;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -14,10 +16,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import total.domain.BoardVO;
 import total.domain.BookVO;
 import total.domain.MongoBoardVo;
+
 
 
 @Service
@@ -54,8 +58,21 @@ public String uuid() {
 	
 }
 
-  public void create(BoardVO vo) throws Exception {
+
+  @SuppressWarnings({ "unchecked", "unused" })
+public void create(BoardVO vo,HttpSession sessions) throws Exception {
 	  
+	  System.out.println(vo.getTag());
+	  String[] tag=vo.getTag().split("#");
+	
+	  for(String s : tag) {
+		  System.out.println(s);
+	  }
+	  
+	  List<String> imgpath=(List)sessions.getAttribute("imgpath");
+	 
+	  System.out.println(Arrays.toString(tag));
+	  System.out.println(vo.getContent());
 	  int no= session.selectOne("board.selectNo");
 	  vo.setNo(no);
     session.insert("board.create", vo);
@@ -82,8 +99,25 @@ public String uuid() {
 	map.put("no",no);
 	map.put("bno",vo.getBno());
 	map.put("contents", vo.getContent());
-	map.put("image",new ArrayList<>());
+	if(imgpath==null){
+		
+		map.put("image",new ArrayList<>());
+		
+		
+	}else{
+		
+		map.put("image",imgpath);
+		
+	}
+	if(tag==null){
+		System.out.println("tag is null");
 	map.put("tag",new ArrayList<>());
+	}else{
+		  List<String> listtag=new ArrayList<>(Arrays.asList(tag));
+		  listtag.remove(0);
+		map.put("tag", listtag);
+		sessions.setAttribute("imgpath", null);
+	}
 	map.put("comments",new ArrayList<>());
 	
 	
@@ -202,11 +236,11 @@ public List<Map> mongoSearch(String word) {
 	  Map map= new HashMap<>();
 	  Map result = session.selectOne("search.boardNo", no);
 	  //System.out.println("result : "+result);
-	  map.put("no", result.get("NO"));
-	  map.put("title", result.get("TITLE"));
-	  map.put("date", result.get("REGDATE"));
-	  map.put("writer", result.get("WRITER"));
-	  map.put("view", result.get("VIEWCNT"));
+	  map.put("NO", result.get("NO"));
+	  map.put("TITLE", result.get("TITLE"));
+	  map.put("REGDATE", result.get("REGDATE"));
+	  map.put("WRITER", result.get("WRITER"));
+	  map.put("VIEWCNT", result.get("VIEWCNT"));
 	  
 	  list.add(map); 
 	  }
@@ -215,6 +249,172 @@ public List<Map> mongoSearch(String word) {
 	  return list;
 	  
 }
+
+public List<Map> mongokeyword(String type) {
+	List<Map> list = session.selectList("search.type",type); 
+	System.out.println("list :" +list);
+	return list;
+	
+
+}
+
+public static List sortByValue(final Map map) {
+    List<String> list = new ArrayList();
+    list.addAll(map.keySet());
+    Collections.sort(list,new Comparator() {
+        public int compare(Object o1,Object o2) {
+            Object v1 = map.get(o1);
+            Object v2 = map.get(o2);
+            return ((Comparable) v2).compareTo(v1);
+        }
+    });
+    //Collections.reverse(list); // 주석시 오름차순
+    return list;
+}
+public List<Map> mongoTag(String type) {
+	  List tag = new LinkedList<>();
+	  Map<String, Integer> m = new HashMap<>(); // key: tag, value: 수
+	  List<Map> list = session.selectList("search.type", type);
+	  for(Map map : list) {
+	  System.out.println("No : "+map.get("NO"));
+	  Number no = (Number) map.get("NO");
+	  Criteria cri=new Criteria("no");
+	  cri.is(no.intValue());
+	  Query query=new Query(cri);
+	  List<MongoBoardVo> mbv =template.find(query,MongoBoardVo.class,"board");  
+	  System.out.println("mbv : "+mbv);
+	  for(String t :mbv.get(0).getTag()) {
+		  if(m.containsKey(t)) {
+			m.put(t, m.get(t)+1);  
+		  } else {
+			  m.put(t, 1);
+		  }
+	  	}
+	  }
+	 
+	 // 오름차순으로 정렬시키기 
+	  Iterator it = sortByValue(m).iterator();
+	  while(it.hasNext()) {
+          String temp = (String) it.next();
+          System.out.println(temp + " = " + m.get(temp));
+          if(temp.length() != 0) {
+          tag.add(temp);
+          }
+      }
+	  System.out.println(tag);
+	return tag;
+}
+
+public List<Map> mongoTagAnd(String tag) {
+	  List taglist = new LinkedList<>();
+	  Map<String, Integer> m1 = new HashMap<>(); // key: tag, value: 수
+	 // List<Map> list = session.selectList("search.type", type);
+	  Criteria cri=new Criteria();
+      cri.orOperator(Criteria.where("contents").regex(tag),Criteria.where("tag").regex(tag));
+	  //cri.regex("^"+word);
+	  Query query=new Query(cri);
+	  List<MongoBoardVo> mbv=template.find(query,MongoBoardVo.class,"board");  
+	  System.out.println("mbv :"+mbv.size());
+	  for(MongoBoardVo m2 : mbv) {
+		  System.out.println("m2 : "+m2);
+	  for( String m3 : m2.getTag() ) {
+		  System.out.println("m3 : "+m3);
+		  if(m1.containsKey(m3)) {
+			  m1.put(m3, m1.get(m3)+1);  
+		  } else {
+			  m1.put(m3, 1);
+		  }
+	  	}
+	  }
+	  
+	  
+	  
+	  
+	  System.out.println("m1 : "+m1);
+	 // 오름차순으로 정렬시키기 
+	  Iterator it = sortByValue(m1).iterator();
+	  while(it.hasNext()) {
+        String temp = (String) it.next();
+        System.out.println(temp + " = " + m1.get(temp));
+        if(temp.length() != 0) {
+        taglist.add(temp);
+        }
+    }
+	  System.out.println(taglist);
+	
+	return taglist;
+	  
+}
+public List<Map> mongoTagSearch(String word) {  // 검색된 데이터에서 태그가져오기
+	  List tag = new LinkedList<>();
+	  Map<String, Integer> m1 = new HashMap<>(); // key: tag, value: 수
+	  Criteria cri=new Criteria();
+	  cri.orOperator(Criteria.where("contents").regex(word),Criteria.where("tag").regex(word));
+	  Query query=new Query(cri);
+	  List<MongoBoardVo> mbv=template.find(query,MongoBoardVo.class,"board");  
+	  
+	  for(MongoBoardVo m2 : mbv) {
+		  for( String m3 : m2.getTag() ) {
+			  if(m1.containsKey(m3)) {
+				  m1.put(m3, m1.get(m3)+1);  
+			  } else {
+				  m1.put(m3, 1);
+			  }
+		  	}
+		  }
+
+	  Map m2 =  new HashMap<>();
+	  	  m2.put("word1", "%"+word+"%");
+		  m2.put("word2", "%"+word+"%");
+		  m2.put("word3", "%"+word+"%");
+	 List<Map> oracle = session.selectList("search.word",m2);
+	  
+	 
+	  for(Map ora : oracle) {
+		  Criteria criteria=new Criteria("no");
+		  Number no = (Number) ora.get("NO");
+		  cri.is(no.intValue());
+		  Query que=new Query(cri);
+		  List<MongoBoardVo> mb=template.find(que,MongoBoardVo.class,"board"); 
+		  for(MongoBoardVo m4 : mb) {
+			  for( String m3 : m4.getTag() ) {
+				  if(m1.containsKey(m3)) {
+					  m1.put(m3, m1.get(m3)+1);  
+				  } else {
+					  m1.put(m3, 1);
+				  }
+			  	}
+			  }
+	  
+	  }
+	  
+	  
+	  /*
+	  List<Map> list = session.selectList("search.type", type);
+	  for(Map map : list) {
+	  System.out.println("No : "+map.get("NO"));
+	  Number no = (Number) map.get("NO");
+	  Criteria cri=new Criteria("no");
+	  cri.is(no.intValue());
+	  Query query=new Query(cri);
+	  List<MongoBoardVo> mbv =template.find(query,MongoBoardVo.class,"board");  
+	  System.out.println("mbv : "+mbv);
+	 */
+	 
+	 // 오름차순으로 정렬시키기 
+	  Iterator it = sortByValue(m1).iterator();
+	  while(it.hasNext()) {
+        String temp = (String) it.next();
+        System.out.println(temp + " = " + m1.get(temp));
+        if(temp.length() != 0) {
+        tag.add(temp);
+        }
+    }
+	  System.out.println(tag);
+	  
+	return tag;
+}
+
 
 
 public void update(BoardVO vo) throws Exception {
@@ -294,6 +494,22 @@ public void update(BoardVO vo) throws Exception {
   public int countPaging(total.domain.Criteria cri) throws Exception {
 
     return session.selectOne("board.countPaging", cri);
+  }
+  public void increaseViewcnt(int no, HttpSession sessions)throws Exception{
+	 
+	  long update_time=0;
+	  if(sessions.getAttribute("update_time_"+no)!=null){
+		  update_time=
+				  (long)sessions.getAttribute("update_time_"+no);
+		  
+		  
+	  }
+	  long current_time=System.currentTimeMillis();
+	  if(current_time-update_time>5*1000){
+		  session.update("board.increaseViewcnt",no);
+	sessions.setAttribute("update_time_"+no, current_time);	  
+	  }
+		  
   }
 
 }

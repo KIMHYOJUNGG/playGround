@@ -2,6 +2,7 @@
 package total.service;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,14 +23,27 @@ public class MemberService {
 		}
 	}
 
-	public boolean loginMember(Map<String, String> param) {
-		// TODO Auto-generated method stub
+	public int loginMember(Map<String, String> param) {
 		Map map = template.selectOne("member.login",param);
 		if(map!=null ) {
-			return true;
+			int i = template.update("member.update",param);
+			if(map.get("STOPTIME")!=null) {
+				Map map2 = template.selectOne("member.member", param);
+				Date a =  (Date) map2.get("STOPTIME");
+				Date b = (Date) map2.get("LOGINTIME");
+				long date1 = a.getTime();
+				long date2 = b.getTime();
+				if((double)date2-(double)date1 >(1000*60*60*3)) {
+					template.update("admin.updateLv4",param);
+					System.out.println("업뎃완료");
+					return 1;
+				}
+				return 1;
+			}
+			return 1;
 		}
 		else {
-			return false;
+			return 2;
 		}
 	}
 	public Map idMember(String email) {
@@ -48,5 +62,8 @@ public class MemberService {
 		return template.update("member.updateLv",id);
 	}
 	
+	public Map emailMember(String id) {
+		return template.selectOne("member.member",id);
+	}
 }
 

@@ -21,6 +21,7 @@ public class BoardVO {
 	*/
 	private int no;
 	private String bno;
+	private String tag;
 	private String title;
 	private String type;
 	private String book;
@@ -29,6 +30,7 @@ public class BoardVO {
 	private String content;
 	private Date regdate;
 	private int viewcnt;
+	private int good;
 	public int getNo() {
 		return no;
 	}
@@ -40,6 +42,12 @@ public class BoardVO {
 	}
 	public void setBno(String bno) {
 		this.bno = bno;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	public String getTitle() {
 		return title;
@@ -89,12 +97,21 @@ public class BoardVO {
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;
 	}
+	public int getGood() {
+		return good;
+	}
+	public void setGood(int good) {
+		this.good = good;
+	}
 	@Override
 	public String toString() {
-		return "BoardVO [no=" + no + ", bno=" + bno + ", title=" + title + ", type=" + type + ", book=" + book
-				+ ", bookname=" + bookname + ", writer=" + writer + ", content=" + content + ", regdate=" + regdate
-				+ ", viewcnt=" + viewcnt + "]";
+		return "BoardVO [no=" + no + ", bno=" + bno + ", tag=" + tag + ", title=" + title + ", type=" + type + ", book="
+				+ book + ", bookname=" + bookname + ", writer=" + writer + ", content=" + content + ", regdate="
+				+ regdate + ", viewcnt=" + viewcnt + ", good=" + good + "]";
 	}
+	
+
+	
 
 	
 	

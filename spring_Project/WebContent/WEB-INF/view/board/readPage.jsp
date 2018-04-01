@@ -13,34 +13,158 @@
         <div class="box-header">
           <h3 class="box-title">READ BOARD</h3>
         </div><!-- /.box-header -->
+    <!--     <font size="5px;">
+							하트 <span id="heart2d335d4abbcb">
+							<a href="javascript:like('2d335d4abbcb','t');"> 
+							<span class="glyphicon glyphicon-heart-empty"></span></a></span> 
+							<span id="count2d335d4abbcb">2</span> 댓글 <a href="/boarddetail?pk=2d335d4abbcb">
+								<span class="glyphicon glyphicon-user"></span>
+						</a> 
+								
+						0
+						
+								
+							 &nbsp;
+					</font> -->
+					
+					<font size="5px;" style="color:red;" id="heart">
+					<c:if test="${like eq false }">
+					
+<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span>
+        </a>
+        			<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span>
+        </a>
+					</c:if>
+					<c:if test="${like eq true}">
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span>
+        </a>
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span>
+        </a>
+					</c:if>
+</font>
+        <span id="info"></span>
+
+<%-- 
+				<c:choose>
+				<c:when test="${fan ne true}">
+					<button type="button" class="btn btn-info"  id="followbt">구독하기</button>
+				  </c:when>
+				  <c:otherwise>
+				  	<button type="button" class="btn btn-info"  id="canclebt">구독취소</button>
+				  </c:otherwise>
+				  </c:choose>
+			 --%>
 
 
-<%--  <form role="form" action="modifyPage" method="post">
 
-    <input type='hidden' name='no' value ="${boardVO.no}">
-    <input type='hidden' name='page' value ="${cri.page}">
-    <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
-    </form> --%>
+					  <script>
+					  $(document).ready(function(){
+						  $('[data-toggle="tooltip"]').tooltip();   
+						  
+					  });
+					  
+					  
+					  
+						  	$("#good").click(function(){
+								$.get("${pageContext.request.contextPath}/board/like",  {"targetboard": "${boardVO.no}"
+									}).done(function(rst){
+										var html="";
+										var html2="";
+										if(rst.result) {
+											html = "${boardVO.no}게시물을 좋아합니다. ";
+										$("#good").hide();
+										$("#bad").show();
+											//html2="<a href=\"#\"><span data-toggle=\"tooltip\" title=\"좋아요취소!\" id=\"good\" class=\"glyphicon glyphicon-heart\"></span></a>";
+										} else {
+											html = "좋아요 실패. 다시 시도해 주세요. "
+										}
+											$("#info").html(html);
+											//$("#heart").html(html2);
+									})	;
+							
+								    $('[data-toggle="tooltip"]').tooltip();   
+								
+					  		});
+						  	
+						  
+
+					  
+						  	$("#bad").click(function(){
+								$.get("${pageContext.request.contextPath}/board/cancle",  {"targetboard": "${boardVO.no}"
+									}).done(function(rst){
+										var html="";
+										if(rst.result) {
+											html = "${boardVO.no}게시물 좋아요를 취소합니다. ";
+											$("#good").show();
+											$("#bad").hide();
+												//html2="<a href=\"#\"><span data-toggle=\"tooltip\" title=\"좋아요!\" id=\"good\" class=\"glyphicon glyphicon-heart-empty\"></span></a>";
+										} else {
+											html = "좋아요 취소 실패. 다시 시도해 주세요.";
+										}
+											$("#info").html(html);
+											//$("#heart").html(html2);
+							  			
+									})	;
+								 $('[data-toggle="tooltip"]').tooltip();   
+					  		});
+						  	
+						  
+					  </script>
+
+
+
+
+
+
+
+
     
   <div class="box-body">
+    <div class="form-group">
+      <label for="exampleInputEmail1">조회수</label>
+      <input type="text" name='title' class="form-control" 
+         value="${boardVO.viewcnt}" readonly="readonly">
+    </div>
     <div class="form-group">
       <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 
          value="${boardVO.title}" readonly="readonly">
     </div>
-  <div class="box-body">
+  
     <div class="form-group">
       <label for="exampleInputEmail1">BookName</label><br/>
-      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}">${boardVO.bookname}</a>
+      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
+         value="${boardVO.bookname}" readonly="readonly"></a>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
-     <!--  <textarea class="form-control"  name="content" rows="3" 
-      readonly="readonly"> --> ${contents}
+       <textarea class="form-control"  name="content" rows="3" id="ck" 
+      readonly="readonly">${contents}</textarea>
+      <script type="text/javascript">
+							$(function() {
+								CKEDITOR.replace('ck', {
+									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
+									height : '500px' // 입력창의 높이
+							
+								
+								});
+								
+							
+							});
+							
+		
+						</script>
+      
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1" >Writer</label></br>
-       <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> ${boardVO.writer}</a>
+      
+       <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
+         value="${boardVO.writer}" readonly="readonly"></a>
       </div>
     <div class="form-group">
     <c:if test="${ !empty comments  }">

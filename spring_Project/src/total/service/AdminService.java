@@ -55,7 +55,6 @@ public class AdminService {
 		return mbv.getContents();
 	}
 
-	
 	// ----------- 여기서 부터 삭제
 	// --------------------------------------------------------------
 	public boolean delete(Integer no) throws Exception {
@@ -81,11 +80,17 @@ public class AdminService {
 
 	// 레드카드수 올리기(아직 3이 아닐때)
 	public boolean updateRedCard(String id) {
-		int i = template.update("admin.updateLv", id);
-		if (i != 0) {
+		Map map = template.selectOne("member.member", id);
+		if (map.get("STOPTIME") != null) {
+			template.update("admin.updateStoptime", id);
 			return true;
 		} else {
-			return false;
+			int i = template.update("admin.updateLv", id);
+			if (i != 0) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -98,23 +103,34 @@ public class AdminService {
 			return false;
 		}
 
+	} 
+	
+	// 더이상의 신고글이 없을 때
+	public boolean updateMemberreport(String id)
+	{
+		List<Map> list = template.selectList("admin.board", id);
+		if (list.size()==0) {
+			template.update("admin.report", id);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
-
 	// 회원한테 msg 보내기
 	public boolean msgSend(Map map) {
 		int no = template.selectOne("admin.selectNo");
 		Map map2 = new HashMap<>();
-		map2.put("no",no);
+		map2.put("no", no);
 		map2.put("id", map.get("id"));
-		map2.put("title","신고된게시물이 삭제되었습니다.");
+		map2.put("title", "신고된게시물이 삭제되었습니다.");
 		map2.put("msg", map.get("title") + " 부적절한 게시글이므로 삭제하였습니다.");
 		int i = template.insert("admin.msg", map2);
 		if (i != 0) {
-			int j = template.insert("admin.msg2",map2);
-			if(j!=0) {
+			int j = template.insert("admin.msg2", map2);
+			if (j != 0) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 		} else {
@@ -130,7 +146,7 @@ public class AdminService {
 	public List<Map> readNo(int no) {
 		return template.selectList("admin.selectReport", no);
 	}
-
+	
 	public boolean reportRemove(int no) {
 		int i = template.delete("admin.reportRemove", no);
 		if (i != 0) {
@@ -145,7 +161,42 @@ public class AdminService {
 	}
 
 	public boolean deletereport(int no) {
+		int i = template.delete("admin.reportRemove", no);
+		if (i != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int sendMessageCnt() {
+		return template.selectOne("admin.sendMessageCnt");
+	}
+
+	// 게시글에 이상없을 때의 report수정겸
+	public boolean modify(Map param) {
+		int no = Integer.parseInt(param.get("no").toString());
 		int i = template.delete("admin.reportRemove",no);
+		int i2 = template.update("admin.boardred",no);
+		if(i != 0 && i2 !=0) {
+			System.out.println("여기까지 감?");
+			return true;
+		}
+		else {
+			System.out.println(i + "  i2 = " + i2);
+			System.out.println("여기임?");
+			return false;
+		}
+	}
+
+	public List<Map> boardSelect() {
+		return template.selectList("admin.boardAll");
+	}
+
+	public boolean deletereport2(String[] rno) {
+		Map map = new HashMap<>();
+		map.put("rno", rno);
+		int i = template.delete("admin.deleteReport2",map);
 		if(i!=0) {
 			return true;
 		}
@@ -154,8 +205,38 @@ public class AdminService {
 		}
 	}
 
-	public int sendMessageCnt() {
-		return template.selectOne("admin.sendMessageCnt");
+	public boolean deletereport3(String rno) {
+		int i = template.delete("admin.deleteReport3",rno);
+		if(i!=0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
+
+	public Map reportAll(String rno) {
+		return template.selectOne("admin.selectReportAll",rno);
+	}
+
+	public boolean selectCntrp(String no) {
+		int cnt = template.selectOne("admin.selectCntrp",no);
+		if(cnt==0) {
+			int i= template.update("admin.boardred",no);
+			if(i!=0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return true;
+		}
+	}
+
+/*	public int getCntRep(String id) {
+		return template.selectOne("admin.selectCnt",id);
+	}*/
+	
 
 }

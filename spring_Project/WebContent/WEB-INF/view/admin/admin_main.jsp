@@ -8,10 +8,15 @@
 <body>
 	<div align="center">
 		<h2>
-			회원목록입니다
-			<div align="right" >
-				<small style="font-size: 15px">
-				<a href="/admin/getmessage?gcnt=${gcnt }">메시지</a>( ${gcnt } )</small>
+			회원목록
+			<div align="right">
+				<small style="font-size: 15px"> <a
+					href="/admin/getmessage?gcnt=${gcnt }">메시지</a>( ${gcnt } )
+				</small>
+			</div>
+			<div align="center">
+			<small style="font-size : 13px">
+				<b>회원목록</b> / <a href="/admin/board">게시글목록</a></small> 
 			</div>
 		</h2>
 		<hr />
@@ -27,15 +32,25 @@
 					<th style="width: 90px;">레벨</th>
 				</tr>
 			</thead>
-			<c:forEach var="m" items="${list }">
+			<c:forEach var="m" items="${mlist }">
 				<tr align="center">
 					<td><a href="/admin/listid?id=${m.ID }">${m.NICKNAME }</a></td>
 					<td>${m.REGDATE }</td>
 					<td>${m.ID }</td>
 					<td>${m.EMAIL }</td>
 					<td>${m.REDCARD }</td>
-					<td>${m.REPORT }</td>
-					<td>${m.LV }</td>
+					<c:if test="${m.REPORT=='Y' }">
+						<td style="color: RED"><b>${m.REPORT }</b></td>
+					</c:if>
+					<c:if test="${m.REPORT=='N' }">
+						<td style="color:BLUE">${m.REPORT }</td>
+					</c:if>
+					<c:if test="${m.LV !=2 }">
+						<td>${m.LV }</td>
+					</c:if>
+					<c:if test="${m.LV == 2}">
+						<td style="color: RED">${m.LV }<small>${m.STOPTIME }</small></td>
+					</c:if>
 				</tr>
 			</c:forEach>
 		</table>
@@ -44,9 +59,8 @@
 </html>
 <script>
 	var success = '${success}';
-	if (success!=''&& success!=null ) {
+	if (success != '' && success != null) {
 		console.log(success);
 		alert(success);
 	}
-	
 </script>

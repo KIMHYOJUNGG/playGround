@@ -14,9 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="boardNo" resultType="hashmap">
 		select * from board where no=#{no}
 	</select>
+	<select id="boardAll" resultType="hashmap">
+		select * from board
+	</select>
 	<select id="read" resultType="total.domain.BoardVO">
 		select
-		no, title, writer, regdate, viewcnt
+		*
 		from
 		board
 		where no = #{no}
@@ -37,10 +40,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateLv2">
 		update member set redcard = 0, lv=2, stoptime=sysdate where id=#{id}
 	</update>
+	<!-- lv이 2이상일때 stoptime 변경 -->
+	<update id="updateStoptime">
+		update member set stoptime=sysdate where id=#{id}
+	</update>
 	
 	<!--  시간이 지남으로써 다시 lv =0으로 -->
 	<update id="updateLv4">
-		update member set lv =0 where id=#{id}
+		update member set lv =0,stoptime=null where id=#{id}
 	</update>
 	
 	<!-- 유저의 레드카드수 -->
@@ -63,5 +70,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from report where no = #{no}
 	</delete> 
 	
+	<!-- 신고글이 더이상 없을시의 report변경-->
+	<select id="board" resultType="hashmap">
+		select * from board where writer =#{id} and red='Y'
+	</select>
+	<update id="report">
+		update member set report='N' where id=#{id}
+	</update>
+	<update id="boardred">
+		update board set red='N' where no = #{no}
+	</update>
 	
+	
+	<delete id="deleteReport2">
+		delete from report where rno in
+		<foreach collection="rno" item="n" open="(" close=")" separator=",">#{n}</foreach>
+	</delete>
+	
+	<delete id="deleteReport3">
+		delete from report where rno in #{rno}
+	</delete>
+	
+	<select id="selectReportAll" resultType="hashmap">
+		select * from report where rno=#{rno}
+	</select>
+	
+	<select id="selectCntrp" resultType="int">
+		select count(*) from report where no=#{no}
+	</select>
 </mapper>

@@ -138,7 +138,13 @@ public class MemberController {
 			int i = memberservice.updateLv((String)param.get("id"));
 			if(i!=0) {
 				session.setAttribute("logon", param.get("id"));
-				return "redirect:/index";
+				String uri = (String)session.getAttribute("uri");
+				if(uri!=null) {
+				return uri;
+				}
+				else {
+					return "redirect:/index";
+				}
 			}
 			else {
 				model.addAttribute("emailfail", "일치하지 않습니다. 재전송바랍니다.");
@@ -152,40 +158,44 @@ public class MemberController {
 
 	// 로그인
 	@RequestMapping(path = "/log", method = RequestMethod.GET)
-	public String memberLoginPage(Model model, Map map, @RequestParam(required = false) Map mapp) {
-		if (mapp != null) {
-			String uri = (String) mapp.get("uri");
-			String no = (String) mapp.get("no");
-			model.addAttribute("uri", uri);
-			model.addAttribute("no", no);
-			System.out.println("uri=" + uri);
-			System.out.println("no=" + no);
-		}
+	public String memberLoginPage(Model model, Map map) {
 		map.put("body", "login.jsp");
 		return "t_el";
 	}
-
+	// 로그인시 lv업
+	@RequestMapping(path="/lvup",method=RequestMethod.GET)
+	public String lvup(Model model,@RequestParam Map<String, String> param,HttpSession session) {
+		String id = (String)session.getAttribute("logon");
+		String uri = (String)session.getAttribute("uri");
+		Map map = memberservice.emailMember(id);
+		if(map != null) {
+			model.addAttribute("email",map.get("EMAIL"));
+			return "/member/confirmpage";
+		}
+		else {
+			return "fail";
+		}
+	}
 	// 로그인 실행
 	@RequestMapping(path = "/loging", method = RequestMethod.POST)
 	public String memberLoginHandle(Model model, @RequestParam Map<String, String> param, HttpSession session,
 			Map mapp) {
-		boolean rst = memberservice.loginMember(param);
-		System.out.println("uri2 = " + param.get("uri"));
-		System.out.println("no2 = " + param.get("no"));
+		String id = (String)param.get("id");
+		String uri = (String)session.getAttribute("uri");
+		int i = memberservice.loginMember(param);
+		boolean rst = i<2;
 		try {
-			if (param.get("uri") != null && param.get("no") != null) {
+			if (uri != null) {
 				if (rst) {
-					String uri = (String) param.get("uri");
-					String no = (String) param.get("no");
 					session.setAttribute("logon", param.get("id"));
 					List<WebSocketSession> s = wsMap.get(session.getId());
 					if (s != null) {
 						for (WebSocketSession ws : s) {
 							ws.sendMessage(new TextMessage("로그인"));
 						}
-						return "redirect:/" + uri + "?no=" + no;
+						return uri;
 					} else {
-						return "redirect:/" + uri + "?no=" + no;
+						return uri;
 					}
 				}
 				throw new Exception();

@@ -1,6 +1,7 @@
 package total.controller;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,26 +11,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import total.service.BoardService;
 
 @Controller
-public class SearchController {
+public class TagController {
 
 	@Autowired
 	BoardService boardService;
 	
-	
-	@RequestMapping("/search")
-	public String searchHandle(Map map,@RequestParam String word ) {
-		map.put("searchList",boardService.mongoSearch(word));
-		List<Map> list = boardService.mongokeyword(word);
-		List<Map> t = boardService.mongoTagSearch(word);
-		map.put("searchList",boardService.mongoSearch(word));
+	@RequestMapping("/tag")
+	public String KeyWordHandle(Map map,@RequestParam String tag ) {
+		List<Map> list = boardService.mongokeyword(tag);
+		List<Map> t = boardService.mongoTagAnd(tag);
+		map.put("searchList",boardService.mongoSearch(tag));
 		map.put("list", list);
 		map.put("tag", t);
 		map.put("body", "/board/listAll.jsp");
 		
 		
+		
 		return "t_el";
+  
 	}
-	
 
-	
 }
+
