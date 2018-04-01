@@ -186,6 +186,7 @@ public String[] mongoFindImage(Number no) throws Exception{
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
 	  String[] list = "/image/Desert.jpg,/image/Desert.jpg".split(",");
+	  System.out.println("image :"+mbv.getImage());
 	  return mbv.getImage().length==0 ? list : mbv.getImage() ;
 	  
   }
@@ -370,11 +371,11 @@ public List<Map> mongoTagSearch(String word)throws Exception {  // 검색된 데
 		  m2.put("word3", "%"+word+"%");
 	 List<Map> oracle = session.selectList("search.word",m2);
 	  
-	 
 	  for(Map ora : oracle) {
 		  Criteria criteria=new Criteria("no");
 		  Number no = (Number) ora.get("NO");
 		  cri.is(no.intValue());
+		  System.out.println("nono :"+no);
 		  Query que=new Query(cri);
 		  List<MongoBoardVo> mb=template.find(que,MongoBoardVo.class,"board"); 
 		  for(MongoBoardVo m4 : mb) {
@@ -387,8 +388,7 @@ public List<Map> mongoTagSearch(String word)throws Exception {  // 검색된 데
 			  	}
 			  }
 	  
-	  }
-	  
+	 }
 	  
 	  /*
 	  List<Map> list = session.selectList("search.type", type);
