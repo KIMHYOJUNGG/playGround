@@ -12,18 +12,18 @@
   padding: 1em;
 }
 </style>
-<div class="container text-center">
+<div class="container text-center" >
 	<h2>${writerInfo.NICKNAME }님의 관심 작가</h2>
 	<c:choose>
 		<c:when test="${!empty  writerFollowing}">
 			<div class="list-group">
 				<c:forEach var="f" items="${writerFollowing}">
-					<li class="list-group-item">
+					<li class="list-group-item" style="margin-top: 20px;">
 						<div class="row">
 							<div class="col-sm-4" 	style="padding-left: 15px; padding-right: 5px">
 								<a href="${pageContext.request.contextPath }/@${f.ID}"> <c:if
 										test="${!empty f.IMAGE }">
-										<img src="${f.IMAGE }" class="img-circle" alt="img">
+										<img src="${f.IMAGE }" class="img-circle" alt="img" style="width: 240px; height: 240px;">
 									</c:if>
 									 <c:if test="${empty f.IMAGE }">
 										<img src="${pageContext.request.contextPath }/image/default_profile.png"
@@ -52,10 +52,21 @@
 													<c:if test="${fb.writer eq f.ID }">
 														<c:set var="list" value="${fb.list }" />
 														<h3>
-															<c:forEach var="book" items="${list }" varStatus="vs">
-																<a href="${pageContext.request.contextPath }/bookPage/${book.bno}">${book.bookName }</a>
-																<c:if test="${!vs.last }"> / </c:if>
-															</c:forEach>
+															<c:choose>
+																<c:when test="${fn:length(list) > 2 }">
+																	<c:forEach var="bi" begin="0" end="1" varStatus="vs">
+																		<a href="${pageContext.request.contextPath }/bookPage/${list[bi].bno}">${list[bi].bookName }</a>
+																		<c:if test="${!vs.last}"> / </c:if>
+																		<c:if test="${vs.last }"> ...</c:if>
+																	</c:forEach>
+																</c:when>
+																<c:otherwise>
+																	<c:forEach var="book" items="${list }"  varStatus="vs">
+																		<a href="${pageContext.request.contextPath }/bookPage/${book.bno}">${book.bookName }</a>
+																		<c:if test="${!vs.last}"> / </c:if>
+																	</c:forEach>
+																</c:otherwise>
+															</c:choose>
 														</h3>
 													</c:if>
 												</c:forEach>

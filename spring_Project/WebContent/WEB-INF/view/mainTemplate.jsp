@@ -48,11 +48,34 @@ main style --%> .main_keywords {
 .w3-bar-block .w3-bar-item {
 	padding: 20px
 }
-</style>collapse navbar-collapse
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+	.centered {
+  position: relative;
+  display: inline-block;
+ 
+  width: 50%;
+  padding: 1em;
+  }
+  
+  .search {
+/*   	background-color: #fff; */
+/*   	color: #777; */
+	background-color: #f0ad4e;
+  }
+  
+  .bg_type{
+  	background-color: #5bc0de;
+  }
+</style>
 </head>
 <body>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top" >
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -65,20 +88,19 @@ main style --%> .main_keywords {
 			<div class="collapse navbar-collapse" id="myNavbar">
 			<c:if test="${logon !=null }">
 				<ul class="nav navbar-nav">
-<!-- 					<li class="dropdown"><a class="dropdown-toggle" -->
-<!-- 						data-toggle="dropdown" -->
-<%-- 						href="${pageContext.request.contextPath}/myPage">myPage<span --%>
-<!-- 							class="caret"></span></a> -->
-<!-- 						<ul class="dropdown-menu"> -->
-							<li><a href="${pageContext.request.contextPath}/myPage">myPage</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">myPage<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="${pageContext.request.contextPath}/myPage">my page</a></li>
+						    <li class="divider"></li>
+							<li><a href="${pageContext.request.contextPath}/modifyInfo">정보 수정</a></li>
+							<li><a href="${pageContext.request.contextPath}/@${logon}">나의 글</a></li>
+							<li><a href="${pageContext.request.contextPath}/@${logon}/following">관심 작가 관리</a></li>
 						</ul>
-			</c:if>
-<!-- 						</li> -->
-					<%-- 
-        <li><a href="#">Page 2</a></li>
-        <li><a href="#">Page 3</a></li>
-     --%>
+						</li>
+					<li><a href="${pageContext.request.contextPath}/message">우편함</a>
 				</ul>
+			</c:if>
 				<ul class="nav navbar-nav navbar-right">
 
 				<c:if test="${logon == null  }">

@@ -66,5 +66,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateReport">
 	 update member set report='Y' where id=#{writer}
 	</update>
+	
+	<select id="checkNickAndEmail" resultType="hashmap">
+		select * from member where
+		<choose>
+			<when test="nickname != null">
+				nickname = #{nickname}
+			</when>
+			<when test="email != null">
+				email = #{email}
+			</when>
+		</choose>
+	</select>
 </mapper>
 
