@@ -55,7 +55,13 @@ public class BookPageService {
 	}
 
 	public List<Map> getBookList(String bno) {
-		return template.selectList("board.getListByBno", bno);
+		Map data = new HashMap<>();
+			data.put("bno", bno);
+		return template.selectList("board.getListByBno", data);
+	}
+	
+	public List<Map> getBookList(Map params) {
+		return template.selectList("board.getListByBno", params);
 	}
 
 	public List<MongoBoardVo> getBoardVO(String bno) {
@@ -63,7 +69,7 @@ public class BookPageService {
 		System.out.println(list.size());
 		return list;
 	}
-
+	
 	public BookVO getBookInfo(String bno) {
 		return mongo.findOne(new Query(Criteria.where("bno").is(bno)), BookVO.class, "book");
 	}
@@ -127,5 +133,4 @@ public class BookPageService {
 		mongo.updateFirst(new Query(Criteria.where("bno").is(book.getBno())), up, "book");
 	}
 	
-
 }

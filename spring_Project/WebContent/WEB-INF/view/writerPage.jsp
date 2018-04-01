@@ -4,19 +4,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<div class="jumbotron" style="background-color: white">
-	<div class="container">
+<div style="margin-top: 15px">
+	<div class="container" style="width:100%">
 	
 		<div class="row">
 			<div class="col-sm-4">
 				<c:if test="${!empty writerInfo.IMAGE }">
-					<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 100%">
+					<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 240px; height: 240px;">
 				</c:if>
 				<c:if test="${empty writerInfo.IMAGE }">
 					<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 			</c:if>
 			</div>
-			<div class="col-sm-8">
+			<div class="col-sm-8 outer">
+				<div class="inner">
+					<div class="centered">
 				<h2>${writerInfo.NICKNAME}</h2>
 				<p>
 					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | 
@@ -28,7 +30,7 @@
 					<span style="color: gray">${writerInfo.WELCOME}</span>
 				</p>
 			</div>
-		
+			</div>
 			</div>
 		</div>
 
@@ -64,8 +66,8 @@
 		<div align="right">
 	  		<c:if test="${logon eq writerInfo.ID }">
 			  	<div class="btn-group">
-			      <a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-primary">글쓰기</button></a>
-			      <a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-primary">책 등록</button></a>
+			      <a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>쓰기</button></a>
+			      <a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-book"></span> 등록</button></a>
 				</div> 
 			</c:if>
 		
@@ -73,7 +75,7 @@
 				<c:forEach items="${follower }" var="fer">
 					<c:set var="fan" value="${fer.READER eq logon}"/>
 				</c:forEach>
-				<button type="button" class="btn btn-info"  id="sendMsg" onclick="sendMsg('${writerInfo.ID}')">메세지 보내기</button>
+				<button type="button" class="btn btn-info"  id="sendMsg" onclick="sendMsg('${writerInfo.ID}')"><span class="glyphicon glyphicon-envelope"></span></button>
 
 			<div class="modal fade" id="sendModal" role="dialog">
 				<div class="modal-dialog">
@@ -213,25 +215,92 @@
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
 				<c:choose>
-				<c:when test="${!empty contentList }">
-					<div class="list-group">
-						<c:forEach var="c" items="${contentList}">
-						<li class="list-group-item">
-								<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">${c.BOOKNAME}</a> &nbsp;
-								<a href="${pageContext.request.contextPath }/search?search=${c.TYPE}"><span class="badge">${c.TYPE}</span></a></h3>
-									<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><p class="list-group-item-text" style="margin-bottom: 3px">  ${c.TITLE}</p>
-									<p class="list-group-item-text">${c.VIEWCNT} | <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p></a>
-							</li>
-							</c:forEach>
-						</div>
-				</c:when>
-				<c:otherwise>
+					<c:when test="${!empty contentList }">
+						<c:choose>
+							<c:when test="${fn:length(contentList) > 10 }">
+							<div class="list-group" id="div_lg"> 
+								<c:forEach var="ci" begin="0" end="9" varStatus="vs">
+									<c:set var="c" value="${contentList[ci] }"/>
+									<li class="list-group-item">
+										<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
+											<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp; 
+											<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
+										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
+										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
+										${ci }
+									</li>
+									<c:if test="${vs.last }">
+										<button type="button" class="btn btn-default btn-block more" value="${vs.count }">더 보기</button>
+									</c:if>							
+								</c:forEach>
+								</div>
+								<script>
+									$(function(){
+										$("#div_lg").on("click", ".more", function(e){
+											console.log(e);
+											console.log(e.target.value);
+											e.target.style.display = "none";
+											more(e.target.value);
+										});
+										
+										function more(idx) {
+											console.log("more");
+											idx = parseInt(idx, 10);
+											console.log(idx);
+											$.get("${pageContext.request.contextPath }/@${writerInfo.ID}/moreContents",function(con){
+												console.log(con);
+												if(con != null) {
+													var html = $("#div_lg").html();
+													var more = (idx+10) < con.length;
+													var end =  more ?  idx + 10 : con.length;
+													for(var i = idx; i < end; i++) {
+														html += "<li class='list-group-item'>"
+																	+ "<h3 class='list-group-item-heading' style='margin-bottom: 15px'><a href='${pageContext.request.contextPath }/bookPage/"+con[i].BNO+"'>"
+																	+"<span class='glyphicon glyphicon-book' style='font-size:15pt'></span> &nbsp;"+con[i].BOOKNAME+"</a> &nbsp;" 
+																	+"<a href='${pageContext.request.contextPath }/search?word="+con[i].TYPE+"'><span class='badge bg_type'>"+con[i].TYPE +"</span></a></h3>"
+																	+"<a href='${pageContext.request.contextPath}/board/readPage?no="+con[i].NO+"'><h4>"+con[i].TITLE+"</h4></a>"
+																	+"<p class='list-group-item-text'><span class='glyphicon glyphicon-eye-open'></span>"+ con[i].VIEWCNT+" &nbsp; &nbsp;"
+																	+" <span class='glyphicon glyphicon-pencil'></span> "+con[i].REGDATE+"</p>"+i+"</li>";
+													}
+													if(more) {
+														html += "<button type='button' class='btn btn-default btn-block more' id="+i+" value="+i+">더 보기</button>";
+													}
+													$("#div_lg").html(html);
+												}
+											});
+										}
+									});
+								</script>
+							</c:when>
+							<c:otherwise>
+							<div class="list-group"> 
+							<c:forEach var="c" items="${contentList}">
+								<li class="list-group-item">
+									<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
+									<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp;
+									<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
+										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
+										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
+								</li>
+								</c:forEach>
+								</div>
+							</c:otherwise>
+						</c:choose>
+							</div>
+					</c:when>
+					<c:otherwise>
+					<br>
 					<p>등록된 글이 없습니다.</p>
+					<c:if test="${logon eq wirterInfo.ID }">
 					<p>글을 등록해 보세요.</p>
-					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글쓰기</button></a>
+					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>글쓰기</button></a>
+					</c:if>
 				</c:otherwise>
 				</c:choose>
+				</div>
 			</div>
+			
+							
 			
 			<div id="menu1" class="tab-pane fade">
 				<c:choose>
@@ -243,20 +312,19 @@
 						<li class="list-group-item">
 							<div class="row">
 								<div class="col-sm-8">
-									<h3 class="list-group-item-heading"><a href="${pageContext.request.contextPath }/bookPage/${b.bno}">${b.bookName}</a></h3>
-								<p class="list-group-item-text">
+									<h3 class="list-group-item-heading"><a href="${pageContext.request.contextPath }/bookPage/${b.bno}">${b.bookName}</a> &nbsp; 
 									<c:forEach items="${b.tag }" var="tag">
-										<a href="${pageContext.request.contextPath }/search?search=${tag}"><span class="badge"> ${tag}</span></a>
+										<a href="${pageContext.request.contextPath }/search?word=${tag}"><span class="badge search"> ${tag}</span></a>
 									</c:forEach>
-								</p>
-								<p class="list-group-item-text">${b.good}</p>
+									</h3>
+								<p class="list-group-item-text" style="margin-top:15px;"><span class="glyphicon glyphicon-heart"></span> ${b.good}</p>
 								</div>
-								<div class="col-sm-4">
-									<h2 style="color: blue">${b.cnt } <span style="color:blue">contents</span></h2>
+								<div class="col-sm-4" align="center">
+									<h3 class="list-group-item-heading" style="color: blue">${b.cnt } <span style="color:blue">contents</span></h3>
 									<c:if test="${logon eq b.writer }">
 										<p class="list-group-item-text">
-											<a href="${pageContext.request.contextPath }/board/register?${b.bno}"><button type="button" class="btn btn-info">이어쓰기</button></a>
-											<a href="${pageContext.request.contextPath }/bookPage/${b.bno}/modify"><button type="button" class="btn btn-info">책 관리</button></a>
+											<a href="${pageContext.request.contextPath }/board/register?${b.bno}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>쓰기</button></a>
+											<a href="${pageContext.request.contextPath }/bookPage/${b.bno}/modify"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-book"></span> 관리</button></a>
 										</p>
 									</c:if>
 								</div>
@@ -266,9 +334,12 @@
 					</div>
 				</c:when>
 				<c:otherwise>
+					<br>
 					<p>등록된 책이 없습니다.</p>
+					<c:if test="${logon eq wirterInfo.ID }">
 					<p>책을 등록해 보세요.</p>
-					<a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-info">책 등록하기</button></a>
+					<a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-book"></span> 등록하기</button></a>
+					</c:if>
 				</c:otherwise>
 				</c:choose>
 			</div>

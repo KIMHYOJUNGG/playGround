@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<div class="container text-center">
+<div class="container-fluid text-center">
 	<br>
 	<div class="row">
 		<div class="col-sm-4">
@@ -28,7 +28,7 @@
 	
 	<hr/>
 	
-	<div class="container">
+	<div class="container-fluid">
 		<h2>보낸 메세지함</h2>
 		<p></p>
 		<div class="table-responsive">

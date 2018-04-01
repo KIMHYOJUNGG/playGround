@@ -146,8 +146,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="getListByBno" resultType="hashmap">
-		select * from board where
-		bno = #{bno} order by (regdate) desc
+		select * from board where bno = #{bno} order by (regdate)
+		<choose>
+			<when test="first == null">
+				desc
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="getBookContentsCntById" resultType="hashmap">

@@ -16,7 +16,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="tag">TAG:</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" value="#${fn:join(bookInfo.tag,'#') }"  onkeyup="checkTag()">
+				<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" value="#${fn:join(bookInfo.tag,'#') }"  onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
 			</div>
 		</div>
 		<div class="form-group" align="right">
@@ -28,7 +28,16 @@
 	</form>
 	<hr/>
 	<script>
+			function addHash() {
+				var tag = $("#tag").val();
+				if(tag.charCodeAt(0) != 35) {
+		//				if(tag.length >= 1)
+						$("#tag").val("#"+tag);
+				}
+			}
+			
 			function checkTag() {
+				console.log("checkTag");
 				var tag = $("#tag").val();
 				console.log($("#tag").val());
 				if(tag.charCodeAt(tag.length-1) == 32) {
@@ -46,7 +55,13 @@
 					}
 				}
 			}
-		</script>
+			
+			function finalCheck() {
+				addHash();
+				var tag = $("#tag").val();
+				$("#tag").val(tag.replace(/\s/gi, ""));
+			}
+	</script>
 	<div class="table-responsive">
 	<table class="table">
 			<thead >

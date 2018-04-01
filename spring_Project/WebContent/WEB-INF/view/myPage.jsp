@@ -2,30 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<style>
-	img {
-	    max-width: 100%;
-	    height: auto;
-	}
 
-	.centered {
-  position: relative;
-  display: inline-block;
- 
-  width: 50%;
-  padding: 1em;
-  }
-</style>
-
-<div class="container text-center">
+<div class="container text-center " style="width:100%">
 	<br>
 	<div class="row">
 		<div class="col-sm-4">
 			<c:if test="${!empty info.IMAGE }">
-				<img src="${info.IMAGE }" class="img-circle" style="max-height: 250px;">
+				<img src="${info.IMAGE }" class="img-circle" style="width: 240px; height: 240px;">
 			</c:if>
 			<c:if test="${empty info.IMAGE }">
-				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="max-height: 250px;" class="img-circle">
+				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 			</c:if>
 			<p>${info.NICKNAME} 님</p>
 		</div>
