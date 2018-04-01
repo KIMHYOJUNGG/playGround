@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import total.service.ModifyInfoService;
@@ -42,6 +43,12 @@ public class ModifyInfoController {
 		boolean rst = modifyInfoService.infoModify(param, (String)session.getAttribute("logon"));
 		
 		return "redirect:/modifyInfo";
+	}
+	
+	@RequestMapping(path="/check", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String checkHandle(@RequestParam Map<String, String> param) {
+		return "{\"rst\" : "+modifyInfoService.check(param)+"}";
 	}
 	
 	

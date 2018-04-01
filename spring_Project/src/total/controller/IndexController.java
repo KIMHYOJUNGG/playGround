@@ -1,8 +1,8 @@
 
 package total.controller;
 
-
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ import com.mongodb.client.FindIterable;
 
 import total.service.BoardService;
 import total.service.IndexService;
-import total.domain.*;  
+import total.domain.*;
 
 @Controller
 public class IndexController {
@@ -36,29 +36,34 @@ public class IndexController {
 
 	
 	@RequestMapping({"/index","/"})
-	public String indexHandle(Model model) {
+	public String indexHandle(Model model) throws Exception{
+
 		System.out.println("index");
 		List<Map> boardNo = indexService.boardConnectNo();
 		model.addAttribute("boardNo", boardNo);
-		model.addAttribute("body","index.jsp");
-		
-		
-		List list = new LinkedList<>();
-		for(int i=0;i>(boardNo.size() < 8 ? boardNo.size() : 8);i++) {
-		list.add(i,boardService.mongoFindImage((Number)(boardNo.get(i).get("NO"))));
-		//System.out.println(Arrays.toString(boardService.mongoFindImage((Number)(boardNo.get(i).get("NO")))));
-	
+		model.addAttribute("body", "index.jsp");
+
+		for (String s : boardService.mongoFindImage((Number) (boardNo.get(0).get("NO")))) {
+			System.out.println("s :"+s);
 		}
-		model.addAttribute("list",list);
+		Map<Integer, String > list = new HashMap<Integer, String>();
+		for (int i = 0; i < (boardNo.size() < 8 ? boardNo.size() : 8); i++) {
+			System.out.println("i :"+i);
+			for (String s : boardService.mongoFindImage((Number) (boardNo.get(i).get("NO")))) {
+				list.put(i, s);
+			}
+		}
 		
-		//application.getRealPath("/image")+"/Desert.jpg";
+		int cnt =0;
+		for(Map m :boardNo) {
+		m.put("IMAGE",list.get(0+cnt));
+		cnt += 1;
+		}
+		System.out.println("list: " + boardNo);
+		model.addAttribute("list", list);
+		// application.getRealPath("/image")+"/Desert.jpg";
 		return "t_el";
-		
+
 	}
-	
-	
 
-	
-	
 }
-

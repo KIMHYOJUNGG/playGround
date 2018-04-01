@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardsearch">
+
+<sql id="search">
+ <if test="searchType != null" > 
+   <if test="searchType == 't'.toString()">
+     and title like '%' ||  #{keyword} || '%'
+
+   </if>
+   
+   <if test="searchType == 'w'.toString()">
+     and writer like '%' ||  #{keyword} || '%'
+   </if>     
+         
+   <if test="searchType == 'tcw'.toString()">
+     and (   title like '%' ||  #{keyword} || '%' 
+         
+           OR 
+             writer like '%' ||  #{keyword} || '%')
+   </if>              
+ </if>  
+</sql>
+
+
+<select id="listSearch" resultType="total.domain.BoardVO">
+ 
+
+  select no, title, writer, regdate, viewcnt,good from (select board.*,
+		row_number() over (order by regdate desc,no desc)
+		as row_id from board
+		
+		<where>
+		<if test="searchType != null" > 
+   <if test="searchType == 't'.toString()">
+     and title like '%' ||  #{keyword} || '%'
+
+   </if>
+   
+   <if test="searchType == 'w'.toString()">
+     and writer like '%' ||  #{keyword} || '%'
+   </if>     
+         
+   <if test="searchType == 'tcw'.toString()">
+     and (   title like '%' ||  #{keyword} || '%' 
+         
+           OR 
+             writer like '%' ||  #{keyword} || '%')
+   </if>    
+     </if>
+    
+
+			<if test="stype!=null">
+				type=#{stype}
+
+			</if>
+		
+   </where>  )
+
+  
+<where>
+
+			<if test="pageStart !=null and perPageNum != null">
+				(row_id between #{pageStart} and #{perPageNum})
+			</if>
+			<if test="stype != null">
+				and type=#{stype}
+
+			</if>
+
+		</where>
+  <include refid="search"></include>
+</select>
+  
+<select id="listSearchCount" resultType="_int">
+
+  select count(no) 
+  from board 
+ <where>
+			no &gt; 0
+			<if test="stype!=null">
+				and type=#{stype}
+			</if>
+		</where>
+
+  <include refid="search"></include>
+ 
+</select>  
+
+
+
+</mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%-- 
 <%@include file="../include/header.jsp"%> --%>
 
@@ -17,8 +18,14 @@
 
 				<form role="form" action="modifyPage" method="post">
 
-					<input type='hidden' name='page' value="${cri.page}"> <input
-						type='hidden' name='perPageNum' value="${cri.perPageNum}">
+                    <c:if test="${cri.stype!=null }">
+					<input type='hidden' name='stype' value="${cri.stype}">
+                    
+                    </c:if>
+					<input type='hidden' name='page' value="${cri.page}">
+					 <input type='hidden' name='perPageNum' value="${cri.perPageNum}">
+					 <input type='hidden' name='searchType' value="${cri.searchType}">
+					 <input type='hidden' name='keyword' value="${cri.keyword}">
 
 					<div class="box-body">
 
@@ -32,9 +39,32 @@
 							<label for="exampleInputEmail1">Title</label> <input type="text"
 								name='title' class="form-control" value="${boardVO.title}">
 						</div>
+						<%-- <div class="form-group">
+							<label for="exampleInputEmail1">Type</label> <input type="text"
+								name='type' class="form-control" value="${boardVO.type}">
+						</div> --%>
+						<div class="form-group">
+						<label for="exampleInputEmail1">Type</label><br /> <select
+							name="type">
+
+							<c:forEach items="${type}" var="v">
+
+								<option value="${v }" <c:out value="${v==boardVO.type?'selected':'' }"/>>${v}</option>
+
+
+							</c:forEach>
+
+
+						</select>
+
+					</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">tag</label> <input type="text"
+								name='tag' class="form-control" value="${mbv.ptag}">
+						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Content</label>
-							<textarea class="form-control" name="content" rows="3" id="ck">${content}</textarea>
+							<textarea class="form-control" name="content" rows="3" id="ck">${mbv.contents}</textarea>
 							<script type="text/javascript">
 							$(function() {
 								CKEDITOR.replace('ck', {
@@ -92,7 +122,15 @@
 												.on(
 														"click",
 														function() {
-															self.location = "/board/listPage?page=${cri.page}&perPageNum=${cri.perPageNum}";
+															
+														var stype="";
+														var b=${cri.stype!=null};
+															if(b){
+																stype="&stype=${cri.stype}";
+															}
+															
+															self.location = "/board/listPage?page=${cri.page}&perPageNum=${cri.perPageNum}"
+																+ "&searchType=${cri.searchType}&keyword=${cri.keyword}"+stype;
 														});
 
 										$(".btn-primary").on("click",

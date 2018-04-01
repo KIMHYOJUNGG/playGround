@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 import total.domain.BoardVO;
 import total.domain.BookVO;
 import total.domain.MongoBoardVo;
+import total.domain.SearchCriteria;
 
 
 
@@ -32,7 +33,7 @@ public class BoardService {
   @Autowired
   MongoTemplate template;
  
-  public List<BookVO> bookName(String id) {
+  public List<BookVO> bookName(String id)throws Exception {
 	  
 	  Criteria cri=new Criteria("writer");
 	  cri.is(id);
@@ -41,7 +42,7 @@ public class BoardService {
 	  System.out.println(book);
 	  return book;
   }
-public String uuid() {
+public String uuid()throws Exception {
 
 	
 	
@@ -107,6 +108,7 @@ public void create(BoardVO vo,HttpSession sessions) throws Exception {
 	}else{
 		
 		map.put("image",imgpath);
+		sessions.setAttribute("imgpath", null);
 		
 	}
 	if(tag==null){
@@ -116,7 +118,6 @@ public void create(BoardVO vo,HttpSession sessions) throws Exception {
 		  List<String> listtag=new ArrayList<>(Arrays.asList(tag));
 		  listtag.remove(0);
 		map.put("tag", listtag);
-		sessions.setAttribute("imgpath", null);
 	}
 	map.put("comments",new ArrayList<>());
 	
@@ -139,7 +140,7 @@ public void create(BoardVO vo,HttpSession sessions) throws Exception {
 	
   }
 
-  public void addcomments(Integer boardNo,String id,String text,String preco)  {
+  public void addcomments(Integer boardNo,String id,String text,String preco) throws Exception {
 	    System.out.println("session boardNo"+boardNo);
 	   //Map map=new HashMap();
 	   //map.put("no",boardNo);
@@ -167,29 +168,30 @@ public void create(BoardVO vo,HttpSession sessions) throws Exception {
     return session.selectOne("board.read", no);
   }
   
-  public String mongoFind(int no) {
+  public MongoBoardVo mongoFind(int no) throws Exception{
 	  
 	  Criteria cri=new Criteria("no");
 	  cri.is(no);
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
 	  System.out.println(mbv.getContents());
-	  return mbv.getContents();
+	  return mbv;
 	  
   }
 
-public String[] mongoFindImage(Number no) {
+public String[] mongoFindImage(Number no) throws Exception{
 	  
 	  Criteria cri=new Criteria("no");
 	  cri.is(no.intValue());
 	  Query query=new Query(cri);
 	  MongoBoardVo mbv=template.findOne(query,MongoBoardVo.class,"board");  
 	  String[] list = "/image/Desert.jpg,/image/Desert.jpg".split(",");
+	  System.out.println("image :"+mbv.getImage());
 	  return mbv.getImage().length==0 ? list : mbv.getImage() ;
 	  
   }
 
-public List<Map> mongoFindComment(Number no) {
+public List<Map> mongoFindComment(Number no) throws Exception{
 	  
 	  Criteria cri=new Criteria("no");
 	  cri.is(no.intValue());
@@ -305,7 +307,7 @@ public List<Map> mongoTag(String type) {
 	return tag;
 }
 
-public List<Map> mongoTagAnd(String tag) {
+public List<Map> mongoTagAnd(String tag)throws Exception {
 	  List taglist = new LinkedList<>();
 	  Map<String, Integer> m1 = new HashMap<>(); // key: tag, value: 수
 	 // List<Map> list = session.selectList("search.type", type);
@@ -345,7 +347,7 @@ public List<Map> mongoTagAnd(String tag) {
 	return taglist;
 	  
 }
-public List<Map> mongoTagSearch(String word) {  // 검색된 데이터에서 태그가져오기
+public List<Map> mongoTagSearch(String word)throws Exception {  // 검색된 데이터에서 태그가져오기
 	  List tag = new LinkedList<>();
 	  Map<String, Integer> m1 = new HashMap<>(); // key: tag, value: 수
 	  Criteria cri=new Criteria();
@@ -369,11 +371,11 @@ public List<Map> mongoTagSearch(String word) {  // 검색된 데이터에서 태
 		  m2.put("word3", "%"+word+"%");
 	 List<Map> oracle = session.selectList("search.word",m2);
 	  
-	 
 	  for(Map ora : oracle) {
 		  Criteria criteria=new Criteria("no");
 		  Number no = (Number) ora.get("NO");
 		  cri.is(no.intValue());
+		  System.out.println("nono :"+no);
 		  Query que=new Query(cri);
 		  List<MongoBoardVo> mb=template.find(que,MongoBoardVo.class,"board"); 
 		  for(MongoBoardVo m4 : mb) {
@@ -386,8 +388,7 @@ public List<Map> mongoTagSearch(String word) {  // 검색된 데이터에서 태
 			  	}
 			  }
 	  
-	  }
-	  
+	 }
 	  
 	  /*
 	  List<Map> list = session.selectList("search.type", type);
@@ -418,6 +419,8 @@ public List<Map> mongoTagSearch(String word) {  // 검색된 데이터에서 태
 
 
 public void update(BoardVO vo) throws Exception {
+	String[] tag=vo.getTag().split("#");
+	
     session.update("board.update", vo);
    
     //db.person.update({"name" : "고길동"});
@@ -428,7 +431,14 @@ public void update(BoardVO vo) throws Exception {
     //업데이트 할 항목 정의
     Update update = new Update();
     update.set("contents", vo.getContent());
-    
+    if(tag==null){
+		System.out.println("tag is null");
+	update.set("tag", new ArrayList<>());
+	}else{
+		  List<String> listtag=new ArrayList<>(Arrays.asList(tag));
+		  listtag.remove(0);
+		  update.set("tag", listtag);
+	}
   template.updateFirst(query, update, "board");
     /*mongoTemplate.updateMulti(query, update, "person");
     
@@ -510,6 +520,16 @@ public void update(BoardVO vo) throws Exception {
 	sessions.setAttribute("update_time_"+no, current_time);	  
 	  }
 		  
+  }
+
+  public List<BoardVO> listSearch(SearchCriteria cri) throws Exception {
+
+    return session.selectList("boardsearch.listSearch", cri);
+  }
+
+  public int listSearchCount(SearchCriteria cri) throws Exception {
+
+    return session.selectOne("boardsearch.listSearchCount", cri);
   }
 
 }

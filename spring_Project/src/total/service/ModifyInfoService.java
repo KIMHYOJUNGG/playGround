@@ -56,5 +56,16 @@ public class ModifyInfoService {
 		param.put("id", id);
 		return template.update("member.modifyInfo", param) == 1;
 	}
+	
+	public boolean check(Map param) {
+		Map map = template.selectOne("member.checkNickAndEmail", param);
+		boolean rst = false;
+		if(map == null) {
+			rst = true;
+		} else if ( ((String)map.get("ID")).equals(param.get("id")) ) {
+			rst = true;
+		}
+		return rst;
+	}
 
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import total.domain.BookVO;
 import total.service.BookPageService;
 import total.service.MyPageService;
@@ -27,6 +29,8 @@ public class BookPageController {
 	MyPageService myPageService;
 	@Autowired
 	WriterPageService writerPageService;
+	@Autowired
+	Gson gson;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String bookPageHandle(Map map, HttpSession session) {
@@ -104,6 +108,12 @@ public class BookPageController {
 		return "{\"rst\":"+rst+"}";
 	}
 	
-	
+	@RequestMapping(path="/orderBy", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String contentsOrderHandle(@RequestParam Map<String, String> params, Map map) {
+		map.put("contentsList", bookPageService.getBookList(params)); 
+		map.put("boardVOList", bookPageService.getBoardVO(params.get("bno")));
+		return gson.toJson(map);
+	}
 	
 }

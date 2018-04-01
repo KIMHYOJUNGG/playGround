@@ -31,6 +31,7 @@ public class BoardVO {
 	private Date regdate;
 	private int viewcnt;
 	private int good;
+
 	public int getNo() {
 		return no;
 	}

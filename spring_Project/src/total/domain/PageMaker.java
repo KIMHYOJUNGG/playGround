@@ -89,17 +89,40 @@ public class PageMaker {
 
 	
 	 public String makeSearch(int page) {
-		/* <a href="list?page=1&amp;perPageNum=10&amp;searchType&amp;keyword=">1</a>
-		 */
-	  UriComponents uriComponents =
-	 UriComponentsBuilder.newInstance().queryParam("page", page)
-	  .queryParam("perPageNum", cri.getPerPageNum()) .queryParam("searchType",
-	  ((SearchCriteria) cri).getSearchType()) .queryParam("keyword",
-	  encoding(((SearchCriteria) cri).getKeyword())).build();
-	  
-	  return uriComponents.toUriString(); }
+		 String stype=cri.getStype();
+		 UriComponents uriComponents;
+		 if(stype!=null){
+		 
+	 uriComponents =
+	 UriComponentsBuilder.newInstance()
+	  .queryParam("page", page)
+	  .queryParam("perPageNum", cri.getPerPageNum()) 
+	  .queryParam("searchType",((SearchCriteria) cri).getSearchType()) 
+	  .queryParam("keyword",((SearchCriteria) cri)
+			  .getKeyword())
 	 
-	private String encoding(String keyword) {
+	  .queryParam("stype",stype)
+	 
+	  .build();
+		 }
+		 else{
+			  uriComponents =
+						 UriComponentsBuilder.newInstance()
+						  .queryParam("page", page)
+						  .queryParam("perPageNum", cri.getPerPageNum()) 
+						  .queryParam("searchType",((SearchCriteria) cri).getSearchType()) 
+						  .queryParam("keyword",((SearchCriteria) cri)
+								  .getKeyword())
+						 
+						 
+						 
+						  .build();
+			 
+		 }
+	  return uriComponents.toUriString(); 
+	  }
+	 
+	/*private String encoding(String keyword) {
 
 		if (keyword == null || keyword.trim().length() == 0) {
 			return "";
@@ -110,5 +133,5 @@ public class PageMaker {
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
-	}
+	}*/
 }

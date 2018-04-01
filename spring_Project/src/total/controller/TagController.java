@@ -17,7 +17,7 @@ public class TagController {
 	BoardService boardService;
 	
 	@RequestMapping("/tag")
-	public String KeyWordHandle(Map map,@RequestParam String tag ) {
+	public String KeyWordHandle(Map map,@RequestParam String tag )throws Exception {
 		List<Map> list = boardService.mongokeyword(tag);
 		List<Map> t = boardService.mongoTagAnd(tag);
 		map.put("searchList",boardService.mongoSearch(tag));

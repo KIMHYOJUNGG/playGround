@@ -21,9 +21,9 @@ public class MongoBoardVo {
 	private String[] image;
 	private String[] tag;
 
+	private String ptag;
 	private List<Map> comments;
-
-	public  String getNo() {
+	public String getNo() {
 		return no;
 	}
 	public void setNo(String no) {
@@ -53,12 +53,38 @@ public class MongoBoardVo {
 	public void setTag(String[] tag) {
 		this.tag = tag;
 	}
+	public StringBuilder getPtag() {
+		StringBuilder sb=new StringBuilder();
+		
+		if(tag!=null){
+			for(String s: tag){
+				
+				sb.append("#");
+				sb.append(s);
+				
+			}
+			return sb;
+		}else{
+			
+			return sb.append("");
+		}
+	}
+	public void setPtag(String ptag) {
+		this.ptag = ptag;
+	}
 	public List<Map> getComments() {
 		return comments;
 	}
 	public void setComments(List<Map> comments) {
 		this.comments = comments;
 	}
+	@Override
+	public String toString() {
+		return "MongoBoardVo [no=" + no + ", bno=" + bno + ", contents=" + contents + ", image="
+				+ Arrays.toString(image) + ", tag=" + Arrays.toString(tag) + ", ptag=" + ptag + ", comments=" + comments
+				+ "]";
+	}
+
 
 
 

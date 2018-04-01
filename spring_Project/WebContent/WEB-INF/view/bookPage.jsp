@@ -5,37 +5,39 @@
 
 <c:choose>
 	<c:when test="${empty bookContents}">
-		<div class="jumbotron" style="background-color: white; margin-bottom: 10px">
-			<div class="container">
+		<div style="margin-top: 15px">
+			<div class="container-fluid" style="width:100%">
 		
-				<div class="row">
-					<div class="col-sm-3">
+				<div class="row" style="margin: 15px;">
+					<div class="col-sm-4">
 						<c:if test="${!empty writerInfo.IMAGE }">
-							<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 100%">
+							<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 240px; height: 240px;">
 						</c:if>
 						<c:if test="${empty writerInfo.IMAGE }">
 							<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 						</c:if>
 					</div>
-					<div class="col-sm-9">
-						<h2>${writerInfo.NICKNAME}</h2>
-						<p>
-							글 <span class="badge">${fn:length(contentList) }</span> | 책 <span
-								class="badge">${fn:length(bookList)}</span> | <a
-								href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가
-								<span class="badge">${fn:length(writerFollowing) }</span>
-							</a>
-						</p>
-						<p>
-							<span style="color: gray">${writerInfo.WELCOME}</span>
-						</p>
+					<div class="col-sm-8">
+						<div style="margin: 20px">
+							<h2>${writerInfo.NICKNAME}</h2>
+							<p>
+								글 <span class="badge">${fn:length(contentList) }</span> | 책 <span
+									class="badge">${fn:length(bookList)}</span> | <a
+									href="${pageContext.request.contextPath }/@${ writerInfo.ID}/following">관심작가
+									<span class="badge">${fn:length(writerFollowing) }</span>
+								</a>
+							</p>
+							<p>
+								<span style="color: gray">${writerInfo.WELCOME}</span>
+							</p>
+						</div>
 					</div>
 				</div>
 		
 			</div>
 		</div>
 		
-		<div class="container">
+		<div class="container" style="width:100%">
 			<h3>책 등록하기</h3>
 			<form class="form-horizontal" action="${pageContext.request.contextPath }/bookPage" method="post">
 				<div class="form-group">
@@ -48,7 +50,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="tag">TAG:</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" onkeyup="checkTag()">
+						<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
 					</div>
 				</div>
 				<div class="form-group" align="right">
@@ -59,7 +61,16 @@
 			</form>
 		</div>
 		<script>
+			function addHash() {
+				var tag = $("#tag").val();
+				if(tag.charCodeAt(0) != 35) {
+// 					if(tag.length >= 1)
+						$("#tag").val("#"+tag);
+				}
+			}
+			
 			function checkTag() {
+				console.log("checkTag");
 				var tag = $("#tag").val();
 				console.log($("#tag").val());
 				if(tag.charCodeAt(tag.length-1) == 32) {
@@ -77,45 +88,156 @@
 					}
 				}
 			}
+			
+			function finalCheck() {
+				addHash();
+				var tag = $("#tag").val();
+				$("#tag").val(tag.replace(/\s/gi, ""));
+			}
 		</script>
 	</c:when>
 	<c:otherwise>
-		<div class="jumbotron" style="background-color: white">
-			<div class="container">
+		<div style="margin-top: 15px">
+			<div class="container-fluid" style="width:100%">
 
-				<div class="row">
-					<div class="col-sm-3">
+				<div class="row" style="margin: 15px;">
+					<div class="col-sm-4 col-lg-5" align="center">
 						<c:if test="${empty writerInfo.IMAGE }">
-							<img
-								src="${pageContext.request.contextPath }/image/default_profile.png"
-								style="width: 240px; height: 240px;" class="img-circle">
+							<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 						</c:if>
 						<c:if test="${!empty writerInfo.IMAGE }">
-							<img src="${writerInfo.IMAGE}"
-								style="width: 240px; height: 240px;" class="img-circle">
+							<img src="${writerInfo.IMAGE}" style="width: 240px; height: 240px;" class="img-circle">
 						</c:if>
 					</div>
-					<div class="col-sm-8">
-						<h2>${bookInfo.bookName}</h2>
-						<p>
-							<span style="font-size: 12px; color: gray; font-style: italic;">by</span>
-							<a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>
-							<span style="font-size: 12px; color: gray; font-style: italic;">
-								| view</span> <span class="badge">${bookInfo.good }</span>
-						</p>
-						<p>
-							<c:forEach items="${bookInfo.tag }" var="t">
-								<span class="badge">${t }</span>
-							</c:forEach>
-						</p>
-					</div>
-					<div class="col-sm-1">
+					<div class="col-sm-8 col-lg-7">
+						<div style="margin: 15px">
+							<h2>${bookInfo.bookName} 
+								<c:forEach items="${bookInfo.tag }" var="t">
+									<a href="${pageContext.request.contextPath }/search?word='${t}"><span class="badge search">${t }</span></a>
+								</c:forEach>
+							</h2>
+							<h3>
+								<span style="font-size: 12px; color: gray; font-style: italic;">by</span>
+								<a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>
+								<span style="font-size: 12px; color: gray; font-style: italic;">
+									| view</span> <span class="badge">${bookInfo.good }</span>
+							</h3>
+							</div>
+							<div style="margin: 15px;">
+							<c:if test="${logon == writerInfo.ID }">
+								<div class="button-group">
+										<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">이어쓰기</button></a>
+										<a href="${pageContext.request.contextPath }/bookPage/${bookInfo.bno}/modify" ><button type="button" class="btn btn-info">책 수정</button></a>
+										<a><button type="button" class="btn btn-info"  onclick="bookDel('${bookInfo.bno}')">책 삭제</button></a>
+								</div>
+							</c:if>
+							<div style="margin-top: 15px;">
+								<a><button type="button" class="btn btn-info"  onclick="fromFirst('${bookInfo.bno}')">첫글부터</button></a>
+								<a><button type="button" class="btn btn-info"  onclick="fromNew('${bookInfo.bno}')">최근글부터</button></a>
+								<script>
+									function fromFirst(bno) {
+										$.get("${pageContext.request.contextPath}/bookPage/orderBy", {
+											"bno" : bno,
+											"first" : "Y"
+										}, function(map){
+											var c = map.contentsList;
+											var vo = map.boardVOList;
+											var html = "";
+											for(var i = 0; i < c.length; i++) {
+												var div = "";
+												var img = "";
+												if(i == 0 || i %3 == 0) {
+													div = "<li class='list-group-item'>"
+															+"<div class='row'>";
+												}
+												div	+= "<div class='col-sm-4'>"
+														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>";
+													for(var j = 0; j < vo.length ; j++) {
+														if(vo[j].no == c[i].NO) {
+															 img = "<img class='card-img-top' alt='Card image' style='width: 100%' ";
+															if(vo[j].image == null) {
+																img += "src='${pageContext.request.contextPath }/image/Desert.jpg'>";
+															} else {
+																img += "src='"+vo[j].image[0]+"'>";
+															}
+															var body = "<div class='card-body'>"
+																				+"<h3 class='card-title'>"+c[i].TITLE +"</h3></a>"
+																				+"<p class='list-group-item-text'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
+																				+"<span class='glyphicon glyphicon-heart'></span> <span class='badge'> "+Math.floor(c[i].GOOD)+"</span> "
+																				+"<span class='glyphicon glyphicon-eye-open'></span> <span class='badge'> "+Math.floor(c[i].VIEWCNT )+"</span></p>"
+																				+"<p>";
+															for(var t = 0; t < vo[j].tag.length; t++){
+																body += "<a href='${pageContext.request.contextPath }/search?word="+vo[j].tag[t]+"'><span class='badge search'>"+ vo[j].tag[t]+"</span></a> ";
+															}
+															body += "</p></div></div></div>";
+															if(i != 0 && (i+1)%3 == 0) {
+																body +="</div></li>";
+															}
+															div += img +body;
+														}
+													}
+												html += div;
+											}
+											$("#cts").html(html);
+										});
+									}
+									
+									
+									function fromNew(bno) {
+										$.get("${pageContext.request.contextPath}/bookPage/orderBy", {
+											"bno" : bno,
+											"new" : "Y"
+										}, function(map){
+											var c = map.contentsList;
+											var vo = map.boardVOList;
+											var html = "";
+											for(var i = 0; i < c.length; i++) {
+												var div = "";
+												var img = "";
+												if(i == 0 || i %3 == 0) {
+													div = "<li class='list-group-item'>"
+															+"<div class='row'>";
+												}
+												div	+= "<div class='col-sm-4'>"
+														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>";
+													for(var j = 0; j < vo.length ; j++) {
+														if(vo[j].no == c[i].NO) {
+															 img = "<img class='card-img-top' alt='Card image' style='width: 100%' ";
+															if(vo[j].image == null) {
+																img += "src='${pageContext.request.contextPath }/image/Desert.jpg'>";
+															} else {
+																img += "src='"+vo[j].image[0]+"'>";
+															}
+															var body = "<div class='card-body'>"
+																				+"<h3 class='card-title'>"+c[i].TITLE +"</h3></a>"
+																				+"<p class=list-group-item-text'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
+																				+"<span class='glyphicon glyphicon-heart'></span> <span class='badge'>"+Math.floor(c[i].GOOD)+"</span> "
+																				+"<span class='glyphicon glyphicon-eye-open'></span> <span class='badge'>"+Math.floor(c[i].VIEWCNT )+"</span></p>"
+																				+"<p>";
+															for(var t = 0; t < vo[j].tag.length; t++){
+																body += "<a href='${pageContext.request.contextPath }/search?word="+vo[j].tag[t]+"'><span class='badge search'>"+ vo[j].tag[t]+"</span></a> ";
+															}
+															body += "</p></div></div></div>";
+															if(i != 0 && (i+1)%3 == 0) {
+																body +="</div></li>";
+															}
+															div += img +body;
+														}
+													}
+												html += div;
+											}
+											$("#cts").html(html);
+										});
+									}
+								</script>
 						<c:if test="${logon  != writerInfo.ID || logon== null}">
 							<c:forEach items="${follower }" var="fer">
-								<c:set var="fan" value="${fer.READER eq logon}" />
+								<c:if test="${fer.READER eq logon}">
+									<c:set var="fan" value="true" />
+								</c:if>
 							</c:forEach>
 							<c:choose>
-								<c:when test="${fan ne true}">
+								<c:when test="${fan != true}">
 									<button type="button" class="btn btn-info" id="followbt">구독하기</button>
 									<!-- Modal -->
 									<div class="modal fade" id="result" role="dialog">
@@ -185,48 +307,44 @@
 								</c:otherwise>
 							</c:choose>
 						</c:if>
-
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<c:if test="${logon == writerInfo.ID }">
-					<div align="right">
-						<div class="btn-group">
-							<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">이어서 쓰기</button></a>
-							<a href="${pageContext.request.contextPath }/bookPage/${bookInfo.bno}/modify"><button type="button" class="btn btn-info">책 정보 수정</button></a>
-							<a><button type="button" class="btn btn-info"  onclick="bookDel('${bookInfo.bno}')">책 삭제</button></a>
-						</div>
-					</div>
-				</c:if>
-
-				<div class="container">
+				<div  style="width:100%">
 				<c:if test="${!empty contentsList }">
-					<ul class="list-group">
+					<ul class="list-group"   id="cts">
 						<li class="list-group-item">
-							<div class="row">
-					<c:forEach begin="0" end="${fn:length(boardVOList)-1 }" var="i" varStatus="vs">
-						<c:set var="vo" value="${boardVOList[i] }"/>
-											<c:set var="c" value="${contentsList[i] }"/>
+							<div class="row" id="row">
+								<c:forEach begin="0" end="${fn:length(boardVOList)-1 }" var="i" varStatus="vs">
+									<c:set var="c" value="${contentsList[i] }"/>
 								<div class="col-sm-4">
-									<div class="card">
-									<a href="${pageContext.request.contextPath}/board/read?no=${c.NO}">
-										<c:if test="${empty vo.image }">
-											<img class="card-img-top" src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Card image" style="width: 100%">
-										</c:if>
-										<c:if test="${! empty vo.image }">
-											<img class="card-img-top" src="${vo.image }" alt="Card image" style="width: 100%">
-										</c:if>
-										<div class="card-body">
-											<h3 class="card-title">${c.TITLE }</h3></a>
-											<h4><a href="${pageContext.request.contextPath }/search?search=${c.TYPE }"><span class="badge">${c.TYPE }</span></a>
-											<span style="color: gray; font-size: 11pt;">GOOD</span> <span class="badge">${c.GOOD }</span>
-											<span style="color: gray; font-size: 11pt;">VIEW</span> <span class="badge">${c.VIEWCNT }</span></h4>
-											<p>
-											<c:forEach items="${vo.tag}" var="t">
-												<a href="${pageContext.request.contextPath }/search?search=${t}"><span class="badge"> ${t}</span></a>
-											</c:forEach>
-											</p>
-										</div>
+									<div class="card" >
+										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}">
+										<c:forEach var="vo" items="${boardVOList }">
+											<c:if test="${vo.no eq c.NO}">
+											
+												<c:if test="${empty vo.image }">
+													<img class="card-img-top" src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Card image" style="width: 100%">
+												</c:if>
+												<c:if test="${! empty vo.image }">
+													<c:set var="path" value="${pageContext.request.contextPath }"/>
+													<img class="card-img-top" src="${ vo.image[0] }" alt="Card image" style="width: 100%">
+												</c:if>
+												<div class="card-body" >
+													<h3 class="card-title">${c.TITLE }</h3></a>
+													<p class="list-group-item-text"><a href="${pageContext.request.contextPath }/search?word=${c.TYPE }"><span class="badge bg_type">${c.TYPE }</span></a>
+													<span class="glyphicon glyphicon-heart"></span> <span class="badge"> ${c.GOOD }</span> 
+													<span class="glyphicon glyphicon-eye-open"></span> <span class="badge"> ${c.VIEWCNT }</span></p>
+													<p>
+													<c:forEach items="${vo.tag}" var="t">
+														<a href="${pageContext.request.contextPath }/search?word=${t}"><span class="badge search"> ${t}</span></a>
+													</c:forEach>
+													</p>
+												</div>
+											</c:if>
+										</c:forEach>
 									</div>
 								</div>
 								<c:choose>
@@ -242,10 +360,13 @@
 									</c:otherwise>
 								</c:choose>
 					</c:forEach>
+						</div>
 						</li>
 					</ul>
 				</c:if>
 				<c:if test="${empty contentsList }">
+				<br>
+					<hr/>
 					<p>발행된 글이 없습니다.</p>
 					<c:if test="${writerInfo.ID eq logon}">
 						<p>글을 등록해 보세요!</p>
@@ -273,7 +394,7 @@
 							  	
 							  	$("#cClose").click(function(){
 							  		location.assign("${pageContext.request.contextPath}/@${writerInfo.ID}");
-															});
+								});
 							  	
 								function bookDel(bno) {
 									var ans = window.confirm("삭제시 책에 등록된 모든 게시글이 함께 삭제됩니다.\r\n정말 삭제하시겠습니까?");
