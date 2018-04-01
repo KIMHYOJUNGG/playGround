@@ -52,6 +52,21 @@
 		text-align: center;
 		margin: 25px 0;
 	}
+	.carousel-inner img {
+		-webkit-filter: grayscale(90%);
+		filter: grayscale(90%); /* make all photos black and white */
+		width: 100%; /* Set width to 100% */
+		margin: auto;
+	}
+	.carousel-caption h3 {
+		color: #fff !important;
+	}
+	@media ( max-width : 600px) {
+		.carousel-caption {
+			display: none;
+			/* Hide the carousel text when the screen is less than 600 pixels wide */
+		}
+	}
 }
 </style>
 </head>
@@ -74,28 +89,27 @@
 			<li class="active"><a data-toggle="tab" href="#home">Main</a></li>
 			<li><a data-toggle="tab" href="#menu1">Keyword</a></li>
 		</ul>
-	--%>
-
-		<div class="tab-content">
-
-			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-				<!-- Indicators -->
-				<ol class="carousel-indicators">
-					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#myCarousel" data-slide-to="1"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
-					<li data-target="#myCarousel" data-slide-to="3"></li>
-					<li data-target="#myCarousel" data-slide-to="4"></li>
+	
+ --%>
 
 
-				</ol>
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+				<li data-target="#myCarousel" data-slide-to="3"></li>
+				<li data-target="#myCarousel" data-slide-to="4"></li>
+			</ol>
 
-				<!-- Wrapper for slides -->
-				<div class="carousel-inner" role="listbox">
-				<%--
-					<c:forEach var="o" items="${boardNo}" varStatus="vs">
-						<c:choose>
-							<c:when test="${vs.count <= 5}">
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+
+				<c:forEach var="o" items="${boardNo}" varStatus="vs">
+					<c:choose>
+						<c:when test="${vs.count <= 5}">
+							<c:if test="${vs.count == 1 }">
 								<div class="item active">
 									<c:if test="${o.IMAGE == null}">
 										<a href="/board/readPage?no=${o.NO}"><img
@@ -110,243 +124,210 @@
 										<h3>${o.TITLE }</h3>
 										<p>${o.BOOKNAME }</p>
 									</div>
-
 								</div>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-				</div>
- --%>
-				
-				<div class="item">
-					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
-						alt="Chicago" width="1200" height="700">
-					<div class="carousel-caption">
-						<h3>Chicago</h3>
-						<p>Thank you, Chicago - A night we won't forget.</p>
-					</div>
-				</div>
-
-				<div class="item">
-					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
-						alt="Los Angeles" width="1200" height="700">
-					<div class="carousel-caption">
-						<h3>LA</h3>
-						<p>Even though the traffic was a mess, we had the best time
-							playing at Venice Beach!</p>
-					</div>
-				</div>
-
-				<div class="item">
-					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
-						alt="Los Angeles" width="1200" height="700">
-					<div class="carousel-caption">
-						<h3>LA</h3>
-						<p>Even though the traffic was a mess, we had the best time
-							playing at Venice Beach!</p>
-					</div>
-				</div>
-
-				<div class="item">
-					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
-						alt="Los Angeles" width="1200" height="700">
-					<div class="carousel-caption">
-						<h3>LA</h3>
-						<p>Even though the traffic was a mess, we had the best time
-							playing at Venice Beach!</p>
-					</div>
-				</div>
-				<div class="item">
-					<img src="${pageContext.request.contextPath }/image/Desert.jpg"
-						alt="Los Angeles" width="1200" height="700">
-					<div class="carousel-caption">
-						<h3>LA</h3>
-						<p>Even though the traffic was a mess, we had the best time
-							playing at Venice Beach!</p>
-					</div>
-				</div>
-</div>
-
-			</div>
-
-				<!-- Left and right controls -->
-				<a class="left carousel-control" href="#myCarousel" role="button"
-					data-slide="prev"> <span
-					class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a> <a class="right carousel-control" href="#myCarousel" role="button"
-					data-slide="next"> <span
-					class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-			</div>
-			
-			<!-- Container (Portfolio Section) -->
-			<div class="container-fluid text-center bg-grey">
-				<h2>Portfolio</h2>
-				<br>
-				<h4>What we have created</h4>
-				<div class="row text-center">
-					<c:forEach var="o" items="${boardNo}" varStatus="vs">
-						<c:choose>
-							<c:when test="${vs.count <= 8}">
-								<div class="col-sm-3">
-									<div class="thumbnail">
-										<div class="w3-quarter">
-											<c:if test="${o.IMAGE == null}">
-												<a href="/board/readPage?no=${o.NO}"><img
-													src="${pageContext.request.contextPath }/image/Desert.jpg"
-													alt="1" width="400" height="300"></a>
-											</c:if>
-											<a href="/board/readPage?no=${o.NO}"><img
-												src="
-												${o.IMAGE }" alt="Paris" width="400"
-												height="300"></a>
-											<p>
-												<strong>${o.TITLE }</strong>
-											</p>
-											<p>${o.BOOKNAME }</p>
-										</div>
+							</c:if>
+							<c:if test="${vs.count != 1 }">
+								<div class="item">
+									<c:if test="${o.IMAGE == null}">
+										<a href="/board/readPage?no=${o.NO}"><img
+											src="${pageContext.request.contextPath }/image/Desert.jpg"
+											alt="1" width="1200" height="700"></a>
+									</c:if>
+									<a href="/board/readPage?no=${o.NO}"><img
+										src="
+												${o.IMAGE }" alt="Paris" width="1200"
+										height="700"></a>
+									<div class="carousel-caption">
+										<h3>${o.TITLE }</h3>
+										<p>${o.BOOKNAME }</p>
 									</div>
 								</div>
-							</c:when>
-						</c:choose>
-					</c:forEach>
+							</c:if>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+
+			</div>
+			<!-- Left and right controls -->
+			<a class="left carousel-control" href="#myCarousel" role="button"
+				data-slide="prev"> <span
+				class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a> <a class="right carousel-control" href="#myCarousel" role="button"
+				data-slide="next"> <span
+				class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+
+		</div>
+
+
+		<!-- Container (Portfolio Section) -->
+		<div class="container-fluid text-center bg-grey">
+			<h2>Portfolio</h2>
+			<br>
+			<h4>What we have created</h4>
+			<div class="row text-center">
+				<c:forEach var="o" items="${boardNo}" varStatus="vs">
+					<c:choose>
+						<c:when test="${vs.count <= 8}">
+							<div class="col-sm-3">
+								<div class="thumbnail">
+									<div class="w3-quarter">
+										<c:if test="${o.IMAGE == null}">
+											<a href="/board/readPage?no=${o.NO}"><img
+												src="${pageContext.request.contextPath }/image/Desert.jpg"
+												alt="1" width="400" height="300"></a>
+										</c:if>
+										<a href="/board/readPage?no=${o.NO}"><img
+											src="
+												${o.IMAGE }" alt="Paris" width="400"
+											height="300"></a>
+										<p>
+											<strong>${o.TITLE }</strong>
+										</p>
+										<p>${o.BOOKNAME }</p>
+									</div>
+								</div>
+							</div>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</div>
+		</div>
+
+
+		<br> <br> <br> <br> <br>
+		<!-- Container (Services Section) -->
+		<div class="container-fluid text-center">
+			<h2>KEYWORD</h2>
+			<br> <br> <br>
+			<div class="row">
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=세계여행">세계여행</a>
+					</h4>
+				</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=글쓰기">글쓰기</a>
+					</h4>
+				</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=문화·예술">문화·예술</a>
+					</h4>
+				</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=사랑·이별">사랑·이별</a>
+					</h4>
+				</div>
+
+			</div>
+			<br> <br>
+			<div class="row">
+				<div class="col-sm-3">
+					<h4>
+						<a
+							href="${pageContext.request.contextPath }/keyword?type=직장인 현실조언">직장인
+							현실조언</a>
+					</h4>
+				</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=건축·설계">건축·설계</a>
+					</h4>
+				</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">시사·이슈</a>
+					</h4>
+				</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는
+							역사</a>
+					</h4>
 				</div>
 			</div>
-
-
-			<br> <br> <br> <br> <br>
-			<!-- Container (Services Section) -->
-			<div class="container-fluid text-center">
-				<h2>KEYWORD</h2>
-				<br> <br> <br>
-				<div class="row">
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=세계여행">세계여행</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=글쓰기">글쓰기</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=문화·예술">문화·예술</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=사랑·이별">사랑·이별</a>
-						</h4>
-					</div>
-
+			<br> <br>
+			<div class="row">
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=육아이야기">육아이야기</a>
+					</h4>
 				</div>
-				<br> <br>
-				<div class="row">
-					<div class="col-sm-3">
-						<h4>
-							<a
-								href="${pageContext.request.contextPath }/keyword?type=직장인 현실조언">직장인
-								현실조언</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=건축·설계">건축·설계</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">시사·이슈</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는
-								역사</a>
-						</h4>
-					</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=요리·레시피">요리·레시피</a>
+					</h4>
 				</div>
-				<br> <br>
-				<div class="row">
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=육아이야기">육아이야기</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=요리·레시피">요리·레시피</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">건강·운동</a>
-						</h4>
-					</div>
-					<div class="col-sm-3">
-						<h4>
-							<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집
-								반려동물</a>
-						</h4>
-					</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">건강·운동</a>
+					</h4>
+				</div>
+				<div class="col-sm-3">
+					<h4>
+						<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집
+							반려동물</a>
+					</h4>
+				</div>
 
+			</div>
+		</div>
+
+
+
+
+
+		<br> <br> <br> <br> <br>
+
+		<!-- Container (Services Section) -->
+		<div class="container-fluid text-center">
+			<h2>SERVICES</h2>
+			<h4>What we offer</h4>
+			<br>
+			<div class="row">
+				<div class="col-sm-4">
+					<span class="glyphicon glyphicon-off"></span>
+					<h4>POWER</h4>
+					<p>Lorem ipsum dolor sit amet..</p>
+				</div>
+				<div class="col-sm-4">
+					<span class="glyphicon glyphicon-heart"></span>
+					<h4>LOVE</h4>
+					<p>Lorem ipsum dolor sit amet..</p>
+				</div>
+				<div class="col-sm-4">
+					<span class="glyphicon glyphicon-lock"></span>
+					<h4>JOB DONE</h4>
+					<p>Lorem ipsum dolor sit amet..</p>
 				</div>
 			</div>
-
-
-
-
-
-			<br> <br> <br> <br> <br>
-
-			<!-- Container (Services Section) -->
-			<div class="container-fluid text-center">
-				<h2>SERVICES</h2>
-				<h4>What we offer</h4>
-				<br>
-				<div class="row">
-					<div class="col-sm-4">
-						<span class="glyphicon glyphicon-off"></span>
-						<h4>POWER</h4>
-						<p>Lorem ipsum dolor sit amet..</p>
-					</div>
-					<div class="col-sm-4">
-						<span class="glyphicon glyphicon-heart"></span>
-						<h4>LOVE</h4>
-						<p>Lorem ipsum dolor sit amet..</p>
-					</div>
-					<div class="col-sm-4">
-						<span class="glyphicon glyphicon-lock"></span>
-						<h4>JOB DONE</h4>
-						<p>Lorem ipsum dolor sit amet..</p>
-					</div>
+			<br> <br>
+			<div class="row">
+				<div class="col-sm-4">
+					<span class="glyphicon glyphicon-leaf"></span>
+					<h4>GREEN</h4>
+					<p>Lorem ipsum dolor sit amet..</p>
 				</div>
-				<br> <br>
-				<div class="row">
-					<div class="col-sm-4">
-						<span class="glyphicon glyphicon-leaf"></span>
-						<h4>GREEN</h4>
-						<p>Lorem ipsum dolor sit amet..</p>
-					</div>
-					<div class="col-sm-4">
-						<span class="glyphicon glyphicon-certificate"></span>
-						<h4>CERTIFIED</h4>
-						<p>Lorem ipsum dolor sit amet..</p>
-					</div>
-					<div class="col-sm-4">
-						<span class="glyphicon glyphicon-wrench"></span>
-						<h4 style="color: #303030;">HARD WORK</h4>
-						<p>Lorem ipsum dolor sit amet..</p>
-					</div>
+				<div class="col-sm-4">
+					<span class="glyphicon glyphicon-certificate"></span>
+					<h4>CERTIFIED</h4>
+					<p>Lorem ipsum dolor sit amet..</p>
+				</div>
+				<div class="col-sm-4">
+					<span class="glyphicon glyphicon-wrench"></span>
+					<h4 style="color: #303030;">HARD WORK</h4>
+					<p>Lorem ipsum dolor sit amet..</p>
 				</div>
 			</div>
+		</div>
 
 
-			<%--
+		<%--
 			<div id="menu1" class="tab-pane fade">
 				<div class="main_keywords">
 
@@ -394,7 +375,7 @@
 			</div>
 --%>
 
-		</div>
+	</div>
 	</div>
 	</div>
 	</div>

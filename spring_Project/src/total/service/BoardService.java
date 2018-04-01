@@ -369,11 +369,11 @@ public List<Map> mongoTagSearch(String word) {  // 검색된 데이터에서 태
 		  m2.put("word3", "%"+word+"%");
 	 List<Map> oracle = session.selectList("search.word",m2);
 	  
-	 
 	  for(Map ora : oracle) {
 		  Criteria criteria=new Criteria("no");
 		  Number no = (Number) ora.get("NO");
 		  cri.is(no.intValue());
+		  System.out.println("nono :"+no);
 		  Query que=new Query(cri);
 		  List<MongoBoardVo> mb=template.find(que,MongoBoardVo.class,"board"); 
 		  for(MongoBoardVo m4 : mb) {
@@ -386,8 +386,7 @@ public List<Map> mongoTagSearch(String word) {  // 검색된 데이터에서 태
 			  	}
 			  }
 	  
-	  }
-	  
+	 }
 	  
 	  /*
 	  List<Map> list = session.selectList("search.type", type);
