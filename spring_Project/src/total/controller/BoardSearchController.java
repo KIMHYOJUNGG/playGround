@@ -2,8 +2,6 @@ package total.controller;
 
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,18 +20,17 @@ import total.service.BoardService;
 @RequestMapping("/sboard/*")
 public class BoardSearchController {
 
-  private static final Logger logger = LoggerFactory.getLogger(BoardSearchController.class);
 
   @Autowired
   private BoardService service;
-/*
-  @RequestMapping(value = "/list", method = RequestMethod.GET)
-  public void listPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
 
-    logger.info(cri.toString());
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public String listPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
+
+    System.out.println(cri.toString());
 
     // model.addAttribute("list", service.listCriteria(cri));
-    model.addAttribute("list", service.listSearchCriteria(cri));
+    model.addAttribute("list", service.listSearch(cri));
 
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
@@ -42,6 +39,8 @@ public class BoardSearchController {
     pageMaker.setTotalCount(service.listSearchCount(cri));
 
     model.addAttribute("pageMaker", pageMaker);
+    model.addAttribute("body", "list.jsp");
+    return "t_sboard";
   }
 
   @RequestMapping(value = "/readPage", method = RequestMethod.GET)
@@ -50,7 +49,7 @@ public class BoardSearchController {
 
     model.addAttribute(service.read(bno));
   }
-
+/*
   @RequestMapping(value = "/removePage", method = RequestMethod.POST)
   public String remove(@RequestParam("bno") int bno, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
 
@@ -127,21 +126,21 @@ public class BoardSearchController {
     return "t_board";
   }*/
   
-   @RequestMapping(value = "/list", method = RequestMethod.GET)
+ /*  @RequestMapping(value = "/list", method = RequestMethod.GET)
    public String listPage(@ModelAttribute("cri") SearchCriteria cri,
    Model model) throws Exception {
   
 	   System.out.println(cri.toString());
   
-   model.addAttribute("list", service.listCriteria(cri));
+   model.addAttribute("list", service.listSearch(cri));
   
    PageMaker pageMaker = new PageMaker();
    pageMaker.setCri(cri);
   
-   pageMaker.setTotalCount(service.countPaging(cri));
+   pageMaker.setTotalCount(service.listSearchCount(cri));
   
    model.addAttribute("pageMaker", pageMaker);
    model.addAttribute("body", "list.jsp");
    return "t_sboard";
-   }
+   }*/
 }

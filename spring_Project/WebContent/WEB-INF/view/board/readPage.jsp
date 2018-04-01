@@ -233,9 +233,16 @@
            
     <input type='hidden' name='no' value ="${boardVO.no}">
     <input type='hidden' name='btitle' value ="${boardVO.title}">
+    <c:if test="${cri.stype!=null }">
+    
+    <input type='hidden' name='stype' value ="${cri.stype}">
+    
+    </c:if>
     <input type='hidden' name='page' value ="${cri.page}">
     <input type='hidden' name='perPageNum' value ="${cri.perPageNum}">
     <input type='hidden' name='writer' value ="${boardVO.writer}">
+    <input type='hidden' name='searchType' value ="${cri.searchType}">
+    <input type='hidden' name='keyword' value ="${cri.keyword}">
     <div class="form-group">
       <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 

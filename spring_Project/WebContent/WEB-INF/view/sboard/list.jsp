@@ -4,8 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
 
-<%@include file="../include/header.jsp"%>
-
+<%-- <%@include file="../include/header.jsp"%>
+ --%>
 <!-- Main content -->
 <section class="content">
 	<div class="row">
@@ -27,21 +27,21 @@
 						<option value="t"
 							<c:out value="${cri.searchType eq 't'?'selected':''}"/>>
 							Title</option>
-						<option value="c"
+						<%-- <option value="c"
 							<c:out value="${cri.searchType eq 'c'?'selected':''}"/>>
-							Content</option>
+							Content</option> --%>
 						<option value="w"
 							<c:out value="${cri.searchType eq 'w'?'selected':''}"/>>
 							Writer</option>
-						<option value="tc"
+						<%-- <option value="tc"
 							<c:out value="${cri.searchType eq 'tc'?'selected':''}"/>>
 							Title OR Content</option>
 						<option value="cw"
 							<c:out value="${cri.searchType eq 'cw'?'selected':''}"/>>
-							Content OR Writer</option>
+							Content OR Writer</option> --%>
 						<option value="tcw"
 							<c:out value="${cri.searchType eq 'tcw'?'selected':''}"/>>
-							Title OR Content OR Writer</option>
+							Title OR Writer</option>
 					</select> <input type="text" name='keyword' id="keywordInput"
 						value='${cri.keyword }'>
 					<button id='searchBtn'>Search</button>
@@ -50,9 +50,9 @@
 				</div>
 				
 				
-				<div class='box-body'>
+				<!-- <div class='box-body'>
 					<button id='newBtn'>New Board</button>
-				</div>
+				</div> -->
 			</div>
 			<div class="box">
 				<div class="box-header with-border">
@@ -65,12 +65,13 @@
 							<th>TITLE</th>
 							<th>WRITER</th>
 							<th>REGDATE</th>
+							<th style="width: 80px">좋아요!</th>
 							<th style="width: 40px">VIEWCNT</th>
 						</tr>
 
 					 	<c:forEach items="${list}" var="boardVO">
 
-							<tr>
+							<%-- <tr>
 								<td>${boardVO.no}</td>
 								<td><a
 									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }&no=${boardVO.no}'>
@@ -78,6 +79,21 @@
 								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 										value="${boardVO.regdate}" /></td>
+										<td><span class="badge">${boardVO.good }</span></td> 
+								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
+							</tr> --%>
+							
+							
+							
+						
+								<td>${boardVO.no}</td>
+								<td><a
+									href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&no=${boardVO.no}'>
+										${boardVO.title}</a></td>
+								<td>${boardVO.writer}</td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+										value="${boardVO.regdate}" /></td>
+										<td><span class="badge">${boardVO.good }</span></td> 
 								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
 							</tr>
 
@@ -112,7 +128,7 @@
 					</div>
  --%>
 
-<a href="list?page=1&amp;perPageNum=10&amp;searchType&amp;keyword=">1</a>
+
 
 					<div class="text-center">
 						<ul class="pagination">
@@ -149,11 +165,11 @@
 </section>
 <!-- /.content -->
 
-<form id="jobForm">
+<!-- <form id="jobForm">
   <input type='hidden' name="page" value=${pageMaker.cri.perPageNum}>
   <input type='hidden' name="perPageNum" value=${pageMaker.cri.perPageNum}>
 </form>
-
+ -->
 
 <script>
 	var result = '${msg}';
@@ -161,8 +177,8 @@
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
-	
-	$(".pagination li a").on("click", function(event){
+	/*
+	 $(".pagination li a").on("click", function(event){
 		
 		event.preventDefault(); 
 		
@@ -172,8 +188,32 @@
 		jobForm.find("[name='page']").val(targetPage);
 		jobForm.attr("action","/board/listPage").attr("method", "get");
 		jobForm.submit();
-	});
+	}); */
 	
-</script>
 
+	$(document).ready(
+			function() {
+
+				$('#searchBtn').on(
+						"click",
+						function(event) {
+
+							self.location = "list"
+									+ '${pageMaker.makeQuery(1)}'
+									+ "&searchType="
+									+ $("select option:selected").val()
+									+ "&keyword=" + $('#keywordInput').val();
+
+						});
+
+				$('#newBtn').on("click", function(evt) {
+
+					self.location = "register";
+
+				});
+
+			});
+</script>
+<%-- 
 <%@include file="../include/footer.jsp"%>
+ --%>

@@ -17,31 +17,45 @@
 					<h3 class="box-title">Board List</h3>
 				</div>
 				<div class='box-body'>
+				
+
+					<select name="searchType">
+						<option value="n"
+							<c:out value="${cri.searchType == null?'selected':''}"/>>
+							---</option>
+						<option value="t"
+							<c:out value="${cri.searchType eq 't'?'selected':''}"/>>
+							Title</option>
+						<%-- <option value="c"
+							<c:out value="${cri.searchType eq 'c'?'selected':''}"/>>
+							Content</option> --%>
+						<option value="w"
+							<c:out value="${cri.searchType eq 'w'?'selected':''}"/>>
+							Writer</option>
+						<%-- <option value="tc"
+							<c:out value="${cri.searchType eq 'tc'?'selected':''}"/>>
+							Title OR Content</option>
+						<option value="cw"
+							<c:out value="${cri.searchType eq 'cw'?'selected':''}"/>>
+							Content OR Writer</option> --%>
+						<option value="tcw"
+							<c:out value="${cri.searchType eq 'tcw'?'selected':''}"/>>
+							Title OR Writer</option>
+					</select> <input type="text" name='keyword' id="keywordInput"
+						value='${cri.keyword }'>
+					<button id='searchBtn'>Search</button>
+					
 					<a href="/board/register"><button class='btn btn-primary'>New Board</button></a>
+					
 				</div>
 				
-			<%-- 		<div class="form-group">
-						<label for="exampleInputEmail1">Type</label><br /> <select
-							name="type">
-
-							<c:forEach items="${type}" var="v">
-
-								<option value="${v }">${v}</option>
-
-
-							</c:forEach>
-
-
-						</select>
-
-					</div>
-				 --%>
+		
 				
 				
 					<div class="container">
 					<c:forEach items="${type}" var="v">
 
-						<a href="/board/listPage?type=${v }"><button type="button"  
+						<a href="/board/listPage?stype=${v }"><button type="button"  
 						class="btn btn-info btn-sm bb">${v }</button></a>&nbsp;
 
 
@@ -73,7 +87,7 @@
 							<tr>
 								<td>${boardVO.no}</td>
 								<td><a
-									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }&no=${boardVO.no}'>
+									href='/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&no=${boardVO.no}'>
 										${boardVO.title}</a></td>
 								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
@@ -93,7 +107,7 @@
 					<div class="text-center">
 						<ul class="pagination">
 
-							<c:if test="${pageMaker.prev}">
+						<%-- 	<c:if test="${pageMaker.prev}">
 								<li><a href="${pageMaker.startPage - 1}">&laquo;</a></li>
 							</c:if>
 
@@ -108,8 +122,25 @@
 							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 								<li><a
 									href="${pageMaker.endPage +1}">&raquo;</a></li>
+							</c:if> --%>
+
+	<c:if test="${pageMaker.prev}">
+								<li><a
+									href="listPage${pageMaker.makeSearch(pageMaker.startPage - 1)}">&laquo;</a></li>
 							</c:if>
 
+							<c:forEach begin="${pageMaker.startPage }"
+								end="${pageMaker.endPage }" var="idx">
+								<li
+									<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+									<a href="listPage${pageMaker.makeSearch(idx)}">${idx}</a>
+								</li>
+							</c:forEach>
+
+							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+								<li><a
+									href="listPage${pageMaker.makeSearch(pageMaker.endPage +1) }">&raquo;</a></li>
+							</c:if>
 						</ul>
 					</div>
 
@@ -128,10 +159,7 @@
   <input type='hidden' name="page" value=${pageMaker.cri.perPageNum}>
   <input type='hidden' name="perPageNum" value=${pageMaker.cri.perPageNum}>
   
-  <c:if test="${pageMaker.cri.type !=null }">
-  <input type='hidden' name="type" value=${pageMaker.cri.type}>
   
-  </c:if>
 </form>
 
 
@@ -142,7 +170,7 @@
 		alert("처리가 완료되었습니다.");
 	}
 	
-	$(".pagination li a").on("click", function(event){
+/* 	$(".pagination li a").on("click", function(event){
 		
 		event.preventDefault(); 
 		
@@ -152,7 +180,29 @@
 		jobForm.find("[name='page']").val(targetPage);
 		jobForm.attr("action","/board/listPage").attr("method", "get");
 		jobForm.submit();
-	});
+	}); */
+	$(document).ready(
+			function() {
+
+				$('#searchBtn').on(
+						"click",
+						function(event) {
+
+							self.location = "listPage"
+									+ '${pageMaker.makeQuery(1)}'
+									+ "&searchType="
+									+ $("select option:selected").val()
+									+ "&keyword=" + $('#keywordInput').val();
+
+						});
+
+				$('#newBtn').on("click", function(evt) {
+
+					self.location = "register";
+
+				});
+
+			});
 	
 </script>
 

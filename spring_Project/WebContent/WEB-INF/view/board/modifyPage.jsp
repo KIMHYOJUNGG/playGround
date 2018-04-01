@@ -18,8 +18,14 @@
 
 				<form role="form" action="modifyPage" method="post">
 
-					<input type='hidden' name='page' value="${cri.page}"> <input
-						type='hidden' name='perPageNum' value="${cri.perPageNum}">
+                    <c:if test="${cri.stype!=null }">
+					<input type='hidden' name='stype' value="${cri.stype}">
+                    
+                    </c:if>
+					<input type='hidden' name='page' value="${cri.page}">
+					 <input type='hidden' name='perPageNum' value="${cri.perPageNum}">
+					 <input type='hidden' name='searchType' value="${cri.searchType}">
+					 <input type='hidden' name='keyword' value="${cri.keyword}">
 
 					<div class="box-body">
 
@@ -116,7 +122,15 @@
 												.on(
 														"click",
 														function() {
-															self.location = "/board/listPage?page=${cri.page}&perPageNum=${cri.perPageNum}";
+															
+														var stype="";
+														var b=${cri.stype!=null};
+															if(b){
+																stype="&stype=${cri.stype}";
+															}
+															
+															self.location = "/board/listPage?page=${cri.page}&perPageNum=${cri.perPageNum}"
+																+ "&searchType=${cri.searchType}&keyword=${cri.keyword}"+stype;
 														});
 
 										$(".btn-primary").on("click",

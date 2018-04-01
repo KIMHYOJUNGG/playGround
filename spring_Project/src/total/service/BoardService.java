@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 import total.domain.BoardVO;
 import total.domain.BookVO;
 import total.domain.MongoBoardVo;
+import total.domain.SearchCriteria;
 
 
 
@@ -519,6 +520,16 @@ public void update(BoardVO vo) throws Exception {
 	sessions.setAttribute("update_time_"+no, current_time);	  
 	  }
 		  
+  }
+
+  public List<BoardVO> listSearch(SearchCriteria cri) throws Exception {
+
+    return session.selectList("boardsearch.listSearch", cri);
+  }
+
+  public int listSearchCount(SearchCriteria cri) throws Exception {
+
+    return session.selectOne("boardsearch.listSearchCount", cri);
   }
 
 }
