@@ -215,64 +215,80 @@
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
 				<c:choose>
-				<c:when test="${!empty contentList }">
-					<c:choose>
-						<c:when test="${fn:length(contentList) > 10 }">
-						<div class="list-group" id="div_lg"> 
-							<c:forEach var="ci" begin="0" end="9" varStatus="vs">
-								<c:set var="c" value="${contentList[ci] }"/>
+					<c:when test="${!empty contentList }">
+						<c:choose>
+							<c:when test="${fn:length(contentList) > 10 }">
+							<div class="list-group" id="div_lg"> 
+								<c:forEach var="ci" begin="0" end="9" varStatus="vs">
+									<c:set var="c" value="${contentList[ci] }"/>
+									<li class="list-group-item">
+										<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
+											<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp; 
+											<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
+										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
+										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
+										${ci }
+									</li>
+									<c:if test="${vs.last }">
+										<button type="button" class="btn btn-default btn-block more" value="${vs.count }">더 보기</button>
+									</c:if>							
+								</c:forEach>
+								</div>
+								<script>
+									$(function(){
+										$("#div_lg").on("click", ".more", function(e){
+											console.log(e);
+											console.log(e.target.value);
+											e.target.style.display = "none";
+											more(e.target.value);
+										});
+										
+										function more(idx) {
+											console.log("more");
+											idx = parseInt(idx, 10);
+											console.log(idx);
+											$.get("${pageContext.request.contextPath }/@${writerInfo.ID}/moreContents",function(con){
+												console.log(con);
+												if(con != null) {
+													var html = $("#div_lg").html();
+													var more = (idx+10) < con.length;
+													var end =  more ?  idx + 10 : con.length;
+													for(var i = idx; i < end; i++) {
+														html += "<li class='list-group-item'>"
+																	+ "<h3 class='list-group-item-heading' style='margin-bottom: 15px'><a href='${pageContext.request.contextPath }/bookPage/"+con[i].BNO+"'>"
+																	+"<span class='glyphicon glyphicon-book' style='font-size:15pt'></span> &nbsp;"+con[i].BOOKNAME+"</a> &nbsp;" 
+																	+"<a href='${pageContext.request.contextPath }/search?word="+con[i].TYPE+"'><span class='badge bg_type'>"+con[i].TYPE +"</span></a></h3>"
+																	+"<a href='${pageContext.request.contextPath}/board/readPage?no="+con[i].NO+"'><h4>"+con[i].TITLE+"</h4></a>"
+																	+"<p class='list-group-item-text'><span class='glyphicon glyphicon-eye-open'></span>"+ con[i].VIEWCNT+" &nbsp; &nbsp;"
+																	+" <span class='glyphicon glyphicon-pencil'></span> "+con[i].REGDATE+"</p>"+i+"</li>";
+													}
+													if(more) {
+														html += "<button type='button' class='btn btn-default btn-block more' id="+i+" value="+i+">더 보기</button>";
+													}
+													$("#div_lg").html(html);
+												}
+											});
+										}
+									});
+								</script>
+							</c:when>
+							<c:otherwise>
+							<div class="list-group"> 
+							<c:forEach var="c" items="${contentList}">
 								<li class="list-group-item">
 									<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
-										<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp; 
-										<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
-									<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
-									<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
-									${ci }
+									<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp;
+									<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
+										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
+										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
 								</li>
-								<c:if test="${vs.last }">
-									<button type="button" class="btn btn-default btn-block" onclick="more('${vs.index}')">더 보기</button>
-								</c:if>							
-							</c:forEach>
+								</c:forEach>
+								</div>
+							</c:otherwise>
+						</c:choose>
 							</div>
-							<script>
-									function more(idx) {
-										var html = $("#div_lg").html();
-										var con = ${contentList};
-										var more = (idx+10) < con.length;
-										var end =  more ?  idx + 10 : con.length;
-										for(var i = idx; i < end; i++) {
-											html += "<li class='list-group-item'>"
-														+ "<h3 class='list-group-item-heading' style='margin-bottom: 15px'><a href='${pageContext.request.contextPath }/bookPage/"+con[i].BNO+"'>"
-														+"<span class='glyphicon glyphicon-book' style='font-size:15pt'></span> &nbsp;"+con[i].BOOKNAME+"</a> &nbsp;" 
-														+"<a href='${pageContext.request.contextPath }/search?word="+con[i].TYPE+"'><span class='badge bg_type'>"+con[i].TYPE +"</span></a></h3>"
-														+"<a href='${pageContext.request.contextPath}/board/readPage?no="+con[i].NO+"'><h4>"+con[i].TITLE"</h4></a>"
-														+"<p class='list-group-item-text'><span class='glyphicon glyphicon-eye-open'></span>"+ con[i].VIEWCNT+" &nbsp; &nbsp;"
-														+" <span class='glyphicon glyphicon-pencil'></span> <fmt:formatDate value='"+con[i].REGDATE+"' pattern='yy/MM/dd hh:mm'/></p>"+i+"</li>";
-										}
-										if(more) {
-											html += "<button type='button' class='btn btn-default btn-block' onclick='more('"+i+"')'>더 보기</button>";
-										}
-										$("#div_lg").html(html);
-									}
-							</script>
-						</c:when>
-						<c:otherwise>
-						<div class="list-group"> 
-						<c:forEach var="c" items="${contentList}">
-							<li class="list-group-item">
-								<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
-								<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp;
-								<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
-									<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
-									<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
-							</li>
-							</c:forEach>
-							</div>
-						</c:otherwise>
-					</c:choose>
-						</div>
-				</c:when>
-				<c:otherwise>
+					</c:when>
+					<c:otherwise>
 					<br>
 					<p>등록된 글이 없습니다.</p>
 					<c:if test="${logon eq wirterInfo.ID }">
@@ -281,6 +297,7 @@
 					</c:if>
 				</c:otherwise>
 				</c:choose>
+				</div>
 			</div>
 			
 							
