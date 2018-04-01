@@ -146,7 +146,7 @@ public class AdminService {
 	public List<Map> readNo(int no) {
 		return template.selectList("admin.selectReport", no);
 	}
-
+	
 	public boolean reportRemove(int no) {
 		int i = template.delete("admin.reportRemove", no);
 		if (i != 0) {
@@ -188,5 +188,55 @@ public class AdminService {
 			return false;
 		}
 	}
+
+	public List<Map> boardSelect() {
+		return template.selectList("admin.boardAll");
+	}
+
+	public boolean deletereport2(String[] rno) {
+		Map map = new HashMap<>();
+		map.put("rno", rno);
+		int i = template.delete("admin.deleteReport2",map);
+		if(i!=0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean deletereport3(String rno) {
+		int i = template.delete("admin.deleteReport3",rno);
+		if(i!=0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public Map reportAll(String rno) {
+		return template.selectOne("admin.selectReportAll",rno);
+	}
+
+	public boolean selectCntrp(String no) {
+		int cnt = template.selectOne("admin.selectCntrp",no);
+		if(cnt==0) {
+			int i= template.update("admin.boardred",no);
+			if(i!=0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return true;
+		}
+	}
+
+/*	public int getCntRep(String id) {
+		return template.selectOne("admin.selectCnt",id);
+	}*/
+	
 
 }

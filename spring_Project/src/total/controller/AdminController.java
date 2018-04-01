@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.gson.Gson;
 
 import total.domain.BoardVO;
 import total.domain.WebSocketMap;
@@ -27,6 +30,9 @@ public class AdminController {
 
 	@Autowired
 	AdminService adminservice;
+
+	@Autowired
+	Gson gson;
 
 	// 로그인창 보내기
 	@RequestMapping(method = RequestMethod.GET)
@@ -57,11 +63,25 @@ public class AdminController {
 			List<Map> list = adminservice.memberSelect();
 			int cnt = adminservice.getMessageCnt();
 			model.addAttribute("gcnt", cnt);
-			model.addAttribute("list", list);
-			if(param.get("success")!=null) {
-				model.addAttribute("success",param.get("success"));
+			model.addAttribute("mlist", list);
+			if (param.get("success") != null) {
+				model.addAttribute("success", param.get("success"));
 			}
 			return "/admin/admin_main";
+		} else {
+			return "redirect:/admin";
+		}
+	}
+
+	// 게시글 목록
+	@RequestMapping("/board")
+	public String BoardSelect(Model model, HttpSession session, @RequestParam Map param) {
+		if (session.getAttribute("admin") != null) {
+			List<Map> list = adminservice.boardSelect();
+			int cnt = adminservice.getMessageCnt();
+			model.addAttribute("gcnt", cnt);
+			model.addAttribute("blist", list);
+			return "/admin/admin_main2";
 		} else {
 			return "redirect:/admin";
 		}
@@ -72,6 +92,8 @@ public class AdminController {
 	public String listId(Model model, @RequestParam String id, HttpSession session) {
 		if (session.getAttribute("admin") != null) {
 			List<Map> list = adminservice.boardIdSelect(id);
+			boolean rst =adminservice.updateMemberreport(id);
+			System.out.println(rst);
 			model.addAttribute("writerid", id);
 			model.addAttribute("boardlist", list);
 			return "/admin/admin_member_board";
@@ -81,11 +103,12 @@ public class AdminController {
 	}
 
 	// 신고글 보기
-	@RequestMapping(value = "/readRed", method = RequestMethod.GET)
+	@RequestMapping(path = "/readRed", method = RequestMethod.GET)
 	public String readRed(@RequestParam("no") int no, Model model, HttpSession session) throws Exception {
 		if (session.getAttribute("admin") != null) {
 			BoardVO vo = adminservice.read(no);
 			model.addAttribute("title", vo.getTitle());
+			model.addAttribute("writer", vo.getWriter());
 			model.addAttribute("reportlist", adminservice.readNo(no));
 			return "/admin/admin_member_red";
 		} else {
@@ -96,7 +119,7 @@ public class AdminController {
 	// 게시글번호로 해당 게시글 보기
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, Model model, HttpSession session, Map map) throws Exception {
-		map.put("body", "/admin/admin_member_board_id.jsp");
+		map.put("body", "/admin/admin_member_board_id2.jsp");
 		if (session.getAttribute("admin") != null) {
 			String contents = adminservice.mongoFind(no);
 			model.addAttribute("admin", adminservice.read(no));
@@ -178,12 +201,12 @@ public class AdminController {
 	// 관리자가 해당 게시글의 유저한테 메세지보냄
 	@RequestMapping(path = "msg", method = RequestMethod.GET)
 	public String msgHandle(Model model, @RequestParam Map param) {
-		String id = (String)param.get("id");
+		String id = (String) param.get("id");
 		boolean rst = adminservice.msgSend(param);
-		boolean rst2= adminservice.updateMemberreport(id);
+		boolean rst2 = adminservice.updateMemberreport(id);
 		if (rst) {
-			model.addAttribute("success", param.get("title")+"을 삭제하였습니다.");
-			System.out.println("리포트수정됬냐"+rst2);
+			model.addAttribute("success", param.get("title") + "을 삭제하였습니다.");
+			System.out.println("리포트수정됬냐" + rst2);
 			adminservice.updateMemberreport(id);
 			return "redirect:/admin/member";
 		} else {
@@ -191,23 +214,62 @@ public class AdminController {
 			return "redirect:/admin/member";
 		}
 	}
-	
+
 	// 해당 게시글에 이상없을 때
-	@RequestMapping(path="/modify",method=RequestMethod.POST)
+	@RequestMapping(path = "/modify", method = RequestMethod.POST)
 	public String modifyHandle(Model model, @RequestParam Map param) {
-		String id = (String)param.get("id");
+		String id = (String) param.get("id");
 		boolean rst = adminservice.modify(param);
-		if(rst) {
-			System.out.println("아이디 가 있냐 "+id);
+		if (rst) {
 			boolean rst2 = adminservice.updateMemberreport(id);
-			System.out.println(rst2);
-			System.out.println("이거 실행되냐");
 			return "redirect:/admin/member";
-		}
-		else {
-			model.addAttribute("fail","실패");
-			System.out.println("실패했네 수정");
+		} else {
+			model.addAttribute("fail", "실패");
 			return "/admin/admin_main";
 		}
 	}
+
+	// 신고된 글을 삭제시
+	@RequestMapping(path = "/removeRep", method = RequestMethod.GET)
+	@ResponseBody
+	public String removeRep(@RequestParam("rno") String rno, Model model) {
+		boolean rst = false;
+		if (rno.contains(",")) {
+			String[] rno2 = rno.split(",");
+			Map map = adminservice.reportAll(rno2[0]);
+			System.out.println("게시글삭제시의 넘버 "+map.get("NO"));
+			String no = map.get("NO").toString();
+			rst = adminservice.deletereport2(rno2);
+			if (rst) {
+				boolean s = adminservice.selectCntrp(no);
+				if(s) {
+					return "{\"rst\" : "+rst+"}";
+				}
+				else {
+					return "{\"rst\" : "+rst+"}";
+				}
+			} else {
+				return "{\"rst\" : "+rst+"}";
+			}
+		}
+		else {
+			Map map = adminservice.reportAll(rno);
+			System.out.println("게시글삭제시의 넘버 "+map.get("NO"));
+			String no = map.get("NO").toString();
+			rst = adminservice.deletereport3(rno);
+			if (rst) {
+				boolean s = adminservice.selectCntrp(no);
+				if(s) {
+					return "{\"rst\" : "+rst+"}";
+				}
+				else {
+					return "{\"rst\" : "+rst+"}";
+				}
+			} else {
+				return "{\"rst\" : "+rst+"}";
+			}
+		}
+	}
+	
+	
 }

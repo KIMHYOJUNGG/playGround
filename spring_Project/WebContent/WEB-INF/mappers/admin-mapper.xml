@@ -14,9 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="boardNo" resultType="hashmap">
 		select * from board where no=#{no}
 	</select>
+	<select id="boardAll" resultType="hashmap">
+		select * from board
+	</select>
 	<select id="read" resultType="total.domain.BoardVO">
 		select
-		no, title, writer, regdate, viewcnt
+		*
 		from
 		board
 		where no = #{no}
@@ -77,4 +80,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="boardred">
 		update board set red='N' where no = #{no}
 	</update>
+	
+	
+	<delete id="deleteReport2">
+		delete from report where rno in
+		<foreach collection="rno" item="n" open="(" close=")" separator=",">#{n}</foreach>
+	</delete>
+	
+	<delete id="deleteReport3">
+		delete from report where rno in #{rno}
+	</delete>
+	
+	<select id="selectReportAll" resultType="hashmap">
+		select * from report where rno=#{rno}
+	</select>
+	
+	<select id="selectCntrp" resultType="int">
+		select count(*) from report where no=#{no}
+	</select>
 </mapper>
