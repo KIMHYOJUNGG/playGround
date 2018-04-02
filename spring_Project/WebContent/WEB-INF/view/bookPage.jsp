@@ -233,7 +233,7 @@
 										});
 									}
 								</script>
-						<c:if test="${logon  != writerInfo.ID || logon== null}">
+						<c:if test="${logon != writerInfo.ID || logon== null}">
 							<c:forEach items="${follower }" var="fer">
 								<c:if test="${fer.READER eq logon}">
 									<c:set var="fan" value="true" />
@@ -265,17 +265,21 @@
 									</div>
 					<script>
 					  	$("#followbt").click(function(){
-							$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
-								}).done(function(rst){
-									var html="";
-									if(rst.result) {
-										html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
-									} else {
-										html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
-									}
-										$("#mbody").html(html);
-						  			$("#result").modal();
-								})	;
+					  		if("${logon}" != "" ) {
+								$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
+									}).done(function(rst){
+										var html="";
+										if(rst.result) {
+											html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
+										} else {
+											html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+										}
+											$("#mbody").html(html);
+							  			$("#result").modal();
+									})	;
+					  		} else {
+					  			window.location.assign("${pageContext.request.contextPath}/member/log");
+					  		}
 				  		});
 					  	
 					  	$("#rClose").click(function(){
