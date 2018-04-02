@@ -23,7 +23,7 @@ public class MemberService {
 		}
 	}
 
-	public int loginMember(Map<String, String> param) {
+	public Map loginMember(Map<String, String> param) {
 		Map map = template.selectOne("member.login",param);
 		if(map!=null ) {
 			int i = template.update("member.update",param);
@@ -36,14 +36,14 @@ public class MemberService {
 				if((double)date2-(double)date1 >(1000*60*60*3)) {
 					template.update("admin.updateLv4",param);
 					System.out.println("업뎃완료");
-					return 1;
+					return map;
 				}
-				return 1;
+				return map;
 			}
-			return 1;
+			return map;
 		}
 		else {
-			return 2;
+			return map;
 		}
 	}
 	public Map idMember(String email) {

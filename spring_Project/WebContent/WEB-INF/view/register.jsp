@@ -12,7 +12,7 @@
 			</div>
 			<p>
 				<b>PASS(*)</b><br /> <input type="password" name="password"
-					id="password">
+					id="password" pattern="/^(?=.*\d)(?=.*[~`!@%23$%\^&*()-])(?=.*[a-zA-Z]).{8,20}$/g">
 			</p>
 			<p></p>
 			<b>REPASS(*)</b><br /> <input type="password" name="repassword"
