@@ -17,4 +17,5 @@
 </body>
 <script>
 	console.log('${lv}');
+	console.log('${uri}');
 </script>

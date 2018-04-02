@@ -136,8 +136,13 @@ public class MemberController {
 			int i = memberservice.updateLv((String) param.get("id"));
 			if (i != 0) {
 				session.setAttribute("logon", param.get("id"));
+				Map map2 = memberservice.emailMember(param.get("id").toString());
+				System.out.println("lvup?");
+				int lv = Integer.parseInt((map2.get("LV").toString()));
+				session.setAttribute("lv", lv);
 				String uri = (String) session.getAttribute("uri");
 				if (uri != null) {
+					System.out.println("uri로 가니?");
 					return "redirect:"+uri;
 				} else {
 					return "redirect:/index";
@@ -232,6 +237,9 @@ public class MemberController {
 	public String logoutHandle(Model model, HttpSession session) {
 		try {
 			session.removeAttribute("logon");
+			session.removeAttribute("email");
+			session.removeAttribute("lv");
+			session.removeAttribute("uri");
 			List<WebSocketSession> s = wsMap.get(session.getId());
 			if (s != null) {
 				for (WebSocketSession ws : s) {
