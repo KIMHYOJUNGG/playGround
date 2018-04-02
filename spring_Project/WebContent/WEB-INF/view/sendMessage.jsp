@@ -50,11 +50,11 @@
 					<c:otherwise>
 						<c:forEach var="msg" items="${sendBox }">
 							<tr>
-								<td><input type="checkbox" class="msgcbx"  value="${msg.NO }"></td>
-								<td style="width: 20%"><a href="javascript:void(0);" onclick="sendMsg('${msg.GETID}')">${msg.GETID }</a></td>
-								<td style="width: 40%"><a href="javascript:void(0);" onclick="readMsg('${msg.NO}')">${msg.TITLE }</a></td>
-								<td style="width: 20%">${msg.REGDATE }</td>
-								<td>${msg.READCHECK == 'Y' ? '읽음' : '읽지 않음'}</td>
+								<td class="mtd"><input type="checkbox" class="msgcbx"  value="${msg.NO }"></td>
+								<td class="mtd" style="width: 20%"><a href="javascript:void(0);" onclick="sendMsg('${msg.GETID}')">${msg.GETID }</a></td>
+								<td class="mtd" style="width: 40%"><a href="javascript:void(0);" onclick="readMsg('${msg.NO}')">${msg.TITLE }</a></td>
+								<td class="mtd" style="width: 20%">${msg.REGDATE }</td>
+								<td class="mtd">${msg.READCHECK == 'Y' ? '읽음' : '읽지 않음'}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
