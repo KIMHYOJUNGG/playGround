@@ -1,11 +1,14 @@
 package total.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -23,6 +26,8 @@ public class ReplyService {
 
 	 @Autowired
 	  MongoTemplate template;
+	 @Autowired
+	 SqlSessionTemplate sqltemplate;
 	
 	 //http://souning.tistory.com/68
 	 
@@ -59,6 +64,7 @@ public class ReplyService {
 /*	*/
 	  public void create(ReplyVO vo) throws Exception {
 
+		  int no=sqltemplate.selectOne("replesequence.sequence");
 		  Criteria criteria=new Criteria("no");
 		  criteria.is(vo.getBno());
 		  
@@ -71,6 +77,7 @@ public class ReplyService {
 		  */
 		  Query query=new Query(criteria);
 		  Update update=new Update();
+		  vo.setRno(no);
 		  update.push("comments",vo);
 		  template.updateFirst(query, update, "board");
 		  
@@ -79,6 +86,30 @@ public class ReplyService {
 
 	  public void update(ReplyVO vo) throws Exception {
 
+		  
+		// db.person.update({"name" : "고길동"});
+			Criteria criteria = new Criteria();
+			
+			criteria.andOperator(Criteria.where("no").is(vo.getBno()),
+					Criteria.where("comments").where("rno").is(vo.getRno()));
+
+			Query query = new Query(criteria);
+			// 업데이트 할 항목 정의
+			Update update = new Update();
+
+			
+				update.set("replyer", vo.getReplytext());
+
+				
+
+			template.updateFirst(query, update, "board");
+			/*
+			 * mongoTemplate.updateMulti(query, update, "person");
+			 * 
+			 * //조건없이 모든걸 다 바꿔버림 mongoTemplate.updateMulti(new Query(), update,
+			 * "person");
+			 */
+		  
 	    //session.update(namespace + ".update", vo);
 	  }
 /*
