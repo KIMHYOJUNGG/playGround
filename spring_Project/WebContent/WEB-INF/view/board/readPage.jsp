@@ -11,21 +11,9 @@
         <!-- general form elements -->
         <div class="box box-primary">
         <div class="box-header">
-          <h3 class="box-title">READ BOARD</h3>
+          <h2 class="box-title">READ BOARD</h2>
         </div><!-- /.box-header -->
-    <!--     <font size="5px;">
-							하트 <span id="heart2d335d4abbcb">
-							<a href="javascript:like('2d335d4abbcb','t');"> 
-							<span class="glyphicon glyphicon-heart-empty"></span></a></span> 
-							<span id="count2d335d4abbcb">2</span> 댓글 <a href="/boarddetail?pk=2d335d4abbcb">
-								<span class="glyphicon glyphicon-user"></span>
-						</a> 
-								
-						0
-						
-								
-							 &nbsp;
-					</font> -->
+    
 					
 					<font size="5px;" style="color:red;" id="heart">
 					<c:if test="${like eq false }">
@@ -46,6 +34,7 @@
         </a>
 					</c:if>
 </font>
+
         <span id="info"></span>
 
 <%-- 
@@ -67,8 +56,6 @@
 						  
 					  });
 					  
-					  
-					  
 						  	$("#good").click(function(){
 								$.get("${pageContext.request.contextPath}/board/like",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
@@ -89,9 +76,6 @@
 								    $('[data-toggle="tooltip"]').tooltip();   
 								
 					  		});
-						  	
-						  
-
 					  
 						  	$("#bad").click(function(){
 								$.get("${pageContext.request.contextPath}/board/cancle",  {"targetboard": "${boardVO.no}"
@@ -114,43 +98,41 @@
 						  	
 						  
 					  </script>
-
-
-
-
-
-
-
-
-    
   <div class="box-body">
     <div class="form-group">
-      <label for="exampleInputEmail1">조회수</label>
-      <input type="text" name='title' class="form-control" 
-         value="${boardVO.viewcnt}" readonly="readonly">
+      <h3>조회수 <small>${boardVO.viewcnt}</small></h3> 
+      <%-- <input type="text" name='title' class="form-control" 
+         value="${boardVO.viewcnt}" readonly="readonly"> --%>
     </div>
   
     <div class="form-group">
-      <label for="exampleInputEmail1">Type</label><br/>
+      <h3>Type <small>${boardVO.type}</small></h3>
+      
+   <%--    <label for="exampleInputEmail1">Type</label><br/>
       <input type="text" name='type' class="form-control" 
-         value="${boardVO.type}" readonly="readonly">
+         value="${boardVO.type}" readonly="readonly"> --%>
     </div>
     <div class="form-group">
-							<label for="exampleInputEmail1">Tag</label> <input type="text"
-								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly">
+    
+							<h3>Tag <small>${mbv.ptag}</small></h3> <%-- <input type="text"
+								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%>
 						</div>
     <div class="form-group">
-      <label for="exampleInputEmail1">BookName</label><br/>
+   <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <h3>BookName <small>${boardVO.bookname}</small></h3></a>
+      <%-- <label for="exampleInputEmail1">BookName</label><br/>
       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
-         value="${boardVO.bookname}" readonly="readonly"></a>
+         value="${boardVO.bookname}" readonly="readonly"></a> --%>
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1">Title</label>
+   <h3>Title <small>${boardVO.title}</small></h3>
+      <%-- <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 
-         value="${boardVO.title}" readonly="readonly">
+         value="${boardVO.title}" readonly="readonly"> --%>
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Content</label>
+     <h3>Content</h3>
+${mbv.contents}     
+      <%-- <label for="exampleInputPassword1">Content</label>
        <textarea class="form-control"  name="content" rows="3" id="ck" 
       readonly="readonly">${mbv.contents}</textarea>
       <script type="text/javascript">
@@ -166,14 +148,16 @@
 							});
 							
 		
-						</script>
+						</script> --%>
       
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1" >Writer</label></br>
+    <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><h3>Writer <small>${boardVO.writer}</small></h3></a>
+    
+      <%-- <label for="exampleInputEmail1" >Writer</label></br>
       
        <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
-         value="${boardVO.writer}" readonly="readonly"></a>
+         value="${boardVO.writer}" readonly="readonly"></a> --%>
       </div>
     <div class="form-group">
     <c:if test="${ !empty comments  }">

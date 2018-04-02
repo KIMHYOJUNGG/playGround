@@ -23,14 +23,15 @@ import total.service.ReplyService;
 public class ReplyController {
 
   @Autowired
-  private ReplyService service;
+  private ReplyService reservice;
 
   @RequestMapping(value = "", method = RequestMethod.POST)
   public ResponseEntity<String> register(@RequestBody ReplyVO vo) {
 
+	  System.out.println(vo.toString());
     ResponseEntity<String> entity = null;
     try {
-      service.create(vo);
+      reservice.create(vo);
       entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
@@ -44,7 +45,7 @@ public class ReplyController {
 
     ResponseEntity<List<ReplyVO>> entity = null;
     try {
-      entity = new ResponseEntity<>(service.list(bno), HttpStatus.OK);
+      entity = new ResponseEntity<>(reservice.list(bno), HttpStatus.OK);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -52,8 +53,8 @@ public class ReplyController {
     }
 
     return entity;
-  }
-
+  }*/
+/*
   @RequestMapping(value = "/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
   public ResponseEntity<String> update(@PathVariable("rno") Integer rno, @RequestBody ReplyVO vo) {
 

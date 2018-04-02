@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import total.domain.MongoBoardVo;
 import total.domain.ReplyVO;
 
 
@@ -24,12 +25,31 @@ public class ReplyService {
 	
 
 	 
-	 /* public List<ReplyVO> list(Integer bno) throws Exception {
+/*	  public List<ReplyVO> list(Integer no) throws Exception {
 
+			Criteria cri = new Criteria("no");
+			cri.is(no);
+			Query query = new Query(cri);
+			ReplyVO revo = template.findOne(query, ReplyVO.class, "board");
+			System.out.println(revo.getContents());
+			return mbv;
 		  
-	    return session.selectList(namespace + ".list", bno);
-	  }*/
 
+		  Criteria criteria=new Criteria("no");
+		  criteria.is(vo.getBno());
+		  
+		  Map map =new HashMap();
+		  map.put("id", vo.getReplyer());
+		  map.put("reply", vo.getReplytext());
+		  map.put("date", new Date());
+		  
+		  Query query=new Query(criteria);
+		  Update update=new Update();
+		  update.push("comments",new Document(map));
+		  template.find(query, update, "board");
+	    return template.selectList(namespace + ".list", bno);
+	  }
+*/
 	  public void create(ReplyVO vo) throws Exception {
 
 		  Criteria criteria=new Criteria("no");
@@ -47,8 +67,8 @@ public class ReplyService {
 		  
 		 
 	  }
-
-	 /* public void update(ReplyVO vo) throws Exception {
+/*
+	  public void update(ReplyVO vo) throws Exception {
 
 	    session.update(namespace + ".update", vo);
 	  }
