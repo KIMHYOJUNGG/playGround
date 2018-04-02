@@ -101,6 +101,9 @@
 			$(".nname").css("color", "red");
 			document.getElementById("sbt").disabled = true;
 		} 
+		else{
+			document.getElementById("sbt").disabled = false;
+		}
 	}
 	function emailCheck(){
 		var email = $("#email").val();
@@ -108,6 +111,9 @@
 			$(".ename").html("이메일을 입력해주세요")
 			$(".ename").css("color", "red");
 			document.getElementById("sbt").disabled = true;
+		}
+		else{
+			document.getElementById("sbt").disabled = false;
 		}
 	}
 
