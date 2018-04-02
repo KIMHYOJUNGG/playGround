@@ -31,8 +31,8 @@
 									</c:if>
 								</a>
 							</div>
-							<div class="col-sm-8 outer" style="padding: 15px;">
-										<div class="inner" style="height: 20%">
+							<div class="col-sm-8 outer" style="padding: 15px; ">
+										<div class="inner" >
 											<div class="centered" style="width: 100%; padding-top: 0px;">
 												<a href="${pageContext.request.contextPath }/@${f.ID}">
 													<h3>${f.NICKNAME}</h3> 
@@ -46,7 +46,7 @@
 												</a>
 											</div>
 										</div>
-										<div class="inner" style="height: 50%">
+										<div class="inner" >
 											<div class="centered" style="width: 100%">
 												<c:forEach var="fb" items="${followingBookList}">
 													<c:if test="${fb.writer eq f.ID }">
@@ -85,7 +85,7 @@
 												</c:forEach>
 											</div>
 										</div>
-										<div class="inner" style="height: 10%">
+										<div class="inner" >
 											<div class="centered" style="width: 100%">
 											<p class="list-group-item-text">
 												<button class="btn btn-info canclebt" id="${f.ID }" value="${f.NICKNAME }">구독 취소</button>

@@ -35,7 +35,7 @@
 						<li  class="list-group-item">
 							<h4 class="list-group-item-heading">
 							<a href="${pageContext.request.contextPath }/search?search=${article[ai].TYPE}"><span class="badge">${article[ai].TYPE }</span></a>
-							<a href="${pageContext.request.contextPath }/board/read?no=${article[ai].NO}">${article[ai].TITLE} 
+							<a href="${pageContext.request.contextPath }/board/readPage?no=${article[ai].NO}&stype=${article[ai].TYPE}">${article[ai].TITLE} 
 							<span style="font-size:12px; color: gray;">${article[ai].REGDATE }</span>
 							</a></h4>
    							<p class="list-group-item-text">

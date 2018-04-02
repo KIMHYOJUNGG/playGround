@@ -16,7 +16,12 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="tag">TAG:</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" value="#${fn:join(bookInfo.tag,'#') }"  onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
+				<c:if test="${fn:length(bookInfo.tag) > 0 }">
+					<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" value="#${fn:join(bookInfo.tag,'#') }"  onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
+				</c:if>
+				<c:if test="${fn:length(bookInfo.tag) == 0 }">
+					<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag"  onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
+				</c:if>
 			</div>
 		</div>
 		<div class="form-group" align="right">
@@ -30,8 +35,7 @@
 	<script>
 			function addHash() {
 				var tag = $("#tag").val();
-				if(tag.charCodeAt(0) != 35) {
-		//				if(tag.length >= 1)
+				if(tag.length >1 && tag.charCodeAt(0) != 35) {
 						$("#tag").val("#"+tag);
 				}
 			}
@@ -47,13 +51,17 @@
 						$("#tag").val(tag.substr(0, tag.length-1));
 					}
 				}
-				if(tag.indexOf("　") != -1){
+				if(tag.length > 1 && tag.indexOf("　") != -1){
 					if(tag.charCodeAt(tag.indexOf("　")-1) != 35){
 						$("#tag").val(tag.replace("　", "#"));
 					} else {
 						$("#tag").val(tag.substr(0,tag.indexOf("　")) );
 					}
 				}
+				if(tag.length == 1 && tag.indexOf("#") != 1) {
+					$("#tag").val("");
+				}
+				
 			}
 			
 			function finalCheck() {
@@ -77,7 +85,7 @@
 			<tbody>
 				<c:choose>
 					<c:when test="${empty contentsList }">
-						<td colspan="4">발행된 글이 없습니다.</td>
+						<td colspan="4" align="center">발행된 글이 없습니다.</td>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="cts" items="${contentsList }">
@@ -100,35 +108,56 @@
 	</div>
 	<script>
 		$("#topcbx").prop("checked", false);
+		$(".ctscbx").prop("checked", $("#topcbx").prop("checked"));
+		
+		$("#topcbx").click(function() {
+				$(".ctscbx").prop("checked", $(this).prop("checked"));
+		});
+		
+		var total = $(".ctscbx").length;
+		var ckd = 0;
+		$(".ctscbx").each(function(){
+				$(this).click(function(){
+					if($(this).prop("checked"))
+						ckd += 1;
+					else
+						ckd -= 1;
+					cbxCheck();
+				});
+		});
+		
+		function cbxCheck() {
+			if(ckd == total) {
+				$("#topcbx").prop("checked", true);
+			} else {
+				$("#topcbx").prop("checked", false);
+			}
+		}	
 	
 		$("#topcbx").click(function() {
-			if($(this).prop("checked")) {
-				$(".ctscbx").prop("checked", true);
-			} else {
-				$(".ctscbx").prop("checked", false);
-			}
+				$(".ctscbx").prop("checked", $(this).prop("checked"));
 		});
 		
 		function del() {
-			var ans = window.confirm("글 삭제시 복구할 수 없습니다.\r\n정말 삭제하시겠습니까?");
-			if(ans) {
-				var dels = [];
-				var cnt = 0;
-				$(".ctscbx:checked").each(function(){
-					cnt = dels.push($(this).val());
-					console.log("cnt : "+cnt);
-				});
-					console.log(dels);
-				$.get("${pageContext.request.contextPath}/bookPage/delContents",{"no" : dels}
-					, function(obj){
-						if(obj.rst) {
-							window.alert(cnt+"건이 삭제되었습니다.");
-							location.reload();
-						} else {
-							window.alert("삭제 실패. \r\n다시 시도해 주세요.");
-						}
-				});
-			}
+				var ans = window.confirm("글 삭제시 복구할 수 없습니다.\r\n정말 삭제하시겠습니까?");
+				if(ans) {
+					var dels = [];
+					var cnt = 0;
+					$(".ctscbx:checked").each(function(){
+						cnt = dels.push($(this).val());
+						console.log("cnt : "+cnt);
+					});
+						console.log(dels);
+					$.get("${pageContext.request.contextPath}/bookPage/delContents",{"no" : dels}
+						, function(obj){
+							if(obj.rst) {
+								window.alert(cnt+"건이 삭제되었습니다.");
+								location.reload();
+							} else {
+								window.alert("삭제 실패. \r\n다시 시도해 주세요.");
+							}
+					});
+				}
 		}
 		
 		function bookDel(bno) {

@@ -292,11 +292,13 @@
 					</c:when>
 					<c:otherwise>
 					<br>
-					<p>등록된 글이 없습니다.</p>
-					<c:if test="${logon eq wirterInfo.ID }">
-					<p>글을 등록해 보세요.</p>
-					<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>글쓰기</button></a>
-					</c:if>
+					<div align="center">
+						<p>등록된 글이 없습니다.</p>
+						<c:if test="${logon eq wirterInfo.ID }">
+						<p>글을 등록해 보세요.</p>
+						<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>글쓰기</button></a>
+						</c:if>
+					</div>
 				</c:otherwise>
 				</c:choose>
 			</div>
@@ -334,11 +336,13 @@
 				</c:when>
 				<c:otherwise>
 					<br>
-					<p>등록된 책이 없습니다.</p>
-					<c:if test="${logon eq wirterInfo.ID }">
-					<p>책을 등록해 보세요.</p>
-					<a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-book"></span> 등록하기</button></a>
-					</c:if>
+					<div align="center">
+						<p>등록된 책이 없습니다.</p>
+						<c:if test="${logon eq wirterInfo.ID }">
+						<p>책을 등록해 보세요.</p>
+						<a href="${pageContext.request.contextPath }/bookPage"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-book"></span> 등록하기</button></a>
+						</c:if>
+					</div>
 				</c:otherwise>
 				</c:choose>
 			</div>
