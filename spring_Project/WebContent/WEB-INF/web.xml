@@ -56,4 +56,18 @@
 		<url-pattern>/sendMessage</url-pattern>
 	</filter-mapping>
 	
+	<filter>
+		<filter-name>lvFilter</filter-name>
+		<filter-class>total.filter.LvCheckFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>lvFilter</filter-name>
+		<url-pattern>/board/register</url-pattern>
+		<url-pattern>/board/modifyPage</url-pattern>
+		<url-pattern>/message/send</url-pattern>
+		<url-pattern>/addComments</url-pattern>
+		<url-pattern>/bookPage</url-pattern>
+		<url-pattern>/bookPage/delContents</url-pattern>
+	</filter-mapping>
+	
 </web-app>

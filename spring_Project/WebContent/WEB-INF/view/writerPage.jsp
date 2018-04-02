@@ -282,13 +282,13 @@
 									<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp;
 									<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
 										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
-										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
+										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> 
+										<fmt:formatDate value="${c.REGDATE }" pattern="yy/MM/dd hh:mm"/></p>
 								</li>
 								</c:forEach>
 								</div>
 							</c:otherwise>
 						</c:choose>
-							</div>
 					</c:when>
 					<c:otherwise>
 					<br>
@@ -299,6 +299,7 @@
 					</c:if>
 				</c:otherwise>
 				</c:choose>
+			</div>
 
 			<div id="menu1" class="tab-pane fade">
 				<c:choose>

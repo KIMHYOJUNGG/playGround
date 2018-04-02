@@ -1,6 +1,5 @@
 package total.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -74,13 +73,17 @@ public class BookPageController {
 	}
 	
 	@RequestMapping(path="/{bno}/modify", method=RequestMethod.GET)
-	public String bookModifyHandle(@PathVariable String bno, Map map) {
-		System.out.println("bookModifyHandle");
-		map.put("bookInfo", bookPageService.getBookInfo(bno));
-		map.put("contentsList", bookPageService.getBookList(bno));
-		map.put("title", "책 정보 수정");
-		map.put("body", "bookModify.jsp");
-		return "t_el_title";
+	public String bookModifyHandle(@PathVariable String bno, Map map, HttpSession session) {
+		if( (Integer)session.getAttribute("lv") == 1) {
+			System.out.println("bookModifyHandle");
+			map.put("bookInfo", bookPageService.getBookInfo(bno));
+			map.put("contentsList", bookPageService.getBookList(bno));
+			map.put("title", "책 정보 수정");
+			map.put("body", "bookModify.jsp");
+			return "t_el_title";
+		} else {
+			return "redirect:/member/lvup";
+		}
 	}
 	
 	@RequestMapping(path="/{bno}/modify", method=RequestMethod.POST)
@@ -92,10 +95,14 @@ public class BookPageController {
 	
 	@RequestMapping(path="/{bno}/del", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String delBookHandle(@PathVariable String bno) {
-		System.out.println("delBookHandle");
-		boolean rst = bookPageService.delBookByBno(bno);
-		return "{\"rst\":"+rst+"}";
+	public String delBookHandle(@PathVariable String bno, HttpSession session) {
+		if( (Integer)session.getAttribute("lv") == 1) {
+			System.out.println("delBookHandle");
+			boolean rst = bookPageService.delBookByBno(bno);
+			return "{\"rst\":"+rst+"}";
+		} else {
+			return "redirect:/member/lvup";
+		}
 	}
 	
 	@RequestMapping(path="/delContents", produces="application/json; charset=utf-8")

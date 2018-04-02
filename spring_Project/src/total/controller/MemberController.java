@@ -130,6 +130,7 @@ public class MemberController {
 	// 이메일 인증으로 인한 레벨 증가
 	@RequestMapping("confirm")
 	public String confirm(@RequestParam Map param, HttpSession session, Model model, Map map) {
+		System.out.println(session.getAttribute("num"));
 		map.put("body", "confirmpage.jsp");
 		if ((session.getAttribute("num").toString()).equals(param.get("num2").toString())) {
 			int i = memberservice.updateLv((String) param.get("id"));
