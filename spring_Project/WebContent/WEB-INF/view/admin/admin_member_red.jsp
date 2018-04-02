@@ -85,6 +85,7 @@
 				window.alert("삭제 실패. \r\n다시 시도해 주세요.");
 			}
 			location.reload();
+			opener.location.reload();
 		});
 	}
 </script>

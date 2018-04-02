@@ -74,15 +74,17 @@ public class MemberController {
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			/*
-			 * if (param.get("password") != null && param.get("email") != null) {
-			 * System.out.println("작동안하냐?"); model.addAttribute("idmsg", "아이디를 입력해주세요"); }
-			 * else if (param.get("id") != null && param.get("email") != null) {
-			 * System.out.println("이건왜하냐?"); model.addAttribute("passwordmsg",
-			 * "비밀번호를 입력해주세요"); } else if (param.get("id") != null && param.get("password")
-			 * != null) { System.out.println("이건뭐야?"); model.addAttribute("emailmsg",
-			 * "이메일을 입력해주세요"); }
-			 */
+			if (param.get("password") != null && param.get("email") != null) {
+				System.out.println("작동안하냐?");
+				model.addAttribute("idmsg", "아이디를 입력해주세요");
+			} else if (param.get("id") != null && param.get("email") != null) {
+				System.out.println("이건왜하냐?");
+				model.addAttribute("passwordmsg", "비밀번호를 입력해주세요");
+			} else if (param.get("id") != null && param.get("password") != null) {
+				System.out.println("이건뭐야?");
+				model.addAttribute("emailmsg", "이메일을 입력해주세요");
+			}
+
 			e.printStackTrace();
 			map.put("body", "register.jsp");
 			return "t_el";
@@ -135,7 +137,7 @@ public class MemberController {
 				session.setAttribute("logon", param.get("id"));
 				String uri = (String) session.getAttribute("uri");
 				if (uri != null) {
-					return uri;
+					return "redirect:"+uri;
 				} else {
 					return "redirect:/index";
 				}
@@ -197,13 +199,13 @@ public class MemberController {
 						ws.sendMessage(new TextMessage("로그인"));
 					}
 					if (uri != null) {
-						return uri;
+						return "redirect:"+uri;
 					} else {
 						return "redirect:/index";
 					}
 				} else {
 					if (uri != null) {
-						return uri;
+						return "redirect:"+uri;
 					} else {
 						return "redirect:/index";
 					}
