@@ -85,13 +85,32 @@
 								} );
 							}
 							
+							$("#topcbx").prop("checked", false);
+							$(".msgcbx").prop("checked", $("#topcbx").prop("checked"));
+							
 							$("#topcbx").click(function() {
-								if($(this).prop("checked")) {
-									$(".msgcbx").prop("checked", true);
-								} else {
-									$(".msgcbx").prop("checked", false);
-								}
+									$(".msgcbx").prop("checked", $(this).prop("checked"));
 							});
+							
+							var total = $(".msgcbx").length;
+							var ckd = 0;
+							$(".msgcbx").each(function(){
+									$(this).click(function(){
+										if($(this).prop("checked"))
+											ckd += 1;
+										else
+											ckd -= 1;
+										cbxCheck();
+									});
+							});
+							
+							function cbxCheck() {
+								if(ckd == total) {
+									$("#topcbx").prop("checked", true);
+								} else {
+									$("#topcbx").prop("checked", false);
+								}
+							}
 							
 							function del() {
 								console.log("del 호출");
@@ -100,7 +119,6 @@
 								$(".msgcbx:checked").each(function(){
 									cnt = dels.push($(this).val());
 								});
-								console.log(dels);
 								$.get("${pageContext.request.contextPath }/message/getBoxDel", {
 									"no" : dels
 								}, function(obj){
@@ -121,10 +139,9 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="sendHead">메세지 보내기</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" align="left">
 					<form class="form-horizontal" action="${pageContext.request.contextPath }/message/send" method="post">
 						<div class="form-group text-right">
 							<label for="getid" class="control-label col-sm-2"> 받을 사람</label>
@@ -156,10 +173,9 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="readHead">받은 메세지</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" align="left">
 				 <form class="form-horizontal" >
 						<div class="form-group">
 							<label class="control-label col-sm-3" for="from">보낸 사람:</label>
