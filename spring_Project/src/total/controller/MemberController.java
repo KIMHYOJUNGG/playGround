@@ -129,6 +129,7 @@ public class MemberController {
 	@RequestMapping("confirm")
 	public String confirm(@RequestParam Map param, HttpSession session, Model model, Map map) {
 		map.put("body", "confirmpage.jsp");
+		System.out.println("num="+session.getAttribute("num"));
 		if ((session.getAttribute("num").toString()).equals(param.get("num2").toString())) {
 			int i = memberservice.updateLv((String) param.get("id"));
 			if (i != 0) {

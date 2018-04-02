@@ -40,7 +40,7 @@ public class LoginFilter implements Filter {
 			session.setAttribute("uri", req.getRequestURI());
 			resp.sendRedirect("/member/log");
 		} else {
-			String path=req.getRequestURI();
+			/*String path=req.getRequestURI();
 			System.out.println(req.getRequestURI());
 			
 			int lv=lcservice.levelCheck((String)session.getAttribute("logon"));
@@ -64,7 +64,7 @@ public class LoginFilter implements Filter {
 				
 				
 			}
-			
+			*/
 			
 			chain.doFilter(req, resp);
 		}

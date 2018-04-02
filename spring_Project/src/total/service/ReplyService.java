@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import total.domain.BookVO;
 import total.domain.MongoBoardVo;
 import total.domain.ReplyVO;
 
@@ -23,19 +24,24 @@ public class ReplyService {
 	 @Autowired
 	  MongoTemplate template;
 	
-
+	 //http://souning.tistory.com/68
 	 
-/*	  public List<ReplyVO> list(Integer no) throws Exception {
+  public MongoBoardVo list(Integer no) throws Exception {
 
 			Criteria cri = new Criteria("no");
 			cri.is(no);
 			Query query = new Query(cri);
-			ReplyVO revo = template.findOne(query, ReplyVO.class, "board");
-			System.out.println(revo.getContents());
+			MongoBoardVo mbv = template.findOne(query, MongoBoardVo.class, "board");
+			for(Map map:mbv.getComments()) {
+				
+				System.out.println(map.toString());
+				
+				
+			}
 			return mbv;
-		  
+			
 
-		  Criteria criteria=new Criteria("no");
+		 /* Criteria criteria=new Criteria("no");
 		  criteria.is(vo.getBno());
 		  
 		  Map map =new HashMap();
@@ -48,31 +54,34 @@ public class ReplyService {
 		  update.push("comments",new Document(map));
 		  template.find(query, update, "board");
 	    return template.selectList(namespace + ".list", bno);
+	    */
 	  }
-*/
+/*	*/
 	  public void create(ReplyVO vo) throws Exception {
 
 		  Criteria criteria=new Criteria("no");
 		  criteria.is(vo.getBno());
 		  
-		  Map map =new HashMap();
+		/*  Map map =new HashMap();
+		  map.put("id", vo.getReplyer());
+		  map.put("id", vo.getReplyer());
 		  map.put("id", vo.getReplyer());
 		  map.put("reply", vo.getReplytext());
 		  map.put("date", new Date());
-		  
+		  */
 		  Query query=new Query(criteria);
 		  Update update=new Update();
-		  update.push("comments",new Document(map));
+		  update.push("comments",vo);
 		  template.updateFirst(query, update, "board");
 		  
 		 
 	  }
-/*
+
 	  public void update(ReplyVO vo) throws Exception {
 
-	    session.update(namespace + ".update", vo);
+	    //session.update(namespace + ".update", vo);
 	  }
-
+/*
 	  public void delete(Integer rno) throws Exception {
 
 	    session.update(namespace + ".delete", rno);
