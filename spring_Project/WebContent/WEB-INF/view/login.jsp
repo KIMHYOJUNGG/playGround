@@ -51,6 +51,10 @@
 			$(".checkid").css("color", "red");
 			document.getElementById("sbt").disabled = true;
 		}
+		else{
+			$(".checkid").html("");
+			document.getElementById("sbt").disabled = false;
+		}
 	}
 	function passCheck() {
 		var pass = $("#password").val();
@@ -58,6 +62,10 @@
 			$(".checkpass").html("비밀번호를 입력해주세요")
 			$(".checkpass").css("color", "red");
 			document.getElementById("sbt").disabled = true;
+		}
+		else{
+			$(".checkpass").html("")
+			document.getElementById("sbt").disabled = false;
 		}
 	}
 </script>

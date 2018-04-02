@@ -102,6 +102,7 @@
 			document.getElementById("sbt").disabled = true;
 		} 
 		else{
+			$(".nname").html("");
 			document.getElementById("sbt").disabled = false;
 		}
 	}
@@ -113,6 +114,7 @@
 			document.getElementById("sbt").disabled = true;
 		}
 		else{
+			$(".ename").html("");
 			document.getElementById("sbt").disabled = false;
 		}
 	}
