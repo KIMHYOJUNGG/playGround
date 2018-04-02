@@ -23,6 +23,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import total.domain.WebSocketMap;
+import total.service.BoardService;
 import total.service.MailService;
 import total.service.MemberService;
 
@@ -38,6 +39,8 @@ public class MemberController {
 	@Autowired
 	MailService mailservice;
 
+	@Autowired
+	BoardService boardservice;
 	// 회원등록 페이지
 	@RequestMapping("/registpage")
 	public String memberPage(Map map) {
@@ -105,6 +108,33 @@ public class MemberController {
 		return rst;
 	}
 
+	// 닉네임 체크
+	@RequestMapping(path = "checknick", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean memberChecknick(Model model, @RequestParam String nick, Map map, HttpServletRequest req) {
+		String nick2 = memberservice.selectNick(nick);
+		map.put("body", "register.jsp");
+		boolean rst = true;
+		if (nick2 == null) {
+			rst = false;
+		}
+		System.out.println(req.getPathInfo());
+		return rst;
+	}
+	// 이메일 체크
+	@RequestMapping(path = "checkemail", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean memberCheckemail(Model model, @RequestParam String email, Map map, HttpServletRequest req) {
+		String email2 = memberservice.selectEmail(email);
+		map.put("body", "register.jsp");
+		boolean rst = true;
+		if (email2 == null) {
+			rst = false;
+		}
+		System.out.println(req.getPathInfo());
+		return rst;
+	}
+	
 	// 이메일인증 번호 보내주기
 	@RequestMapping("/confirmpage")
 	public String emailConfirm(Model model, HttpSession session, HttpServletRequest req, @RequestParam Map param,
@@ -302,6 +332,25 @@ public class MemberController {
 		} else {
 			model.addAttribute("passwordwarn", "아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해주세요");
 			return "t_el";
+		}
+	}
+	
+	// 회원탈퇴페이지 이동
+	@RequestMapping(path="/godrop")
+	public String goDroppage() {
+		return "dropmember";
+	}
+	
+	
+	// 회원탈퇴
+	@RequestMapping(path="/dropmember")
+	public String dropMember(HttpSession session,@RequestParam String pass) {
+		String id = session.getAttribute("logon").toString();
+		Map map = memberservice.emailMember(id);
+		String password = map.get("PASSWORD").toString();
+		if(password.equals(pass)) {
+			//해당 아이디의 게시글 지우기 join으로...
+			
 		}
 	}
 }

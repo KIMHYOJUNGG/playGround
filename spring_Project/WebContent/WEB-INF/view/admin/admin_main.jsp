@@ -63,5 +63,5 @@
 		console.log(success);
 		alert(success);
 	}
-	location.reload();
+	
 </script>

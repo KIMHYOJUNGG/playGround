@@ -63,7 +63,7 @@
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10" align="right">
 				<button type="submit" id="btn" class="btn btn-default" formaction="${pageContext.request.contextPath }/modifyInfo">수정</button> 
-				<button type="submit" class="btn btn-default" formaction="#">회원탈퇴</button>
+				<button type="submit" class="btn btn-default" formaction="javascript:void(0);" onclick="dropmember( )">회원탈퇴</button>
 			</div>
 		</div>
 	</form>
@@ -203,6 +203,9 @@
 		
 	});
 	
+	function dropmember(){
+		window.open("/member/godrop",	"m","left=100,top=200,width=700,height=300");
+	};
 </script>
 
 <c:if test="${!empty msg }">

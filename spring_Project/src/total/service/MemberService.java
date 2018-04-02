@@ -65,5 +65,13 @@ public class MemberService {
 	public Map emailMember(String id) {
 		return template.selectOne("member.member",id);
 	}
+
+	public String selectNick(String nick) {
+		return template.selectOne("member.nicksearch",nick);
+	}
+
+	public String selectEmail(String email) {
+		return template.selectOne("member.emailsearch",email);
+	}
 }
 
