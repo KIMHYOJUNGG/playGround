@@ -72,6 +72,10 @@ img {
   .bg_type{
   	background-color: #5bc0de;
   }
+  
+  .mtd {
+  	text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -87,10 +91,10 @@ img {
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/">PlayGround</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
-			<c:if test="${logon !=null }">
+			<c:if test="${logon != null }">
 				<ul class="nav navbar-nav">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">myPage<span class="caret"></span></a>
+					<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown"  href="${pageContext.request.contextPath}/myPage">myPage<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="${pageContext.request.contextPath}/myPage">my page</a></li>
 						    <li class="divider"></li>
