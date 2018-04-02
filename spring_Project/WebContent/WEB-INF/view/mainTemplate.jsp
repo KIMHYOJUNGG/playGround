@@ -94,7 +94,7 @@ img {
 			<c:if test="${logon != null }">
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown"  href="${pageContext.request.contextPath}/myPage">myPage<span class="caret"></span></a>
+					<a class="dropdown-toggle" data-toggle="dropdown"  href="#">myPage<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="${pageContext.request.contextPath}/myPage">my page</a></li>
 						    <li class="divider"></li>

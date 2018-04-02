@@ -82,7 +82,7 @@ public class BookPageController {
 			map.put("body", "bookModify.jsp");
 			return "t_el_title";
 		} else {
-			return "redirect:/lvup";
+			return "redirect:/member/lvup";
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class BookPageController {
 			boolean rst = bookPageService.delBookByBno(bno);
 			return "{\"rst\":"+rst+"}";
 		} else {
-			return "redirect:/lvup";
+			return "redirect:/member/lvup";
 		}
 	}
 	

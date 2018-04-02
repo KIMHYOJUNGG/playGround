@@ -28,7 +28,7 @@ public class LvCheckFilter implements Filter  {
 			chain.doFilter(req, resp);
 		} else {
 			session.setAttribute("uri", req.getRequestURI());
-			resp.sendRedirect("/lvup");
+			resp.sendRedirect("/member/lvup");
 		}
 		
 	}
