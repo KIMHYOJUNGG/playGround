@@ -57,6 +57,7 @@ public class boardUploardController {
 	out.write(bytes);
 	String callback=request.getParameter("CKEditorFuncNum");
 	System.out.println(callback);
+	Thread.sleep(900);
 	PrintWriter printWriter=response.getWriter();
 	String fileUrl=
 			request.getContextPath()+"/bimage/"+id+"/"+fileName;

@@ -99,7 +99,8 @@ img {
 							<li><a href="${pageContext.request.contextPath}/@${logon}/following">관심 작가 관리</a></li>
 						</ul>
 						</li>
-					<li><a href="${pageContext.request.contextPath}/message">우편함</a>
+					<li><a href="${pageContext.request.contextPath}/message">우편함</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/listPage">글목록</a></li>
 				</ul>
 			</c:if>
 				<ul class="nav navbar-nav navbar-right">

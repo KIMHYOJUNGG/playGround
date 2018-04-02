@@ -177,9 +177,9 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+	public String modifyPOST(BoardVO board, RedirectAttributes rttr,HttpSession session) throws Exception {
 		System.out.println("mod post............");
-		service.update(board);
+		service.update(board,session);
 		rttr.addFlashAttribute("msg", "success");
 
 		return "redirect:/board/listAll";
@@ -379,11 +379,11 @@ public class BoardController {
 
 	@RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
 	public String modifyPagingPOST(@RequestParam("no") int no, @ModelAttribute("cri") SearchCriteria cri, Model model,
-			BoardVO board, RedirectAttributes rttr) throws Exception {
+			BoardVO board, RedirectAttributes rttr,HttpSession session) throws Exception {
 
 		System.out.println("mod post............");
 
-		service.update(board);
+		service.update(board,session);
 		rttr.addAttribute("page", cri.getPage());
 		rttr.addAttribute("stype", cri.getStype());
 		rttr.addAttribute("perPageNum", cri.getPerPageNum());
