@@ -138,7 +138,13 @@ public class MemberController {
 			int i = memberservice.updateLv((String)param.get("id"));
 			if(i!=0) {
 				session.setAttribute("logon", param.get("id"));
-				return "redirect:/index";
+				String uri = (String)session.getAttribute("uri");
+				if(uri!=null) {
+				return uri;
+				}
+				else {
+					return "redirect:/index";
+				}
 			}
 			else {
 				model.addAttribute("emailfail", "일치하지 않습니다. 재전송바랍니다.");
@@ -156,28 +162,36 @@ public class MemberController {
 		map.put("body", "login.jsp");
 		return "t_el";
 	}
-
+	// 로그인시 lv업(0일시 1로)
+	@RequestMapping(path="/lvup",method=RequestMethod.GET)
+	public String lvup(Model model,@RequestParam Map<String, String> param,HttpSession session) {
+		String id = (String)session.getAttribute("logon");
+		String uri = (String)session.getAttribute("uri");
+		Map map = memberservice.emailMember(id);
+		if(map != null) {
+			model.addAttribute("email",map.get("EMAIL"));
+			return "/member/confirmpage";
+		}
+		else {
+			return "fail";
+		}
+	}
 	// 로그인 실행
 	@RequestMapping(path = "/loging", method = RequestMethod.POST)
 	public String memberLoginHandle(Model model, @RequestParam Map<String, String> param, HttpSession session,
 			Map mapp) {
 		String id = (String)param.get("id");
+		String uri = (String)session.getAttribute("uri");
 		int i = memberservice.loginMember(param);
-		boolean rst = i<4;
+		boolean rst = i<2;
 		try {
-			if (session.getAttribute("uri") != null) {
+			if (uri != null) {
 				if (rst) {
-					String uri = (String)session.getAttribute("uri");
 					session.setAttribute("logon", param.get("id"));
 					List<WebSocketSession> s = wsMap.get(session.getId());
 					if (s != null) {
 						for (WebSocketSession ws : s) {
 							ws.sendMessage(new TextMessage("로그인"));
-						}
-						if(i==1) {
-							Map map = memberservice.emailMember(id);
-							model.addAttribute("email",map.get("EMAIL"));
-							return uri;
 						}
 						return uri;
 					} else {

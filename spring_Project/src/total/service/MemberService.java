@@ -38,12 +38,12 @@ public class MemberService {
 					System.out.println("업뎃완료");
 					return 1;
 				}
-				return 2;
+				return 1;
 			}
-			return 3;
+			return 1;
 		}
 		else {
-			return 4;
+			return 2;
 		}
 	}
 	public Map idMember(String email) {
