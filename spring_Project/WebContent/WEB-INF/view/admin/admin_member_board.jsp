@@ -8,16 +8,16 @@
 </head>
 <body>
 	<div align="center">
-		<h2>${writerid }님의 게시글목록</h2>
+		<h2>${writerid }님의게시글목록</h2>
 		<c:if test="${fail !=null }">
 			${fail }
 		</c:if>
-		<hr/>
+		<hr />
 		<table>
 			<thead>
 				<tr style="background: silver">
 					<th style="width: 200px;">번호</th>
-					<th style="width: 200px;">책번호</th>
+					<th style="width: 200px;">책이름</th>
 					<th style="width: 200px;">제목</th>
 					<th style="width: 200px;">등록날짜</th>
 					<th style="width: 90px;">타입</th>
@@ -40,15 +40,15 @@
 					<td>${m.TYPE }</td>
 					<c:choose>
 						<c:when test="${m.RED == 'Y'}">
-							<td style="color: RED">${m.RED }
-							<a href="/admin/readRed?no=${m.NO }"><small>신고글보기</small></a>
-							</td>
-						</c:when> 
+						<%-- 	<td style="color: RED" id="view" value="${m.NO }">${m.RED } 
+							<a href="/admin/readRed?no=${m.NO }"><small>신고글보기</small></a></td> --%>
+							<td style="color: RED"><a href="javascript:void(0);" onclick="readRed('${m.NO }')">${m.RED }</a></td>
+						</c:when>
 						<c:otherwise>
 							<td>${m.RED}</td>
 						</c:otherwise>
 					</c:choose>
-					
+
 				</tr>
 			</c:forEach>
 		</table>
@@ -57,5 +57,7 @@
 
 </html>
 <script>
-	
+	function readRed(no){
+		window.open("/admin/readRed?no="+no,"m","left=100,top=200,width=700,height=300");
+	};
 </script>

@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 해원한테서 받은 메세지함 제목 보기  -->
 	<select id="getMessage" resultType="hashmap">
-		select no, sendid, title from getmessage where sendid != 'admin'
+		select no, sendid, title from getmessage where getid = 'admin'
 	</select>
 	
 	<!-- 해원한테 보낸 메세지함 제목보기 -->
