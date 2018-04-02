@@ -162,7 +162,7 @@ public class MemberController {
 		map.put("body", "login.jsp");
 		return "t_el";
 	}
-	// 로그인시 lv업
+	// 로그인시 lv업(0일시 1로)
 	@RequestMapping(path="/lvup",method=RequestMethod.GET)
 	public String lvup(Model model,@RequestParam Map<String, String> param,HttpSession session) {
 		String id = (String)session.getAttribute("logon");
