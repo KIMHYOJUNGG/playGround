@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
-   no, title, writer, regdate, viewcnt   
+   no, title, writer, regdate, viewcnt 
  from 
    board 
  where no > 0 

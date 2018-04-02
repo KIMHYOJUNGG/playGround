@@ -231,6 +231,7 @@ public class BoardService {
 			map.put("REGDATE", result.get("REGDATE"));
 			map.put("WRITER", result.get("WRITER"));
 			map.put("VIEWCNT", result.get("VIEWCNT"));
+			map.put("GOOD", result.get("GOOD"));
 
 			list.add(map);
 		}

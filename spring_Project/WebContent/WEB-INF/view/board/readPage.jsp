@@ -331,7 +331,7 @@ $('#pre').click(function() {
 	    success: function(response) {
 				if(response.result) {
 				alert(response.prev);
-				if(response.prev==""){
+				if(response.prev==null){
 					alert('이전 글이 존재하지 않습니다.');
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.prev);
@@ -345,7 +345,6 @@ $('#pre').click(function() {
 });
 
 $('#next').click(function() {
-	console.log("next");
 	$.ajax({
 	    url: "/next",
 	    method: "get",
@@ -354,11 +353,9 @@ $('#next').click(function() {
 	        "bookname" : "${boardVO.bookname}",
 	        "id" : "${logon}"},
 	    success: function(response) {
-	    	console.log("성공");
 				if(response.result) {
-				alert(response.next);
-				if(response.next==""){
-					alert('이전 글이 존재하지 않습니다.');
+				if(response.next==null){
+					alert('다음 글이 존재하지 않습니다.');
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.next);
 				}

@@ -47,8 +47,8 @@ public class PreNextBTSController {
 		map.put("next",pre.get("NEXT"));
 		Gson gson = new Gson();
 		gson.toJson(map);
-//		return gson.toJson(map);
-		return ((String)pre.get("next"));
+		return gson.toJson(map);
+		//return ((String)pre.get("next"));
 	}
 	
 	

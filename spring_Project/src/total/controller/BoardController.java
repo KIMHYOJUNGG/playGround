@@ -126,21 +126,37 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+
 	public String listAll(Model model) throws Exception {
+
+
 
 		System.out.println("show all list......................");
 
+
+
 		for (BoardVO bv : service.listAll()) {
+
+
 
 			System.out.println(bv);
 
+
+
 		}
+
 		model.addAttribute("list", service.listAll());
+
 		model.addAttribute("body", "listAll.jsp");
 
+
+
 		// return "board/listAll";
+
 		return "t_board";
+
 	}
+
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, Model model,HttpSession session) throws Exception {
