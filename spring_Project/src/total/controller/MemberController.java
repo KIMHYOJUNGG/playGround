@@ -1,4 +1,5 @@
 
+
 package total.controller;
 
 import java.io.File;
@@ -74,15 +75,17 @@ public class MemberController {
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			/*
-			 * if (param.get("password") != null && param.get("email") != null) {
-			 * System.out.println("작동안하냐?"); model.addAttribute("idmsg", "아이디를 입력해주세요"); }
-			 * else if (param.get("id") != null && param.get("email") != null) {
-			 * System.out.println("이건왜하냐?"); model.addAttribute("passwordmsg",
-			 * "비밀번호를 입력해주세요"); } else if (param.get("id") != null && param.get("password")
-			 * != null) { System.out.println("이건뭐야?"); model.addAttribute("emailmsg",
-			 * "이메일을 입력해주세요"); }
-			 */
+			if (param.get("password") != null && param.get("email") != null) {
+				System.out.println("작동안하냐?");
+				model.addAttribute("idmsg", "아이디를 입력해주세요");
+			} else if (param.get("id") != null && param.get("email") != null) {
+				System.out.println("이건왜하냐?");
+				model.addAttribute("passwordmsg", "비밀번호를 입력해주세요");
+			} else if (param.get("id") != null && param.get("password") != null) {
+				System.out.println("이건뭐야?");
+				model.addAttribute("emailmsg", "이메일을 입력해주세요");
+			}
+
 			e.printStackTrace();
 			map.put("body", "register.jsp");
 			return "t_el";
@@ -128,15 +131,20 @@ public class MemberController {
 	// 이메일 인증으로 인한 레벨 증가
 	@RequestMapping("confirm")
 	public String confirm(@RequestParam Map param, HttpSession session, Model model, Map map) {
+		System.out.println(session.getAttribute("num"));
 		map.put("body", "confirmpage.jsp");
-		System.out.println("num="+session.getAttribute("num"));
 		if ((session.getAttribute("num").toString()).equals(param.get("num2").toString())) {
 			int i = memberservice.updateLv((String) param.get("id"));
 			if (i != 0) {
 				session.setAttribute("logon", param.get("id"));
+				Map map2 = memberservice.emailMember(param.get("id").toString());
+				System.out.println("lvup?");
+				int lv = Integer.parseInt((map2.get("LV").toString()));
+				session.setAttribute("lv", lv);
 				String uri = (String) session.getAttribute("uri");
 				if (uri != null) {
-					return uri;
+					System.out.println("uri로 가니?");
+					return "redirect:"+uri;
 				} else {
 					return "redirect:/index";
 				}
@@ -198,13 +206,13 @@ public class MemberController {
 						ws.sendMessage(new TextMessage("로그인"));
 					}
 					if (uri != null) {
-						return uri;
+						return "redirect:"+uri;
 					} else {
 						return "redirect:/index";
 					}
 				} else {
 					if (uri != null) {
-						return uri;
+						return "redirect:"+uri;
 					} else {
 						return "redirect:/index";
 					}
@@ -230,6 +238,9 @@ public class MemberController {
 	public String logoutHandle(Model model, HttpSession session) {
 		try {
 			session.removeAttribute("logon");
+			session.removeAttribute("email");
+			session.removeAttribute("lv");
+			session.removeAttribute("uri");
 			List<WebSocketSession> s = wsMap.get(session.getId());
 			if (s != null) {
 				for (WebSocketSession ws : s) {
@@ -295,3 +306,4 @@ public class MemberController {
 		}
 	}
 }
+

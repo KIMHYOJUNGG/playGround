@@ -177,13 +177,13 @@ ${mbv.contents}
                 <br/>
 		 <button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button>
 	</c:if>
-	<c:if test="${logon == null }">
-		<label for="exampleInputEmail1">댓글쓰기</label> 
-		  <textarea class="form-control" name="comments" id="commentslog" rows="3" cols="3" placeholder="댓글을 쓸수 있는 권한이 없습니다."  ></textarea>
-                <br/>
-		 <button type="button"  name="comments" class="btn btn-default" 
-		 onclick="javascript: location.assign('${pageContext.request.contextPath}/member/log?uri=board/readPage&no=${NO }')" >댓글쓰기</button>
-	</c:if>
+<%-- 	<c:if test="${logon == null }"> --%>
+<!-- 		<label for="exampleInputEmail1">댓글쓰기</label>  -->
+<!-- 		  <textarea class="form-control" name="comments" id="commentslog" rows="3" cols="3" placeholder="댓글을 쓸수 있는 권한이 없습니다."  ></textarea> -->
+<!--                 <br/> -->
+<!-- 		 <button type="button"  name="comments" class="btn btn-default"  -->
+<%-- 		 onclick="javascript: location.assign('${pageContext.request.contextPath}/member/log?uri=board/readPage&no=${NO }')" >댓글쓰기</button> --%>
+<%-- 	</c:if> --%>
 	</div>
 	<div class="form-group">
 	

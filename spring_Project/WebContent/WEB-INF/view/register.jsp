@@ -3,6 +3,7 @@
 <!-- 회원가입 -->
 <body>
 	<div align="center">
+		<div id="checkresult"></div>
 		<form action="/member/regist"  role="form" method="post"
 			style="width: 400px; text-align: left; line-height: 34px;"
 			autocomplete="off">
@@ -54,10 +55,13 @@
 			document.getElementById("sbt").disabled = false;
 		}
 	}
+	
+	// 아이디 확인
 	document.getElementById("id").onblur = function() {
 		if(this.value == ""){
-			$(".checkrst").html("아이디를 입력하세요.");
-			$(".checkrst").css("color", "red");
+			console.log("아이디빈칸?")
+			$("#checkrst").html("아이디를 입력하세요.");
+			$("#checkrst").css("color", "red");
 			document.getElementById("sbt").disabled = true;
 		}
 		else{
@@ -80,6 +84,7 @@
 			xhr.send();
 		}
 	}
+	
 	$("#sbt").click( function()	{
 		if (document.getElementById("checkemail").checked) {
 			console.log(document.getElementById("checkemail").checked);

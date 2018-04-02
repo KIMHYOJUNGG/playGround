@@ -60,4 +60,5 @@
 	function readRed(no){
 		window.open("/admin/readRed?no="+no,"m","left=100,top=200,width=700,height=300");
 	};
+	opener.location.reload();
 </script>
