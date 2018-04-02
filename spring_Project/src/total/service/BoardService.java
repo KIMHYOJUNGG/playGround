@@ -463,6 +463,17 @@ public class BoardService {
 
 	}
 
+	public Map prenext(int no, String bookname) { 
+		System.out.println("nnn :" + no+bookname);
+		Map m = new HashMap<>();
+		m.put("no", no);
+		m.put("bookname", bookname);
+		Map map = session.selectOne("prenext.read",m);
+		System.out.println("nextnext : "+map.get("NEXT"));
+		return map;
+	}
+	
+	
 	public void delete(Integer no) throws Exception {
 		session.delete("report.delete", no);
 		session.delete("board.delete", no);
