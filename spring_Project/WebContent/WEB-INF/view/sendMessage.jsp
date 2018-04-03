@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <div class="container-fluid text-center">
 	<br>
@@ -53,7 +54,7 @@
 								<td class="mtd"><input type="checkbox" class="msgcbx"  value="${msg.NO }"></td>
 								<td class="mtd" style="width: 20%"><a href="javascript:void(0);" onclick="sendMsg('${msg.GETID}')">${msg.GETID }</a></td>
 								<td class="mtd" style="width: 40%"><a href="javascript:void(0);" onclick="readMsg('${msg.NO}')">${msg.TITLE }</a></td>
-								<td class="mtd" style="width: 20%">${msg.REGDATE }</td>
+								<td class="mtd" style="width: 20%"><fmt:formatDate value="${msg.REGDATE }" pattern="yy/MM/dd HH:mm"/></td>
 								<td class="mtd">${msg.READCHECK == 'Y' ? '읽음' : '읽지 않음'}</td>
 							</tr>
 						</c:forEach>
@@ -139,6 +140,7 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="sendHead">메세지 보내기</h4>
 				</div>
 				<div class="modal-body" align="left">

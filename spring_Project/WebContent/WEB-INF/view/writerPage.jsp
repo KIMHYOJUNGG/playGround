@@ -228,8 +228,8 @@
 											<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp; 
 											<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
 										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
-										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> <fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd hh:mm"/></p>
-										${ci }
+										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> 
+										<fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd HH:mm"/></p>
 									</li>
 									<c:if test="${vs.last }">
 										<button type="button" class="btn btn-default btn-block more" value="${vs.count }">더 보기</button>
@@ -239,18 +239,13 @@
 								<script>
 									$(function(){
 										$("#div_lg").on("click", ".more", function(e){
-											console.log(e);
-											console.log(e.target.value);
 											e.target.style.display = "none";
 											more(e.target.value);
 										});
 										
 										function more(idx) {
-											console.log("more");
 											idx = parseInt(idx, 10);
-											console.log(idx);
 											$.get("${pageContext.request.contextPath }/@${writerInfo.ID}/moreContents",function(con){
-												console.log(con);
 												if(con != null) {
 													var html = $("#div_lg").html();
 													var more = (idx+10) < con.length;
@@ -262,7 +257,16 @@
 																	+"<a href='${pageContext.request.contextPath }/search?word="+con[i].TYPE+"'><span class='badge bg_type'>"+con[i].TYPE +"</span></a></h3>"
 																	+"<a href='${pageContext.request.contextPath}/board/readPage?no="+con[i].NO+"'><h4>"+con[i].TITLE+"</h4></a>"
 																	+"<p class='list-group-item-text'><span class='glyphicon glyphicon-eye-open'></span>"+ con[i].VIEWCNT+" &nbsp; &nbsp;"
-																	+" <span class='glyphicon glyphicon-pencil'></span> "+con[i].REGDATE+"</p>"+i+"</li>";
+																	+" <span class='glyphicon glyphicon-pencil'></span> ";
+														var dt = new Date(con[i].REGDATE);
+														var yy = dt.getFullYear().toString().substr(2);
+														var month = dt.getMonth()+1
+														var MM = month.toString().length == 1 ? 0 + month.toString() : month; 
+														var dd = dt.getDate().toString().length < 2 ? 0+dt.getDate().toString() : dt.getDate();
+														var HH = dt.getHours().toString().length < 2 ? 0+ dt.getHours().toString() :  dt.getHours()+":";
+														var mm = dt.getMinutes().toString().length < 2 ? 0+ dt.getMinutes().toString() :  dt.getMinutes();
+														var regdate =  yy+"/"+MM+"/"+dd+" "+HH+":"+mm;
+														html += regdate+"</p></li>";
 													}
 													if(more) {
 														html += "<button type='button' class='btn btn-default btn-block more' id="+i+" value="+i+">더 보기</button>";
@@ -283,7 +287,7 @@
 									<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
 										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
 										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> 
-										<fmt:formatDate value="${c.REGDATE }" pattern="yy/MM/dd hh:mm"/></p>
+										<fmt:formatDate value="${c.REGDATE }" pattern="yy/MM/dd HH:mm"/></p>
 								</li>
 								</c:forEach>
 								</div>
@@ -294,7 +298,7 @@
 					<br>
 					<div align="center">
 						<p>등록된 글이 없습니다.</p>
-						<c:if test="${logon eq wirterInfo.ID }">
+						<c:if test="${logon == wirterInfo.ID }">
 						<p>글을 등록해 보세요.</p>
 						<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>글쓰기</button></a>
 						</c:if>
@@ -310,6 +314,7 @@
 					<c:forEach var="i" begin="0" end="${fn:length(bookList)-1 }">
 						<c:set var="b" value="${bookList[i] }"/>
 						<c:set var="bc" value="${bookContentsList[i] }"/>
+						<c:set var="vng" value="${vngList[i] }" />
 						<li class="list-group-item">
 							<div class="row">
 								<div class="col-sm-8">
@@ -318,7 +323,10 @@
 										<a href="${pageContext.request.contextPath }/search?word=${tag}"><span class="badge search"> ${tag}</span></a>
 									</c:forEach>
 									</h3>
-								<p class="list-group-item-text" style="margin-top:15px;"><span class="glyphicon glyphicon-heart"></span> ${b.good}</p>
+								<p class="list-group-item-text" style="margin-top:15px; font-size: 20px;"><span class="glyphicon glyphicon-heart" ></span> 
+								${empty vng.GOODCNT ? 0 : vng.GOODCNT} &nbsp;
+									<span class="glyphicon glyphicon-eye-open"></span> ${empty vng.VIEWCNT ? 0 : vng.VIEWCNT}
+								</p>
 								</div>
 								<div class="col-sm-4" align="center">
 									<h3 class="list-group-item-heading" style="color: blue">${b.cnt } <span style="color:blue">contents</span></h3>

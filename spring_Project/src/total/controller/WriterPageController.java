@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+import total.domain.BookVO;
+import total.service.BookPageService;
 import total.service.FollowService;
 import total.service.MyPageService;
 import total.service.WriterPageService;
@@ -24,6 +26,8 @@ public class WriterPageController {
 	@Autowired
 	FollowService followService;
 	@Autowired
+	BookPageService bookPageService;
+	@Autowired
 	Gson gson;
 	
 	@RequestMapping("/@{id}")
@@ -34,6 +38,13 @@ public class WriterPageController {
 			map.put("contentList", writerPageService.getContentsListById(id));
 			map.put("writerFollowing", myPageService.getFollowingInfoById(myPageService.getMyFollowingList(id)));
 			map.put("bookList",writerPageService.mergeBookListAndCnt(writerPageService.getBookContentsCntById(id), writerPageService.getBookListById(id)) );
+			Map data = new HashMap<>();
+			List<String> bnos = new ArrayList<>();
+			for ( BookVO b : (List<BookVO>)map.get("bookList")) {
+					bnos.add(b.getBno());
+			}
+			data.put("bno", bnos);
+			map.put("vngList", bookPageService.getViewNGoodCnt(data));
 			map.put("follower", writerPageService.getFollower(id));
 			map.put("body", "writerPage.jsp");
 			map.put("title", id+"의 PlayGround");
