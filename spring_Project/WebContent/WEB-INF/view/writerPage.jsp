@@ -314,7 +314,14 @@
 					<c:forEach var="i" begin="0" end="${fn:length(bookList)-1 }">
 						<c:set var="b" value="${bookList[i] }"/>
 						<c:set var="bc" value="${bookContentsList[i] }"/>
-						<c:set var="vng" value="${vngList[i] }" />
+							<c:if test="${!empty vng }">
+								 <c:remove var = "vng"/>
+							</c:if>
+						<c:forEach var="elm" items="${vngList }">
+							<c:if test="${b.bookName eq  elm.BOOKNAME}">
+								<c:set var="vng" value="${elm }" />
+							</c:if>
+						</c:forEach>
 						<li class="list-group-item">
 							<div class="row">
 								<div class="col-sm-8">

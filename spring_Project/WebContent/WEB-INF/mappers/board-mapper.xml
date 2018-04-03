@@ -195,13 +195,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getViewNGoodCnt" resultType="hashmap">
-		select bno, sum(viewcnt) as viewcnt,sum(good) as goodcnt from board
+		select bno, bookname, sum(viewcnt) as viewcnt,sum(good) as goodcnt from board
 		<if test="bno != null">
 			where bno in
 			<foreach collection="bno" item="n" open="(" close=")" separator=",">
 				#{n}
 			</foreach>
 		</if>
-		group by bno
+		group by bno,bookname order by(bookname)
 	</select>
 </mapper>
