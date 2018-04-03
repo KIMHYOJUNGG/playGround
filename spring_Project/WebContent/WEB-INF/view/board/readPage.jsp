@@ -11,21 +11,9 @@
         <!-- general form elements -->
         <div class="box box-primary">
         <div class="box-header">
-          <h3 class="box-title">READ BOARD</h3>
+          <h2 class="box-title">READ BOARD</h2>
         </div><!-- /.box-header -->
-    <!--     <font size="5px;">
-							하트 <span id="heart2d335d4abbcb">
-							<a href="javascript:like('2d335d4abbcb','t');"> 
-							<span class="glyphicon glyphicon-heart-empty"></span></a></span> 
-							<span id="count2d335d4abbcb">2</span> 댓글 <a href="/boarddetail?pk=2d335d4abbcb">
-								<span class="glyphicon glyphicon-user"></span>
-						</a> 
-								
-						0
-						
-								
-							 &nbsp;
-					</font> -->
+    
 					
 					<font size="5px;" style="color:red;" id="heart">
 					<c:if test="${like eq false }">
@@ -46,6 +34,7 @@
         </a>
 					</c:if>
 </font>
+
         <span id="info"></span>
 
 <%-- 
@@ -67,8 +56,6 @@
 						  
 					  });
 					  
-					  
-					  
 						  	$("#good").click(function(){
 								$.get("${pageContext.request.contextPath}/board/like",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
@@ -89,9 +76,6 @@
 								    $('[data-toggle="tooltip"]').tooltip();   
 								
 					  		});
-						  	
-						  
-
 					  
 						  	$("#bad").click(function(){
 								$.get("${pageContext.request.contextPath}/board/cancle",  {"targetboard": "${boardVO.no}"
@@ -114,43 +98,41 @@
 						  	
 						  
 					  </script>
-
-
-
-
-
-
-
-
-    
   <div class="box-body">
     <div class="form-group">
-      <label for="exampleInputEmail1">조회수</label>
-      <input type="text" name='title' class="form-control" 
-         value="${boardVO.viewcnt}" readonly="readonly">
+      <h3>조회수 <small>${boardVO.viewcnt}</small></h3> 
+      <%-- <input type="text" name='title' class="form-control" 
+         value="${boardVO.viewcnt}" readonly="readonly"> --%>
     </div>
   
     <div class="form-group">
-      <label for="exampleInputEmail1">Type</label><br/>
+      <h3>Type <small>${boardVO.type}</small></h3>
+      
+   <%--    <label for="exampleInputEmail1">Type</label><br/>
       <input type="text" name='type' class="form-control" 
-         value="${boardVO.type}" readonly="readonly">
+         value="${boardVO.type}" readonly="readonly"> --%>
     </div>
     <div class="form-group">
-							<label for="exampleInputEmail1">Tag</label> <input type="text"
-								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly">
+    
+							<h3>Tag <small>${mbv.ptag}</small></h3> <%-- <input type="text"
+								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%>
 						</div>
     <div class="form-group">
-      <label for="exampleInputEmail1">BookName</label><br/>
+   <h3>BookName <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><small>${boardVO.bookname}</small></a></h3>
+      <%-- <label for="exampleInputEmail1">BookName</label><br/>
       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
-         value="${boardVO.bookname}" readonly="readonly"></a>
+         value="${boardVO.bookname}" readonly="readonly"></a> --%>
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1">Title</label>
+   <h3>Title <small>${boardVO.title}</small></h3>
+      <%-- <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 
-         value="${boardVO.title}" readonly="readonly">
+         value="${boardVO.title}" readonly="readonly"> --%>
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Content</label>
+     <h3>Content</h3>
+${mbv.contents}     
+      <%-- <label for="exampleInputPassword1">Content</label>
        <textarea class="form-control"  name="content" rows="3" id="ck" 
       readonly="readonly">${mbv.contents}</textarea>
       <script type="text/javascript">
@@ -166,14 +148,16 @@
 							});
 							
 		
-						</script>
+						</script> --%>
       
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1" >Writer</label></br>
+   <h3>Writer  <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><small>${boardVO.writer}</small></a></h3>
+    
+      <%-- <label for="exampleInputEmail1" >Writer</label></br>
       
        <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
-         value="${boardVO.writer}" readonly="readonly"></a>
+         value="${boardVO.writer}" readonly="readonly"></a> --%>
       </div>
     <div class="form-group">
     <c:if test="${ !empty comments  }">
@@ -193,13 +177,13 @@
                 <br/>
 		 <button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button>
 	</c:if>
-	<c:if test="${logon == null }">
-		<label for="exampleInputEmail1">댓글쓰기</label> 
-		  <textarea class="form-control" name="comments" id="commentslog" rows="3" cols="3" placeholder="댓글을 쓸수 있는 권한이 없습니다."  ></textarea>
-                <br/>
-		 <button type="button"  name="comments" class="btn btn-default" 
-		 onclick="javascript: location.assign('${pageContext.request.contextPath}/member/log?uri=board/readPage&no=${NO }')" >댓글쓰기</button>
-	</c:if>
+<%-- 	<c:if test="${logon == null }"> --%>
+<!-- 		<label for="exampleInputEmail1">댓글쓰기</label>  -->
+<!-- 		  <textarea class="form-control" name="comments" id="commentslog" rows="3" cols="3" placeholder="댓글을 쓸수 있는 권한이 없습니다."  ></textarea> -->
+<!--                 <br/> -->
+<!-- 		 <button type="button"  name="comments" class="btn btn-default"  -->
+<%-- 		 onclick="javascript: location.assign('${pageContext.request.contextPath}/member/log?uri=board/readPage&no=${NO }')" >댓글쓰기</button> --%>
+<%-- 	</c:if> --%>
 	</div>
 	<div class="form-group">
 	
@@ -210,12 +194,49 @@
     <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
     </c:if>
+    <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글 </button>
+    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글  </button>
     <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
     <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
   </c:if>
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
   </div>
+  
+  <div class="row">
+		<div class="col-md-12">
+
+			<div class="box box-success">
+				<div class="box-header">
+					<h3 class="box-title">ADD NEW REPLY</h3>
+				</div>
+				<div class="box-body">
+					<label for="exampleInputEmail1">Writer</label> <input
+						class="form-control" type="text" placeholder="USER ID"
+						id="newReplyWriter"> <label for="exampleInputEmail1">Reply
+						Text</label> <input class="form-control" type="text"
+						placeholder="REPLY TEXT" id="newReplyText">
+
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
+						REPLY</button>
+				</div>
+			</div>
+			
+			<!-- The time line -->
+			<ul class="timeline">
+				<!-- timeline time label -->
+				<li class="time-label" id="repliesDiv"><span class="bg-green">
+						Replies List </span></li>
+			</ul>
+
+			<div class='text-center'>
+				<ul id="pagination" class="pagination pagination-sm no-margin ">
+
+				</ul>
+			</div>
 <div class="container" >
  
   <!-- Trigger the modal with a button -->
@@ -315,6 +336,55 @@ $.ajax({
         alert('게시글 등록 실패');
     }
 	});
+});
+
+
+$('#pre').click(function() {
+	$.ajax({
+	    url: "/pre",
+	    method: "get",
+	    data: {   
+	        "boardNo" : "${boardVO.no}",
+	        "bookname" : "${boardVO.bookname}",
+	        "id" : "${logon}"},
+	    success: function(response) {
+				if(response.result) {
+				alert(response.prev);
+				if(response.prev==null){
+					alert('이전 글이 존재하지 않습니다.');
+				}else{
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.prev);
+				}
+	    		
+			}
+	    }, error: function() {
+	        alert('게시글 등록 실패');
+	    }
+		});
+});
+
+$('#next').click(function() {
+	$.ajax({
+	    url: "/next",
+	    method: "get",
+	    data: {   
+	        "boardNo" : "${boardVO.no}",
+	        "bookname" : "${boardVO.bookname}",
+	        "id" : "${logon}"},
+	    success: function(response) {
+				if(response.result) {
+				if(response.next==null){
+					alert('다음 글이 존재하지 않습니다.');
+				}else{
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.next);
+				}
+	    		
+			}
+	    }, error: function() {
+	    	console.log("에러");
+	        alert('게시글 등록 실패');
+	    }
+		});
 });
 
 

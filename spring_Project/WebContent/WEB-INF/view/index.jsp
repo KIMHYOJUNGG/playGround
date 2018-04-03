@@ -2,74 +2,28 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 .bg-grey {
-	background-color: #f6f6f6;
+	background-color: white;
+}
+
+.logo-small {
+	color: #f4511e;
+	font-size: 50px;
 }
 
 .logo {
+	color: #f4511e;
 	font-size: 200px;
-}
-
-@media screen and (max-width: 768px) {
-	.col-sm-4 {
-		text-align: center;
-		margin: 25px 0;
-	}
-}
-
-.carousel-inner img {
-	width: 40%; /* Set width to 100% */
-	height: 40%;
-	margin: auto;
-}
-
-.carousel-caption h3 {
-	color: #fff !important;
-}
-
-@media ( max-width : 400px) {
-	.carousel-caption {
-		display: none;
-		/* Hide the carousel text when the screen is less than 600 pixels wide */
-	}
-}
-
-.container-fluid {
-	
 }
 
 @media screen and (max-width: 768px) {
 	.col-sm-3 {
 		text-align: center;
-		margin: 25px 0;
-	}
-	.carousel-inner img {
-		-webkit-filter: grayscale(90%);
-		filter: grayscale(90%); /* make all photos black and white */
-		width: 100%; /* Set width to 100% */
-		margin: auto;
-	}
-	.carousel-caption h3 {
-		color: #fff !important;
-	}
-	@media ( max-width : 600px) {
-		.carousel-caption {
-			display: none;
-			/* Hide the carousel text when the screen is less than 600 pixels wide */
-		}
+		margin: 90px 0;
 	}
 }
 </style>
-</head>
 <body class="mainbody">
 	<div class="alert alert-warning alert-dismissible" id="warn1"
 		style="display: none">
@@ -158,69 +112,59 @@
 				class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 				<span class="sr-only">Next</span>
 			</a>
-
 		</div>
-
-
 		<!-- Container (Portfolio Section) -->
 		<div class="container-fluid text-center bg-grey">
-			<h2>Portfolio</h2>
-			<br>
+			<h2>Now</h2>
 			<h4>What we have created</h4>
-			<div class="row text-center">
-				<c:forEach var="o" items="${boardNo}" varStatus="vs">
-					<c:choose>
-						<c:when test="${vs.count <= 8}">
-							<div class="col-sm-3">
-								<div class="thumbnail">
-									<div class="w3-quarter">
-										<c:if test="${o.IMAGE == null}">
-											<a href="/board/readPage?no=${o.NO}"><img
-												src="${pageContext.request.contextPath }/image/Desert.jpg"
-												alt="1" width="400" height="300"></a>
-										</c:if>
-										<a href="/board/readPage?no=${o.NO}"><img
-											src="
-												${o.IMAGE }" alt="Paris" width="400"
-											height="300"></a>
-										<p>
-											<strong>${o.TITLE }</strong>
-										</p>
-										<p>${o.BOOKNAME }</p>
-									</div>
-								</div>
-							</div>
-						</c:when>
-					</c:choose>
-				</c:forEach>
-			</div>
+			<c:forEach var="o" items="${boardNo}" varStatus="vs">
+				<c:if test="${vs.count %4 == 1}">
+					<div class="row text-center">
+				</c:if>
+				<div class="col-sm-3">
+					<div class="thumbnail">
+						<c:if test="${o.IMAGE == null}">
+							<a href="/board/readPage?no=${o.NO}"><img
+								src="${pageContext.request.contextPath }/image/Desert.jpg"
+								alt="1" style="width: 300px; height: 200px;"></a>
+						</c:if>
+						<a href="/board/readPage?no=${o.NO}"><img src="${o.IMAGE }"
+							alt="Paris" style="width: 400px; height: 300px;"></a>
+						<p>
+							<strong>${o.TITLE }</strong>
+						</p>
+						<p>${o.BOOKNAME }</p>
+					</div>
+				</div>
+				<c:if test="${vs.count %4 == 0 or vs.last}">
 		</div>
-
-
-		<br> <br> <br> <br> <br>
-		<!-- Container (Services Section) -->
-		<div class="container-fluid text-center">
-			<h2>KEYWORD</h2>
-			<br> <br> <br>
-			<div class="row">
-				<div class="col-sm-3">
+		</c:if>
+		</c:forEach>
+	</div>
+	</div>
+	<!-- Container (Services Section) -->
+	<div class="container-fluid text-center">
+		<h2>KEYWORD</h2>
+		<br> <br> <br>
+		<div class="row">
+			<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=세계여행">세계여행</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=세계여행">세계여행</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=글쓰기">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=글쓰기">글쓰기</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=문화·예술">문화·예술</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=문화·예술">문화·예술</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=사랑·이별">사랑·이별</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=그림·웹툰">그림·웹툰</a>
 					</h4>
 				</div>
 
@@ -230,23 +174,23 @@
 				<div class="col-sm-3">
 					<h4>
 						<a
-							href="${pageContext.request.contextPath }/keyword?type=직장인 현실조언">직장인
+							href="${pageContext.request.contextPath }/board/listPage?stype=직장인%20현실조언">직장인
 							현실조언</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=건축·설계">건축·설계</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=건축·설계">건축·설계</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">시사·이슈</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=시사·이슈">시사·이슈</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=쉽게읽는%20역사">쉽게읽는
 							역사</a>
 					</h4>
 				</div>
@@ -255,79 +199,83 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=육아이야기">육아이야기</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=육아이야기">육아이야기</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=요리·레시피">요리·레시피</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=요리·레시피">요리·레시피</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">건강·운동</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=건강·운동">건강·운동</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=우리집%20반려동물">우리집
 							반려동물</a>
 					</h4>
 				</div>
 
+		</div>
+	</div>
+
+
+
+
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<!-- Container (Services Section) -->
+	<div class="container-fluid text-center">
+		<h2>SERVICES</h2>
+		<h4>What we offer</h4>
+		<br>
+		<div class="row">
+			<div class="col-sm-4">
+				<span class="glyphicon glyphicon-off"></span>
+				<h4>POWER</h4>
+				<p>Lorem ipsum dolor sit amet..</p>
+			</div>
+			<div class="col-sm-4">
+				<span class="glyphicon glyphicon-heart"></span>
+				<h4>LOVE</h4>
+				<p>Lorem ipsum dolor sit amet..</p>
+			</div>
+			<div class="col-sm-4">
+				<span class="glyphicon glyphicon-lock"></span>
+				<h4>JOB DONE</h4>
+				<p>Lorem ipsum dolor sit amet..</p>
 			</div>
 		</div>
-
-
-
-
-
-		<br> <br> <br> <br> <br>
-
-		<!-- Container (Services Section) -->
-		<div class="container-fluid text-center">
-			<h2>SERVICES</h2>
-			<h4>What we offer</h4>
-			<br>
-			<div class="row">
-				<div class="col-sm-4">
-					<span class="glyphicon glyphicon-off"></span>
-					<h4>POWER</h4>
-					<p>Lorem ipsum dolor sit amet..</p>
-				</div>
-				<div class="col-sm-4">
-					<span class="glyphicon glyphicon-heart"></span>
-					<h4>LOVE</h4>
-					<p>Lorem ipsum dolor sit amet..</p>
-				</div>
-				<div class="col-sm-4">
-					<span class="glyphicon glyphicon-lock"></span>
-					<h4>JOB DONE</h4>
-					<p>Lorem ipsum dolor sit amet..</p>
-				</div>
+		<br> <br>
+		<div class="row">
+			<div class="col-sm-4">
+				<span class="glyphicon glyphicon-leaf"></span>
+				<h4>GREEN</h4>
+				<p>Lorem ipsum dolor sit amet..</p>
 			</div>
-			<br> <br>
-			<div class="row">
-				<div class="col-sm-4">
-					<span class="glyphicon glyphicon-leaf"></span>
-					<h4>GREEN</h4>
-					<p>Lorem ipsum dolor sit amet..</p>
-				</div>
-				<div class="col-sm-4">
-					<span class="glyphicon glyphicon-certificate"></span>
-					<h4>CERTIFIED</h4>
-					<p>Lorem ipsum dolor sit amet..</p>
-				</div>
-				<div class="col-sm-4">
-					<span class="glyphicon glyphicon-wrench"></span>
-					<h4 style="color: #303030;">HARD WORK</h4>
-					<p>Lorem ipsum dolor sit amet..</p>
-				</div>
+			<div class="col-sm-4">
+				<span class="glyphicon glyphicon-certificate"></span>
+				<h4>CERTIFIED</h4>
+				<p>Lorem ipsum dolor sit amet..</p>
+			</div>
+			<div class="col-sm-4">
+				<span class="glyphicon glyphicon-wrench"></span>
+				<h4 style="color: #303030;">HARD WORK</h4>
+				<p>Lorem ipsum dolor sit amet..</p>
 			</div>
 		</div>
+	</div>
 
 
-		<%--
+	<%--
 			<div id="menu1" class="tab-pane fade">
 				<div class="main_keywords">
 

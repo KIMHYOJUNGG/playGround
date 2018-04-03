@@ -49,7 +49,7 @@
 						<td>${m.LV }</td>
 					</c:if>
 					<c:if test="${m.LV == 2}">
-						<td style="color: RED">${m.LV }<small>${m.STOPTIME }</small></td>
+						<td style="color: RED"><b>${m.LV }</b><small>(${m.STOPTIME })</small></td>
 					</c:if>
 				</tr>
 			</c:forEach>
@@ -63,4 +63,5 @@
 		console.log(success);
 		alert(success);
 	}
+	
 </script>

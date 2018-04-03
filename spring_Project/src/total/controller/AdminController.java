@@ -230,7 +230,7 @@ public class AdminController {
 	}
 
 	// 신고된 글을 삭제시
-	@RequestMapping(path = "/removeRep", method = RequestMethod.GET)
+	@RequestMapping(path = "/removeRep", method = RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String removeRep(@RequestParam("rno") String rno, Model model) {
 		boolean rst = false;

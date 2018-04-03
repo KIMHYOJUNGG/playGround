@@ -126,21 +126,37 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+
 	public String listAll(Model model) throws Exception {
+
+
 
 		System.out.println("show all list......................");
 
+
+
 		for (BoardVO bv : service.listAll()) {
+
+
 
 			System.out.println(bv);
 
+
+
 		}
+
 		model.addAttribute("list", service.listAll());
+
 		model.addAttribute("body", "listAll.jsp");
 
+
+
 		// return "board/listAll";
+
 		return "t_board";
+
 	}
+
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, Model model,HttpSession session) throws Exception {
@@ -177,9 +193,9 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+	public String modifyPOST(BoardVO board, RedirectAttributes rttr,HttpSession session) throws Exception {
 		System.out.println("mod post............");
-		service.update(board);
+		service.update(board,session);
 		rttr.addFlashAttribute("msg", "success");
 
 		return "redirect:/board/listAll";
@@ -379,11 +395,11 @@ public class BoardController {
 
 	@RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
 	public String modifyPagingPOST(@RequestParam("no") int no, @ModelAttribute("cri") SearchCriteria cri, Model model,
-			BoardVO board, RedirectAttributes rttr) throws Exception {
+			BoardVO board, RedirectAttributes rttr,HttpSession session) throws Exception {
 
 		System.out.println("mod post............");
 
-		service.update(board);
+		service.update(board,session);
 		rttr.addAttribute("page", cri.getPage());
 		rttr.addAttribute("stype", cri.getStype());
 		rttr.addAttribute("perPageNum", cri.getPerPageNum());

@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[
  select 
-   no, title, writer, regdate, viewcnt   
+   no, title, writer, regdate, viewcnt 
  from 
    board 
  where no > 0 
@@ -192,5 +192,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select lv from member id= #{id}
 
 
+	</select>
+	
+	<select id="getViewNGoodCnt" resultType="hashmap">
+		select bno, bookname, sum(viewcnt) as viewcnt,sum(good) as goodcnt from board
+		<if test="bno != null">
+			where bno in
+			<foreach collection="bno" item="n" open="(" close=")" separator=",">
+				#{n}
+			</foreach>
+		</if>
+		group by bno,bookname order by(bookname)
 	</select>
 </mapper>

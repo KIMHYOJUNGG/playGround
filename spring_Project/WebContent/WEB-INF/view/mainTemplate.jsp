@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
@@ -22,15 +20,12 @@
 <!--     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Karma">
 
 <style>
-<%--
-main style --%> .main_keywords {
+ .main_keywords {
 	border-collapse: collapse;
 	height: 600px;
 	width: 30%;
@@ -72,6 +67,68 @@ img {
   .bg_type{
   	background-color: #5bc0de;
   }
+  
+  .mtd {
+  	text-align: center;
+  }
+  
+  .bg-grey {
+	background-color: #f6f6f6;
+}
+
+.logo {
+	font-size: 200px;
+}
+
+@media screen and (max-width: 768px) {
+	.col-sm-4 {
+		text-align: center;
+		margin: 25px 0;
+	}
+}
+
+.carousel-inner img {
+	width: 40%; /* Set width to 100% */
+	height: 40%;
+	margin: auto;
+}
+
+.carousel-caption h3 {
+	color: #fff !important;
+}
+
+@media ( max-width : 400px) {
+	.carousel-caption {
+		display: none;
+		/* Hide the carousel text when the screen is less than 600 pixels wide */
+	}
+}
+
+.container-fluid {
+	
+}
+
+@media screen and (max-width: 768px) {
+	.col-sm-3 {
+		text-align: center;
+		margin: 25px 0;
+	}
+	.carousel-inner img {
+		-webkit-filter: grayscale(90%);
+		filter: grayscale(90%); /* make all photos black and white */
+		width: 100%; /* Set width to 100% */
+		margin: auto;
+	}
+	.carousel-caption h3 {
+		color: #fff !important;
+	}
+	@media ( max-width : 600px) {
+		.carousel-caption {
+			display: none;
+			/* Hide the carousel text when the screen is less than 600 pixels wide */
+		}
+	}
+}
 </style>
 </head>
 <body>
@@ -87,10 +144,10 @@ img {
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/">PlayGround</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
-			<c:if test="${logon !=null }">
+			<c:if test="${logon != null }">
 				<ul class="nav navbar-nav">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">myPage<span class="caret"></span></a>
+					<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown"  href="#">myPage<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="${pageContext.request.contextPath}/myPage">my page</a></li>
 						    <li class="divider"></li>
@@ -99,7 +156,9 @@ img {
 							<li><a href="${pageContext.request.contextPath}/@${logon}/following">관심 작가 관리</a></li>
 						</ul>
 						</li>
-					<li><a href="${pageContext.request.contextPath}/message">우편함</a>
+					<li><a href="${pageContext.request.contextPath}/message">우편함</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/listPage">글목록</a></li>
+					<li><a href="">${logon }님 환영합니다.</a></li>
 				</ul>
 			</c:if>
 				<ul class="nav navbar-nav navbar-right">

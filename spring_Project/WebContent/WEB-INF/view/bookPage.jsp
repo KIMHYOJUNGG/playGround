@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+
 <c:choose>
 	<c:when test="${empty bookContents}">
 		<div style="margin-top: 15px">
@@ -63,8 +64,7 @@
 		<script>
 			function addHash() {
 				var tag = $("#tag").val();
-				if(tag.charCodeAt(0) != 35) {
-// 					if(tag.length >= 1)
+				if(tag.length >1 && tag.charCodeAt(0) != 35) {
 						$("#tag").val("#"+tag);
 				}
 			}
@@ -80,13 +80,17 @@
 						$("#tag").val(tag.substr(0, tag.length-1));
 					}
 				}
-				if(tag.indexOf("　") != -1){
+				if(tag.length > 1 && tag.indexOf("　") != -1){
 					if(tag.charCodeAt(tag.indexOf("　")-1) != 35){
 						$("#tag").val(tag.replace("　", "#"));
 					} else {
 						$("#tag").val(tag.substr(0,tag.indexOf("　")) );
 					}
 				}
+				if(tag.length == 1 && tag.indexOf("#") != 1) {
+					$("#tag").val("");
+				}
+				
 			}
 			
 			function finalCheck() {
@@ -103,7 +107,7 @@
 				<div class="row" style="margin: 15px;">
 					<div class="col-sm-4 col-lg-5" align="center">
 						<c:if test="${empty writerInfo.IMAGE }">
-							<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
+							<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle ">
 						</c:if>
 						<c:if test="${!empty writerInfo.IMAGE }">
 							<img src="${writerInfo.IMAGE}" style="width: 240px; height: 240px;" class="img-circle">
@@ -118,9 +122,10 @@
 							</h2>
 							<h3>
 								<span style="font-size: 12px; color: gray; font-style: italic;">by</span>
-								<a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>
+								<a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>&nbsp;
 								<span style="font-size: 12px; color: gray; font-style: italic;">
-									| view</span> <span class="badge">${bookInfo.good }</span>
+									| &nbsp;VIEW</span> <span class="badge">${empty viewNgood[0].VIEWCNT? 0 : viewNgood[0].VIEWCNT }</span> 
+								<span style="font-size: 12px; color: gray; font-style: italic;">| &nbsp;GOOD</span> <span class="badge">${empty viewNgood[0].GOODCNT ? 0 : viewNgood[0].GOODCNT}</span>
 							</h3>
 							</div>
 							<div style="margin: 15px;">
@@ -154,7 +159,7 @@
 														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>";
 													for(var j = 0; j < vo.length ; j++) {
 														if(vo[j].no == c[i].NO) {
-															 img = "<img class='card-img-top' alt='Card image' style='width: 100%' ";
+															 img = "<img class='card-img-top' alt='Card image' style='width: 100%; max-height:' ";
 															if(vo[j].image == null) {
 																img += "src='${pageContext.request.contextPath }/image/Desert.jpg'>";
 															} else {
@@ -162,7 +167,7 @@
 															}
 															var body = "<div class='card-body'>"
 																				+"<h3 class='card-title'>"+c[i].TITLE +"</h3></a>"
-																				+"<p class='list-group-item-text'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
+																				+"<p class='list-group-item-text' style='margin:0 0 10px;'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
 																				+"<span class='glyphicon glyphicon-heart'></span> <span class='badge'> "+Math.floor(c[i].GOOD)+"</span> "
 																				+"<span class='glyphicon glyphicon-eye-open'></span> <span class='badge'> "+Math.floor(c[i].VIEWCNT )+"</span></p>"
 																				+"<p>";
@@ -230,7 +235,7 @@
 										});
 									}
 								</script>
-						<c:if test="${logon  != writerInfo.ID || logon== null}">
+						<c:if test="${logon != writerInfo.ID || logon== null}">
 							<c:forEach items="${follower }" var="fer">
 								<c:if test="${fer.READER eq logon}">
 									<c:set var="fan" value="true" />
@@ -262,17 +267,21 @@
 									</div>
 					<script>
 					  	$("#followbt").click(function(){
-							$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
-								}).done(function(rst){
-									var html="";
-									if(rst.result) {
-										html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
-									} else {
-										html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
-									}
-										$("#mbody").html(html);
-						  			$("#result").modal();
-								})	;
+					  		if("${logon}" != "" ) {
+								$.get("${pageContext.request.contextPath}/follow",  {"target": "${writerInfo.ID}"
+									}).done(function(rst){
+										var html="";
+										if(rst.result) {
+											html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
+										} else {
+											html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+										}
+											$("#mbody").html(html);
+							  			$("#result").modal();
+									})	;
+					  		} else {
+					  			window.location.assign("${pageContext.request.contextPath}/member/log");
+					  		}
 				  		});
 					  	
 					  	$("#rClose").click(function(){
@@ -330,7 +339,7 @@
 												</c:if>
 												<c:if test="${! empty vo.image }">
 													<c:set var="path" value="${pageContext.request.contextPath }"/>
-													<img class="card-img-top" src="${ vo.image[0] }" alt="Card image" style="width: 100%">
+													<img class="card-img-top" src="${ vo.image[0] }" alt="Card image" style="width: 100%; border: 1px solid #ddd;">
 												</c:if>
 												<div class="card-body" >
 													<h3 class="card-title">${c.TITLE }</h3></a>
@@ -367,11 +376,13 @@
 				<c:if test="${empty contentsList }">
 				<br>
 					<hr/>
+					<div align="center">
 					<p>발행된 글이 없습니다.</p>
 					<c:if test="${writerInfo.ID eq logon}">
 						<p>글을 등록해 보세요!</p>
 						<a href="${pageContext.request.contextPath }/board/register"><button type="button" class="btn btn-info">글쓰기</button></a>
 					</c:if>
+					</div>
 				</c:if>
 				</div>
 	</c:otherwise>
@@ -397,17 +408,21 @@
 								});
 							  	
 								function bookDel(bno) {
-									var ans = window.confirm("삭제시 책에 등록된 모든 게시글이 함께 삭제됩니다.\r\n정말 삭제하시겠습니까?");
-									if(ans) {
-										$.get("${pageContext.request.contextPath}/bookPage/"+bno+"/del",{"bno" : bno}
-											,function(obj){
-												if(obj.rst) {
-													window.alert("삭제되었습니다.");
-													location.assign("${pageContext.request.contextPath}/@${bookInfo.writer}");
-												} else {
-													window.alert("삭제 실패. \r\n다시 시도해 주세요.");
-												}
-											});
+									if('${lv}'==1) {
+										var ans = window.confirm("삭제시 책에 등록된 모든 게시글이 함께 삭제됩니다.\r\n정말 삭제하시겠습니까?");
+										if(ans) {
+											$.get("${pageContext.request.contextPath}/bookPage/"+bno+"/del",{"bno" : bno}
+												,function(obj){
+													if(obj.rst) {
+														window.alert("삭제되었습니다.");
+														location.assign("${pageContext.request.contextPath}/@${bookInfo.writer}");
+													} else {
+														window.alert("삭제 실패. \r\n다시 시도해 주세요.");
+													}
+												});
+										}
+									} else {
+										location.assign("${pageContext.request.contextPath}/member/lvup");
 									}
 								}
 							</script>

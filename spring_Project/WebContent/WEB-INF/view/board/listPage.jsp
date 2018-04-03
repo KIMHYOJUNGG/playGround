@@ -44,7 +44,13 @@
 					</select> <input type="text" name='keyword' id="keywordInput"
 						value='${cri.keyword }'>
 					<button id='searchBtn'>Search</button>
+					<script>
+					$("#searchBtn").onchange(function(){
+						
+						
+					});
 					
+					</script>
 					<a href="/board/register"><button class='btn btn-primary'>New Board</button></a>
 					
 				</div>
@@ -75,7 +81,7 @@
 					<table class="table table-bordered table-hover">
 						<tr>
 							<th style="width: 10px">BNO</th>
-							<th>TITLE</th>
+							<th >TITLE</th>
 							<th>WRITER</th>
 							<th>REGDATE</th>
 							<th style="width: 80px">좋아요!</th>
@@ -184,6 +190,15 @@
 	$(document).ready(
 			function() {
 
+				$("#keywordInput").on("change",function(event){
+					self.location = "listPage"
+						+ '${pageMaker.makeQuery(1)}'
+						+ "&searchType="
+						+ $("select option:selected").val()
+						+ "&keyword=" + $('#keywordInput').val();
+					$(this).focus();
+					
+				});
 				$('#searchBtn').on(
 						"click",
 						function(event) {

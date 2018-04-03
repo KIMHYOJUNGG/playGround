@@ -16,3 +16,6 @@
 		</form>
 	</div>
 </body>
+<script>
+	console.log('${uri}');
+</script>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <div class="container-fluid text-center">
 	<br>
@@ -45,16 +46,16 @@
 			<tbody>
 				<c:choose>
 					<c:when test="${empty sendBox }">
-						<td colspan="4">보낸 메세지가 없습니다.</td>
+						<td colspan="4" align="center">보낸 메세지가 없습니다.</td>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="msg" items="${sendBox }">
 							<tr>
-								<td><input type="checkbox" class="msgcbx"  value="${msg.NO }"></td>
-								<td style="width: 20%"><a href="javascript:void(0);" onclick="sendMsg('${msg.GETID}')">${msg.GETID }</a></td>
-								<td style="width: 40%"><a href="javascript:void(0);" onclick="readMsg('${msg.NO}')">${msg.TITLE }</a></td>
-								<td style="width: 20%">${msg.REGDATE }</td>
-								<td>${msg.READCHECK == 'Y' ? '읽음' : '읽지 않음'}</td>
+								<td class="mtd"><input type="checkbox" class="msgcbx"  value="${msg.NO }"></td>
+								<td class="mtd" style="width: 20%"><a href="javascript:void(0);" onclick="sendMsg('${msg.GETID}')">${msg.GETID }</a></td>
+								<td class="mtd" style="width: 40%"><a href="javascript:void(0);" onclick="readMsg('${msg.NO}')">${msg.TITLE }</a></td>
+								<td class="mtd" style="width: 20%"><fmt:formatDate value="${msg.REGDATE }" pattern="yy/MM/dd HH:mm"/></td>
+								<td class="mtd">${msg.READCHECK == 'Y' ? '읽음' : '읽지 않음'}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
@@ -86,6 +87,33 @@
 			});
 		}
 		
+		$("#topcbx").prop("checked", false);
+		$(".msgcbx").prop("checked", $("#topcbx").prop("checked"));
+		
+		$("#topcbx").click(function() {
+				$(".msgcbx").prop("checked", $(this).prop("checked"));
+		});
+		
+		var total = $(".msgcbx").length;
+		var ckd = 0;
+		$(".msgcbx").each(function(){
+				$(this).click(function(){
+					if($(this).prop("checked"))
+						ckd += 1;
+					else
+						ckd -= 1;
+					cbxCheck();
+				});
+		});
+		
+		function cbxCheck() {
+			if(ckd == total) {
+				$("#topcbx").prop("checked", true);
+			} else {
+				$("#topcbx").prop("checked", false);
+			}
+		}
+		
 		function del() {
 			console.log("del 호출");
 			var dels = [];
@@ -93,7 +121,6 @@
 			$(".msgcbx:checked").each(function(){
 				cnt = dels.push($(this).val());
 			});
-			console.log(dels);
 			$.get("${pageContext.request.contextPath }/message/sendBoxDel", {
 				"no" : dels
 			}, function(obj){
@@ -106,14 +133,6 @@
 					location.reload();
 			});
 		}
-		
-		$("#topcbx").click(function() {
-			if($(this).prop("checked")) {
-				$(".msgcbx").prop("checked", true);
-			} else {
-				$(".msgcbx").prop("checked", false);
-			}
-		});
 	</script>
 
 	<div class="modal fade" id="sendModal" role="dialog">
@@ -121,10 +140,10 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="sendHead">메세지 보내기</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" align="left">
 					<form class="form-horizontal" action="${pageContext.request.contextPath }/message/send" method="post">
 						<div class="form-group text-right">
 							<label for="getid" class="control-label col-sm-2"> 받을 사람</label>
@@ -156,10 +175,9 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="readHead">보낸 메세지</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" align="left">
 				 <form class="form-horizontal" >
 						<div class="form-group">
 							<label class="control-label col-sm-3" for="to">받는 사람:</label>

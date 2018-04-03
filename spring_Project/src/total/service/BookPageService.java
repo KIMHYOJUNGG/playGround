@@ -111,7 +111,7 @@ public class BookPageService {
 	}
 	
 	public void ModifyBookInfoByBno(BookVO book) {
-		if (book.getTag() != null && (book.getTag()[0]).length() > 1) {
+		if (book.getTag() != null && (book.getTag()).length != 0 && (book.getTag()[0]).length() > 1) {
 			String[] tags = book.getTag()[0].trim().split("#");
 			int[] ri = new int[tags.length];
 			int j = 0;
@@ -131,6 +131,10 @@ public class BookPageService {
 			up.set("bookName", book.getBookName());
 			up.set("tag", book.getTag());
 		mongo.updateFirst(new Query(Criteria.where("bno").is(book.getBno())), up, "book");
+	}
+	
+	public List<Map> getViewNGoodCnt(Map data) {
+		return template.selectList("board.getViewNGoodCnt", data);
 	}
 	
 }

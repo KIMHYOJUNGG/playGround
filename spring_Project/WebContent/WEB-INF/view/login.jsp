@@ -27,7 +27,7 @@
 			</c:if>
 			<p>
 				<b>ID(*)</b><br />  <input type="text"
-					name="id" id="id" pattern="[a-zA-Z]+" onblur="idCheck()"><small><span class="checkid"></span></small>
+					name="id" id="id" pattern="[a-zA-Z1-9]+" onblur="idCheck()"><small><span class="checkid"></span></small>
 			</p>
 			<p>
 				<b>PASS(*)</b><br /> <input type="password" name="password"
@@ -51,6 +51,10 @@
 			$(".checkid").css("color", "red");
 			document.getElementById("sbt").disabled = true;
 		}
+		else{
+			$(".checkid").html("");
+			document.getElementById("sbt").disabled = false;
+		}
 	}
 	function passCheck() {
 		var pass = $("#password").val();
@@ -58,6 +62,10 @@
 			$(".checkpass").html("비밀번호를 입력해주세요")
 			$(".checkpass").css("color", "red");
 			document.getElementById("sbt").disabled = true;
+		}
+		else{
+			$(".checkpass").html("")
+			document.getElementById("sbt").disabled = false;
 		}
 	}
 </script>

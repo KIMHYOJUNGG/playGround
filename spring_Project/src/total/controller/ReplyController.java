@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import total.domain.Criteria;
 import total.domain.PageMaker;
 import total.domain.ReplyVO;
@@ -23,14 +23,15 @@ import total.service.ReplyService;
 public class ReplyController {
 
   @Autowired
-  private ReplyService service;
+  private ReplyService reservice;
 
   @RequestMapping(value = "", method = RequestMethod.POST)
   public ResponseEntity<String> register(@RequestBody ReplyVO vo) {
 
+	  System.out.println(vo.toString());
     ResponseEntity<String> entity = null;
     try {
-      service.create(vo);
+      reservice.create(vo);
       entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
@@ -39,12 +40,12 @@ public class ReplyController {
     return entity;
   }
 
- /* @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
+  @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
   public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
 
     ResponseEntity<List<ReplyVO>> entity = null;
     try {
-      entity = new ResponseEntity<>(service.list(bno), HttpStatus.OK);
+      entity = new ResponseEntity<>(reservice.list(bno), HttpStatus.OK);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -55,12 +56,13 @@ public class ReplyController {
   }
 
   @RequestMapping(value = "/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
-  public ResponseEntity<String> update(@PathVariable("rno") Integer rno, @RequestBody ReplyVO vo) {
+  public ResponseEntity<String> update(@PathVariable("rno") Integer rno,
+		  @RequestBody ReplyVO vo) {
 
     ResponseEntity<String> entity = null;
     try {
       vo.setRno(rno);
-      service.update(vo);
+      reservice.update(vo);
 
       entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     } catch (Exception e) {
@@ -71,11 +73,12 @@ public class ReplyController {
   }
 
   @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
-  public ResponseEntity<String> remove(@PathVariable("rno") Integer rno) {
+  public ResponseEntity<String> remove(
+		  @PathVariable("rno") Integer rno) {
 
     ResponseEntity<String> entity = null;
     try {
-      service.delete(rno);
+      reservice.delete(rno);
       entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
@@ -99,11 +102,11 @@ public class ReplyController {
       pageMaker.setCri(cri);
 
       Map<String, Object> map = new HashMap<String, Object>();
-      List<ReplyVO> list = service.listPage(bno, cri);
+      List<ReplyVO> list = reservice.listPage(bno, cri);
 
       map.put("list", list);
 
-      int replyCount = service.count(bno);
+      int replyCount = reservice.count(bno);
       pageMaker.setTotalCount(replyCount);
 
       map.put("pageMaker", pageMaker);
@@ -116,5 +119,5 @@ public class ReplyController {
     }
     return entity;
   }
-*/
+/**/
 }

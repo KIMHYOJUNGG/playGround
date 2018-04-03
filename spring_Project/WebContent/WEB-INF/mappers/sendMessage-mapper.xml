@@ -29,5 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from sendmessage where no in
 		<foreach collection="no" item="n" open="(" close=")" separator=",">#{n}</foreach>
 	</delete>
-	
+	<!-- okt -->
+	<delete id="deletesendMessage">
+		delete from sendmessage where sendid= #{id} or getid=#{id}
+	</delete>
 </mapper>

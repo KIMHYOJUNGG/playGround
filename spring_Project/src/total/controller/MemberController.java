@@ -1,4 +1,3 @@
-
 package total.controller;
 
 import java.io.File;
@@ -23,6 +22,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import total.domain.WebSocketMap;
+import total.service.BoardService;
 import total.service.MailService;
 import total.service.MemberService;
 
@@ -38,6 +38,8 @@ public class MemberController {
 	@Autowired
 	MailService mailservice;
 
+	@Autowired
+	BoardService boardservice;
 	// 회원등록 페이지
 	@RequestMapping("/registpage")
 	public String memberPage(Map map) {
@@ -50,11 +52,9 @@ public class MemberController {
 	public String memberRegistHandle(Model model, HttpServletRequest req, @RequestParam Map<String, Object> param,
 			HttpSession session, Map map) {
 		try {
-			if (param.get("checkemail")!=null) {
-				System.out.println("일단 이쪽이니?");
+			if (param.get("checkemail") != null) {
 				boolean rst = memberservice.registerMember(param);
 				if (rst) {
-					System.out.println("여기니?");
 					model.addAttribute("id", param.get("id"));
 					model.addAttribute("email", param.get("email"));
 					return "redirect:/member/confirmpage";
@@ -63,32 +63,31 @@ public class MemberController {
 				}
 			} else {
 				if (param != null) {
-					System.out.println("여기로 가?");
-					System.out.println("param"+param);
+					System.out.println("param" + param);
 					boolean rst = memberservice.registerMember(param);
-					
+
 					if (rst) {
 						session.setAttribute("logon", param.get("id"));
 						return "redirect:/index";
 					} else {
-						System.out.println("이거야");
 						return "/registpage";
 					}
 				}
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			/*
-			 * if (param.get("password") != null && param.get("email") != null) {
-			 * System.out.println("작동안하냐?"); model.addAttribute("idmsg", "아이디를 입력해주세요"); }
-			 * else if (param.get("id") != null && param.get("email") != null) {
-			 * System.out.println("이건왜하냐?"); model.addAttribute("passwordmsg",
-			 * "비밀번호를 입력해주세요"); } else if (param.get("id") != null && param.get("password")
-			 * != null) { System.out.println("이건뭐야?"); model.addAttribute("emailmsg",
-			 * "이메일을 입력해주세요"); }
-			 */
+			if (param.get("password") != null && param.get("email") != null) {
+				System.out.println("작동안하냐?");
+				model.addAttribute("idmsg", "아이디를 입력해주세요");
+			} else if (param.get("id") != null && param.get("email") != null) {
+				System.out.println("이건왜하냐?");
+				model.addAttribute("passwordmsg", "비밀번호를 입력해주세요");
+			} else if (param.get("id") != null && param.get("password") != null) {
+				System.out.println("이건뭐야?");
+				model.addAttribute("emailmsg", "이메일을 입력해주세요");
+			}
+
 			e.printStackTrace();
-			System.out.println("저거야");
 			map.put("body", "register.jsp");
 			return "t_el";
 		}
@@ -108,6 +107,33 @@ public class MemberController {
 		return rst;
 	}
 
+	// 닉네임 체크
+	@RequestMapping(path = "checknick", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean memberChecknick(Model model, @RequestParam String nick, Map map, HttpServletRequest req) {
+		String nick2 = memberservice.selectNick(nick);
+		map.put("body", "register.jsp");
+		boolean rst = true;
+		if (nick2 == null) {
+			rst = false;
+		}
+		System.out.println(req.getPathInfo());
+		return rst;
+	}
+	// 이메일 체크
+	@RequestMapping(path = "checkemail", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean memberCheckemail(Model model, @RequestParam String email, Map map, HttpServletRequest req) {
+		String email2 = memberservice.selectEmail(email);
+		map.put("body", "register.jsp");
+		boolean rst = true;
+		if (email2 == null) {
+			rst = false;
+		}
+		System.out.println(req.getPathInfo());
+		return rst;
+	}
+	
 	// 이메일인증 번호 보내주기
 	@RequestMapping("/confirmpage")
 	public String emailConfirm(Model model, HttpSession session, HttpServletRequest req, @RequestParam Map param,
@@ -121,7 +147,7 @@ public class MemberController {
 		if (rst) {
 			System.out.println("이메일 인증번호 갔니?");
 			session.setAttribute("num", num);
-			model.addAttribute("email",param.get("email"));
+			model.addAttribute("email", param.get("email"));
 			model.addAttribute("id", param.get("id"));
 			return "t_el";
 		} else {
@@ -133,20 +159,24 @@ public class MemberController {
 	// 이메일 인증으로 인한 레벨 증가
 	@RequestMapping("confirm")
 	public String confirm(@RequestParam Map param, HttpSession session, Model model, Map map) {
+		System.out.println(session.getAttribute("num"));
 		map.put("body", "confirmpage.jsp");
 		if ((session.getAttribute("num").toString()).equals(param.get("num2").toString())) {
-			int i = memberservice.updateLv((String)param.get("id"));
-			if(i!=0) {
+			int i = memberservice.updateLv((String) param.get("id"));
+			if (i != 0) {
 				session.setAttribute("logon", param.get("id"));
-				String uri = (String)session.getAttribute("uri");
-				if(uri!=null) {
-				return uri;
-				}
-				else {
+				Map map2 = memberservice.emailMember(param.get("id").toString());
+				System.out.println("lvup?");
+				int lv = Integer.parseInt((map2.get("LV").toString()));
+				session.setAttribute("lv", lv);
+				String uri = (String) session.getAttribute("uri");
+				if (uri != null) {
+					System.out.println("uri로 가니?");
+					return "redirect:"+uri;
+				} else {
 					return "redirect:/index";
 				}
-			}
-			else {
+			} else {
 				model.addAttribute("emailfail", "일치하지 않습니다. 재전송바랍니다.");
 				return "t_el";
 			}
@@ -162,58 +192,61 @@ public class MemberController {
 		map.put("body", "login.jsp");
 		return "t_el";
 	}
-	// 로그인시 lv업
-	@RequestMapping(path="/lvup",method=RequestMethod.GET)
-	public String lvup(Model model,@RequestParam Map<String, String> param,HttpSession session) {
-		String id = (String)session.getAttribute("logon");
-		String uri = (String)session.getAttribute("uri");
-		Map map = memberservice.emailMember(id);
-		if(map != null) {
-			model.addAttribute("email",map.get("EMAIL"));
-			return "/member/confirmpage";
-		}
-		else {
-			return "fail";
-		}
+
+	// 권한이 제한되었을 때의 페이지이동
+	@RequestMapping(path = "/lvup", method = RequestMethod.GET)
+	public String lvup(Model model, @RequestParam Map<String, String> param, Map map) {
+		map.put("body", "lvpage.jsp");
+		return "t_el";
 	}
+
+	// 로그인시 lv업(0일시 1로)
+	@RequestMapping(path = "/lvup2")
+	public String lvup2(Model model, HttpSession session) {
+		String id = (String) session.getAttribute("logon");
+		String email = (String) session.getAttribute("email");
+		System.out.println("아이디" + id);
+		System.out.println("이메일" + email);
+		// Map map = memberservice.emailMember(id);
+		model.addAttribute("email", email);
+		model.addAttribute("id", id);
+		return "redirect:/member/confirmpage";
+	}
+
 	// 로그인 실행
 	@RequestMapping(path = "/loging", method = RequestMethod.POST)
 	public String memberLoginHandle(Model model, @RequestParam Map<String, String> param, HttpSession session,
 			Map mapp) {
-		String id = (String)param.get("id");
-		String uri = (String)session.getAttribute("uri");
-		int i = memberservice.loginMember(param);
-		boolean rst = i<2;
+		String id = (String) param.get("id");
+		String uri = (String) session.getAttribute("uri");
+		Map map2 = memberservice.loginMember(param);
 		try {
-			if (uri != null) {
-				if (rst) {
-					session.setAttribute("logon", param.get("id"));
-					List<WebSocketSession> s = wsMap.get(session.getId());
-					if (s != null) {
-						for (WebSocketSession ws : s) {
-							ws.sendMessage(new TextMessage("로그인"));
-						}
-						return uri;
-					} else {
-						return uri;
+			if (map2 != null) {
+				session.setAttribute("logon", param.get("id"));
+				int lv = Integer.parseInt(map2.get("LV").toString());
+				session.setAttribute("lv", lv);
+				System.out.println(session.getAttribute("lv"));
+				String email = map2.get("EMAIL").toString();
+				session.setAttribute("email", email);
+				List<WebSocketSession> s = wsMap.get(session.getId());
+				if (s != null) {
+					for (WebSocketSession ws : s) {
+						ws.sendMessage(new TextMessage("로그인"));
 					}
-				}
-				throw new Exception();
-			} else {
-				if (rst) {
-					session.setAttribute("logon", param.get("id"));
-					List<WebSocketSession> s = wsMap.get(session.getId());
-					if (s != null) {
-						for (WebSocketSession ws : s) {
-							ws.sendMessage(new TextMessage("로그인"));
-						}
+					if (uri != null) {
+						return "redirect:"+uri;
+					} else {
 						return "redirect:/index";
+					}
+				} else {
+					if (uri != null) {
+						return "redirect:"+uri;
 					} else {
 						return "redirect:/index";
 					}
 				}
-				throw new Exception();
 			}
+			throw new Exception();
 		} catch (Exception e) {
 			e.printStackTrace();
 			mapp.put("body", "login.jsp");
@@ -233,6 +266,9 @@ public class MemberController {
 	public String logoutHandle(Model model, HttpSession session) {
 		try {
 			session.removeAttribute("logon");
+			session.removeAttribute("email");
+			session.removeAttribute("lv");
+			session.removeAttribute("uri");
 			List<WebSocketSession> s = wsMap.get(session.getId());
 			if (s != null) {
 				for (WebSocketSession ws : s) {
@@ -296,5 +332,40 @@ public class MemberController {
 			model.addAttribute("passwordwarn", "아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해주세요");
 			return "t_el";
 		}
+	}   
+	
+	// 회원탈퇴페이지 이동
+	@RequestMapping(path="/godrop")
+	public String goDroppage() {
+		return "dropmember";
+	}
+	
+	// 회원탈퇴
+	@RequestMapping(path="/dropmember" , method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String dropMember(HttpSession session,@RequestParam("password") String password) {
+		String id = session.getAttribute("logon").toString();
+		System.out.println("id======"+id);
+		boolean rst = false;
+		Map map = memberservice.emailMember(id);
+		String password2 = map.get("PASSWORD").toString();
+		if(password.equals(password)) {
+			//해당 아이디의 게시글 지우기 join으로...
+			boolean rst2 = memberservice.deleteAll(id);
+			if(rst2) {
+				rst = true;
+				session.removeAttribute("logon");
+				session.removeAttribute("email");
+				session.removeAttribute("lv");
+				session.removeAttribute("uri");
+				return "{\"rst\" : "+rst+"}";
+			}
+			else {
+				return "{\"rst\" : "+rst+"}";
+			}
+		}else {
+			return "{\"rst\" : "+rst+"}";
+		}
 	}
 }
+
