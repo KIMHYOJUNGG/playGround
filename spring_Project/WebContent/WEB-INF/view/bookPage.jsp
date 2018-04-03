@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
 <c:choose>
 	<c:when test="${empty bookContents}">
 		<div style="margin-top: 15px">
@@ -333,14 +332,19 @@
 										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}">
 										<c:forEach var="vo" items="${boardVOList }">
 											<c:if test="${vo.no eq c.NO}">
-											
-												<c:if test="${empty vo.image }">
-													<img class="card-img-top" src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Card image" style="width: 100%">
-												</c:if>
-												<c:if test="${! empty vo.image }">
-													<c:set var="path" value="${pageContext.request.contextPath }"/>
-													<img class="card-img-top" src="${ vo.image[0] }" alt="Card image" style="width: 100%; border: 1px solid #ddd;">
-												</c:if>
+											<div class="img_div-wrapper" style="border: 1px solid #ddd;">
+												<div class="img_div">
+													<div class="img-centered">
+														<c:if test="${empty vo.image }">
+															<img class="card-img-top" src="${pageContext.request.contextPath }/image/Desert.jpg" alt="Card image" style="width: 100%">
+														</c:if>
+														<c:if test="${! empty vo.image }">
+															<c:set var="path" value="${pageContext.request.contextPath }"/>
+															<img class="card-img-top" src="${ vo.image[0] }" alt="Card image" >
+														</c:if>
+													</div>
+												</div>
+												</div>
 												<div class="card-body" >
 													<h3 class="card-title">${c.TITLE }</h3></a>
 													<p class="list-group-item-text"><a href="${pageContext.request.contextPath }/search?word=${c.TYPE }"><span class="badge bg_type">${c.TYPE }</span></a>
@@ -356,6 +360,27 @@
 										</c:forEach>
 									</div>
 								</div>
+								<script>
+								$(function(){
+									$(".img-centered").each(function(){
+										console.log(".img-centered");
+										var div = $(this); // 이미지를 감싸는 div
+										var $img = $(this).children('img');
+										var divAspect = div.height() / div.width(); 
+										var imgAspect = $img.height() / $img.width();
+										if (imgAspect <= divAspect) {
+										    // 이미지가 div보다 납작한 경우 세로를 div에 맞추고 가로는 잘라낸다
+										    if($img.attr("class").indexOf("landscape") == -1)
+										    	$img.attr("class", $img.attr("class")+" landscape");
+										} else {
+										    // 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
+// 										    $img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
+											 if($img.attr("class").indexOf("portrait") == -1)
+											 	 $img.attr("class", $img.attr("class")+" portrait");
+										}
+									});
+								});
+								</script>
 								<c:choose>
 									<c:when test="${vs.count%3 eq 0 }">
 										</div>

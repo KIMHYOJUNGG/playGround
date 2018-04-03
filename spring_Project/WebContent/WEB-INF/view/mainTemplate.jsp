@@ -25,7 +25,7 @@
 	href="https://fonts.googleapis.com/css?family=Karma">
 
 <style>
- .main_keywords {
+.main_keywords {
 	border-collapse: collapse;
 	height: 600px;
 	width: 30%;
@@ -38,7 +38,7 @@
 }
 
 .mainbody {
-
+	
 }
 
 .w3-bar-block .w3-bar-item {
@@ -46,33 +46,32 @@
 }
 
 img {
-    width: 100%;
-    height: auto;
+	width: 100%;
+	height: auto;
 }
 
-	.centered {
-  position: relative;
-  display: inline-block;
- 
-  width: 50%;
-  padding: 1em;
-  }
-  
-  .search {
-/*   	background-color: #fff; */
-/*   	color: #777; */
+.centered {
+	position: relative;
+	display: inline-block;
+	width: 50%;
+	padding: 1em;
+}
+
+.search {
+	/*   	background-color: #fff; */
+	/*   	color: #777; */
 	background-color: #f0ad4e;
-  }
-  
-  .bg_type{
-  	background-color: #5bc0de;
-  }
-  
-  .mtd {
-  	text-align: center;
-  }
-  
-  .bg-grey {
+}
+
+.bg_type {
+	background-color: #5bc0de;
+}
+
+.mtd {
+	text-align: center;
+}
+
+.bg-grey {
 	background-color: #f6f6f6;
 }
 
@@ -129,9 +128,111 @@ img {
 		}
 	}
 }
+
+#media-320, #media-768, #media-1024, #media-1025 {
+	display: none;
+	height: 0px;
+	overflow: hidden;
+}
+
+@media all and (max-width: 320px) {
+	#media-320 {
+		display: block;
+	}
+}
+
+@media all and (min-width: 321px) and (max-width: 768px) {
+	#media-768 {
+		display: block;
+	}
+}
+
+@media all and (min-width: 769px) and (max-width: 1024px) {
+	#media-1024 {
+		display: block;
+	}
+}
+
+@media all and (min-width: 1025px) {
+	#media-1025 {
+		display: block;
+	}
+}
+
+.img_div-wrapper {
+	display: inline-block;
+	width: 100%;
+}
+
+.img_div {
+	position: relative;
+	padding-top: 100%;
+	overflow: hidden;
+}
+
+.img_div img {
+  position: absolute;
+  top:0;
+  left: 0;
+}
+
+.img_div .img-centered {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	-webkit-transform: translate(50%, 50%);
+	-ms-transform: translate(50%, 50%);
+	transform: translate(50%, 50%);
+}
+
+.img_div .img-centered img {
+	-webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.img_div img.portrait {
+	width: 100%;
+	max-width: none;
+	height: auto;
+}
+
+.img_div img.landscape {
+	width: auto;
+	max-width: none;
+	height: 100%;
+}
 </style>
 </head>
 <body>
+    <div id="media-320"></div>
+    <div id="media-768"></div>
+    <div id="media-1024"></div>
+    <div id="media-1025"></div>
+    
+    <script>
+		var responsive;
+		
+		function setResponsive() {
+		    if ($('div#media-320').css('display') == 'block') responsive = 1;
+		    else if ($('div#media-768').css('display') == 'block') responsive = 2; // 모바일
+		    else if ($('div#media-1024').css('display') == 'block') responsive = 3;
+		    else if ($('div#media-1025').css('display') == 'block') responsive = 0;
+		    else responsive = 4;
+		}
+		  
+		$(window).on('load', function () {
+		    setResponsive();
+			console.log("load :" + responsive);
+		});
+		  
+		$(window).on('resize', function () {
+		    setResponsive();
+		    console.log("resize :" + responsive);
+		});
+	</script>
 
 	<nav class="navbar navbar-inverse navbar-fixed-top" >
 		<div class="container-fluid">
