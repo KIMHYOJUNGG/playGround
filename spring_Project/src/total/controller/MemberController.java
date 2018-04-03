@@ -337,35 +337,8 @@ public class MemberController {
 	// 회원탈퇴페이지 이동
 	@RequestMapping(path="/godrop")
 	public String goDroppage() {
-		return "dropmember2";
+		return "dropmember";
 	}
-	
-/*	
-	// 회원탈퇴
-	@RequestMapping(path="/dropmember" ,method=RequestMethod.POST)
-	public String dropMember(HttpSession session,@RequestParam String password) {
-		String id = session.getAttribute("logon").toString();
-		System.out.println("id======"+id);
-		Map map = memberservice.emailMember(id);
-		String password2 = map.get("PASSWORD").toString();
-		if(password.equals(password)) {
-			//해당 아이디의 게시글 지우기 join으로...
-			boolean rst = memberservice.deleteAll(id);
-			if(rst) {
-				session.removeAttribute("logon");
-				session.removeAttribute("email");
-				session.removeAttribute("lv");
-				session.removeAttribute("uri");
-				return "redirect:/index";
-			}
-			else {
-				return "redirect:/index";
-			}
-		}else {
-			return "redirect:/index";
-		}
-	}*/
-	
 	
 	// 회원탈퇴
 	@RequestMapping(path="/dropmember" , method = RequestMethod.GET, produces="application/json;charset=utf-8")
