@@ -1,10 +1,5 @@
 package total.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import total.domain.Criteria;
-import total.domain.PageMaker;
+
+import total.domain.MongoBoardVo;
 import total.domain.ReplyVO;
 import total.service.ReplyService;
 
@@ -23,14 +18,15 @@ import total.service.ReplyService;
 public class ReplyController {
 
   @Autowired
-  private ReplyService service;
+  private ReplyService reservice;
 
   @RequestMapping(value = "", method = RequestMethod.POST)
   public ResponseEntity<String> register(@RequestBody ReplyVO vo) {
 
+	  System.out.println(vo.toString());
     ResponseEntity<String> entity = null;
     try {
-      service.create(vo);
+      reservice.create(vo);
       entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
@@ -39,12 +35,12 @@ public class ReplyController {
     return entity;
   }
 
- /* @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
-  public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
+  @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
+  public ResponseEntity<MongoBoardVo> list(@PathVariable("bno") Integer bno) {
 
-    ResponseEntity<List<ReplyVO>> entity = null;
+    ResponseEntity<MongoBoardVo> entity = null;
     try {
-      entity = new ResponseEntity<>(service.list(bno), HttpStatus.OK);
+      entity = new ResponseEntity<>(reservice.list(bno), HttpStatus.OK);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -60,7 +56,7 @@ public class ReplyController {
     ResponseEntity<String> entity = null;
     try {
       vo.setRno(rno);
-      service.update(vo);
+      reservice.update(vo);
 
       entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     } catch (Exception e) {
@@ -69,7 +65,7 @@ public class ReplyController {
     }
     return entity;
   }
-
+/*
   @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
   public ResponseEntity<String> remove(@PathVariable("rno") Integer rno) {
 

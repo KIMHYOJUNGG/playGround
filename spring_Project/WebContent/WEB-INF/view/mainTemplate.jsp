@@ -158,6 +158,7 @@ img {
 						</li>
 					<li><a href="${pageContext.request.contextPath}/message">우편함</a></li>
 					<li><a href="${pageContext.request.contextPath}/board/listPage">글목록</a></li>
+					<li><a href="">${logon }님 환영합니다.</a></li>
 				</ul>
 			</c:if>
 				<ul class="nav navbar-nav navbar-right">
