@@ -62,6 +62,7 @@
 			formObj.submit();
 		});
 	});
+	opener.location.reload();
 </script>
 
 

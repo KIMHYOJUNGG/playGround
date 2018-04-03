@@ -43,7 +43,11 @@ public class IndexController {
 		model.addAttribute("type",type);
 		System.out.println("index");
 		List<Map> boardNo = indexService.boardConnectNo();
-		model.addAttribute("boardNo", boardNo);
+		if(boardNo.size()<8) 
+			model.addAttribute("boardNo", boardNo);
+		else 
+			model.addAttribute("boardNo", boardNo.subList(0, 8));
+		
 		model.addAttribute("body", "index.jsp");
 
 		for (String s : boardService.mongoFindImage((Number) (boardNo.get(0).get("NO")))) {

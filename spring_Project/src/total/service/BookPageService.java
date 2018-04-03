@@ -133,4 +133,8 @@ public class BookPageService {
 		mongo.updateFirst(new Query(Criteria.where("bno").is(book.getBno())), up, "book");
 	}
 	
+	public List<Map> getViewNGoodCnt(Map data) {
+		return template.selectList("board.getViewNGoodCnt", data);
+	}
+	
 }
