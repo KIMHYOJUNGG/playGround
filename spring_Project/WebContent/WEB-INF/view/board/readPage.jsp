@@ -210,6 +210,8 @@
     <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
     </c:if>
+    <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글 </button>
+    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글  </button>
     <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
     <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
@@ -315,6 +317,55 @@ $.ajax({
         alert('게시글 등록 실패');
     }
 	});
+});
+
+
+$('#pre').click(function() {
+	$.ajax({
+	    url: "/pre",
+	    method: "get",
+	    data: {   
+	        "boardNo" : "${boardVO.no}",
+	        "bookname" : "${boardVO.bookname}",
+	        "id" : "${logon}"},
+	    success: function(response) {
+				if(response.result) {
+				alert(response.prev);
+				if(response.prev==null){
+					alert('이전 글이 존재하지 않습니다.');
+				}else{
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.prev);
+				}
+	    		
+			}
+	    }, error: function() {
+	        alert('게시글 등록 실패');
+	    }
+		});
+});
+
+$('#next').click(function() {
+	$.ajax({
+	    url: "/next",
+	    method: "get",
+	    data: {   
+	        "boardNo" : "${boardVO.no}",
+	        "bookname" : "${boardVO.bookname}",
+	        "id" : "${logon}"},
+	    success: function(response) {
+				if(response.result) {
+				if(response.next==null){
+					alert('다음 글이 존재하지 않습니다.');
+				}else{
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.next);
+				}
+	    		
+			}
+	    }, error: function() {
+	    	console.log("에러");
+	        alert('게시글 등록 실패');
+	    }
+		});
 });
 
 
