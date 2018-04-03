@@ -111,7 +111,7 @@ public class BookPageService {
 	}
 	
 	public void ModifyBookInfoByBno(BookVO book) {
-		if (book.getTag() != null && (book.getTag()[0]).length() > 1) {
+		if (book.getTag() != null && (book.getTag()).length != 0 && (book.getTag()[0]).length() > 1) {
 			String[] tags = book.getTag()[0].trim().split("#");
 			int[] ri = new int[tags.length];
 			int j = 0;

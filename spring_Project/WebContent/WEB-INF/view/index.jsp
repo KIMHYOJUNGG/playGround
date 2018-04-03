@@ -2,74 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
-.bg-grey {
-	background-color: #f6f6f6;
-}
 
-.logo {
-	font-size: 200px;
-}
-
-@media screen and (max-width: 768px) {
-	.col-sm-4 {
-		text-align: center;
-		margin: 25px 0;
-	}
-}
-
-.carousel-inner img {
-	width: 40%; /* Set width to 100% */
-	height: 40%;
-	margin: auto;
-}
-
-.carousel-caption h3 {
-	color: #fff !important;
-}
-
-@media ( max-width : 400px) {
-	.carousel-caption {
-		display: none;
-		/* Hide the carousel text when the screen is less than 600 pixels wide */
-	}
-}
-
-.container-fluid {
-	
-}
-
-@media screen and (max-width: 768px) {
-	.col-sm-3 {
-		text-align: center;
-		margin: 25px 0;
-	}
-	.carousel-inner img {
-		-webkit-filter: grayscale(90%);
-		filter: grayscale(90%); /* make all photos black and white */
-		width: 100%; /* Set width to 100% */
-		margin: auto;
-	}
-	.carousel-caption h3 {
-		color: #fff !important;
-	}
-	@media ( max-width : 600px) {
-		.carousel-caption {
-			display: none;
-			/* Hide the carousel text when the screen is less than 600 pixels wide */
-		}
-	}
-}
-</style>
-</head>
 <body class="mainbody">
 	<div class="alert alert-warning alert-dismissible" id="warn1"
 		style="display: none">
@@ -164,7 +97,7 @@
 
 		<!-- Container (Portfolio Section) -->
 		<div class="container-fluid text-center bg-grey">
-			<h2>Portfolio</h2>
+			<h2>Now</h2>
 			<br>
 			<h4>What we have created</h4>
 			<div class="row text-center">

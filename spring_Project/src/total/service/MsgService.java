@@ -51,7 +51,7 @@ public class MsgService {
 	public boolean delMsgByNoFromGetBox(String[] no) {
 		Map data = new HashMap<>();
 			data.put("no", no);
-		return template.delete("getBox.delMsgByNo", data) == 1;
+		return template.delete("getBox.delMsgByNo", data) == no.length;
 	}
 	
 }
