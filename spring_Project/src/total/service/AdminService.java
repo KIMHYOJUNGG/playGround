@@ -58,6 +58,7 @@ public class AdminService {
 	// ----------- 여기서 부터 삭제
 	// --------------------------------------------------------------
 	public boolean delete(Integer no) throws Exception {
+		template.delete("report.delete",no);
 		int rst = template.delete("admin.delete", no);
 		if (rst != 0) {
 			Criteria criteria = new Criteria("no");

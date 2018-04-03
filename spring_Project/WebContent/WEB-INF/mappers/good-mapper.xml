@@ -25,4 +25,9 @@ update board set good=good+1
 update board set good=good-1
 		where no = #{no}
 </update>
+
+<!--  okt(회원탈퇴시의 해당게시글의 good지우기  -->
+<delete id="deleteAll">
+	delete from good where targetboard = #{no} 
+</delete>
 </mapper>

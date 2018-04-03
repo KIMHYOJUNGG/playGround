@@ -18,5 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="dropFollow">
 		delete from follow where (reader = #{reader} and target = #{target})
 	</delete>
-
+	
+	<!-- okt 회원탈퇴시의 follow -->
+	<delete id="deleteAll">
+		delete from follow where target=#{id}
+	</delete>
 </mapper>

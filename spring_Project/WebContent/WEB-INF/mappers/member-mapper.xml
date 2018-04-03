@@ -97,6 +97,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 회원 탈퇴///////////////////////////// -->
-	
+		<select id="selectAllbd" resultType="hashmap">
+		select * from board where writer = #{id}
+	</select>
+	<delete id = "deleteAll">
+		delete from member where id=#{id}
+	</delete>
 </mapper>
 

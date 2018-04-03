@@ -21,8 +21,7 @@
 		var formObj = $("form[role='form']");
 		var s = window.confirm("회원탈퇴를 하게 되면 관련된 모든 정보가 삭제됩니다. 정말로 삭제합니까? ");
 		if (s) {
-			var y = window.confirm("당신을 구독하는 구독자가 슬퍼할지 모릅니다. 정말로 삭제할 껍니까?");
-			if(y){
+			if(s){
 				formObj.submit();
 			}
 		}
