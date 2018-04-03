@@ -337,10 +337,10 @@ public class MemberController {
 	// 회원탈퇴페이지 이동
 	@RequestMapping(path="/godrop")
 	public String goDroppage() {
-		return "dropmember";
+		return "dropmember2";
 	}
 	
-	
+/*	
 	// 회원탈퇴
 	@RequestMapping(path="/dropmember" ,method=RequestMethod.POST)
 	public String dropMember(HttpSession session,@RequestParam String password) {
@@ -352,6 +352,10 @@ public class MemberController {
 			//해당 아이디의 게시글 지우기 join으로...
 			boolean rst = memberservice.deleteAll(id);
 			if(rst) {
+				session.removeAttribute("logon");
+				session.removeAttribute("email");
+				session.removeAttribute("lv");
+				session.removeAttribute("uri");
 				return "redirect:/index";
 			}
 			else {
@@ -359,6 +363,35 @@ public class MemberController {
 			}
 		}else {
 			return "redirect:/index";
+		}
+	}*/
+	
+	
+	// 회원탈퇴
+	@RequestMapping(path="/dropmember" , method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String dropMember(HttpSession session,@RequestParam("password") String password) {
+		String id = session.getAttribute("logon").toString();
+		System.out.println("id======"+id);
+		boolean rst = false;
+		Map map = memberservice.emailMember(id);
+		String password2 = map.get("PASSWORD").toString();
+		if(password.equals(password)) {
+			//해당 아이디의 게시글 지우기 join으로...
+			boolean rst2 = memberservice.deleteAll(id);
+			if(rst2) {
+				rst = true;
+				session.removeAttribute("logon");
+				session.removeAttribute("email");
+				session.removeAttribute("lv");
+				session.removeAttribute("uri");
+				return "{\"rst\" : "+rst+"}";
+			}
+			else {
+				return "{\"rst\" : "+rst+"}";
+			}
+		}else {
+			return "{\"rst\" : "+rst+"}";
 		}
 	}
 }

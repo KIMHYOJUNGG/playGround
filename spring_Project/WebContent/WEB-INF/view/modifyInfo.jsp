@@ -205,6 +205,7 @@
 	
 	function dropmember(){
 		window.open("/member/godrop",	"m","left=100,top=200,width=700,height=300");
+		opener.location.reload(); 
 	};
 </script>
 
