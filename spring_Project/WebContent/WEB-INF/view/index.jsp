@@ -97,7 +97,7 @@
 
 		<!-- Container (Portfolio Section) -->
 		<div class="container-fluid text-center bg-grey">
-			<h2>Portfolio</h2>
+			<h2>Now</h2>
 			<br>
 			<h4>What we have created</h4>
 			<div class="row text-center">
