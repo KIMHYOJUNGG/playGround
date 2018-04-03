@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+
 <c:choose>
 	<c:when test="${empty bookContents}">
 		<div style="margin-top: 15px">
@@ -106,7 +107,7 @@
 				<div class="row" style="margin: 15px;">
 					<div class="col-sm-4 col-lg-5" align="center">
 						<c:if test="${empty writerInfo.IMAGE }">
-							<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
+							<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle ">
 						</c:if>
 						<c:if test="${!empty writerInfo.IMAGE }">
 							<img src="${writerInfo.IMAGE}" style="width: 240px; height: 240px;" class="img-circle">
@@ -121,9 +122,10 @@
 							</h2>
 							<h3>
 								<span style="font-size: 12px; color: gray; font-style: italic;">by</span>
-								<a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>
+								<a href="${pageContext.request.contextPath }/@${writerInfo.ID}">${writerInfo.NICKNAME }</a>&nbsp;
 								<span style="font-size: 12px; color: gray; font-style: italic;">
-									| view</span> <span class="badge">${bookInfo.good }</span>
+									| &nbsp;VIEW</span> <span class="badge">${empty viewNgood[0].VIEWCNT? 0 : viewNgood[0].VIEWCNT }</span> 
+								<span style="font-size: 12px; color: gray; font-style: italic;">| &nbsp;GOOD</span> <span class="badge">${empty viewNgood[0].GOODCNT ? 0 : viewNgood[0].GOODCNT}</span>
 							</h3>
 							</div>
 							<div style="margin: 15px;">
@@ -157,7 +159,7 @@
 														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>";
 													for(var j = 0; j < vo.length ; j++) {
 														if(vo[j].no == c[i].NO) {
-															 img = "<img class='card-img-top' alt='Card image' style='width: 100%' ";
+															 img = "<img class='card-img-top' alt='Card image' style='width: 100%; max-height:' ";
 															if(vo[j].image == null) {
 																img += "src='${pageContext.request.contextPath }/image/Desert.jpg'>";
 															} else {
@@ -165,7 +167,7 @@
 															}
 															var body = "<div class='card-body'>"
 																				+"<h3 class='card-title'>"+c[i].TITLE +"</h3></a>"
-																				+"<p class='list-group-item-text'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
+																				+"<p class='list-group-item-text' style='margin:0 0 10px;'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
 																				+"<span class='glyphicon glyphicon-heart'></span> <span class='badge'> "+Math.floor(c[i].GOOD)+"</span> "
 																				+"<span class='glyphicon glyphicon-eye-open'></span> <span class='badge'> "+Math.floor(c[i].VIEWCNT )+"</span></p>"
 																				+"<p>";
@@ -337,7 +339,7 @@
 												</c:if>
 												<c:if test="${! empty vo.image }">
 													<c:set var="path" value="${pageContext.request.contextPath }"/>
-													<img class="card-img-top" src="${ vo.image[0] }" alt="Card image" style="width: 100%">
+													<img class="card-img-top" src="${ vo.image[0] }" alt="Card image" style="width: 100%; border: 1px solid #ddd;">
 												</c:if>
 												<div class="card-body" >
 													<h3 class="card-title">${c.TITLE }</h3></a>
