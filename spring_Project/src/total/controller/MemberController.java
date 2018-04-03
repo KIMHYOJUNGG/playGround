@@ -333,7 +333,7 @@ public class MemberController {
 			model.addAttribute("passwordwarn", "아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해주세요");
 			return "t_el";
 		}
-	}
+	}   
 	
 	// 회원탈퇴페이지 이동
 	@RequestMapping(path="/godrop")
