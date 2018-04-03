@@ -286,28 +286,55 @@ public class BoardController {
 	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
 	public String read(@RequestParam("no") int no, @ModelAttribute("cri") SearchCriteria cri, Model model,
 			HttpSession session) throws Exception {
-		
-		
-			String id=(String)session.getAttribute("logon");
-			if(id!=null){
-				GoodVO good=new GoodVO();
-				good.setTargetboard(no);
-				good.setWholike(id);
-				boolean b=gservice.find(good);
-				model.addAttribute("like",b);
-			}
-			service.increaseViewcnt(no, session);
-			MongoBoardVo mbv= service.mongoFind(no);
-			List<Map> comments = service.mongoFindComment(no);
-			//System.out.println(service.read(no));
-			model.addAttribute(service.read(no));
-			model.addAttribute("mbv", mbv);
-			model.addAttribute("body", "readPage.jsp");
-			model.addAttribute("comments", comments);
-			model.addAttribute("logon", id);
-			session.setAttribute("NO", no);
+			System.out.println("cricri: "+(cri == null));
+			System.out.println(cri.toString() );
+			System.out.println("keyword null? "+(cri.getKeyword()==null) );
+			System.out.println("searchType null? "+ (cri.getSearchType() == null));
 			
-			return "t_board";
+			if(cri.getKeyword()==null && cri.getSearchType() == null) {
+				
+				String id=(String)session.getAttribute("logon");
+				if(id!=null){
+					GoodVO good=new GoodVO();
+					good.setTargetboard(no);
+					good.setWholike(id);
+					boolean b=gservice.find(good);
+					model.addAttribute("like",b);
+				}
+				service.increaseViewcnt(no, session);
+				MongoBoardVo mbv= service.mongoFind(no);
+				List<Map> comments = service.mongoFindComment(no);
+				//System.out.println(service.read(no));
+				model.addAttribute(service.read(no));
+				model.addAttribute("mbv", mbv);
+				model.addAttribute("body", "readPage.jsp");
+				model.addAttribute("comments", comments);
+				model.addAttribute("logon", id);
+				session.setAttribute("NO", no);
+				
+				return "t_board";
+			} else {
+				String id=(String)session.getAttribute("logon");
+				if(id!=null){
+					GoodVO good=new GoodVO();
+					good.setTargetboard(no);
+					good.setWholike(id);
+					boolean b=gservice.find(good);
+					model.addAttribute("like",b);
+				}
+				service.increaseViewcnt(no, session);
+				MongoBoardVo mbv= service.mongoFind(no);
+				List<Map> comments = service.mongoFindComment(no);
+				//System.out.println(service.read(no));
+				model.addAttribute(service.read(no));
+				model.addAttribute("mbv", mbv);
+				model.addAttribute("body", "readPage2.jsp");
+				model.addAttribute("comments", comments);
+				model.addAttribute("logon", id);
+				session.setAttribute("NO", no);
+				
+				return "t_board";
+			}
 		
 			
 		}

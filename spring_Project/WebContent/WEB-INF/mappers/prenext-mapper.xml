@@ -10,5 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		by no) prev from board where bookname = #{bookname} )
 		where no=#{no}
 	</select>
+	
+	<select id="read2" resultType="hashmap">
+		select *
+		from ( select no, lead(no,1) over(order by no) next, lag(no,1) over(order
+		by no) prev from board )
+		where no=#{no}
+	</select>
 
 </mapper>

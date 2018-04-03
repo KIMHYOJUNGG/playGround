@@ -2,7 +2,28 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
+.container {
+	padding: 80px 120px;
+}
+
+.person {
+	border: 10px solid transparent;
+	margin-bottom: 25px;
+}
+
+.person:hover {
+	border-color: #f1f1f1;
+}
+
 .bg-grey {
 	background-color: white;
 }
@@ -217,6 +238,42 @@
 						반려동물</a>
 				</h4>
 			</div>
+
+		</div>
+	</div>
+
+
+
+	<div class="container text-center">
+		<h3>WRITERS</h3>
+		<p>
+			<em>이달의 작가</em>
+		</p>
+		<p>이달의 새로운 작가들을 만나보세요.</p>
+		<br>
+		<div class="row">
+			<c:forEach items="${writer}" var="vo">
+				<div class="col-sm-4">
+					<a href="#demo" data-toggle="collapse"> <c:if
+							test="${!empty vo.IMAGE }">
+							<a href="/@${vo.ID }"><img src="${vo.IMAGE }" class="img-circle person"
+								alt="Random Name" style="width: 200px; height: 200px;"></a>
+						</c:if> <c:if test="${empty vo.IMAGE }">
+							<a href="/@${vo.ID }"><img
+								src="${pageContext.request.contextPath }/image/default_profile.png"
+								class="img-circle person" alt="Random Name"
+								style="width: 200px; height: 200px;"></a>
+						</c:if>
+
+					</a>
+					<p class="text-center">
+						<a href="/@${vo.ID }"><strong>${vo.NICKNAME }</strong></a>
+					</p>
+					<br>
+
+				</div>
+			</c:forEach>
+
 
 		</div>
 	</div>
