@@ -50,8 +50,7 @@
 											alt="1" width="1200" height="700"></a>
 									</c:if>
 									<a href="/board/readPage?no=${o.NO}"><img
-										src="
-												${o.IMAGE }" alt="Paris" width="1200"
+										src="${o.IMAGE }" alt="Paris" width="1200"
 										height="700"></a>
 									<div class="carousel-caption">
 										<h3>${o.TITLE }</h3>
@@ -67,8 +66,7 @@
 											alt="1" width="1200" height="700"></a>
 									</c:if>
 									<a href="/board/readPage?no=${o.NO}"><img
-										src="
-												${o.IMAGE }" alt="Paris" width="1200"
+										src="${o.IMAGE }" alt="Paris" width="1200"
 										height="700"></a>
 									<div class="carousel-caption">
 										<h3>${o.TITLE }</h3>
@@ -138,22 +136,22 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=세계여행">세계여행</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=세계여행">세계여행</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=글쓰기">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=글쓰기">글쓰기</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=문화·예술">문화·예술</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=문화·예술">문화·예술</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=사랑·이별">사랑·이별</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=그림·웹툰">그림·웹툰</a>
 					</h4>
 				</div>
 
@@ -163,23 +161,23 @@
 				<div class="col-sm-3">
 					<h4>
 						<a
-							href="${pageContext.request.contextPath }/keyword?type=직장인 현실조언">직장인
+							href="${pageContext.request.contextPath }/board/listPage?stype=직장인%20현실조언">직장인
 							현실조언</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=건축·설계">건축·설계</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=건축·설계">건축·설계</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">시사·이슈</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=시사·이슈">시사·이슈</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=쉽게읽는%20역사">쉽게읽는
 							역사</a>
 					</h4>
 				</div>
@@ -188,22 +186,22 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=육아이야기">육아이야기</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=육아이야기">육아이야기</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=요리·레시피">요리·레시피</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=요리·레시피">요리·레시피</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">건강·운동</a>
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=건강·운동">건강·운동</a>
 					</h4>
 				</div>
 				<div class="col-sm-3">
 					<h4>
-						<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집
+						<a href="${pageContext.request.contextPath }/board/listPage?stype=우리집%20반려동물">우리집
 							반려동물</a>
 					</h4>
 				</div>

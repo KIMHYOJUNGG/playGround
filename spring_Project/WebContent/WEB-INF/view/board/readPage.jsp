@@ -118,7 +118,7 @@
 								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%>
 						</div>
     <div class="form-group">
-   <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <h3>BookName <small>${boardVO.bookname}</small></h3></a>
+   <h3>BookName <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><small>${boardVO.bookname}</small></a></h3>
       <%-- <label for="exampleInputEmail1">BookName</label><br/>
       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.bookname}" readonly="readonly"></a> --%>
@@ -152,7 +152,7 @@ ${mbv.contents}
       
     </div>
     <div class="form-group">
-    <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><h3>Writer <small>${boardVO.writer}</small></h3></a>
+   <h3>Writer  <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><small>${boardVO.writer}</small></a></h3>
     
       <%-- <label for="exampleInputEmail1" >Writer</label></br>
       
@@ -202,6 +202,41 @@ ${mbv.contents}
   </c:if>
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
   </div>
+  
+  <div class="row">
+		<div class="col-md-12">
+
+			<div class="box box-success">
+				<div class="box-header">
+					<h3 class="box-title">ADD NEW REPLY</h3>
+				</div>
+				<div class="box-body">
+					<label for="exampleInputEmail1">Writer</label> <input
+						class="form-control" type="text" placeholder="USER ID"
+						id="newReplyWriter"> <label for="exampleInputEmail1">Reply
+						Text</label> <input class="form-control" type="text"
+						placeholder="REPLY TEXT" id="newReplyText">
+
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
+						REPLY</button>
+				</div>
+			</div>
+			
+			<!-- The time line -->
+			<ul class="timeline">
+				<!-- timeline time label -->
+				<li class="time-label" id="repliesDiv"><span class="bg-green">
+						Replies List </span></li>
+			</ul>
+
+			<div class='text-center'>
+				<ul id="pagination" class="pagination pagination-sm no-margin ">
+
+				</ul>
+			</div>
 <div class="container" >
  
   <!-- Trigger the modal with a button -->
