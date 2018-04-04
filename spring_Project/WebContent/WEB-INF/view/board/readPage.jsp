@@ -8,7 +8,7 @@
 
 <%-- <%@include file="../include/header.jsp" %> --%>
 
-
+<%-- 
 <div class="container-fluid">
 	<div class="page-header">
 		 <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><h3 style="text-decoration: underline;">${boardVO.bookname}</h3></a>
@@ -71,20 +71,45 @@
 	  		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button> 
 	  </c:if>
 	</div>
-
+ --%>
 
 
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+
     <!-- Main content -->
-<!--     <section class="content"> -->
-<!--       <div class="row"> -->
-<!--       left column -->
-<!--       <div class="col-md-12"> -->
-<!--         general form elements -->
-<!--         <div class="box box-primary"> -->
+    <section class="content">
+      <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+        <div class="box-header">
+          <h2 class="box-title">READ BOARD</h2>
+        </div><!-- /.box-header -->
     
 					
+					<font size="5px;" style="color:red;" id="heart">
+					<c:if test="${like eq false }">
+					
+<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span>
+        </a>
+        			<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span>
+        </a>
+					</c:if>
+					<c:if test="${like eq true}">
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span>
+        </a>
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span>
+        </a>
+					</c:if>
+</font>
+
+        <span id="info"></span>
 
 <%-- 
 				<c:choose>
@@ -99,86 +124,7 @@
 
 
 
-
-<!--   <div class="box-body"> -->
-<!--     <div class="form-group"> -->
-<%--       <h3>조회수 <small>${boardVO.viewcnt}</small></h3>  --%>
-<%--       <input type="text" name='title' class="form-control" 
-<%--          value="${boardVO.viewcnt}" readonly="readonly"> --%> 
-<!--     </div> -->
-  
-<!--     <div class="form-group"> -->
-<%--       <h3>Type <small>${boardVO.type}</small></h3> --%>
-      
-<%--    <%--    <label for="exampleInputEmail1">Type</label><br/> --%>
-<%--       <input type="text" name='type' class="form-control"  --%>
-<%--          value="${boardVO.type}" readonly="readonly"> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-    
-<%-- 							<h3>Tag <small>${mbv.ptag}</small></h3> <input type="text"
-<%-- 								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%> 
-<!-- 						</div> -->
-<!--     <div class="form-group"> -->
-<%--    <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <h3>BookName <small>${boardVO.bookname}</small></h3></a> --%>
-<%--       <label for="exampleInputEmail1">BookName</label><br/>
-<%--       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control"  --%>
-<%--          value="${boardVO.bookname}" readonly="readonly"></a> --%> 
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<%--    <h3>Title <small>${boardVO.title}</small></h3> --%>
-<%--       <label for="exampleInputEmail1">Title</label>
-<%--       <input type="text" name='title' class="form-control"  --%>
-<%--          value="${boardVO.title}" readonly="readonly"> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<!--      <h3>Content</h3> -->
-<%-- ${mbv.contents}      --%>
-      <%-- <label for="exampleInputPassword1">Content</label>
-       <textarea class="form-control"  name="content" rows="3" id="ck" 
-      readonly="readonly">${mbv.contents}</textarea>
-      <script type="text/javascript">
-							$(function() {
-								CKEDITOR.replace('ck', {
-									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
-									height : '500px' // 입력창의 높이
-							
-								
-								});
-								
-							
-							});
-							
-		
-						</script> --%>
-      
-<!--     </div> -->
-    
-    
-    
-    
-<!--     					<font size="5px;" style="color:red;" id="heart"> -->
-<%-- 					<c:if test="${like eq false }"> --%>
-					
-<!--  <a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span> -->
-<!-- </a> -->
-<!--         			<a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span> -->
-<!--         </a> -->
-<%-- 					</c:if> --%>
-<%-- 					<c:if test="${like eq true}"> --%>
-<!-- 					<a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span> -->
-<!--         </a> -->
-<!-- 					<a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span> -->
-<!--         </a> -->
-<%-- 					</c:if> --%>
-<!-- </font> -->
-
-<!--         <span id="info"></span> -->
-    					  <script>
+					  <script>
 					  $(document).ready(function(){
 						  $('[data-toggle="tooltip"]').tooltip();   
 						  
@@ -223,27 +169,43 @@
 									})	;
 								 $('[data-toggle="tooltip"]').tooltip();   
 					  		});
+						  	
+						  
 					  </script>
-   
-<!-- <<<<<<< HEAD -->
-<%-- 							<h3>Tag <small>${mbv.ptag}</small></h3> <input type="text"
+  <div class="box-body">
+    <div class="form-group">
+      <h3>조회수 <small>${boardVO.viewcnt}</small></h3> 
+      <%-- <input type="text" name='title' class="form-control" 
+         value="${boardVO.viewcnt}" readonly="readonly"> --%>
+    </div>
+  
+    <div class="form-group">
+      <h3>Type <small>${boardVO.type}</small></h3>
+      
+   <%--    <label for="exampleInputEmail1">Type</label><br/>
+      <input type="text" name='type' class="form-control" 
+         value="${boardVO.type}" readonly="readonly"> --%>
+    </div>
+    <div class="form-group">
+    
+							<h3>Tag <small>${mbv.ptag}</small></h3> <%-- <input type="text"
 								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%>
 						</div>
-<!--     <div class="form-group"> -->
-<%--    <h3>BookName <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><small>${boardVO.bookname}</small></a></h3> --%>
+    <div class="form-group">
+   <h3>BookName <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><small>${boardVO.bookname}</small></a></h3>
       <%-- <label for="exampleInputEmail1">BookName</label><br/>
       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.bookname}" readonly="readonly"></a> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<%--    <h3>Title <small>${boardVO.title}</small></h3> --%>
+    </div>
+    <div class="form-group">
+   <h3>Title <small>${boardVO.title}</small></h3>
       <%-- <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 
          value="${boardVO.title}" readonly="readonly"> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<!--      <h3>Content</h3> -->
-<%-- ${mbv.contents}      --%>
+    </div>
+    <div class="form-group">
+     <h3>Content</h3>
+${mbv.contents}     
       <%-- <label for="exampleInputPassword1">Content</label>
        <textarea class="form-control"  name="content" rows="3" id="ck" 
       readonly="readonly">${mbv.contents}</textarea>
@@ -262,26 +224,16 @@
 		
 						</script> --%>
       
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<%--    <h3>Writer  <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><small>${boardVO.writer}</small></a></h3> --%>
-<!-- ======= -->
-<!--     <div class="form-group"> -->
-<%--     <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><h3>Writer <small>${boardVO.writer}</small></h3></a> --%>
-<%-- >>>>>>> refs/heads/CSS--%>
+    </div>
+    <div class="form-group">
+   <h3>Writer  <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><small>${boardVO.writer}</small></a></h3>
     
       <%-- <label for="exampleInputEmail1" >Writer</label></br>
       
        <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.writer}" readonly="readonly"></a> --%>
-
-<!--       </div> -->
-<%--
-    <div class="form-group">
-=======
       </div>
   <%--   <div class="form-group">
->>>>>>> refs/heads/reple
     <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
@@ -292,14 +244,8 @@
 
 		</c:forEach>
 	</c:if>
-<<<<<<< HEAD
-	</div>
-	
-	<c:if test="${logon != null  }">
-=======
 	</div> --%>
 <%-- 	<c:if test="${logon != null  }">
->>>>>>> refs/heads/reple
 		<label for="exampleInputEmail1">댓글쓰기</label> 
 		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
                 <br/>
@@ -311,24 +257,11 @@
 <!--                 <br/> -->
 <!-- 		 <button type="button"  name="comments" class="btn btn-default"  -->
 <%-- 		 onclick="javascript: location.assign('${pageContext.request.contextPath}/member/log?uri=board/readPage&no=${NO }')" >댓글쓰기</button> --%>
-<%-- 	</c:if>
-<!-- 	</div> -->  --%>
-<!-- 	<div class="form-group"> -->
-
-
-<!--   </div>/.box-body -->
-
-<!--   <div class="box-footer"> -->
-<%--    <c:if test="${sessionScope.logon== boardVO.writer}" > --%>
-<!--     <button type="submit" class="btn btn-warning modifyBtn">Modify</button> -->
-<!--     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button> -->
-<%--     </c:if> --%>
-<!--     <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button> -->
-<!--     <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button> -->
-<!--     <button type="submit" class="btn btn-primary goListBtn"> 목록 </button> -->
-<%--     <c:if test="${sessionScope.logon!= boardVO.writer}" > --%>
-<!--   		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button>  -->
-<%--   </c:if> --%>
+<%-- 	</c:if> --%>
+	</div>
+	<div class="form-group">
+	
+  </div><!-- /.box-body -->
 
   <div class="box-footer">
    <c:if test="${sessionScope.logon== boardVO.writer}" >
@@ -341,25 +274,11 @@
     <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
   </c:if>
-
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
-<!-- <<<<<<< HEAD -->
   </div>
   
-<!--   <div class="row"> -->
-<!-- 		<div class="col-md-12"> -->
-
-
-<!-- 			<div class="box box-success"> -->
-<!-- 				<div class="box-header"> -->
-<!-- 					<h3 class="box-title">ADD NEW REPLY</h3> -->
-<!-- 				</div> -->
-<!-- 				<div class="box-body"> -->
-<!-- 					<label for="exampleInputEmail1">Writer</label> <input -->
-<!-- 						class="form-control" type="text" placeholder="USER ID" -->
-<!-- 						id="newReplyWriter"> <label for="exampleInputEmail1">Reply -->
-<!-- 						Text</label> <input class="form-control" type="text" -->
-<!-- 						placeholder="REPLY TEXT" id="newReplyText"> -->
+  <div class="row">
+		<div class="col-md-12">
 
 <c:if test="${logon != null  }">
 			<div class="box box-success">
@@ -372,23 +291,6 @@
 						id="newReplyWriter" readonly="readonly" value="${logon }"> <label for="exampleInputEmail1">Reply
 						Text</label> <input class="form-control" type="text"
 						placeholder="REPLY TEXT" id="newReplyText">
-
-
-
-<!-- 				</div> -->
-<!-- 				/.box-body -->
-<!-- 				<div class="box-footer"> -->
-<!-- 					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD -->
-<!-- 						REPLY</button> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
-<!-- 			<!-- The time line --> -->
-<!-- 			<ul class="timeline"> -->
-<!-- 				timeline time label -->
-<!-- 				<li class="time-label" id="repliesDiv"><span class="bg-green"> -->
-<!-- 						Replies List </span></li> -->
-<!-- 			</ul> -->
 
 				</div>
 				<!-- /.box-body -->
@@ -414,17 +316,8 @@
 	
 }); -->
 
-
-<!-- 			<div class='text-center'> -->
-<!-- 				<ul id="pagination" class="pagination pagination-sm no-margin "> -->
-
-
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- ======= -->
-<!--   </div> -->
-  
-<!-- >>>>>>> refs/heads/CSS -->
+			<div class='text-center'>
+				<ul id="pagination" class="pagination pagination-sm no-margin ">
 
 				</ul>
 			</div>
@@ -467,8 +360,8 @@
 	</div>
 		 -->
 
-
 <div class="container" >
+ 
   <!-- Trigger the modal with a button -->
 
   <!-- Modal -->
@@ -879,18 +772,25 @@ $('#comments-btn').click(function() {
 
   
   
-<!--         </div>/.box -->
-<!--       </div>/.col (left) -->
+        </div><!-- /.box -->
+      </div><!--/.col (left) -->
  
-<!--       </div>   /.row -->
-<!--     </section>/.content -->
-<!--     </div>/.content-wrapper -->
-    
-    </div>
-    
+      </div>   <!-- /.row -->
+    </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
 <%--     
 <%@include file="../include/footer.jsp" %> --%>
 
+
+
+
+
+
+
+
+
+
+   
 
 
 
