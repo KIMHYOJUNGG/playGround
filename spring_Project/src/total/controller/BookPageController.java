@@ -52,7 +52,11 @@ public class BookPageController {
 		String id = (String)session.getAttribute("logon");
 		vo.setId(id );
 		String bno =  bookPageService.bookInsert(vo);
+		
+		// okt
 		int i = weekservice.insertWeek();
+		System.out.println("책등록이 됨?");
+		
 //		map.put("no", bno);
 		return "redirect:board/register";
 	}
