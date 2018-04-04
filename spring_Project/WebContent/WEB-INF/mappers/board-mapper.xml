@@ -204,4 +204,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		group by bno,bookname order by(bookname)
 	</select>
+	<!--  okt 주간순위때문 -->
+	<select id="searchId" resultType="String">
+		select bno from board where no = #{no}
+	</select>
+
 </mapper>

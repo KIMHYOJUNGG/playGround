@@ -15,26 +15,9 @@ public class adminWeekService {
 
 	@Autowired
 	MongoTemplate session;
-	// 
+	// 현재일등인놈
 	public String weektop() {
 		return template.selectOne("week.weekendtop");
-	}
-	// 날짜비교함으로써 같으면 주간순위테이블에 삽입 
-	public boolean weekendequal() {
-		List<Map> list = template.selectList("week.weekendequal");
-		if(list.size()!=0) {
-			int i = template.insert("week.inserttime");
-			if(i!=0) {
-				return true;
-			}
-			else {
-				System.out.println("주간순위 삽입 실패");
-				return false;
-			}
-		}else {
-			System.out.println("날짜가 다릅니다.");
-			return false;
-		}
 	}
 	
 	// 책에 속한 게시글의 좋아요수가 늘어날 때의 time테이블 cnt증가
@@ -75,12 +58,50 @@ public class adminWeekService {
 		return template.update("week.updateWeek");
 	}
 	
+	// 책들의 정보와 날짜 리셋을 위한 delete
+	public int dropweek() {
+		return template.delete("week.deletetime");
+	}
+	
 	// 다시 책들의 정보를 받아옴
 	public int insertWeek() {
 		return template.insert("week.inserttime");
 	}
-
-
+	
+	// 게시글 삭제시 주간순위에 있을 때 해당 게시글의 좋아요 수만큼 감소
+	public boolean updateWeekCnt(String bno) {
+		int i = template.update("week.updatecnt",bno);
+		if(i!=0) {
+			System.out.println("해당 게시글의 좋아요 수만큼 감소");
+		}else {
+			System.out.println("해당 게시글이 없거나 실패");
+		}
+		return true;
+	}
+	
+	// 책 삭제시 주간순위에 등록되어 있을 시 삭제
+	public boolean deleteBno(String bno) {
+		int i = template.delete("week.deletebno",bno);
+		if(i!=0) {
+			System.out.println("주간순위에서 책삭제 성공");
+		}
+		else {
+			System.out.println("주간순위에 없거나 책삭제 실패");
+		}
+		return true;
+	}
+	
+	// 책 삭제시 해당 책의 출간 삭제
+	public boolean deletePublish(String bno) {
+		int i = template.delete("week.deletepublish",bno);
+		if(i!=0) {
+			System.out.println("책권한 삭제");
+		}else {
+			System.out.println("책권한이 없었거나 삭제실패");
+		}
+		return true;
+	}
+	
 	
 	
 }

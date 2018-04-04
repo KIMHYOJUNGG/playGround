@@ -3,20 +3,15 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="week">
-	<!-- 게시글 등록시의 날짜와 이번주 주간순위의 시작날짜와 같은지를 비교 -->
-	<select id="weekendequal" resultType="hashmap">
-		select * from time where TO_CHAR(lastweek,'YYYY-MM-DD') = TO_CHAR(sysdate,'YYYY-MM-DD')
-	</select>
-	
+<mapper namespace="week">	
 	<!-- 주간순위 현재 1등자 -->
 	<select id="weekendtop" resultType="String">
 		select writer from time where rownum= 1
 	</select>
 	
-	<!-- 날짜가 같은경우 time에 새 등록 or updateweek가 실행후 -->
+	<!-- insert -->
 	<insert id="inserttime">
-		insert into time (select bno,bookname,writer,count(good),sysdate,sysdate,0 from board where bno not in (select bno from time) group by bno, bookname, writer,  sysdate)
+		insert into time (select bno,bookname,writer,count(good),null,sysdate,0 from board where bno not in (select bno from time) group by bno, bookname, writer, sysdate)
 	</insert>
 	
 	<!-- 책에 속한 게시글의 좋아요 수 증가시의 time테이블 cnt 증가 -->
@@ -31,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--regdate와 lastweek날짜 비교  -->
 	<select id="castweek" resultType="int">
-		select cast((regdate - lastweek)as int) col from time where rownum= 1
+		select cast((min(regdate) - sysdate)as int) col from time where rownum= 1
 	</select>
 	
 	<!-- 이번주 우승자 정보찾기 -->
@@ -51,7 +46,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 주간순위 리셋 -->
 	<update id="updateWeek">
-		update time set lastcnt = lastcnt+cnt, cnt=0
+		update time3 set lastweek=regdate, regdate=sysdate ,cnt=0, lastcnt=cnt
 	</update>
+	
+	<!-- 게시글 삭제시 주간순위에 있을 때 해당 게시글의 좋아요수만큼 감소-->
+	<update id="updatecnt">
+		update time set cnt= cnt-(select count(good) from board where bno = #{bno}) where bno=#{bno}
+	</update>
+	
+	<!-- 책삭제시 주간순위에 있을 때의 삭제 -->
+	<delete id="deletebno">
+		delete from time where bno = #{bno}
+	</delete>
+	
+	<!-- 책을 출간할 수 있는 권한 삭제 -->
+	<delete id="deletepublish">
+		delete from publish where bno=#{bno}
+	</delete>
 	
 </mapper>

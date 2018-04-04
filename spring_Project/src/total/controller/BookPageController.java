@@ -18,6 +18,7 @@ import total.domain.BookVO;
 import total.service.BookPageService;
 import total.service.MyPageService;
 import total.service.WriterPageService;
+import total.service.adminWeekService;
 
 @Controller
 @RequestMapping("/bookPage")
@@ -30,6 +31,8 @@ public class BookPageController {
 	WriterPageService writerPageService;
 	@Autowired
 	Gson gson;
+	@Autowired
+	adminWeekService weekservice;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String bookPageHandle(Map map, HttpSession session) {
@@ -49,6 +52,11 @@ public class BookPageController {
 		String id = (String)session.getAttribute("logon");
 		vo.setId(id );
 		String bno =  bookPageService.bookInsert(vo);
+		
+		// okt
+		int i = weekservice.insertWeek();
+		System.out.println("책등록이 됨?");
+		
 //		map.put("no", bno);
 		return "redirect:board/register";
 	}

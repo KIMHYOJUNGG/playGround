@@ -551,6 +551,10 @@ public class BoardService {
 
 		return session.selectOne("boardsearch.listSearchCount", cri);
 	}
+	// okt 주간순위때문
+	public String selectBno(int no) {
+		return session.selectOne("board.searchId",no);
+	}
 
 	public Map getBoardInfo(int no) {
 		return session.selectOne("board.boardNo", no);

@@ -33,6 +33,7 @@ import total.domain.SearchCriteria;
 import total.service.BoardService;
 import total.service.GoodService;
 import total.service.ReportService;
+import total.service.adminWeekService;
 
 @Controller
 @RequestMapping("/board/*")
@@ -44,7 +45,10 @@ public class BoardController {
 	ReportService rservice;
 	@Autowired
 	GoodService gservice;
-
+	
+	@Autowired
+	adminWeekService weekservice;
+	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String registerGET(BoardVO board, Model model, Map map, HttpSession session, HttpServletResponse resp,
 			HttpServletRequest req) throws Exception {
@@ -107,7 +111,7 @@ public class BoardController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registPOST(BoardVO board, RedirectAttributes rttr, HttpSession session) throws Exception {
-
+		
 		System.out.println("regist post ...........");
 		System.out.println(board.toString());
 		String[] book = board.getBook().split(",");
@@ -170,12 +174,12 @@ public class BoardController {
 		return "t_board";
 	}
 
-	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String remove(@RequestParam("no") int no, RedirectAttributes rttr) throws Exception {
 		service.delete(no);
 		rttr.addFlashAttribute("msg", "success");
 		return "redirect:/board/listAll";
-	}
+	}*/
 
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modifyGET(int no, Model model) throws Exception {
@@ -343,7 +347,11 @@ public class BoardController {
 
 	@RequestMapping(value = "/removePage", method = RequestMethod.POST)
 	public String remove(@RequestParam("no") int no, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
-
+		//  okt 주간순위때문
+		String bno = service.selectBno(no);
+		System.out.println("해당 Bno = " + bno);
+		boolean rst = weekservice.updateWeekCnt(bno);
+		System.out.println("게시글이 있을 시 삭제 성공");
 		service.delete(no);
 
 		rttr.addAttribute("page", cri.getPage());
@@ -415,6 +423,14 @@ public class BoardController {
 	@ResponseBody
 	public String likeHandle(GoodVO good, HttpSession session) throws Exception {
 		System.out.println("likeHandle");
+		System.out.println("게시글번호 = "+good.getTargetboard());
+		
+		// OKT
+		int no = good.getTargetboard();
+		String bno = service.selectBno(no);
+		int i =weekservice.goodincre(bno);
+		System.out.println("여기까지 좋아요 추가");
+		
 		String id = (String)session.getAttribute("logon");
 		good.setWholike(id);
 		boolean rst = gservice.create(good);
@@ -425,6 +441,13 @@ public class BoardController {
 	@ResponseBody
 	public String cancleHandle(GoodVO good, HttpSession session) throws Exception {
 		System.out.println("cancleHandle");
+		
+		// OKT
+		int no = good.getTargetboard();
+		String bno = service.selectBno(no);
+		int i =weekservice.gooddecre(bno);
+		System.out.println("여기까지 좋아요 취소?");
+		
 		String id = (String)session.getAttribute("logon");
 		good.setWholike(id);
 		boolean rst = gservice.delete(good);
