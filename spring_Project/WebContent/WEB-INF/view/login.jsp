@@ -4,21 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <body>
 	<div align="center">
-		<c:if test="${idsearch!=null }">
-			<p style="color: red">${idsearch }</p>
-		</c:if>
-		<c:if test="${idwarn!=null }">
-			<p style="color: red">${idwarn }</p>
-		</c:if>
-		<c:if test="${passwordwarn !=null }">
-			<p style="color: red">${passwordwarn }</p>
-		</c:if>
-		<c:if test="${idn!= null }">
-			<p style="color: red">${idn }</p>
-		</c:if>
-		<c:if test="${passn!=null }">
-			<p style="color: red">${passn }</p>
-		</c:if>
 		<form action="/member/loging" method="post"
 			style="width: 370px; text-align: left; line-height: 34px;"
 			autocomplete="off">

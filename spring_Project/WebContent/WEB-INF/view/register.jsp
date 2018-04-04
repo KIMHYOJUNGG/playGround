@@ -14,7 +14,7 @@
 			<p>
 				<b>PASS(*)</b><br /> <input type="password" name="password"
 					id="password"
-					pattern="/^(?=.*\d)(?=.*[~`!@%23$%\^&*()-])(?=.*[a-zA-Z]).{8,20}$/g">
+					/>  
 			</p>
 			<p></p>
 			<b>REPASS(*)</b><br /> <input type="password" name="repassword"
@@ -154,7 +154,7 @@
 		}
 	}
 
-	function checkPasswordPattern(str) {
+/* 	function checkPasswordPattern(str) {
 		var pattern1 = /[0-9]/; // 숫자 
 		var pattern2 = /[a-zA-Z]/; // 문자 
 		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
@@ -165,6 +165,6 @@
 		} else {
 			return true;
 		}
-	}
+	} */
 </script>
 
