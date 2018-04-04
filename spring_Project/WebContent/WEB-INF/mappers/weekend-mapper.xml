@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--regdate와 lastweek날짜 비교  -->
 	<select id="castweek" resultType="int">
-	select cast((min(regdate) - sysdate)as int) col from time where rownum= 1
+		select cast((min(regdate) - sysdate)as int) col from time where rownum= 1
 	</select>
 	
 	<!-- 이번주 우승자 정보찾기 -->
