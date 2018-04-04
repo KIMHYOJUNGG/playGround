@@ -90,11 +90,10 @@
 					<div class="form-group">
 						<label for="exampleInputEmail1">bookname</label><br /> <select
 							name="book">
-
 							<c:forEach items="${listbook}" var="bookVO">
-
-								<option value="${bookVO.bno },${bookVO.bookName}">
-									${bookVO.bookName }</option>
+								
+								<option value="${bookVO.bno },${bookVO.bookName}" ${param.bno == bookVO.bno ? 'selected':'' }>
+									${bookVO.bookName } </option>
 
 
 							</c:forEach>
