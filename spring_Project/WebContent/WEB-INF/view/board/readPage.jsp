@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <%-- <%@include file="../include/header.jsp" %> --%>
-<!--  <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
+
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -160,7 +160,7 @@ ${mbv.contents}
        <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.writer}" readonly="readonly"></a> --%>
       </div>
-    <div class="form-group">
+  <%--   <div class="form-group">
     <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
@@ -171,13 +171,13 @@ ${mbv.contents}
 
 		</c:forEach>
 	</c:if>
-	</div>
-	<c:if test="${logon != null  }">
+	</div> --%>
+<%-- 	<c:if test="${logon != null  }">
 		<label for="exampleInputEmail1">댓글쓰기</label> 
 		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
                 <br/>
 		 <button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button>
-	</c:if>
+	</c:if> --%>
 <%-- 	<c:if test="${logon == null }"> --%>
 <!-- 		<label for="exampleInputEmail1">댓글쓰기</label>  -->
 <!-- 		  <textarea class="form-control" name="comments" id="commentslog" rows="3" cols="3" placeholder="댓글을 쓸수 있는 권한이 없습니다."  ></textarea> -->
@@ -207,6 +207,7 @@ ${mbv.contents}
   <div class="row">
 		<div class="col-md-12">
 
+<c:if test="${logon != null  }">
 			<div class="box box-success">
 				<div class="box-header">
 					<h3 class="box-title">ADD NEW REPLY</h3>
@@ -214,7 +215,7 @@ ${mbv.contents}
 				<div class="box-body">
 					<label for="exampleInputEmail1">Writer</label> <input
 						class="form-control" type="text" placeholder="USER ID"
-						id="newReplyWriter"> <label for="exampleInputEmail1">Reply
+						id="newReplyWriter" readonly="readonly" value="${logon }"> <label for="exampleInputEmail1">Reply
 						Text</label> <input class="form-control" type="text"
 						placeholder="REPLY TEXT" id="newReplyText">
 
@@ -225,14 +226,22 @@ ${mbv.contents}
 						REPLY</button>
 				</div>
 			</div>
-
+</c:if>
 
 			<!-- The time line -->
 			<ul class="timeline">
 				<!-- timeline time label -->
-				<li class="time-label" id="repliesDiv"><span class="bg-green">
-						Replies List </span></li>
+				<button type="button" class="time-label" id="repliesDiv"><span class="bg-green">
+						Replies List </span></button></li>
 			</ul>
+<!-- 			$(".timeline").on("click", ".replyLi", function(event){
+	
+	var reply = $(this);
+	
+	$("#replytext").val(reply.find('.timeline-body').text());
+	$(".modal-title").html(reply.attr("data-rno"));
+	
+}); -->
 
 			<div class='text-center'>
 				<ul id="pagination" class="pagination pagination-sm no-margin ">
@@ -245,9 +254,9 @@ ${mbv.contents}
 	</div>
 	
 	<!-- Modal -->
-<div id="modifyModal" class="modal modal-primary fade" role="dialog">
+ <div id="modifyModal" class="modal modal-primary fade" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
+    Modal content
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -264,6 +273,19 @@ ${mbv.contents}
     </div>
   </div>
 </div>      
+
+<!-- 	<div id='modDiv' style="display: none;">
+		<div class='modal-title'></div>
+		<div>
+			<input type='text' id='replytext'>
+		</div>
+		<div>
+			<button type="button" id="replyModBtn">Modify</button>
+			<button type="button" id="replyDelBtn">DELETE</button>
+			<button type="button" id='closeBtn'>Close</button>
+		</div>
+	</div>
+		 -->
 
 <div class="container" >
  
@@ -313,7 +335,8 @@ ${mbv.contents}
   </div>
 </div>
 
-
+<!--   <a class="btn btn-primary btn-xs mo" 
+	    data-toggle="modal" data-target="#modifyModal" >Modify</a> -->
 
 <script id="template" type="text/x-handlebars-template">
 {{#each .}}
@@ -323,18 +346,23 @@ ${mbv.contents}
   <span class="time">
     <i class="fa fa-clock-o"></i>{{prettifyDate regdate}}
   </span>
-  <h3 class="timeline-header"><strong>{{rno}}</strong> -{{replyer}}</h3>
-  <div class="timeline-body">{{replytext}} </div>
-    <div class="timeline-footer">
-     <a class="btn btn-primary btn-xs" 
-	    data-toggle="modal" data-target="#modifyModal">Modify</a>
+  <h3 class="timeline-header"><strong>{{rno}}</strong> -<span class="rid">{{replyer}}</span></h3>
+  <div class="timeline-body">{{replytext}}</div>
+
+    <div class="timeline-footer modifyshow" >
+ <a class="btn btn-primary btn-xs mo" 
+	    data-toggle="modal" data-target="#modifyModal" >Modify</a>
     </div>
-  </div>			
+
+ 	
+
 </li>
 {{/each}}
 </script>
 
 <script>
+
+
 
 Handlebars.registerHelper("prettifyDate", function(timeValue) {
 	var dateObj = new Date(timeValue);
@@ -351,6 +379,26 @@ var printData = function(replyArr, target, templateObject) {
 	var html = template(replyArr);
 	$(".replyLi").remove();
 	target.after(html);
+	
+	/* var logon="${logon}";
+	$(".rid").each(function(){
+		if(logon==$(this).html()){
+			$(".modifyshow").each(function(){
+				$(this).show();
+			});
+			
+		}
+		else{
+			$(".modifyshow").each(function(){
+				$(this).hide();
+			});
+		}
+			
+		
+		
+	});
+ */
+	
 
 }
 
@@ -394,8 +442,10 @@ var printPaging = function(pageMaker, target) {
 $("#repliesDiv").on("click", function() {
 console.log($(".timeline li").length );
 	if ($(".timeline li").length > 1) {
+	
 		return;
 	}
+	
 	getPage("/replies/" + bno + "/1");
 
 });
@@ -431,22 +481,43 @@ $("#replyAddBtn").on("click",function(){
 					alert("등록 되었습니다.");
 					replyPage = 1;
 					getPage("/replies/"+bno+"/"+replyPage );
-					replyerObj.val("");
+					
 					replytextObj.val("");
 				}
 		}});
 });
 
-$(".timeline").on("click", ".replyLi", function(event){
+/* $(".timeline").on("click", ".replyLi button", function() {
+
+	var reply = $(this).parent();
+
+	var rno = reply.attr("data-rno");
+	var replytext = reply.text();
+
+	$(".modal-title").html(rno);
+	$("#replytext").val(replytext);
+	$("#modDiv").show("slow");
+
+}); */
+var id="";
+  $(".timeline").on("click", ".replyLi", function(event){
 	
 	var reply = $(this);
-	
+	console.log(reply);
+	id=reply.find('.rid').text();
 	$("#replytext").val(reply.find('.timeline-body').text());
 	$(".modal-title").html(reply.attr("data-rno"));
 	
-});
+});  
 $("#replyModBtn").on("click",function(){
+	  var log="${logon}";
 	  
+	  if(id!=log){
+		  alert('권한이 없습니다.');
+		  $("#modifyModal").modal('hide');
+		  
+		  return;
+	  }
 	  var rno = $(".modal-title").html();
 	  var replytext = $("#replytext").val();
 	  
@@ -468,7 +539,13 @@ $("#replyModBtn").on("click",function(){
 });
 
 $("#replyDelBtn").on("click",function(){
+	 var log="${logon}";
 	  
+	  if(id!=log){
+		  alert('권한이 없습니다.');
+		  $("#modifyModal").modal('hide');
+		  return;
+	  }
 	  var rno = $(".modal-title").html();
 	  var replytext = $("#replytext").val();
 	  
@@ -526,7 +603,7 @@ $(document).ready(function(){
 });
 
 
-$('#comments-btn').click(function() {
+/* $('#comments-btn').click(function() {
 $.ajax({
     url: "/addComments",
     method: "post",
@@ -546,7 +623,7 @@ $.ajax({
 	});
 });
 
-
+ */
 $('#pre').click(function() {
 	$.ajax({
 	    url: "/pre",

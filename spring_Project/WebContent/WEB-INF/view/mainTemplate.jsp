@@ -144,6 +144,11 @@ img {
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/">PlayGround</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
+			<c:if test="${logon == null }">
+			<ul class="nav navbar-nav">
+			<li><a href="${pageContext.request.contextPath}/board/listPage">글목록</a></li>
+			</ul>
+			</c:if>
 			<c:if test="${logon != null }">
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
