@@ -15,7 +15,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 	  <!-- jQuery 2.1.4 -->
 <!--     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
 <script

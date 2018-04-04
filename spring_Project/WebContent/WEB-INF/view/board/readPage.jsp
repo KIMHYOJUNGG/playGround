@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <%-- <%@include file="../include/header.jsp" %> --%>
-
+<!--  <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -191,12 +192,12 @@ ${mbv.contents}
 
   <div class="box-footer">
    <c:if test="${sessionScope.logon== boardVO.writer}" >
-    <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
-    <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
+    <button type="submit" class="btn btn-warning" id="modifyBtn">Modify</button>
+    <button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
     </c:if>
     <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글 </button>
     <button type="submit" class="btn btn-primary goListBtn" id="next">다음글  </button>
-    <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
+    <button type="submit" class="btn btn-primary" id="goListBtn" >GO LIST </button>
     <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
   </c:if>
@@ -224,7 +225,8 @@ ${mbv.contents}
 						REPLY</button>
 				</div>
 			</div>
-			
+
+
 			<!-- The time line -->
 			<ul class="timeline">
 				<!-- timeline time label -->
@@ -237,6 +239,32 @@ ${mbv.contents}
 
 				</ul>
 			</div>
+
+		</div>
+		<!-- /.col -->
+	</div>
+	
+	<!-- Modal -->
+<div id="modifyModal" class="modal modal-primary fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body" data-rno>
+        <p><input type="text" id="replytext" class="form-control"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
+        <button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>      
+
 <div class="container" >
  
   <!-- Trigger the modal with a button -->
@@ -277,7 +305,7 @@ ${mbv.contents}
  </form>   
         </div>
         <div class="modal-footer">
-        <button type="submit" class="btn btn-danger reportBtn">신고하기 </button>
+        <button type="submit" class="btn btn-danger" id="reportBtn">신고하기 </button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -285,30 +313,210 @@ ${mbv.contents}
   </div>
 </div>
 
+
+
+<script id="template" type="text/x-handlebars-template">
+{{#each .}}
+<li class="replyLi" data-rno={{rno}}>
+<i class="fa fa-comments bg-blue"></i>
+ <div class="timeline-item" >
+  <span class="time">
+    <i class="fa fa-clock-o"></i>{{prettifyDate regdate}}
+  </span>
+  <h3 class="timeline-header"><strong>{{rno}}</strong> -{{replyer}}</h3>
+  <div class="timeline-body">{{replytext}} </div>
+    <div class="timeline-footer">
+     <a class="btn btn-primary btn-xs" 
+	    data-toggle="modal" data-target="#modifyModal">Modify</a>
+    </div>
+  </div>			
+</li>
+{{/each}}
+</script>
+
+<script>
+
+Handlebars.registerHelper("prettifyDate", function(timeValue) {
+	var dateObj = new Date(timeValue);
+	var year = dateObj.getFullYear();
+	var month = dateObj.getMonth() + 1;
+	var date = dateObj.getDate();
+	return year + "/" + month + "/" + date;
+});
+
+var printData = function(replyArr, target, templateObject) {
+
+	var template = Handlebars.compile(templateObject.html());
+
+	var html = template(replyArr);
+	$(".replyLi").remove();
+	target.after(html);
+
+}
+
+
+var bno = ${boardVO.no};
+console.log(bno);
+var replyPage = 1;
+
+function getPage(pageInfo) {
+
+	$.getJSON(pageInfo, function(data) {
+		printData(data.list, $("#repliesDiv"), $('#template'));
+		printPaging(data.pageMaker, $(".pagination"));
+
+		$("#modifyModal").modal('hide');
+
+	});
+}
+
+var printPaging = function(pageMaker, target) {
+
+	var str = "";
+
+	if (pageMaker.prev) {
+		str += "<li><a href='" + (pageMaker.startPage - 1)
+				+ "'> << </a></li>";
+	}
+
+	for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+		var strClass = pageMaker.cri.page == i ? 'class=active' : '';
+		str += "<li "+strClass+"><a href='"+i+"'>" + i + "</a></li>";
+	}
+
+	if (pageMaker.next) {
+		str += "<li><a href='" + (pageMaker.endPage + 1)
+				+ "'> >> </a></li>";
+	}
+
+	target.html(str);
+};
+$("#repliesDiv").on("click", function() {
+console.log($(".timeline li").length );
+	if ($(".timeline li").length > 1) {
+		return;
+	}
+	getPage("/replies/" + bno + "/1");
+
+});
+
+$(".pagination").on("click", "li a", function(event){
+	
+	event.preventDefault();
+	
+	replyPage = $(this).attr("href");
+	
+	getPage("/replies/"+bno+"/"+replyPage);
+	
+});
+$("#replyAddBtn").on("click",function(){
+	 console.log("dfsd");
+	 var replyerObj = $("#newReplyWriter");
+	 var replytextObj = $("#newReplyText");
+	 var replyer = replyerObj.val();
+	 var replytext = replytextObj.val();
+	console.log(replyer+" "+replytext+" ");
+	  
+	  $.ajax({
+			type:'post',
+			url:'/replies/',
+			headers: { 
+			      "Content-Type": "application/json",
+			      "X-HTTP-Method-Override": "POST" },
+			dataType:'text',
+			data: JSON.stringify({bno:bno, replyer:replyer, replytext:replytext}),
+			success:function(result){
+				console.log("result: " + result);
+				if(result == 'SUCCESS'){
+					alert("등록 되었습니다.");
+					replyPage = 1;
+					getPage("/replies/"+bno+"/"+replyPage );
+					replyerObj.val("");
+					replytextObj.val("");
+				}
+		}});
+});
+
+$(".timeline").on("click", ".replyLi", function(event){
+	
+	var reply = $(this);
+	
+	$("#replytext").val(reply.find('.timeline-body').text());
+	$(".modal-title").html(reply.attr("data-rno"));
+	
+});
+$("#replyModBtn").on("click",function(){
+	  
+	  var rno = $(".modal-title").html();
+	  var replytext = $("#replytext").val();
+	  
+	  $.ajax({
+			type:'put',
+			url:'/replies/'+rno,
+			headers: { 
+			      "Content-Type": "application/json",
+			      "X-HTTP-Method-Override": "PUT" },
+			data:JSON.stringify({replytext:replytext}), 
+			dataType:'text', 
+			success:function(result){
+				console.log("result: " + result);
+				if(result == 'SUCCESS'){
+					alert("수정 되었습니다.");
+					getPage("/replies/"+bno+"/"+replyPage );
+				}
+		}});
+});
+
+$("#replyDelBtn").on("click",function(){
+	  
+	  var rno = $(".modal-title").html();
+	  var replytext = $("#replytext").val();
+	  
+	  $.ajax({
+			type:'delete',
+			url:'/replies/'+rno,
+			headers: { 
+			      "Content-Type": "application/json",
+			      "X-HTTP-Method-Override": "DELETE" },
+			dataType:'text', 
+			success:function(result){
+				console.log("result: " + result);
+				if(result == 'SUCCESS'){
+					alert("삭제 되었습니다.");
+					getPage("/replies/"+bno+"/"+replyPage );
+				}
+		}});
+});
+
+</script>
+
+
+
 <script>
 $(document).ready(function(){
+
 	
 	var formObj = $("form[role='form']");
 	
 	console.log(formObj);
 	
-	$(".btn-warning").on("click", function(){
+	$("#modifyBtn").on("click", function(){
 		formObj.attr("action", "/board/modifyPage");
 		formObj.attr("method", "get");		
 		formObj.submit();
 	});
 	
-	$(".btn-danger").on("click", function(){
+	$("#removeBtn").on("click", function(){
 		formObj.attr("action", "/board/removePage");
 		formObj.submit();
 	});
 	
-	$(".goListBtn").on("click", function(){
+	$("#goListBtn").on("click", function(){
 		formObj.attr("method", "get");
 		formObj.attr("action", "/board/listPage");
 		formObj.submit();
 	});
-	$(".reportBtn").on("click", function(){
+	$("#reportBtn").on("click", function(){
 		formObj.attr("method", "get");
 		formObj.attr("action", "/board/report");
 		formObj.submit();
