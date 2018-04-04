@@ -31,6 +31,7 @@ public class PreNextBTSController {
 		System.out.println("prev : "+pre.get("PREV"));
 		Map map = new HashMap<String, String>();
 		map.put("result", true);
+		map.put("no", pre.get("NO"));
 		map.put("prev",pre.get("PREV"));
 		Gson gson = new Gson();
 		gson.toJson(map);
@@ -45,6 +46,7 @@ public class PreNextBTSController {
 		System.out.println("next : "+pre.get("NEXT"));
 		Map map = new HashMap<String, String>();
 		map.put("result", true);
+		map.put("no", pre.get("NO"));
 		map.put("next",pre.get("NEXT"));
 		Gson gson = new Gson();
 		gson.toJson(map);
@@ -61,6 +63,7 @@ public class PreNextBTSController {
 		System.out.println("prev : "+pre.get("PREV"));
 		Map map = new HashMap<String, String>();
 		map.put("result", true);
+		map.put("no", pre.get("NO"));
 		map.put("prev",pre.get("PREV"));
 		Gson gson = new Gson();
 		gson.toJson(map);
@@ -75,6 +78,7 @@ public class PreNextBTSController {
 		System.out.println("next : "+pre.get("NEXT"));
 		Map map = new HashMap<String, String>();
 		map.put("result", true);
+		map.put("no", pre.get("NO"));
 		map.put("next",pre.get("NEXT"));
 		Gson gson = new Gson();
 		gson.toJson(map);

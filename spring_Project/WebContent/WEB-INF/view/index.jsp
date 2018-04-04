@@ -89,12 +89,11 @@
 									<c:if test="${o.IMAGE == null}">
 										<a href="/board/readPage?no=${o.NO}"><img
 											src="${pageContext.request.contextPath }/image/Desert.jpg"
-											alt="1" width="1200" height="700"></a>
+											alt="1" style="width: 500px; height: 400px;"></a>
 									</c:if>
 									<a href="/board/readPage?no=${o.NO}"><img
 										src="
-												${o.IMAGE }" alt="Paris" width="1200"
-										height="700"></a>
+												${o.IMAGE }" alt="Paris" style="width: 500px; height: 400px;"></a>
 									<div class="carousel-caption">
 										<h3>${o.TITLE }</h3>
 										<p>${o.BOOKNAME }</p>
@@ -106,12 +105,11 @@
 									<c:if test="${o.IMAGE == null}">
 										<a href="/board/readPage?no=${o.NO}"><img
 											src="${pageContext.request.contextPath }/image/Desert.jpg"
-											alt="1" width="1200" height="700"></a>
+											alt="1" style="width: 500px; height: 400px;"></a>
 									</c:if>
 									<a href="/board/readPage?no=${o.NO}"><img
 										src="
-												${o.IMAGE }" alt="Paris" width="1200"
-										height="700"></a>
+												${o.IMAGE }" alt="Paris" style="width: 500px; height: 400px;"></a>
 									<div class="carousel-caption">
 										<h3>${o.TITLE }</h3>
 										<p>${o.BOOKNAME }</p>

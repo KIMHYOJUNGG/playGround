@@ -328,6 +328,7 @@ $('#pre').click(function() {
 				alert(response.prev);
 				if(response.prev==null){
 					alert('이전 글이 존재하지 않습니다.');
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+${boardVO.no});
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.prev);
 				}
@@ -351,6 +352,7 @@ $('#next').click(function() {
 				if(response.result) {
 				if(response.next==null){
 					alert('다음 글이 존재하지 않습니다.');
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+${boardVO.no});
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.next);
 				}
