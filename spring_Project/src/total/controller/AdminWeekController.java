@@ -72,6 +72,18 @@ public class AdminWeekController {
 		return "";
 	}
 	
+	// 책에 속한 게시글의 좋아요를 취소할 때
+	@RequestMapping("/gooddecrease")
+	public String decrease(Model model, @RequestParam("bno") String bno) {
+		int i = weekservice.gooddecre(bno);
+		if(i!=0) {
+			System.out.println("좋아요 수 감소 완료");
+		}else {
+			System.out.println("좋아요 수 감소 실패");
+		}
+		return "";
+	}
+	
 	//============================ 어드민 ================================
 	// 어드민 로그인페이지로 갈시의 날짜 비교
 	@RequestMapping("/castadmin")

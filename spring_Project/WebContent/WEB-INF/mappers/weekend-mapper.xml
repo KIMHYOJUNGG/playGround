@@ -19,6 +19,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update time set cnt=cnt+1 where bno=#{bno}
 	</update>
 	
+	<!-- 책에 속한 게시글의 좋아요 수 취소시의 time테이블 cnt 증가 -->
+	<update id="updatetimedel">
+		update time set cnt=cnt-1 where bno=#{bno}
+	</update>
+	
 	<!--regdate와 lastweek날짜 비교  -->
 	<select id="castweek" resultType="int">
 		select cast((regdate - lastweek)as int) col from time

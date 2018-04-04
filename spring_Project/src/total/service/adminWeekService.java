@@ -39,6 +39,11 @@ public class adminWeekService {
 		return template.update("week.updatetimecnt",bno);
 	}
 	
+	// 좋아요를 취소할 때
+	public int gooddecre(String bno) {
+		return template.update("week.updatetimedel",bno);
+	}
+
 	// 어드민 로그인페이지로 갈시의 regdate와 lastweek날짜 비교
 	public int castweek() {
 		return template.selectOne("week.castweek");
@@ -71,6 +76,7 @@ public class adminWeekService {
 	public int insertWeek() {
 		return template.insert("week.inserttime");
 	}
+
 
 	
 	
