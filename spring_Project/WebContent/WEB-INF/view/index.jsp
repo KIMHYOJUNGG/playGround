@@ -81,41 +81,61 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
 
-				<c:forEach var="o" items="${boardNo}" varStatus="vs">
+				<c:forEach var="o" items="${WinnerNo}" varStatus="vs">
 					<c:choose>
 						<c:when test="${vs.count <= 5}">
-							<c:if test="${vs.count == 1 }">
-								<div class="item active">
-									<c:if test="${o.IMAGE == null}">
-										<a href="/board/readPage?no=${o.NO}"><img
-											src="${pageContext.request.contextPath }/image/Desert.jpg"
-											alt="1" style="width: 500px; height: 400px;"></a>
-									</c:if>
-									<a href="/board/readPage?no=${o.NO}"><img
-										src="
-												${o.IMAGE }" alt="Paris" style="width: 500px; height: 400px;"></a>
-									<div class="carousel-caption">
-										<h3>${o.TITLE }</h3>
-										<p>${o.BOOKNAME }</p>
+							<c:choose>
+								<c:when test="${vs.count == 1 }">
+									<div class="item active">
+										<c:choose>
+											<c:when test="${o.image[0] == null}">
+												<a href="/bookPage/${o.BNO}"><img
+													src="${pageContext.request.contextPath }/image/Desert.jpg"
+													alt="1" style="width: 500px; height: 400px;"></a>
+													<div class="carousel-caption">
+													<h3>${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<a href="/bookPage/${o.BNO}"><img
+													src="
+												${o.image[0]  }" alt="Paris"
+													style="width: 500px; height: 400px;"></a>
+												<div class="carousel-caption">
+													<h3>${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
-								</div>
-							</c:if>
-							<c:if test="${vs.count != 1 }">
-								<div class="item">
-									<c:if test="${o.IMAGE == null}">
-										<a href="/board/readPage?no=${o.NO}"><img
-											src="${pageContext.request.contextPath }/image/Desert.jpg"
-											alt="1" style="width: 500px; height: 400px;"></a>
-									</c:if>
-									<a href="/board/readPage?no=${o.NO}"><img
-										src="
-												${o.IMAGE }" alt="Paris" style="width: 500px; height: 400px;"></a>
-									<div class="carousel-caption">
-										<h3>${o.TITLE }</h3>
-										<p>${o.BOOKNAME }</p>
+								</c:when>
+								<c:otherwise>
+									<div class="item">
+										<c:choose>
+											<c:when test="${o.image[0]  == null}">
+												<a href="/bookPage/${o.BNO}"><img
+													src="${pageContext.request.contextPath }/image/Desert.jpg"
+													alt="1" style="width: 500px; height: 400px;"></a>
+													<div class="carousel-caption">
+													<h3>${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<a href="/bookPage/${o.BNO}"><img
+													src="
+												${o.image[0]  }" alt="Paris"
+													style="width: 500px; height: 400px;"></a>
+												<div class="carousel-caption">
+													<h3>${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
-								</div>
-							</c:if>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 					</c:choose>
 				</c:forEach>
@@ -254,8 +274,9 @@
 				<div class="col-sm-4">
 					<a href="#demo" data-toggle="collapse"> <c:if
 							test="${!empty vo.IMAGE }">
-							<a href="/@${vo.ID }"><img src="${vo.IMAGE }" class="img-circle person"
-								alt="Random Name" style="width: 200px; height: 200px;"></a>
+							<a href="/@${vo.ID }"><img src="${vo.IMAGE }"
+								class="img-circle person" alt="Random Name"
+								style="width: 200px; height: 200px;"></a>
 						</c:if> <c:if test="${empty vo.IMAGE }">
 							<a href="/@${vo.ID }"><img
 								src="${pageContext.request.contextPath }/image/default_profile.png"

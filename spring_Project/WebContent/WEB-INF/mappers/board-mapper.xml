@@ -36,6 +36,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board order
 		by good desc
 	</select>
+	
+	<select id="boardWinnerNo" resultType="hashmap">
+		select * from time order
+		by cnt desc
+	</select>
+	
+	<select id="boardWinnerNo2" resultType="hashmap">
+		select * from time, board  where time.bno = board.bno order by cnt desc
+	</select>
+
+	<select id="boardWinnerBno" resultType="hashmap">
+		select * from board where bno = #{bno}
+	</select>
 
 	<select id="listAll" resultType="total.domain.BoardVO">
  <![CDATA[

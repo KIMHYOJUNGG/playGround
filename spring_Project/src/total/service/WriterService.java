@@ -13,8 +13,6 @@ public class WriterService {
 	SqlSessionTemplate session;
 	
 	public List<Map> Writer() {
-		System.out.println("Writer!!!!!!!");
-		
 		return session.selectList("writers.writer");
 	}
 	

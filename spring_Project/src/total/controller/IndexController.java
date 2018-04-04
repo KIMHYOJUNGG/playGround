@@ -1,11 +1,7 @@
 
 package total.controller;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.servlet.ServletContext;
 
@@ -31,7 +27,7 @@ public class IndexController {
 	WriterService writerService;
 	  
 	
-	@RequestMapping({"/index","/"})
+	@RequestMapping({"/index","/"})  ///week/castindex
 	public String indexHandle(Model model) throws Exception{
 
 	List<Map> writerlist = writerService.Writer();
@@ -47,9 +43,54 @@ public class IndexController {
 	  
 	  	model.addAttribute("writer",set);
 		
-		
-		System.out.println("index");
 		List<Map> boardNo = indexService.boardConnectNo();
+		List<Map> WinnerNo = indexService.boardWinnerNo();
+		List<Map> WinnerNo2 = indexService.boardWinnerNo2();
+		model.addAttribute("WinnerNo",WinnerNo);
+		
+		List<Map> bnolist = new LinkedList<>();
+		for (int i = 0; i < WinnerNo.size() ; i++) { 
+		 bnolist.add(indexService.boardWinnerBno((String)WinnerNo.get(i).get("BNO")).get(0));
+		}
+		
+		System.out.println("bnolist : "+ bnolist);
+		System.out.println("bnolist : "+ bnolist.get(0).get("NO"));
+		for(int i = 0; i < WinnerNo.size() ; i++) {
+			WinnerNo.get(i).put("image", boardService.mongoFindImage((Number)bnolist.get(i).get("NO")));
+		}
+		System.out.println("image; "+WinnerNo.get(2).get("NO"));
+		System.out.println(";;;"+ WinnerNo.get(2).get("image").toString());
+		
+		
+		/*
+		int count = 0;
+		Map<Integer, String > slidelist = new HashMap<Integer, String>();
+		Set<String> bnoset = new HashSet<>();
+		Set<Map> bnomap = new HashSet<>();
+		for (int i = 0; i < WinnerNo2.size() ; i++) {  
+			for (String s : boardService.mongoFindImage((Number) (WinnerNo2.get(i).get("NO")))) { 
+				if(bnoset.add((String) WinnerNo2.get(i).get("BNO"))){
+				slidelist.put(count, s);
+				
+				count++;  
+				//if(WinnerNo.size() < bnoset.size() )
+				//WinnerNo.get(i).put("image", slidelist.get(i));
+				
+				}
+			}
+		}
+		
+		for(int ii=0 ; ii < WinnerNo.size() ; ii++) {
+			WinnerNo.get(ii).put("image", slidelist.get(ii));
+			
+		}
+		
+		System.out.println("slidelist  : "+slidelist);
+		System.out.println("slidelist22  : "+WinnerNo);
+		 */
+		
+		
+		
 		if(boardNo.size()<8) 
 			model.addAttribute("boardNo", boardNo);
 		else 

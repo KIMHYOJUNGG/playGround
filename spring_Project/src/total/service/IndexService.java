@@ -21,8 +21,17 @@ public class IndexService {
 		return template.selectList("board.mainBoardOrder");
 	}
 	
+	public List<Map> boardWinnerNo() {
+		return template.selectList("board.boardWinnerNo");
+	}
 	
+	public List<Map> boardWinnerNo2() {
+		return template.selectList("board.boardWinnerNo2");
+	}
 	
+	public List<Map> boardWinnerBno(String bno) {
+		return template.selectList("board.boardWinnerBno",bno);
+	}
 	
 	
 }
