@@ -477,6 +477,8 @@ public class BoardService {
 	
 	
 	public void delete(Integer no) throws Exception {
+		session.delete("reply.totaldelete",no);
+		
 		session.delete("report.delete", no);
 		session.delete("board.delete", no);
 

@@ -4,7 +4,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="reply">
+<delete id="totaldelete">
+delete from reply where bno=#{no}
 
+</delete>
 	<select id="list" resultType="total.domain.ReplyVO">
 		select
 		*
