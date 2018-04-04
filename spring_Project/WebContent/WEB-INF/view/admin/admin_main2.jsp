@@ -10,8 +10,8 @@
 		<h2>
 			게시글목록
 			<div align="right">
-				<small style="font-size: 15px"> <a
-					href="/admin/getmessage?gcnt=${gcnt }">메시지</a>( ${gcnt } )
+				<small style="font-size: 15px"><a href="/week/weekendtop"> 주간순위 </a>/ <a
+					href="/admin/getmessage?gcnt=${gcnt }">메시지</a>( ${gcnt } )  </small>
 				</small>
 			</div>
 			<div align="center">

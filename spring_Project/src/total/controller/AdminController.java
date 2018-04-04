@@ -38,7 +38,7 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String AminHandler(HttpSession session) {
 		if (session.getAttribute("admin") == null) {
-			return "admin/admin_log";
+			return "redirect:/week/castadmin";
 		} else {
 			return "redirect:/admin/member";
 		}
@@ -270,6 +270,5 @@ public class AdminController {
 			}
 		}
 	}
-	
 	
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <div class="container-fluid text-center">
 	<br>
@@ -55,7 +56,7 @@
 								<c:if test="${msg.READCHECK eq 'N' }">
 								 &nbsp; &nbsp;<span class="label label-info">NEW</span>
 								</c:if></td>
-								<td class="mtd" style="width: 20%">${msg.REGDATE }</td>
+								<td class="mtd" style="width: 20%"><fmt:formatDate value="${msg.REGDATE }" pattern="yy/MM/dd HH:mm"/> </td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
@@ -139,6 +140,7 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="sendHead">메세지 보내기</h4>
 				</div>
 				<div class="modal-body" align="left">

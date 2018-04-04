@@ -189,7 +189,7 @@ public class MemberController {
 	// 로그인
 	@RequestMapping(path = "/log", method = RequestMethod.GET)
 	public String memberLoginPage(Model model, Map map) {
-		map.put("body", "login3.jsp");
+		map.put("body", "login.jsp");
 		return "t_el";
 	}
 

@@ -98,4 +98,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectCntrp" resultType="int">
 		select count(*) from report where no=#{no}
 	</select>
+	
+	<!-- 주간순위  보여주기 -->
+	<select id="selectWeekend" resultType="hashmap">
+		select * from time order by cnt desc
+	</select>
+	
 </mapper>

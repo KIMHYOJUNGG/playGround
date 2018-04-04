@@ -1,6 +1,6 @@
 package total.controller;
 
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -59,6 +59,11 @@ public class BookPageController {
 		if(book != null) {
 			map.put("bookContents", "Y");
 			map.put("bookInfo", bookPageService.getBookInfo(bno));
+			List<String> li = new ArrayList<>();
+				li.add(bno);
+			Map data = new HashMap<>();
+				data.put("bno", li);
+			map.put("viewNgood", bookPageService.getViewNGoodCnt(data));
 			map.put("contentsList", bookPageService.getBookList(bno)); 
 			map.put("boardVOList", bookPageService.getBoardVO(bno));
 			map.put("writerInfo", myPageService.getInfo(book.getWriter()));

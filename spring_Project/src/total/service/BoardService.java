@@ -362,9 +362,10 @@ public class BoardService {
 		for (Map ora : oracle) {
 			Criteria criteria = new Criteria("no");
 			Number no = (Number) ora.get("NO");
-			cri.is(no.intValue());
+			//cri.orOperator(Criteria.where("no").regex((String) ora.get("NO")));
+			criteria.is(no.intValue());
 			System.out.println("nono :" + no);
-			Query que = new Query(cri);
+			Query que = new Query(criteria);
 			List<MongoBoardVo> mb = template.find(que, MongoBoardVo.class, "board");
 			for (MongoBoardVo m4 : mb) {
 				for (String m3 : m4.getTag()) {

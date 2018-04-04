@@ -1,5 +1,9 @@
 package total.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import total.domain.MongoBoardVo;
+import total.domain.Criteria;
+import total.domain.PageMaker;
 import total.domain.ReplyVO;
 import total.service.ReplyService;
 
@@ -36,9 +41,9 @@ public class ReplyController {
   }
 
   @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
-  public ResponseEntity<MongoBoardVo> list(@PathVariable("bno") Integer bno) {
+  public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
 
-    ResponseEntity<MongoBoardVo> entity = null;
+    ResponseEntity<List<ReplyVO>> entity = null;
     try {
       entity = new ResponseEntity<>(reservice.list(bno), HttpStatus.OK);
 
@@ -51,7 +56,8 @@ public class ReplyController {
   }
 
   @RequestMapping(value = "/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
-  public ResponseEntity<String> update(@PathVariable("rno") Integer rno, @RequestBody ReplyVO vo) {
+  public ResponseEntity<String> update(@PathVariable("rno") Integer rno,
+		  @RequestBody ReplyVO vo) {
 
     ResponseEntity<String> entity = null;
     try {
@@ -65,13 +71,14 @@ public class ReplyController {
     }
     return entity;
   }
-/*
+
   @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
-  public ResponseEntity<String> remove(@PathVariable("rno") Integer rno) {
+  public ResponseEntity<String> remove(
+		  @PathVariable("rno") Integer rno) {
 
     ResponseEntity<String> entity = null;
     try {
-      service.delete(rno);
+      reservice.delete(rno);
       entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
@@ -95,11 +102,11 @@ public class ReplyController {
       pageMaker.setCri(cri);
 
       Map<String, Object> map = new HashMap<String, Object>();
-      List<ReplyVO> list = service.listPage(bno, cri);
+      List<ReplyVO> list = reservice.listPage(bno, cri);
 
       map.put("list", list);
 
-      int replyCount = service.count(bno);
+      int replyCount = reservice.count(bno);
       pageMaker.setTotalCount(replyCount);
 
       map.put("pageMaker", pageMaker);
@@ -112,5 +119,5 @@ public class ReplyController {
     }
     return entity;
   }
-*/
+/**/
 }

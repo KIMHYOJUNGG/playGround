@@ -74,7 +74,7 @@
 													<c:choose>
 														<c:when  test="${map.WRITER eq f.ID }">
 														<c:set var="m" value="${map }"/>
-															<p>	최근 글 등록일 <span style="color: gray"><fmt:formatDate value="${ m.REGDATE}" pattern="yy/MM/dd hh:mm"/></span></p>
+															<p>	최근 글 등록일 <span style="color: gray"><fmt:formatDate value="${ m.REGDATE}" pattern="yy/MM/dd HH:mm"/></span></p>
 														</c:when>
 														<c:otherwise>
 															<c:if test="${vs.last }">
