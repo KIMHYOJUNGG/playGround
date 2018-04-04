@@ -37,13 +37,13 @@
 <!-- <<<<<<< HEAD -->
 <%-- 						value='${cri.keyword }'> --%>
 <!-- 					<button id='searchBtn'>Search</button> -->
-<!-- 					<script> -->
+					<script>
 // 					$("#searchBtn").onchange(function(){
 						
 						
 // 					});
 					
-<!-- 					</script> -->
+ 					</script> 
 <!-- 					<a href="/board/register"><button class='btn btn-primary'>New Board</button></a> -->
 					
 <!-- 				</div> -->
