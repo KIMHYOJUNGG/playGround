@@ -1,41 +1,86 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- <%@include file="../include/header.jsp" %> --%>
 
+
+<div class="container-fluid">
+	<div class="page-header">
+		 <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><h3 style="text-decoration: underline;">${boardVO.bookname}</h3></a>
+		<h1>${boardVO.title} &nbsp; <a href="${pageContext.request.contextPath}/search?word=${boardVO.type}"><span class="badge bg_type">${boardVO.type}</span></a></h1>
+	<p> <span style="font-size: 12px; color: gray; font-style: italic;">by </span> <a href="${pageContext.request.contextPath}/@${boardVO.writer}">${boardVO.writer} </a>
+	 &nbsp;<span class="glyphicon glyphicon-eye-open"  style="color: gray;"></span> <span style="font-size: 12px; color: gray; font-style: italic;">${boardVO.viewcnt}</span>
+	 &nbsp;<span class="glyphicon glyphicon-pencil"  style="color: gray;"></span> 
+	 <span style="font-size: 12px; color: gray; font-style: italic;"><fmt:formatDate value="${boardVO.regdate }" pattern="yy/MM/dd HH:mm"/></span> </p> 
+	</div>
+	<div align="right">
+		<c:if test="${sessionScope.logon== boardVO.writer}" >
+		    <button type="submit" class="btn btn-primary modifyBtn">수정</button>
+		    <button type="submit" class="btn btn-primary removeBtn">삭제</button>
+	    </c:if>
+	</div>
+	<div id="cbody">
+		${mbv.contents}    
+	</div>
+	<hr/>
+
+    <font size="5px;" style="color:red;" id="heart">
+		<c:if test="${like eq false }">
+					
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span>
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span>
+		</c:if>
+		<c:if test="${like eq true}">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span>
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span>
+		</c:if>
+	</font>
+    <span id="info"></span>
+
+<div class="form-group">
+    <c:if test="${ !empty comments  }">
+		<label for="exampleInputEmail1">comments</label> 
+		<c:forEach var="co" items="${comments }" varStatus="vs">
+
+		<p>
+		${co.id } &nbsp; &nbsp; &nbsp; ${co.reply } &nbsp; &nbsp; &nbsp; ${co.date}  
+		</p> 
+
+		</c:forEach>
+	</c:if>
+	</div>
+	
+	<div id="cmt">
+	<c:if test="${logon != null  }">
+		<label for="exampleInputEmail1">댓글쓰기</label> 
+		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
+	<p align="right" style="margin-top: 15px; margin-bottom:0px"><button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button></p>
+	</c:if>
+	</div>
+
+	<div id="btn-div" style="margin-bottom: 15px" align="center">
+	    <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button>
+	    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button>
+	    <button type="submit" class="btn btn-primary goListBtn"> 목록 </button>
+	    <c:if test="${sessionScope.logon!= boardVO.writer}" >
+	  		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button> 
+	  </c:if>
+	</div>
+
+
+
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- Main content -->
-    <section class="content">
-      <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <!-- general form elements -->
-        <div class="box box-primary">
-        <div class="box-header">
-          <h2 class="box-title">READ BOARD</h2>
-        </div><!-- /.box-header -->
+<!--     <section class="content"> -->
+<!--       <div class="row"> -->
+<!--       left column -->
+<!--       <div class="col-md-12"> -->
+<!--         general form elements -->
+<!--         <div class="box box-primary"> -->
     
 					
-					<font size="5px;" style="color:red;" id="heart">
-					<c:if test="${like eq false }">
-					
-<a href="#">
-          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span>
-        </a>
-        			<a href="#">
-          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span>
-        </a>
-					</c:if>
-					<c:if test="${like eq true}">
-					<a href="#">
-          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span>
-        </a>
-					<a href="#">
-          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span>
-        </a>
-					</c:if>
-</font>
-
-        <span id="info"></span>
 
 <%-- 
 				<c:choose>
@@ -50,7 +95,86 @@
 
 
 
-					  <script>
+
+<!--   <div class="box-body"> -->
+<!--     <div class="form-group"> -->
+<%--       <h3>조회수 <small>${boardVO.viewcnt}</small></h3>  --%>
+<%--       <input type="text" name='title' class="form-control" 
+<%--          value="${boardVO.viewcnt}" readonly="readonly"> --%> 
+<!--     </div> -->
+  
+<!--     <div class="form-group"> -->
+<%--       <h3>Type <small>${boardVO.type}</small></h3> --%>
+      
+<%--    <%--    <label for="exampleInputEmail1">Type</label><br/> --%>
+<%--       <input type="text" name='type' class="form-control"  --%>
+<%--          value="${boardVO.type}" readonly="readonly"> --%>
+<!--     </div> -->
+<!--     <div class="form-group"> -->
+    
+<%-- 							<h3>Tag <small>${mbv.ptag}</small></h3> <input type="text"
+<%-- 								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%> 
+<!-- 						</div> -->
+<!--     <div class="form-group"> -->
+<%--    <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <h3>BookName <small>${boardVO.bookname}</small></h3></a> --%>
+<%--       <label for="exampleInputEmail1">BookName</label><br/>
+<%--       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control"  --%>
+<%--          value="${boardVO.bookname}" readonly="readonly"></a> --%> 
+<!--     </div> -->
+<!--     <div class="form-group"> -->
+<%--    <h3>Title <small>${boardVO.title}</small></h3> --%>
+<%--       <label for="exampleInputEmail1">Title</label>
+<%--       <input type="text" name='title' class="form-control"  --%>
+<%--          value="${boardVO.title}" readonly="readonly"> --%>
+<!--     </div> -->
+<!--     <div class="form-group"> -->
+<!--      <h3>Content</h3> -->
+<%-- ${mbv.contents}      --%>
+      <%-- <label for="exampleInputPassword1">Content</label>
+       <textarea class="form-control"  name="content" rows="3" id="ck" 
+      readonly="readonly">${mbv.contents}</textarea>
+      <script type="text/javascript">
+							$(function() {
+								CKEDITOR.replace('ck', {
+									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
+									height : '500px' // 입력창의 높이
+							
+								
+								});
+								
+							
+							});
+							
+		
+						</script> --%>
+      
+<!--     </div> -->
+    
+    
+    
+    
+<!--     					<font size="5px;" style="color:red;" id="heart"> -->
+<%-- 					<c:if test="${like eq false }"> --%>
+					
+<!--  <a href="#"> -->
+<!--           <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span> -->
+<!-- </a> -->
+<!--         			<a href="#"> -->
+<!--           <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span> -->
+<!--         </a> -->
+<%-- 					</c:if> --%>
+<%-- 					<c:if test="${like eq true}"> --%>
+<!-- 					<a href="#"> -->
+<!--           <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span> -->
+<!--         </a> -->
+<!-- 					<a href="#"> -->
+<!--           <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span> -->
+<!--         </a> -->
+<%-- 					</c:if> --%>
+<!-- </font> -->
+
+<!--         <span id="info"></span> -->
+    					  <script>
 					  $(document).ready(function(){
 						  $('[data-toggle="tooltip"]').tooltip();   
 						  
@@ -95,70 +219,17 @@
 									})	;
 								 $('[data-toggle="tooltip"]').tooltip();   
 					  		});
-						  	
-						  
 					  </script>
-  <div class="box-body">
-    <div class="form-group">
-      <h3>조회수 <small>${boardVO.viewcnt}</small></h3> 
-      <%-- <input type="text" name='title' class="form-control" 
-         value="${boardVO.viewcnt}" readonly="readonly"> --%>
-    </div>
-  
-    <div class="form-group">
-      <h3>Type <small>${boardVO.type}</small></h3>
-      
-   <%--    <label for="exampleInputEmail1">Type</label><br/>
-      <input type="text" name='type' class="form-control" 
-         value="${boardVO.type}" readonly="readonly"> --%>
-    </div>
-    <div class="form-group">
     
-							<h3>Tag <small>${mbv.ptag}</small></h3> <%-- <input type="text"
-								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%>
-						</div>
-    <div class="form-group">
-   <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <h3>BookName <small>${boardVO.bookname}</small></h3></a>
-      <%-- <label for="exampleInputEmail1">BookName</label><br/>
-      <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
-         value="${boardVO.bookname}" readonly="readonly"></a> --%>
-    </div>
-    <div class="form-group">
-   <h3>Title <small>${boardVO.title}</small></h3>
-      <%-- <label for="exampleInputEmail1">Title</label>
-      <input type="text" name='title' class="form-control" 
-         value="${boardVO.title}" readonly="readonly"> --%>
-    </div>
-    <div class="form-group">
-     <h3>Content</h3>
-${mbv.contents}     
-      <%-- <label for="exampleInputPassword1">Content</label>
-       <textarea class="form-control"  name="content" rows="3" id="ck" 
-      readonly="readonly">${mbv.contents}</textarea>
-      <script type="text/javascript">
-							$(function() {
-								CKEDITOR.replace('ck', {
-									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
-									height : '500px' // 입력창의 높이
-							
-								
-								});
-								
-							
-							});
-							
-		
-						</script> --%>
-      
-    </div>
-    <div class="form-group">
-    <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><h3>Writer <small>${boardVO.writer}</small></h3></a>
+<!--     <div class="form-group"> -->
+<%--     <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><h3>Writer <small>${boardVO.writer}</small></h3></a> --%>
     
       <%-- <label for="exampleInputEmail1" >Writer</label></br>
       
        <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.writer}" readonly="readonly"></a> --%>
-      </div>
+<!--       </div> -->
+<%--
     <div class="form-group">
     <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
@@ -171,39 +242,41 @@ ${mbv.contents}
 		</c:forEach>
 	</c:if>
 	</div>
+	
 	<c:if test="${logon != null  }">
 		<label for="exampleInputEmail1">댓글쓰기</label> 
 		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
                 <br/>
 		 <button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button>
-	</c:if>
+	</c:if> --%>
 <%-- 	<c:if test="${logon == null }"> --%>
 <!-- 		<label for="exampleInputEmail1">댓글쓰기</label>  -->
 <!-- 		  <textarea class="form-control" name="comments" id="commentslog" rows="3" cols="3" placeholder="댓글을 쓸수 있는 권한이 없습니다."  ></textarea> -->
 <!--                 <br/> -->
 <!-- 		 <button type="button"  name="comments" class="btn btn-default"  -->
 <%-- 		 onclick="javascript: location.assign('${pageContext.request.contextPath}/member/log?uri=board/readPage&no=${NO }')" >댓글쓰기</button> --%>
-<%-- 	</c:if> --%>
-	</div>
-	<div class="form-group">
-	
-  </div><!-- /.box-body -->
+<%-- 	</c:if>
+<!-- 	</div> -->  --%>
+<!-- 	<div class="form-group"> -->
 
-  <div class="box-footer">
-   <c:if test="${sessionScope.logon== boardVO.writer}" >
-    <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
-    <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
-    </c:if>
-    <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글 </button>
-    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글  </button>
-    <button type="submit" class="btn btn-primary goListBtn">GO LIST </button>
-    <c:if test="${sessionScope.logon!= boardVO.writer}" >
-  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
-  </c:if>
+	
+<!--   </div>/.box-body -->
+
+<!--   <div class="box-footer"> -->
+<%--    <c:if test="${sessionScope.logon== boardVO.writer}" > --%>
+<!--     <button type="submit" class="btn btn-warning modifyBtn">Modify</button> -->
+<!--     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button> -->
+<%--     </c:if> --%>
+<!--     <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button> -->
+<!--     <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button> -->
+<!--     <button type="submit" class="btn btn-primary goListBtn"> 목록 </button> -->
+<%--     <c:if test="${sessionScope.logon!= boardVO.writer}" > --%>
+<!--   		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button>  -->
+<%--   </c:if> --%>
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
-  </div>
+<!--   </div> -->
+  
 <div class="container" >
- 
   <!-- Trigger the modal with a button -->
 
   <!-- Modal -->
@@ -379,12 +452,15 @@ $('#comments-btn').click(function() {
 
   
   
-        </div><!-- /.box -->
-      </div><!--/.col (left) -->
+<!--         </div>/.box -->
+<!--       </div>/.col (left) -->
  
-      </div>   <!-- /.row -->
-    </section><!-- /.content -->
-    </div><!-- /.content-wrapper -->
+<!--       </div>   /.row -->
+<!--     </section>/.content -->
+<!--     </div>/.content-wrapper -->
+    
+    </div>
+    
 <%--     
 <%@include file="../include/footer.jsp" %> --%>
 
