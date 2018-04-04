@@ -49,11 +49,34 @@ img {
 	height: auto;
 }
 
-.centered {
+#outer {
 	position: relative;
+	 width: 100%;
+	 text-align: center;
+	 height: 500px;
+ }
+
+#inner {
 	display: inline-block;
-	width: 50%;
-	padding: 1em;
+	margin: auto;
+	position: absolute;
+	left:0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.centered {
+ 	position: relative; 
+/* 	display: inline-block; */
+/* 	width: 100%; */
+/* 	padding: 1em; */
+/*	position: absolute;  */
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 48%;
+	height: 59%;
 }
 
 .search {
@@ -71,8 +94,8 @@ img {
 }
 
 .bg-grey {
-	background-color: #f6f6f6;
-/* 		background-color: white; */
+/* 	background-color: #f6f6f6; */
+ 		background-color: white; 
 }
 
 .logo {
