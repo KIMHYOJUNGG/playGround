@@ -44,7 +44,8 @@ public class MemberController {
 	@RequestMapping("/registpage")
 	public String memberPage(Map map) {
 		map.put("body", "register.jsp");
-		return "t_el";
+		map.put("title", "회원가입");
+		return "t_el_title";
 	}
 
 	// 회원등록
@@ -190,7 +191,8 @@ public class MemberController {
 	@RequestMapping(path = "/log", method = RequestMethod.GET)
 	public String memberLoginPage(Model model, Map map) {
 		map.put("body", "login.jsp");
-		return "t_el";
+		map.put("title", "로그인");
+		return "t_el_title";
 	}
 
 	// 권한이 제한되었을 때의 페이지이동
@@ -250,13 +252,14 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			mapp.put("body", "login.jsp");
+			mapp.put("title", "로그인");
 			Map map = memberservice.selectId(param.get("id"));
 			if (map != null) {
 				model.addAttribute("passn", "아이디와 비밀번호가 일치하지 않습니다.");
-				return "t_el";
+				return "t_el_title";
 			} else {
 				model.addAttribute("idn", "해당 아이디가 없습니다.");
-				return "t_el";
+				return "t_el_title";
 			}
 		}
 	}
@@ -288,23 +291,25 @@ public class MemberController {
 	@RequestMapping("/idsearch")
 	public String memberIdHandle(Map map) {
 		map.put("body", "idsearch.jsp");
-		return "t_el";
+		map.put("title", "ID 찾기");
+		return "t_el_title";
 	}
 
 	// 아이디 찾기
 	@RequestMapping(path = "idresult", method = RequestMethod.POST)
 	public String memberIdResultHandle(Model model, HttpServletRequest req, @RequestParam String email, Map map2) {
 		map2.put("body", "login.jsp");
+		map2.put("title", "로그인");
 		String addr = req.getLocalAddr();
 		Map map = memberservice.idMember(email);
 		if (map != null) {
 			String id2 = (String) map.get("ID");
 			boolean rst2 = mailservice.searchId(email, id2, addr);
 			model.addAttribute("idsearch", "이메일을 확인해보세요");
-			return "t_el";
+			return "t_el_title";
 		} else {
 			model.addAttribute("idwarn", "해당 이메일이 없습니다.");
-			return "t_el";
+			return "t_el_title";
 		}
 	}
 
@@ -312,7 +317,8 @@ public class MemberController {
 	@RequestMapping("/passwordsearch")
 	public String memberPasswordHandle(Map map) {
 		map.put("body", "password.jsp");
-		return "t_el";
+		map.put("title", "비밀번호 찾기");
+		return "t_el_title";
 	}
 
 	// 비밀번호 찾기
@@ -320,6 +326,7 @@ public class MemberController {
 	public String memberPasswordResultHandle(Model model, HttpServletRequest req,
 			@RequestParam Map<String, String> param, Map map2) {
 		map2.put("body", "login.jsp");
+		map2.put("title", "로그인");
 		String addr = req.getLocalAddr();
 		Map map = memberservice.passwordMember(param);
 		if (map != null) {
@@ -327,10 +334,10 @@ public class MemberController {
 			String email = param.get("email");
 			boolean rst2 = mailservice.searchPassword(email, password, addr);
 			model.addAttribute("idsearch", "이메일을 확인해보세요");
-			return "t_el";
+			return "t_el_title";
 		} else {
-			model.addAttribute("passwordwarn", "아이디와 이메일이 일치하지 않습니다. 아이디를 재확인 해주세요");
-			return "t_el";
+			model.addAttribute("passwordwarn", "아이디와 이메일이 일치하지 않습니다. <br>아이디를 재확인 해주세요");
+			return "t_el_title";
 		}
 	}   
 	

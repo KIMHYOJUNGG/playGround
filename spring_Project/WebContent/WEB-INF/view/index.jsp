@@ -46,12 +46,10 @@
 									<c:if test="${o.IMAGE == null}">
 										<a href="/board/readPage?no=${o.NO}"><img
 											src="${pageContext.request.contextPath }/image/Desert.jpg"
-											alt="1" width="1200" height="700"></a>
+											alt="img"  style="width: 1200px; height: 700px"></a>
 									</c:if>
-									<a href="/board/readPage?no=${o.NO}"><img
-										src="
-												${o.IMAGE }" alt="Paris" width="1200"
-										height="700"></a>
+									<a href="/board/readPage?no=${o.NO}">
+									<img src="${o.IMAGE }" alt="img"  style="width: 1200px; height: 300px"></a>
 									<div class="carousel-caption">
 										<h3>${o.TITLE }</h3>
 										<p>${o.BOOKNAME }</p>
@@ -61,14 +59,11 @@
 							<c:if test="${vs.count != 1 }">
 								<div class="item">
 									<c:if test="${o.IMAGE == null}">
-										<a href="/board/readPage?no=${o.NO}"><img
-											src="${pageContext.request.contextPath }/image/Desert.jpg"
-											alt="1" width="1200" height="700"></a>
+										<a href="/board/readPage?no=${o.NO}">
+										<img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="img" style="width: 1200px; height: 300px"></a>
 									</c:if>
-									<a href="/board/readPage?no=${o.NO}"><img
-										src="
-												${o.IMAGE }" alt="Paris" width="1200"
-										height="700"></a>
+									<a href="/board/readPage?no=${o.NO}">
+									<img	src="${o.IMAGE }" alt="img" style="width: 1200px; height: 300px"></a>
 									<div class="carousel-caption">
 										<h3>${o.TITLE }</h3>
 										<p>${o.BOOKNAME }</p>

@@ -2,8 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div id="outer">
-	<div id="inner">
+<div class="outer">
+	<div class="inner"  style="max-width: 800px">
 		<div class="centered" >
 			<form  action="/member/loging" method="post"
 				style="text-align: left; line-height: 34px"
@@ -37,8 +37,8 @@
 				<p style="margin:20px" align="center">
 					<a href="/member/idsearch">아이디 찾기</a> / 
 					<a href="/member/passwordsearch">비밀번호 찾기</a> </p>
-				<p style="margin:10px" align="right">
-					<button id="sbt" type="submit" class="btn btn-info" style="height: 34px;">로그인</button>
+				<p style="margin-top:10px" align="right">
+					<button id="sbt" type="submit" class="btn btn-info" style="height: 38px; min-width:100px">로그인</button>
 				</p>
 			</form>
 <!-- 			<p> -->

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 회원가입 -->
-<body>
 	<div align="center">
 		<div id="checkresult"></div>
 		<form action="/member/regist" role="form" method="post"
@@ -13,8 +12,7 @@
 			</div>
 			<p>
 				<b>PASS(*)</b><br /> <input type="password" name="password"
-					id="password"
-					pattern="/^(?=.*\d)(?=.*[~`!@%23$%\^&*()-])(?=.*[a-zA-Z]).{8,20}$/g">
+					id="password">
 			</p>
 			<p></p>
 			<b>REPASS(*)</b><br /> <input type="password" name="repassword"
@@ -39,7 +37,6 @@
 			</p>
 		</form>
 	</div>
-</body>
 <script>
 	// 패스워드 재확인
 	function checkps() {
@@ -154,17 +151,17 @@
 		}
 	}
 
-	function checkPasswordPattern(str) {
-		var pattern1 = /[0-9]/; // 숫자 
-		var pattern2 = /[a-zA-Z]/; // 문자 
-		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
-		if (!pattern1.test(str) || !pattern2.test(str) || !pattern3.test(str)
-				|| str.length < 8) {
-			alert("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
-			return false;
-		} else {
-			return true;
-		}
+// 	function checkPasswordPattern(str) {
+// 		var pattern1 = /[0-9]/; // 숫자 
+// 		var pattern2 = /[a-zA-Z]/; // 문자 
+// 		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
+// 		if (!pattern1.test(str) || !pattern2.test(str) || !pattern3.test(str)
+// 				|| str.length < 8) {
+// 			alert("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
+// 			return false;
+// 		} else {
+// 			return true;
+// 		}
 	}
 </script>
 

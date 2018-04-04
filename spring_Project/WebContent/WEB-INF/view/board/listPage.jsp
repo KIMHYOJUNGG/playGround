@@ -6,20 +6,11 @@
 
 <%-- <%@include file="../include/header.jsp"%> --%>
 
-<!-- Main content -->
-<section class="content">
-	<div class="row">
-		<!-- left column -->
-		<div class="col-md-12">
-			<!-- general form elements -->
-			<div class='box'>
-				<div class="box-header with-border">
-					<h3 class="box-title">Board List</h3>
-				</div>
-				<div class='box-body'>
-				
-
-					<select name="searchType">
+<div class="outer" style="max-height: 100px">
+	<div class="inner">
+		<div class="centered" style="width: 100%; height: 30%" >
+				<p>
+					<select name="searchType" style="height: 33.6px">
 						<option value="n"
 							<c:out value="${cri.searchType == null?'selected':''}"/>>
 							---</option>
@@ -42,66 +33,79 @@
 							<c:out value="${cri.searchType eq 'tcw'?'selected':''}"/>>
 							Title OR Writer</option>
 					</select> <input type="text" name='keyword' id="keywordInput"
-						value='${cri.keyword }'>
-					<button id='searchBtn'>Search</button>
-					
-					<a href="/board/register"><button class='btn btn-primary'>New Board</button></a>
-					
-				</div>
-				
-		
-				
-				
-					<div class="container">
-					<c:forEach items="${type}" var="v">
-
-						<a href="/board/listPage?stype=${v }"><button type="button"  
-						class="btn btn-info btn-sm bb">${v }</button></a>&nbsp;
-
-
-							</c:forEach>
+						value='${cri.keyword }' style="height: 33.6px">
+					<button id='searchBtn' class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+					<a href="/board/register"><button class='btn btn-primary'><span class="glyphicon glyphicon-pencil"></span> 글쓰기</button></a>
+					<button class='btn btn-primary' onclick="showKw()">키워드</button>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+				<div id="kw" class="container-fulid" align="center" style="display: none;">
+					<p style="margin: 10 0 0 10">
+						<c:forEach items="${type}" var="v" varStatus="vs">
+							<a href="/board/listPage?stype=${v }">
+							<button type="button"  	class="btn btn-info btn-sm bb" >${v }</button></a>&nbsp;
+							<c:if test="${vs.count == 9 }"></p><p></c:if>
+						</c:forEach>
 						<a href="/board/listPage"><button type="button"  
 						class="btn btn-info btn-sm bb">전체목록</button></a>
-
+						</p>
 					</div>
 					
-			</div>
 			
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">LIST PAGING</h3>
-				</div>
-				<div class="box-body">
-					<table class="table table-bordered table-hover">
-						<tr>
-							<th style="width: 10px">BNO</th>
-							<th>TITLE</th>
-							<th>WRITER</th>
-							<th>REGDATE</th>
-							<th style="width: 80px">좋아요!</th>
-							<th style="width: 40px">VIEWCNT</th>
-						</tr>
+<!-- 				<div class="table-responsive"> -->
+<!-- 					<table class="table table-hover" style="margin-top: 10px"> -->
+<!-- 						<tr> -->
+<!-- 							<th style="width: 10px">BNO</th> -->
+<!-- 							<th>TITLE</th> -->
+<!-- 							<th>WRITER</th> -->
+<!-- 							<th>REGDATE</th> -->
+<!-- 							<th style="width: 80px">좋아요!</th> -->
+<!-- 							<th style="width: 40px">VIEWCNT</th> -->
+<!-- 						</tr> -->
 
-					 	<c:forEach items="${list}" var="boardVO">
+<%-- 					 	<c:forEach items="${list}" var="boardVO"> --%>
 
-							<tr>
-								<td>${boardVO.no}</td>
-								<td><a
-									href='/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&no=${boardVO.no}'>
-										${boardVO.title}</a></td>
-								<td>${boardVO.writer}</td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-										value="${boardVO.regdate}" /></td>
-							<td><span class="badge">${boardVO.good }</span></td> 
-							 <td><span class="badge">${boardVO.viewcnt }</span></td> 
+<!-- 							<tr> -->
+<%-- 								<td>${boardVO.no}</td> --%>
+<!-- 								<td><a -->
+<%-- 									href='/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&no=${boardVO.no}'> --%>
+<%-- 										${boardVO.title}</a></td> --%>
+<%-- 								<td>${boardVO.writer}</td> --%>
+<%-- 								<td><fmt:formatDate pattern="yy-MM-dd HH:mm" --%>
+<%-- 										value="${boardVO.regdate}" /></td> --%>
+<%-- 							<td><span class="badge">${boardVO.good }</span></td>  --%>
+<%-- 							 <td><span class="badge">${boardVO.viewcnt }</span></td>  --%>
 
-							</tr>
+<!-- 							</tr> -->
 
-						</c:forEach> 
+<%-- 						</c:forEach>  --%>
 
-					</table>
-				</div>
-					<div class="box-footer">
+<!-- 					</table> -->
+<!-- 				</div> -->
+
+<div class="container-fluid"  align="center">
+	<div class="li"  style="margin-top: 10px; width: 80%">
+		<c:forEach items="${list}" var="boardVO">
+			<hr/>
+			<a href="/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&no=${boardVO.no}" style="text-align: center">
+			<div class="row">
+					 <h3 style="margin-bottom:25px">${boardVO.title} <span style="font-size: 12px; color: gray; font-style: italic;">by</span> <span style="font-size: 12pt">${boardVO.writer}</span> </p></h3>
+					 <p>
+					 <span style="font-size: 12px; color: gray; font-style: italic;">GOOD</span> <span class="badge">${boardVO.good }</span> &nbsp;
+					 <span style="font-size: 12px; color: gray; font-style: italic;">VIEW</span>  <span class="badge">${boardVO.viewcnt }</span> &nbsp;
+					 <span style="font-size: 12px; color: gray;"><fmt:formatDate pattern="yy-MM-dd HH:mm" value="${boardVO.regdate}" /></span>
+			</div>
+			</a>
+		</c:forEach>
+		<hr/>
+	</div>
+</div>
+
+
+<div class="box-footer">
 
 				
 					<div class="text-center">
@@ -204,6 +208,12 @@
 
 			});
 	
+	function showKw() {
+		if($("#kw").css("display") == "none")
+			$("#kw").css("display", "block");
+		else
+			$("#kw").css("display", "none");
+	}
 </script>
 
 <%-- <%@include file="../include/footer.jsp"%> --%>

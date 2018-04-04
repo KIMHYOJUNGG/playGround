@@ -155,7 +155,8 @@
 															+"<div class='row'>";
 												}
 												div	+= "<div class='col-sm-4'>"
-														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>";
+														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>"
+														+"<div class='img_div-wrapper' style='border: 1px solid #ddd;''><div class='img_div'><div class='img-centered'>";
 													for(var j = 0; j < vo.length ; j++) {
 														if(vo[j].no == c[i].NO) {
 															 img = "<img class='card-img-top' alt='Card image' style='width: 100%; max-height:' ";
@@ -164,7 +165,7 @@
 															} else {
 																img += "src='"+vo[j].image[0]+"'>";
 															}
-															var body = "<div class='card-body'>"
+															var body = "</div></div></div><div class='card-body'>"
 																				+"<h3 class='card-title'>"+c[i].TITLE +"</h3></a>"
 																				+"<p class='list-group-item-text' style='margin:0 0 10px;'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
 																				+"<span class='glyphicon glyphicon-heart'></span> <span class='badge'> "+Math.floor(c[i].GOOD)+"</span> "
@@ -202,8 +203,10 @@
 													div = "<li class='list-group-item'>"
 															+"<div class='row'>";
 												}
+												
 												div	+= "<div class='col-sm-4'>"
-														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>";
+														+"<div class='card' ><a href='${pageContext.request.contextPath}/board/readPage?no="+c[i].NO+"'>"
+														+"<div class='img_div-wrapper' style='border: 1px solid #ddd;''><div class='img_div'><div class='img-centered'>";
 													for(var j = 0; j < vo.length ; j++) {
 														if(vo[j].no == c[i].NO) {
 															 img = "<img class='card-img-top' alt='Card image' style='width: 100%' ";
@@ -212,7 +215,7 @@
 															} else {
 																img += "src='"+vo[j].image[0]+"'>";
 															}
-															var body = "<div class='card-body'>"
+															var body = "</div></div></div><div class='card-body'>"
 																				+"<h3 class='card-title'>"+c[i].TITLE +"</h3></a>"
 																				+"<p class=list-group-item-text'><a href='${pageContext.request.contextPath }/search?word="+c[i].TYPE +"'><span class='badge bg_type'>"+c[i].TYPE +"</span></a>"
 																				+"<span class='glyphicon glyphicon-heart'></span> <span class='badge'>"+Math.floor(c[i].GOOD)+"</span> "
@@ -233,6 +236,36 @@
 											$("#cts").html(html);
 										});
 									}
+											imgClass();
+									
+									$(function(){
+										function imgClass() {
+											console.log("imgclass");
+											$(".img-centered").each(function(){
+												console.log(".img-centered");
+												console.log($(this));
+												var div = $(this); // 이미지를 감싸는 div
+												var $img = $(this).children('img');
+												console.log($img);
+												var divAspect = div.height() / div.width(); 
+												var imgAspect = $img.height() / $img.width();
+												if (imgAspect <= divAspect) {
+												    // 이미지가 div보다 납작한 경우 세로를 div에 맞추고 가로는 잘라낸다
+												    if($img.attr("class").indexOf("landscape") == -1)
+												    	$img.attr("class", $img.attr("class")+" landscape");
+												    else
+												    	$img.attr("class", $img.attr("class")+" landscape");
+												} else {
+												    // 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
+	//	 										    $img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
+													 if($img.attr("class").indexOf("portrait") == -1)
+													 	 $img.attr("class", $img.attr("class")+" portrait");
+													 else
+														 $img.attr("class", $img.attr("class")+" portrait");
+												}
+											});
+										}
+									});
 								</script>
 						<c:if test="${logon != writerInfo.ID || logon== null}">
 							<c:forEach items="${follower }" var="fer">

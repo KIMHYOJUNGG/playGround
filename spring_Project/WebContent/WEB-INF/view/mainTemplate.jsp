@@ -49,14 +49,14 @@ img {
 	height: auto;
 }
 
-#outer {
+.outer {
 	position: relative;
 	 width: 100%;
 	 text-align: center;
 	 height: 500px;
  }
 
-#inner {
+.inner {
 	display: inline-block;
 	margin: auto;
 	position: absolute;
