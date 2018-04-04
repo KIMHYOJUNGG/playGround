@@ -554,4 +554,7 @@ public class BoardService {
 		return session.selectOne("board.searchId",no);
 	}
 
+	public Map getBoardInfo(int no) {
+		return session.selectOne("board.boardNo", no);
+	}
 }

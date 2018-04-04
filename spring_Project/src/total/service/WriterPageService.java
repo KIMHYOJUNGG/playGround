@@ -40,14 +40,10 @@ public class WriterPageService {
 	}
 	
 	public List<BookVO> mergeBookListAndCnt(List<Map> bookContentsList, List<BookVO> bookList) {
-		System.out.println("mergeBookListAndCnt");
-		System.out.println(bookContentsList.size());
-		System.out.println(bookList.size());
 		for(BookVO b : bookList) {
 			for( Map m : bookContentsList) {
 				if( m.containsValue(b.getBno()) ) {
 					b.setCnt( ((Number)m.get("CNT")).intValue() );
-					System.out.println( "bookList"+b.getBno()+" : "+b.getCnt());
 					break;
 				}
 			}

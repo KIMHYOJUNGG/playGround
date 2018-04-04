@@ -30,10 +30,6 @@ public class BookPageService {
 	public String bookInsert(BookVO vo) {
 		String bno = UUID.randomUUID().toString().split("-")[0];
 		vo.setBno(bno);
-		System.out.println("bookInsert");
-		System.out.println("tag? "+vo.getTag());
-		System.out.println("tag == null? "+(vo.getTag() == null)); 
-		System.out.println("tag.length? "+vo.getTag().length);
 		if (vo.getTag() != null && vo.getTag().length >= 1 && (vo.getTag()[0]).length() > 1) {
 			String[] tags = vo.getTag()[0].trim().split("#");
 			int[] ri = new int[tags.length];
@@ -66,7 +62,6 @@ public class BookPageService {
 
 	public List<MongoBoardVo> getBoardVO(String bno) {
 		List<MongoBoardVo> list = mongo.find(new Query(Criteria.where("bno").is(bno)), MongoBoardVo.class, "board");
-		System.out.println(list.size());
 		return list;
 	}
 	
@@ -82,8 +77,6 @@ public class BookPageService {
 			WriteResult wr = mongo.remove(new Query(Criteria.where("no").in(n)), "board");
 			cntDel += wr.getN();
 		}
-		System.out.println("no는 총 "+no.length+" 개 였음");
-		System.out.println("mongo에서 "+cntDel+" 개 삭제");
 		if(cntDel == no.length) {
 			boolean rst = template.delete("board.delContentByNo", data) == no.length;
 			return rst && cntDel == no.length;
@@ -101,7 +94,6 @@ public class BookPageService {
 		int cnt = 0;
 		if(map != null && map.get("CNT") != null ) {
 			cnt = (int)((Number)map.get("CNT")).intValue();
-			System.out.println("총 "+cnt+"글 삭제 되어야 함");
 			temrst = template.delete("board.delBookByBno", bno) == cnt;
 		}
 		WriteResult wr = mongo.remove(new Query(Criteria.where("bno").is(bno)), "book");

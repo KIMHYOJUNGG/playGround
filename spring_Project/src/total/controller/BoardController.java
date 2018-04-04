@@ -63,7 +63,8 @@ public class BoardController {
 		String cp = req.getContextPath();
 		System.out.println(cp);
 		System.out.println("register get ...........");
-		model.addAttribute("body", "register.jsp");
+		model.addAttribute("body", "/board/register.jsp");
+		model.addAttribute("title", "글 등록");
 		List<BookVO> book = service.bookName(id);
 		if (book.isEmpty()) {
 			
@@ -81,7 +82,7 @@ public class BoardController {
 		model.addAttribute("listbook", book);
 
 		// return "board/register";
-		return "t_board";
+		return "t_el_title";
 
 	}
 
@@ -132,32 +133,28 @@ public class BoardController {
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
 
 	public String listAll(Model model) throws Exception {
-
-
-
-		System.out.println("show all list......................");
-
-
-
-		for (BoardVO bv : service.listAll()) {
-
-
-
-			System.out.println(bv);
-
-
-
-		}
+//		System.out.println("show all list......................");
+//
+//
+//
+//		for (BoardVO bv : service.listAll()) {
+//
+//
+//
+//			System.out.println(bv);
+//
+//
+//
+//		}
 
 		model.addAttribute("list", service.listAll());
-
-		model.addAttribute("body", "listAll.jsp");
-
+		model.addAttribute("body", "board/listAll.jsp");
+		model.addAttribute("title", "글 목록");
 
 
 		// return "board/listAll";
 
-		return "t_board";
+		return "t_el_title";
 
 	}
 
@@ -190,10 +187,11 @@ public class BoardController {
 		MongoBoardVo mbv = service.mongoFind(no);
 		model.addAttribute(service.read(no));
 		model.addAttribute("mbv", mbv);
-		model.addAttribute("body", "modify.jsp");
+		model.addAttribute("body", "board/modify.jsp");
+		model.addAttribute("title", "글 수정");
 
 		// return "board/modify";
-		return "t_board";
+		return "t_el_title";
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
@@ -264,9 +262,10 @@ public class BoardController {
 		pageMaker.setTotalCount(service.listSearchCount(cri));
 
 		model.addAttribute("pageMaker", pageMaker);
-		model.addAttribute("body", "listPage.jsp");
+		model.addAttribute("body", "board/listPage.jsp");
 		model.addAttribute("type",type);
-		return "t_board";
+		model.addAttribute("title", "글 목록");
+		return "t_el_title";
 	}
 	/* @RequestMapping(value = "/list", method = RequestMethod.GET)
 	  public String listPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
@@ -303,15 +302,17 @@ public class BoardController {
 			service.increaseViewcnt(no, session);
 			MongoBoardVo mbv= service.mongoFind(no);
 			List<Map> comments = service.mongoFindComment(no);
+			Map binfo = service.getBoardInfo(no);
 			//System.out.println(service.read(no));
 			model.addAttribute(service.read(no));
 			model.addAttribute("mbv", mbv);
-			model.addAttribute("body", "readPage.jsp");
+			model.addAttribute("body", "board/readPage.jsp");
+			model.addAttribute("title", binfo.get("TITLE"));
 			model.addAttribute("comments", comments);
 			model.addAttribute("logon", id);
 			session.setAttribute("NO", no);
 			
-			return "t_board";
+			return "t_el_title";
 		
 			
 		}
@@ -394,10 +395,10 @@ public class BoardController {
 		MongoBoardVo mbv= service.mongoFind(no);
 		model.addAttribute(service.read(no));
 		model.addAttribute("mbv", mbv);
-		model.addAttribute("body", "modifyPage.jsp");
-
+		model.addAttribute("body", "board/modifyPage.jsp");
+		model.addAttribute("title","글 수정");
 		// return "board/modify";
-		return "t_board";
+		return "t_el_title";
 
 	}
 

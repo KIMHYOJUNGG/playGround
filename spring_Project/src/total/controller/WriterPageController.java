@@ -30,6 +30,7 @@ public class WriterPageController {
 	@Autowired
 	Gson gson;
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/@{id}")
 	public String writerPageHandle(@PathVariable String id, Map map) {
 		Map writerInfo = myPageService.getInfo(id);
@@ -38,13 +39,19 @@ public class WriterPageController {
 			map.put("contentList", writerPageService.getContentsListById(id));
 			map.put("writerFollowing", myPageService.getFollowingInfoById(myPageService.getMyFollowingList(id)));
 			map.put("bookList",writerPageService.mergeBookListAndCnt(writerPageService.getBookContentsCntById(id), writerPageService.getBookListById(id)) );
-			Map data = new HashMap<>();
-			List<String> bnos = new ArrayList<>();
-			for ( BookVO b : (List<BookVO>)map.get("bookList")) {
-					bnos.add(b.getBno());
+			if( ((List)map.get("bookList")) != null &&  ((List)map.get("bookList")).size() != 0) {
+				Map data = new HashMap<>();
+				List<String> bnos = new ArrayList<>();
+				for ( BookVO b : (List<BookVO>)map.get("bookList")) {
+						bnos.add(b.getBno());
+						System.out.println(b.getBno());
+				}
+				if(bnos != null) {
+					System.out.println("bnos != null");
+					data.put("bno", bnos);
+					map.put("vngList", bookPageService.getViewNGoodCnt(data));
+				}
 			}
-			data.put("bno", bnos);
-			map.put("vngList", bookPageService.getViewNGoodCnt(data));
 			map.put("follower", writerPageService.getFollower(id));
 			map.put("body", "writerPage.jsp");
 			map.put("title", id+"의 PlayGround");
