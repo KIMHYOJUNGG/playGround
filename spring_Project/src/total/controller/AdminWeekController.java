@@ -45,22 +45,6 @@ public class AdminWeekController {
 	}
 	
 	
-	// 날짜비교(같은지를 비교하여 같으면 삽입)
-	@RequestMapping(path="/weekendequal",produces="application/json;charset=utf-8")
-	@ResponseBody
-	public String weekendequal(Model model) {
-		boolean rst = weekservice.weekendequal();
-		if(rst) {
-			// model.addAttribute("wsuccess","이번주 베스트 책경쟁에 참여하였습니다.");
-			System.out.println("주간순위등록에 성공");
-			return "{\"rst\" : "+rst+"}";
-		}
-		else {
-			System.out.println("주간순위등록에 실패");
-			return "{\"rst\" : "+rst+"}";
-		}
-	}
-	
 	// 책에 속한 게시글의 좋아요가 늘어날때
 	@RequestMapping("/goodincrease")
 	public String goodincre(Model model,@RequestParam("bno") String bno) {
@@ -86,6 +70,34 @@ public class AdminWeekController {
 		return "";
 	}
 	
+		
+	// 책 삭제시 주간순위에 등록되어 있을 시 삭제
+	@RequestMapping("/deleteBno")
+	public String deleteBno(Model model,@RequestParam Map param) {
+		String bno = param.get("bno").toString();
+		boolean rst = weekservice.deleteBno(bno);
+		if(rst) {
+			System.out.println("작동완료?");
+		}else {
+			System.out.println("에러겠지");
+		}
+		model.addAttribute("bno",bno);
+		return "redirect:/week/deletePublish";
+	}
+	
+	// 책 삭제시 해당 책의 출간 삭제
+	@RequestMapping("/deletePublish")
+	public String deletePublish(Model model,@RequestParam Map param) {
+		String bno = param.get("bno").toString();
+		boolean rst = weekservice.deletePublish(bno);
+		if(rst) {
+			System.out.println("작동완료2?");
+		}else {
+			System.out.println("에러겠지2");
+		}
+		model.addAttribute("bno",bno);
+		return "";
+	}
 	//============================ 어드민 ================================
 	// 어드민 로그인페이지로 갈시의 날짜 비교
 	@RequestMapping("/castadmin")
@@ -123,7 +135,7 @@ public class AdminWeekController {
 	public String publish(@RequestParam Map param) {
 		// publish테이블에 이미 있는 책인가
 		boolean rst = weekservice.selectBno(param.get("bno").toString());
-		if(rst) {
+		if(rst==false) {
 			boolean rst2 = weekservice.insertPb(param);
 			if(rst2) {
 				System.out.println("삽입성공");
@@ -142,7 +154,7 @@ public class AdminWeekController {
 	public String updateWeek() {
 		int i = weekservice.updateWeek();
 		if(i!=0) {
-			weekservice.insertWeek();
+		int i3= weekservice.insertWeek();
 			System.out.println("업뎃완료");
 		}else {
 			System.out.println("업뎃실패");
