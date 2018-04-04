@@ -2,29 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<style>
-.bg-grey {
-	background-color: white;
-}
-
-.logo-small {
-	color: #f4511e;
-	font-size: 50px;
-}
-
-.logo {
-	color: #f4511e;
-	font-size: 200px;
-}
-
-@media screen and (max-width: 768px) {
-	.col-sm-3 {
-		text-align: center;
-		margin: 90px 0;
-	}
-}
-</style>
-<body class="mainbody">
+<!-- <body class="mainbody"> -->
 	<div class="alert alert-warning alert-dismissible" id="warn1"
 		style="display: none">
 		<a href="javascript:location.reload();" class="close"
@@ -122,22 +100,46 @@
 					<div class="row text-center">
 				</c:if>
 				<div class="col-sm-3">
-					<div class="thumbnail">
-						<c:if test="${o.IMAGE == null}">
-							<a href="/board/readPage?no=${o.NO}"><img
-								src="${pageContext.request.contextPath }/image/Desert.jpg"
-								alt="1" style="width: 300px; height: 200px;"></a>
-						</c:if>
-						<a href="/board/readPage?no=${o.NO}"><img src="${o.IMAGE }"
-							alt="Paris" style="width: 400px; height: 300px;"></a>
+					<a href="/board/readPage?no=${o.NO}">
+						<div class="img_div-wrapper">
+						<div class="img_div">
+						<div class="img-centered">
+							<c:if test="${o.IMAGE == null}">
+								<img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="img" >
+							</c:if>
+							<img src="${o.IMAGE }"	alt="img">
+						</div>
+						</div>
+						</div>
+						</a>
 						<p>
 							<strong>${o.TITLE }</strong>
 						</p>
 						<p>${o.BOOKNAME }</p>
-					</div>
 				</div>
 				<c:if test="${vs.count %4 == 0 or vs.last}">
 		</div>
+			<script>
+				$(function(){
+					$(".img-centered").each(function(){
+						var div = $(this); // 이미지를 감싸는 div
+						var $img = $(this).children('img');
+						var divAspect = div.height() / div.width(); 
+						var imgAspect = $img.height() / $img.width();
+						if (imgAspect <= divAspect) {
+						    if($img.attr("class") != undefined && $img.attr("class").indexOf("landscape") == -1)
+						    	$img.attr("class", "landscape");
+						    else
+						    	$img.attr("class", "landscape");
+						} else {
+							 if($img.attr("class") != undefined && $img.attr("class").indexOf("portrait") == -1) {
+							 	 $img.attr("class", "portrait");
+							 } else
+								 $img.attr("class", "portrait");
+						}
+					});
+				});
+			</script>
 		</c:if>
 		</c:forEach>
 	</div>

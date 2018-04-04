@@ -5,15 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
- <script src="../../resources/ckeditor/ckeditor.js"></script> 
-<!--  <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script> 
- -->
-
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src="../../resources/ckeditor/ckeditor.js"></script> 
+<!--  <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script> 
+ -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  <!-- jQuery 2.1.4 -->
@@ -73,10 +72,17 @@ img {
 
 .bg-grey {
 	background-color: #f6f6f6;
+/* 		background-color: white; */
 }
 
 .logo {
+	color: #f4511e;
 	font-size: 200px;
+}
+
+.logo-small {
+	color: #f4511e;
+	font-size: 50px;
 }
 
 @media screen and (max-width: 768px) {
@@ -162,6 +168,7 @@ img {
 .img_div-wrapper {
 	display: inline-block;
 	width: 100%;
+	border: 1px solid #ddd;"
 }
 
 .img_div {
