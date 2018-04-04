@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="week">
+	<!-- 게시글 등록시의 날짜와 이번주 주간순위의 시작날짜와 같은지를 비교 -->
+	<select id="weekendequal" resultType="hashmap">
+		select * from time where TO_CHAR(lastweek,'YYYY-MM-DD') = TO_CHAR(sysdate,'YYYY-MM-DD')
+	</select>
+	
+	<!-- 날짜가 같은경우 time에 새 등록 or updateweek가 실행후 -->
+	<insert id="inserttime">
+		insert into time (select bno,bookname,writer,count(good),sysdate,sysdate,0 from board where bno not in (select bno from time) group by bno, bookname, writer,  sysdate)
+	</insert>
+	
+	<!-- 책에 속한 게시글의 좋아요 수 증가시의 time테이블 cnt 증가 -->
+	<update id="updatetimecnt">
+		update time set cnt=cnt+1 where bno=#{bno}
+	</update>
+	
+	<!-- 책에 속한 게시글의 좋아요 수 취소시의 time테이블 cnt 증가 -->
+	<update id="updatetimedel">
+		update time set cnt=cnt-1 where bno=#{bno}
+	</update>
+	
+	<!--regdate와 lastweek날짜 비교  -->
+	<select id="castweek" resultType="int">
+		select cast((regdate - lastweek)as int) col from time
+	</select>
+	
+	<!-- 이번주 우승자 정보찾기 -->
+	<select id="search" resultType="hashmap">
+		select bno,writer,btitle from time where cnt in (select max(cnt) from time)
+	</select>
+	
+	<!-- publish 테이블에 이미 있는 책인가 -->
+	<select id="selectBno" resultType="hashmap">
+		select * from publish where bno = #{bno}
+	</select>
+	
+	<!-- 우승자가 나올시 출간테이블(publish)에 정보저장 -->
+	<insert id="publish">
+		insert into publish values(publish_seq,{#bno},{#btitle},{#writer})
+	</insert>
+	
+	<!-- 주간순위 리셋 -->
+	<update id="updateWeek">
+		update time set lastcnt = lastcnt+cnt, cnt=0
+	</update>
+	
+</mapper>

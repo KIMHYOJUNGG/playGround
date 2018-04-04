@@ -239,5 +239,8 @@ public class AdminService {
 		return template.selectOne("admin.selectCnt",id);
 	}*/
 	
-
+	// 주간순위 보기
+	public List<Map> weekend(){
+		return template.selectList("admin.selectWeekend");
+	}
 }
