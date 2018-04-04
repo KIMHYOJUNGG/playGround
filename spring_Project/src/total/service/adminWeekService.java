@@ -15,7 +15,10 @@ public class adminWeekService {
 
 	@Autowired
 	MongoTemplate session;
-	
+	// 
+	public String weektop() {
+		return template.selectOne("week.weekendtop");
+	}
 	// 날짜비교함으로써 같으면 주간순위테이블에 삽입 
 	public boolean weekendequal() {
 		List<Map> list = template.selectList("week.weekendequal");

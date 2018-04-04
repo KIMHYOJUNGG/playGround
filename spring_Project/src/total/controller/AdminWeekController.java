@@ -34,7 +34,9 @@ public class AdminWeekController {
 	public String WeekendTop(Model model, HttpSession session) {
 		if(session.getAttribute("admin")!=null) {
 			List<Map> list = adminservice.weekend();
+			String wid = weekservice.weektop(); // 현재 1등
 			model.addAttribute("wlist",list);
+			model.addAttribute("wid",wid);
 			return "/admin/weekview";
 		}
 		else {
@@ -158,7 +160,7 @@ public class AdminWeekController {
 		if(i==3) {
 			return "redirect:/week/writersearch2";
 		}else {
-			return "redirect:/index";
+			return "redirect:/index2";
 		}
 	}
 	
@@ -197,7 +199,7 @@ public class AdminWeekController {
 			}
 			else {
 				// 어드민이 해당 writer한테 축하메세지를 보내기
-				return "redirect:/index";
+				return "redirect:/index2";
 			}
 		}
 		// 주간순위 리셋
@@ -210,6 +212,6 @@ public class AdminWeekController {
 			}else {
 				System.out.println("업뎃실패");
 			}
-			return "redirect:/index";
+			return "redirect:/index2";
 		}
 }

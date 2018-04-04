@@ -9,6 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from time where TO_CHAR(lastweek,'YYYY-MM-DD') = TO_CHAR(sysdate,'YYYY-MM-DD')
 	</select>
 	
+	<!-- 주간순위 현재 1등자 -->
+	<select id="weekendtop" resultType="String">
+		select writer from time where rownum= 1
+	</select>
+	
 	<!-- 날짜가 같은경우 time에 새 등록 or updateweek가 실행후 -->
 	<insert id="inserttime">
 		insert into time (select bno,bookname,writer,count(good),sysdate,sysdate,0 from board where bno not in (select bno from time) group by bno, bookname, writer,  sysdate)
@@ -26,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--regdate와 lastweek날짜 비교  -->
 	<select id="castweek" resultType="int">
-		select cast((regdate - lastweek)as int) col from time
+		select cast((regdate - lastweek)as int) col from time where rownum= 1
 	</select>
 	
 	<!-- 이번주 우승자 정보찾기 -->

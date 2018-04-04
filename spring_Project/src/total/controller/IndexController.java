@@ -34,8 +34,12 @@ public class IndexController {
 	@Autowired
 	ServletContext application;
 
-	
 	@RequestMapping({"/index","/"})
+	public String sendHandle(){
+		return "redirect:/week/castindex";
+	}
+	
+	@RequestMapping("/index2")
 	public String indexHandle(Model model) throws Exception{
 
 		String[] type = "세계여행,글쓰기,문화·예술,그림·웹툰,직장인 현실조언,건축·설계,시사·이슈,스타트업 경험담,인문학·철학,IT트렌드,육아이야기,쉽게읽는 역사,사진·촬영,요리·레시피,우리집 반려동물,건강·운동,사랑·이별,디자인 스토리"

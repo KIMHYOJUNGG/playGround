@@ -243,4 +243,6 @@ public class AdminService {
 	public List<Map> weekend(){
 		return template.selectList("admin.selectWeekend");
 	}
+
+
 }

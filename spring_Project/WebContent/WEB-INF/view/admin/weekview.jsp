@@ -8,6 +8,7 @@
 <body>
 	<div align="center">
 		<h2>주간순위</h2>
+		<h3>현재 주간순위 1위 : ${wid }</h3>
 		<hr />
 		<table>
 			<thead>
