@@ -8,7 +8,7 @@
 	<div class="container" style="width:100%">
 	
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-4" align="center">
 				<c:if test="${!empty writerInfo.IMAGE }">
 					<img src="${writerInfo.IMAGE }" class="img-circle"  style="width: 240px; height: 240px;">
 				</c:if>
@@ -16,9 +16,9 @@
 					<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 			</c:if>
 			</div>
-			<div class="col-sm-8 outer">
+			<div class="col-sm-8" style="min-height: 240px">
 				<div class="inner">
-					<div class="centered">
+					<div class="centered" style="width:100%">
 				<h2>${writerInfo.NICKNAME}</h2>
 				<p>
 					글 <span class="badge">${fn:length(contentList) }</span> | 책 <span class="badge">${fn:length(bookList)}</span> | 

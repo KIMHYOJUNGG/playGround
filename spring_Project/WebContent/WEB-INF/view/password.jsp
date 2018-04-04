@@ -1,22 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<body>
-<div align="center">
+
+  <div class="outer">
+	<div class="inner"  style="max-width: 800px">
+		<div class="centered" >
 		<form action="/member/passwordresult" method="post"
-			style="width: 330px; text-align: left; line-height: 34px;"
-			autocomplete="off">
+			style="line-height: 34px;" 	autocomplete="off">
+			<p align="left">
+				<b>ID(*)</b>
+			</p>
 			<p>
-				<b>ID(*)</b><br />
 				<small id="checkrst"></small> <input type="text" name="id" id="id"
-					pattern="[a-zA-Z]+">
+					pattern="[a-zA-Z]+" style="width: 100%;" required>
+			</p>
+			<p align="left">
+				<b>EMAIL(*)</b>
 			</p>
 			<p>
-				<b>EMAIL(*)</b><br />
-				<input type="text" name="email" id="email">
+				<input type="text" name="email" id="email" style="width: 100%;" required>
 			</p>
-			<p>
-				<button id="sbt" type="submit" style="width: 100%; height: 30px;">비밀번호 찾기</button>
+			<p style="margin-top: 25px;" align="right">
+				<button id="sbt" type="submit" class="btn btn-info" style="height: 34px;">비밀번호 찾기</button>
 			</p>
 		</form>
 </div>
-</body>
+</div>
+</div>
