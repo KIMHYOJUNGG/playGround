@@ -22,7 +22,6 @@
 			data-dismiss="alert" aria-label="close">&times;</a> <strong>경고!</strong>
 		다른 윈도우 혹은 탭에서 로그아웃되었습니다. F5를 눌러주세요.
 	</div>
-	<div>
 		<%-- 
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Main</a></li>
@@ -125,16 +124,17 @@
 					<div class="row text-center">
 				</c:if>
 				<div class="col-sm-3">
-				
+							<div class="thumbnail">
 					<a href="/board/readPage?no=${o.NO}">
 						<div class="img_div-wrapper">
 						<div class="img_div">
 						<div class="img-centered">
-							<c:if test="${o.IMAGE == null}">
-								<img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="img" >
-							</c:if>
-							<img src="${o.IMAGE }"	alt="img">
-						</div>
+								<c:if test="${o.IMAGE == null}">
+									<img src="${pageContext.request.contextPath }/image/Desert.jpg"
+										alt="img">
+								</c:if>
+								<img src="${o.IMAGE }" alt="img">
+							</div>
 						</div>
 						</div>
 						</a>
@@ -142,9 +142,12 @@
 							<strong>${o.TITLE }</strong>
 						</p>
 						<p>${o.BOOKNAME }</p>
-				</div>
+						</div>
+						</div>
 				<c:if test="${vs.count %4 == 0 or vs.last}">
-		</div>
+					</c:if>
+		</c:forEach>
+	</div>
 			<script>
 				$(function(){
 					$(".img-centered").each(function(){
@@ -166,10 +169,7 @@
 					});
 				});
 			</script>
-		</c:if>
-		</c:forEach>
-	</div>
-	</div>
+	
 	<!-- Container (Services Section) -->
 	<div class="container-fluid text-center">
 		<h2>KEYWORD</h2>
@@ -252,10 +252,7 @@
 
 <div class="container text-center">
 		<h3>WRITERS</h3>
-		<p>
-			<em>이달의 작가</em>
-		</p>
-		<p>이달의 새로운 작가들을 만나보세요.</p>
+		<p>새로운 작가들을 만나보세요.</p>
 		<br>
 		<div class="row">
 			<c:forEach items="${writer}" var="vo">
