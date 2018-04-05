@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -117,10 +116,12 @@
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
+		
+		<br>
 		<!-- Container (Portfolio Section) -->
-		<div class="container-fluid text-center bg-grey">
-			<h2>Now</h2>
-			<h4>What we have created</h4>
+		<div class="container-fluid text-center bg-grey" style="margin: 35px">
+			<h2>이번 주 TOP 8</h2>
+			<br>
 			<c:forEach var="o" items="${boardNo}" varStatus="vs">
 				<c:if test="${vs.count %4 == 1}">
 					<div class="row text-center">
@@ -140,9 +141,26 @@
 						</div>
 						</a>
 						<p>
-							<strong>${o.TITLE }</strong>
-						</p>
-						<p>${o.BOOKNAME }</p>
+							<strong> <c:choose>
+							<c:when test="${fn:length(o.TITLE) > 10 }">
+									${fn:substring(o.TITLE, 0,10) } ...
+								</c:when>
+							<c:otherwise>
+									${o.TITLE }
+								</c:otherwise>
+						</c:choose>
+					</strong>
+					</p>
+					<p>
+					<c:choose>
+						<c:when test="${fn:length(o.BOOKNAME) > 10 }">
+									${fn:substring(o.BOOKNAME, 0,10) } ...
+								</c:when>
+						<c:otherwise>
+									${o.TITLE }
+								</c:otherwise>
+					</c:choose>
+				</p>
 				</div>
 				<c:if test="${vs.count %4 == 0 or vs.last}">
 		</div>
@@ -171,10 +189,12 @@
 		</c:forEach>
 	</div>
 	</div>
+	
+<br>
 	<!-- Container (Services Section) -->
-	<div class="container-fluid text-center">
-		<h2>KEYWORD</h2>
-		<br> <br> <br>
+	<div class="container-fluid text-center"  style="margin: 35px">
+		<h2>장르별 보기</h2>
+		<br>
 		<div class="row">
 			<div class="col-sm-3">
 				<h4>
@@ -246,16 +266,12 @@
 						반려동물</a>
 				</h4>
 			</div>
-
 		</div>
 	</div>
+<br>
 
-
-<div class="container text-center">
-		<h3>WRITERS</h3>
-		<p>
-			<em>이달의 작가</em>
-		</p>
+<div class="container text-center" style="margin: 35px">
+		<h2>새로운 작가</h2>
 		<p>이달의 새로운 작가들을 만나보세요.</p>
 		<br>
 		<div class="row">
@@ -289,12 +305,6 @@
 
 
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-
 
 
 	<!-- Container (Services Section) -->
@@ -343,13 +353,10 @@
 	<%--
 			<div id="menu1" class="tab-pane fade">
 				<div class="main_keywords">
-
 					<div class="keyword_list_wrap">
 						<div class="keyword_list #home_keyword"></div>
 					</div>
-
 					<div class="cl_b"></div>
-
 					<table class="main_keyword">
 						<tr class="main_tr">
 							<th class="main_th"><a
@@ -383,7 +390,6 @@
 							<td class="main_td"><a href="">디자인 스토리</a></td>
 						</tr>
 					</table>
-
 				</div>
 			</div>
 --%>
@@ -411,7 +417,6 @@
 	}
 </script>
 <%-- 
-
 				<!-- First Photo Grid-->
 				<div class="w3-row-padding w3-padding-16 w3-center" id="food">
 					<c:forEach var="o" items="${boardNo}" varStatus="vs">
@@ -432,10 +437,7 @@
 							</c:when>
 						</c:choose>
 					</c:forEach>
-
 				</div>
-
-
 	
 </body>
 --%>

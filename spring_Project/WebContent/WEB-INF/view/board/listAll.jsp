@@ -131,9 +131,9 @@
 
 
 			<div class="text-center">
-				<ul class="pagination">
+			<ul class="pagination">
 
-					<%-- 	<c:if test="${pageMaker.prev}">
+						<%-- 	<c:if test="${pageMaker.prev}">
 								<li><a href="${pageMaker.startPage - 1}">&laquo;</a></li>
 							</c:if>
 
@@ -149,25 +149,25 @@
 								<li><a
 									href="${pageMaker.endPage +1}">&raquo;</a></li>
 							</c:if> --%>
-					<c:if test="${pageMaker.prev}">
-						<li><a
-							href="listAll${pageMaker.makeSearch(pageMaker.startPage - 1)}">&laquo;</a></li>
-					</c:if>
 
-					<c:forEach begin="${pageMaker.startPage }"
-						end="${pageMaker.endPage }" var="idx">
+	<c:if test="${pageMaker.prev}">
+								<li><a
+									href="listPage${pageMaker.makeSearch(pageMaker.startPage - 1)}">&laquo;</a></li>
+							</c:if>
 
-						<li
-							<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-							<a href="listAll${pageMaker.makeSearch(idx)}">${idx}</a>
-						</li>
-					</c:forEach>
+							<c:forEach begin="${pageMaker.startPage }"
+								end="${pageMaker.endPage }" var="idx">
+								<li
+									<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+									<a href="listPage${pageMaker.makeSearch(idx)}">${idx}</a>
+								</li>
+							</c:forEach>
 
-					<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-						<li><a
-							href="listAll${pageMaker.makeSearch(pageMaker.endPage +1) }">&raquo;</a></li>
-					</c:if>
-				</ul>
+							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+								<li><a
+									href="listPage${pageMaker.makeSearch(pageMaker.endPage +1) }">&raquo;</a></li>
+							</c:if>
+						</ul>
 			</div>
 
 		</div>

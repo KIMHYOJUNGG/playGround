@@ -1,43 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 회원가입 -->
-<body>
-	<div align="center">
-		<form action="/member/regist" role="form" method="post"
-			style="width: 400px; text-align: left; line-height: 34px;"
-			autocomplete="off">
-			<div style="margin-top: 20px;">
-				<span>ID(*)</span> <small id="checkrst"></small><br /> <input
-					type="text" name="id" id="id" placeholder="아이디" >
+<div class="container outer"  style="margin-top: 50px">
+	<div class="inner"  style="max-width: 800px">
+		<div class="centered" style="height:100%;">
+			<form action="/member/regist" role="form" method="post"
+				style="text-align: left; line-height: 34px;" autocomplete="off">
+				<p>
+					<b>ID(*)</b>
+					<input type="text" name="id" id="id" placeholder="아이디"  style="width: 100%" required>
+				</p>
+				<small id="checkrst"></small>
+				<p>
+					<b>PASS(*)</b> <input type="password" name="password"  id="password" onblur="checkps();" style="width: 100%" required>
+				</p>
+				<span id="rgd"></span>
+				<p>
+				<b>REPASS(*)</b>
+				<input type="password" name="repassword" id="repass" onblur="checkps2();" style="width: 100%" required>
+				<span id="rgd2"></span>
+				</p>
+				<p>
+					<b>NICKNAME(*)</b>
+					<input type="nickname" name="nickname"  id="nick" onblur="nickCheck()" style="width: 100%"> 
+				</p>
+				<small><span	class="nname"></span></small>
+				<p>
+					<b>EMAIL(*)</b>
+						<input type="email" name="email" id="email" 	onblur="emailCheck()" style="width: 100%">
+						<small><span class="ename"></span></small>
+				</p>
+					 <p><input type="checkbox"  id="checkemail" name="checkemail" /> 이메일 인증을 하겠습니다.</p>
+				<p>
+					<button id="sbt" type="submit"  class="btn btn-info" style="width: 100%; height: 36px;">가입신청</button>
+				</p>
+			</form>
 			</div>
-			<p>
-				<b>PASS(*)</b><br /> <input type="password" name="password"
-					id="password" onblur="checkps();"><span id="rgd"></span>
-			</p>
-			<p></p>
-			<b>REPASS(*)</b><br /> <input type="password" name="repassword"
-				id="repass" onblur="checkps2();"><br /> <span id="rgd2"></span>
-			<p>
-			<p>
-				<b>NICKNAME(*)</b><br /> <input type="nickname" name="nickname"
-					id="nick" onblur="nickCheck()"> <small><span
-					class="nname"></span></small>
-			</p>
-			<p>
-
-				<b>EMAIL(*)</b><small> <input type="checkbox"
-					id="checkemail" name="checkemail" />이메일 인증을 하겠습니다.
-				</small><br /> <input type="email" name="email" id="email"
-					onblur="emailCheck()"><small><span class="ename"></span></small><br />
-
-			</p>
-			<p>
-				<button id="sbt" type="submit" style="width: 100%; height: 30px;">가
-					입 신 청</button>
-			</p>
-		</form>
 	</div>
-</body>
+</div>
+		
+		
+		
 <script>
 	function checkps() {
 		var pval = document.getElementById("password").value;

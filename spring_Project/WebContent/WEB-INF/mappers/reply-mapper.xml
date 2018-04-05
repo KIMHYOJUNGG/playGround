@@ -4,6 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="reply">
+<select id="getBno" resultType="int">
+select bno from reply where rno=#{rno}
+
+</select>
+
 <delete id="totaldelete">
 delete from reply where bno=#{no}
 

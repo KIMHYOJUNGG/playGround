@@ -86,16 +86,20 @@
 							</button>
 						</p>
 					</c:if>
+					<script>
+						$("#publish")
+								.click(
+										function() {
+											var id = $("#hwriter").val()
+											window
+													.open("/week/publishbook",
+															"m",
+															"left=100,top=200,width=400,height=300");
+										})
+					</script>
 				</div>
 			</c:if>
-			<script>
-				$("#publish").click(
-						function() {
-							var id = $("#hwriter").val()
-							window.open("/week/publishbook", "m",
-									"left=100,top=200,width=400,height=300");
-						})
-			</script>
+
 			<c:if test="${logon  != writerInfo.ID || logon== null}">
 				<c:forEach items="${follower }" var="fer">
 					<c:if test="${fer.READER eq logon}">
@@ -290,7 +294,7 @@
 													<span class="glyphicon glyphicon-book"
 													style="font-size: 15pt"></span> &nbsp;${c.BOOKNAME}
 												</a> &nbsp; <a
-													href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span
+													href="${pageContext.request.contextPath }/board/listPage?stype=${c.TYPE}"><span
 													class="badge bg_type">${c.TYPE}</span></a>
 											</h4>
 
