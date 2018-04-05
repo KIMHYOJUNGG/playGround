@@ -67,6 +67,10 @@
 														</h4>
 													</c:if>
 												</c:forEach>
+												<c:if test="${empty regList }">
+													<p>	<span style="font-size: 10pt">등록된 글 없음</span></p>
+												</c:if>
+												<c:if test="${!empty regList }">
 												<c:forEach var="map" items="${regList }" varStatus="vs">
 													<c:choose>
 														<c:when  test="${map.WRITER eq f.ID }">
@@ -80,6 +84,7 @@
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
+												</c:if>
 											</div>
 											<div>
 											<p class="list-group-item-text">

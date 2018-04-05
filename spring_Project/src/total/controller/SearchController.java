@@ -28,6 +28,7 @@ public class SearchController {
 				.split(",");
 		
 		
+		
 		model.addAttribute("type",stype);
 		
 		
@@ -38,7 +39,7 @@ public class SearchController {
 		map.put("tag", t);
 		map.put("body", "/board/listPage.jsp");
 		model.addAttribute("title", "글 목록");
-		
+		model.addAttribute("nocri","nocri");
 		if(boardService.mongoSearch(word).size()<8) 
 			map.put("list", boardService.mongoSearch(word));
 		else 

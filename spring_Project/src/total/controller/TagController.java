@@ -36,7 +36,7 @@ public class TagController {
 		//map.put("list", list);
 		map.put("tag", t);
 		map.put("body", "/board/listPage.jsp");
-		
+		model.addAttribute("nocri","nocri");
 		
 		if(boardService.mongoSearch(tag).size()<8) 
 			map.put("list", boardService.mongoSearch(tag));
