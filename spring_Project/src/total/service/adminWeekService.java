@@ -101,6 +101,12 @@ public class adminWeekService {
 		}
 		return true;
 	}
+
+	public List<Map> loginMember(String id) {
+		return template.selectList("week.searchPublish",id);
+	}
+
+	
 	
 	
 	

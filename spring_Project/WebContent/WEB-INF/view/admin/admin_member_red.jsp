@@ -67,7 +67,7 @@
 			document.getElementById("all").checked = true;
 		}
 	}
-	
+		
 	function rm() {
 		console.log("del 호출");
 		var dels = [];

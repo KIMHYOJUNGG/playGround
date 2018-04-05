@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 회원가입 -->
-
 <div class="container outer"  style="margin-top: 50px">
 	<div class="inner"  style="max-width: 800px">
 		<div class="centered" style="height:100%;">
@@ -109,7 +108,7 @@
 			document.getElementById("checkemail").value = 1;
 		} else {
 			var formObj = $("form[role='form']");
-			var s = window.confirm("이메일 인증을 안해?");
+			var s = window.confirm("이메일 인증을 하지 않으시면 행동에 제약이 걸립니다. 인증을 안하실겁니까?");
 			if (s) {
 				formObj.submit();
 			} else {
@@ -157,7 +156,7 @@
 			var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
 			if (!regex.test(id)) {
-				$(".ename").html("이메일을 형식에 맞지 않습니다.(예 : okt@naver.com)")
+				$(".ename").html("이메일형식에 맞지 않습니다.(예 : okt@naver.com)")
 				$(".ename").css("color", "red");
 				document.getElementById("sbt").disabled = true;
 			} else {

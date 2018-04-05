@@ -112,7 +112,7 @@ public class AdminWeekController {
 	}
 
 	// 결과값이 3으로 나올 시의 우승자 찾기 
-	@RequestMapping("writersearch")
+	@RequestMapping("/writersearch")
 	public String writersearch(Model model) {
 		Map map = weekservice.search();
 		if(map!=null) {
@@ -131,7 +131,7 @@ public class AdminWeekController {
 		return "redirect:/week/publish";
 	}
 	// 우승자가 나올시 출간테이블(publish)에 정보저장
-	@RequestMapping("publish")
+	@RequestMapping("/publish")
 	public String publish(@RequestParam Map param) {
 		// publish테이블에 이미 있는 책인가
 		boolean rst = weekservice.selectBno(param.get("bno").toString());
@@ -150,7 +150,7 @@ public class AdminWeekController {
 		}
 	}
 	// 주간순위 리셋
-	@RequestMapping("updateWeek")
+	@RequestMapping("/updateWeek")
 	public String updateWeek() {
 		int i = weekservice.updateWeek();
 		if(i!=0) {
@@ -177,7 +177,7 @@ public class AdminWeekController {
 	}
 	
 	// 결과값이 3으로 나올 시의 우승자 찾기 
-		@RequestMapping("writersearch2")
+		@RequestMapping("/writersearch2")
 		public String writersearch2(Model model) {
 			Map map = weekservice.search();
 			if(map!=null) {
@@ -196,7 +196,7 @@ public class AdminWeekController {
 			return "redirect:/week/publish2";
 		}
 		// 우승자가 나올시 출간테이블(publish)에 정보저장
-		@RequestMapping("publish2")
+		@RequestMapping("/publish2")
 		public String publish2(@RequestParam Map param) {
 			// publish테이블에 이미 있는 책인가
 			boolean rst = weekservice.selectBno(param.get("bno").toString());
@@ -215,7 +215,7 @@ public class AdminWeekController {
 			}
 		}
 		// 주간순위 리셋
-		@RequestMapping("updateWeek2")
+		@RequestMapping("/updateWeek2")
 		public String updateWeek2() {
 			int i = weekservice.updateWeek();
 			if(i!=0) {
@@ -225,5 +225,11 @@ public class AdminWeekController {
 				System.out.println("업뎃실패");
 			}
 			return "redirect:/index2";
+		}
+		
+		// 출간신청시
+		@RequestMapping("/publishbook")
+		public String publishbook() {
+			return "/publish";
 		}
 }

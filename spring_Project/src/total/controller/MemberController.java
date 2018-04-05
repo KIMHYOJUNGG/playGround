@@ -25,6 +25,7 @@ import total.domain.WebSocketMap;
 import total.service.BoardService;
 import total.service.MailService;
 import total.service.MemberService;
+import total.service.adminWeekService;
 
 @Controller
 @RequestMapping("/member")
@@ -40,6 +41,9 @@ public class MemberController {
 
 	@Autowired
 	BoardService boardservice;
+	
+	@Autowired
+	adminWeekService weekservice;
 	// 회원등록 페이지
 	@RequestMapping("/registpage")
 	public String memberPage(Map map) {
@@ -66,9 +70,13 @@ public class MemberController {
 				if (param != null) {
 					System.out.println("param" + param);
 					boolean rst = memberservice.registerMember(param);
-
 					if (rst) {
+						String id = param.get("id").toString();
+						Map map2 = memberservice.emailMember(id);
+						session.setAttribute("lv", map2.get("LV"));
+						session.setAttribute("email",map2.get("EMAIL"));
 						session.setAttribute("logon", param.get("id"));
+						System.out.println("email과 lv : " + map2.get("EMAIL") + " , " + map2.get("LV"));
 						return "redirect:/index";
 					} else {
 						return "/registpage";
@@ -165,6 +173,10 @@ public class MemberController {
 		if ((session.getAttribute("num").toString()).equals(param.get("num2").toString())) {
 			int i = memberservice.updateLv((String) param.get("id"));
 			if (i != 0) {
+				String id = param.get("id").toString();
+				Map map3 = memberservice.emailMember(id);
+				session.setAttribute("logon", param.get("id"));
+				session.setAttribute("email",map3.get("EMAIL"));
 				session.setAttribute("logon", param.get("id"));
 				Map map2 = memberservice.emailMember(param.get("id").toString());
 				System.out.println("lvup?");
@@ -222,6 +234,10 @@ public class MemberController {
 		String id = (String) param.get("id");
 		String uri = (String) session.getAttribute("uri");
 		Map map2 = memberservice.loginMember(param);
+		List<Map> publish = weekservice.loginMember(id);
+		if(publish != null) {
+			session.setAttribute("publish", publish);
+		}
 		try {
 			if (map2 != null) {
 				session.setAttribute("logon", param.get("id"));
