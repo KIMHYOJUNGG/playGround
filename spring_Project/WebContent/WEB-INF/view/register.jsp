@@ -3,13 +3,12 @@
 <!-- 회원가입 -->
 <body>
 	<div align="center">
-		<div id="checkresult"></div>
 		<form action="/member/regist" role="form" method="post"
 			style="width: 400px; text-align: left; line-height: 34px;"
 			autocomplete="off">
 			<div style="margin-top: 20px;">
 				<span>ID(*)</span> <small id="checkrst"></small><br /> <input
-					type="text" name="id" id="id" placeholder="아이디" pattern="[a-zA-Z]+">
+					type="text" name="id" id="id" placeholder="아이디" >
 			</div>
 			<p>
 				<b>PASS(*)</b><br /> <input type="password" name="password"
@@ -154,7 +153,7 @@
 			var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
 			if (!regex.test(id)) {
-				$(".ename").html("이메일을 형식에 맞지 않습니다.(예 : okt@naver.com)")
+				$(".ename").html("이메일형식에 맞지 않습니다.(예 : okt@naver.com)")
 				$(".ename").css("color", "red");
 				document.getElementById("sbt").disabled = true;
 			} else {

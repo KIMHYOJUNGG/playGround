@@ -59,4 +59,11 @@ public class AdminmsgController {
 		System.out.println(map);
 		return "/admin/admin_messageId";
 	}
+	
+	// 받은메세지에서 답장보내기
+	@RequestMapping("/sendAnswer")
+	public String SendAnswer(Model model,@RequestParam String id) {
+		model.addAttribute("id",id);
+		return "/admin/admin_sendAnswer";
+	}
 }
