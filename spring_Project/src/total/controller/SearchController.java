@@ -43,7 +43,7 @@ public class SearchController {
 		if(boardService.mongoSearch(word).size()<8) 
 			map.put("list", boardService.mongoSearch(word));
 		else 
-			map.put("list", boardService.mongoSearch(word).subList(0, 10));
+			map.put("list", boardService.mongoSearch(word).subList(0, 8));
 		
 		
 		
