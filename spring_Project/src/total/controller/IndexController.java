@@ -57,13 +57,13 @@ public class IndexController {
 		model.addAttribute("WinnerNo",WinnerNo);
 		
 		List<Map> bnolist = new LinkedList<>();
-		for (int i = 0; i < WinnerNo.size() ; i++) { 
+		for (int i = 0; i < 5 ; i++) { 
 		 bnolist.add(indexService.boardWinnerBno((String)WinnerNo.get(i).get("BNO")).get(0));
 		}
 		
 		System.out.println("bnolist : "+ bnolist);
 		System.out.println("bnolist : "+ bnolist.get(0).get("NO"));
-		for(int i = 0; i < WinnerNo.size() ; i++) {
+		for(int i = 0; i < 5 ; i++) {
 			WinnerNo.get(i).put("image", boardService.mongoFindImage((Number)bnolist.get(i).get("NO")));
 		}
 		System.out.println("image; "+WinnerNo.get(2).get("NO"));

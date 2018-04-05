@@ -330,7 +330,7 @@ public class BoardController {
 			model.addAttribute(service.read(no));
 			model.addAttribute("mbv", mbv);
 			model.addAttribute("title", binfo.get("TITLE"));
-			model.addAttribute("body", "readPage2.jsp");
+			model.addAttribute("body", "board/readPage2.jsp");
 			model.addAttribute("comments", comments);
 			model.addAttribute("logon", id);
 			session.setAttribute("NO", no);
