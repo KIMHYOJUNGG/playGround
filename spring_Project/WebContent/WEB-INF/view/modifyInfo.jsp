@@ -149,16 +149,18 @@
 	
 	function passCheck() {
 		console.log("passCheck");
-		if($("#password").val().length > 1) {
+		if($("#password").val().length >= 1) {
 			console.log("pw.length > 1");
 			$("#password2").prop("required", true);
 			var pw = $("#password").val();
+			checkps();
 		} else {
+			$("#msg_pw").html("");
 			$("#password2").val("");
 			$("#msg_pw2").html("");
 			$("#password2").prop("required", false);
+			confirm()
 		}
-			checkps();
 	}
 	
 	function passCheck2() {
@@ -191,15 +193,15 @@
 		var pattern1 = /[0-9]/; // 숫자 
 		var pattern2 = /[a-zA-Z]/; // 문자 
 		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
-		if (!pattern1.test(pval) || !pattern2.test(pval)
+		if(pval == null) {
+			$("#msg_pw").html("");
+		} else if (!pattern1.test(pval) || !pattern2.test(pval)
 				|| !pattern3.test(pval) || pval.length < 8) {
 			console.log("if");
 			$("#msg_pw").css("color","red");
 			$("#msg_pw").html("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
 			$("#btn").prop("disabled", true);
 			return false;
-		} else if (pval == null) {
-			$("#msg_pw").html("");
 		} else {
 			$("#msg_pw").html("");
 			return true;
