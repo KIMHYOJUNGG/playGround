@@ -232,24 +232,45 @@ public class AdminWeekController {
 		return "/publish";
 	}
 
-/*	// 출간신청시
-	@RequestMapping("/publishBook")
-	public String publishBook(@RequestParam String btitle, HttpSession session) {
+	// 출간신청시
+	@RequestMapping(path="/publishBook",method = RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String publishBook(Model model, @RequestParam String btitle, HttpSession session) {
 		String id = session.getAttribute("logon").toString();
 		int i = weekservice.selectYN(id);
+		boolean yn = false;
 		if (i == 0) {
 			Map map = new HashMap();
 			map.put("id", session.getAttribute("logon"));
 			map.put("btitle", btitle);
 			boolean rst = weekservice.publishBook(map);
 			if (rst) {
+				yn=true;
 				System.out.println("성공");
 			} else {
 				System.out.println("실패");
 			}
+			return "{\"rst\" : "+yn+"}";
 		}else {
 			int i2 = weekservice.selectDate(id);
+			if(i2 >30) {
+				Map map = new HashMap();
+				map.put("id", session.getAttribute("logon"));
+				map.put("btitle", btitle);
+				boolean rst = weekservice.publishUpdateBno(map);
+				boolean rst2 = weekservice.publishBook(map);
+				if(rst2) {
+					yn=true;
+					System.out.println("성공2");
+				}else {
+					System.out.println("실패2");
+				}
+				return "{\"rst\" : "+yn+"}";
+			}
+			else {
+				return "{\"rst\" : "+yn+"}";
+			}
 		}
 
-	}*/
+	}
 }
