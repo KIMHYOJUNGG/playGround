@@ -14,7 +14,7 @@
 <!--  <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script> 
  -->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 	  <!-- jQuery 2.1.4 -->
 <!--     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
 <script
@@ -275,6 +275,11 @@ img {
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/">PlayGround</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
+			<c:if test="${logon == null }">
+			<ul class="nav navbar-nav">
+			<li><a href="${pageContext.request.contextPath}/board/listPage">글목록</a></li>
+			</ul>
+			</c:if>
 			<c:if test="${logon != null }">
 				<ul class="nav navbar-nav">
 					<li class="dropdown">

@@ -2,6 +2,13 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<style>
+.str{
+	text-overflow: ellipsis; 
+	white-space: nowrap; 
+	overflow: hidden
+	}
+</style>
 <!-- <body class="mainbody"> -->
 	<div class="alert alert-warning alert-dismissible" id="warn1"
 		style="display: none">
@@ -38,38 +45,61 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
 
-				<c:forEach var="o" items="${boardNo}" varStatus="vs">
+				<c:forEach var="o" items="${WinnerNo}" varStatus="vs">
 					<c:choose>
 						<c:when test="${vs.count <= 5}">
-							<c:if test="${vs.count == 1 }">
-								<div class="item active">
-									<c:if test="${o.IMAGE == null}">
-										<a href="/board/readPage?no=${o.NO}"><img
-											src="${pageContext.request.contextPath }/image/Desert.jpg"
-											alt="img"  style="width: 1200px; height: 700px"></a>
-									</c:if>
-									<a href="/board/readPage?no=${o.NO}">
-									<img src="${o.IMAGE }" alt="img"  style="width: 1200px; height: 300px"></a>
-									<div class="carousel-caption">
-										<h3>${o.TITLE }</h3>
-										<p>${o.BOOKNAME }</p>
+							<c:choose>
+								<c:when test="${vs.count == 1 }">
+									<div class="item active">
+										<c:choose>
+											<c:when test="${o.image[0] == null}">
+												<a href="/bookPage/${o.BNO}"><img
+													src="${pageContext.request.contextPath }/image/Desert.jpg"
+													alt="1" style="width: 500px; height: 400px;"></a>
+													<div class="carousel-caption">
+													<h3 class="str">${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<a href="/bookPage/${o.BNO}"><img
+													src="
+												${o.image[0]  }" alt="Paris"
+													style="width: 500px; height: 400px;"></a>
+												<div class="carousel-caption">
+													<h3 class="str">${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
-								</div>
-							</c:if>
-							<c:if test="${vs.count != 1 }">
-								<div class="item">
-									<c:if test="${o.IMAGE == null}">
-										<a href="/board/readPage?no=${o.NO}">
-										<img src="${pageContext.request.contextPath }/image/Desert.jpg" alt="img" style="width: 1200px; height: 300px"></a>
-									</c:if>
-									<a href="/board/readPage?no=${o.NO}">
-									<img	src="${o.IMAGE }" alt="img" style="width: 1200px; height: 300px"></a>
-									<div class="carousel-caption">
-										<h3>${o.TITLE }</h3>
-										<p>${o.BOOKNAME }</p>
+								</c:when>
+								<c:otherwise>
+									<div class="item">
+										<c:choose>
+											<c:when test="${o.image[0]  == null}">
+												<a href="/bookPage/${o.BNO}"><img
+													src="${pageContext.request.contextPath }/image/Desert.jpg"
+													alt="1" style="width: 500px; height: 400px;"></a>
+													<div class="carousel-caption">
+													<h3 class="str">${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<a href="/bookPage/${o.BNO}"><img
+													src="
+												${o.image[0]  }" alt="Paris"
+													style="width: 500px; height: 400px;"></a>
+												<div class="carousel-caption">
+													<h3 class="str">${o.BTITLE }</h3>
+													<p>${o.WRITER  }</p>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
-								</div>
-							</c:if>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 					</c:choose>
 				</c:forEach>
@@ -95,6 +125,7 @@
 					<div class="row text-center">
 				</c:if>
 				<div class="col-sm-3">
+				
 					<a href="/board/readPage?no=${o.NO}">
 						<div class="img_div-wrapper">
 						<div class="img_div">
@@ -146,22 +177,22 @@
 		<div class="row">
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=세계여행">세계여행</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=세계여행">세계여행</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=글쓰기">글쓰기</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=글쓰기">글쓰기</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=문화·예술">문화·예술</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=문화·예술">문화·예술</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=사랑·이별">사랑·이별</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=사랑·이별">사랑·이별</a>
 				</h4>
 			</div>
 
@@ -170,23 +201,23 @@
 		<div class="row">
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=직장인 현실조언">직장인
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=직장인 현실조언">직장인
 						현실조언</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=건축·설계">건축·설계</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=건축·설계">건축·설계</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">시사·이슈</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=시사·이슈">시사·이슈</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=시사·이슈">쉽게읽는
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=시사·이슈">쉽게읽는
 						역사</a>
 				</h4>
 			</div>
@@ -195,22 +226,22 @@
 		<div class="row">
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=육아이야기">육아이야기</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=육아이야기">육아이야기</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=요리·레시피">요리·레시피</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=요리·레시피">요리·레시피</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">건강·운동</a>
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=건강·운동">건강·운동</a>
 				</h4>
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/keyword?type=건강·운동">우리집
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=건강·운동">우리집
 						반려동물</a>
 				</h4>
 			</div>
@@ -219,6 +250,40 @@
 	</div>
 
 
+<div class="container text-center">
+		<h3>WRITERS</h3>
+		<p>
+			<em>이달의 작가</em>
+		</p>
+		<p>이달의 새로운 작가들을 만나보세요.</p>
+		<br>
+		<div class="row">
+			<c:forEach items="${writer}" var="vo">
+				<div class="col-sm-4">
+					<a href="#demo" data-toggle="collapse"> <c:if
+							test="${!empty vo.IMAGE }">
+							<a href="/@${vo.ID }"><img src="${vo.IMAGE }"
+								class="img-circle person" alt="Random Name"
+								style="width: 200px; height: 200px;"></a>
+						</c:if> <c:if test="${empty vo.IMAGE }">
+							<a href="/@${vo.ID }"><img
+								src="${pageContext.request.contextPath }/image/default_profile.png"
+								class="img-circle person" alt="Random Name"
+								style="width: 200px; height: 200px;"></a>
+						</c:if>
+
+					</a>
+					<p class="text-center">
+						<a href="/@${vo.ID }"><strong>${vo.NICKNAME }</strong></a>
+					</p>
+					<br>
+
+				</div>
+			</c:forEach>
+
+
+		</div>
+	</div>
 
 
 
@@ -227,6 +292,9 @@
 	<br>
 	<br>
 	<br>
+
+
+
 
 	<!-- Container (Services Section) -->
 	<div class="container-fluid text-center">
@@ -370,3 +438,5 @@
 	
 </body>
 --%>
+
+

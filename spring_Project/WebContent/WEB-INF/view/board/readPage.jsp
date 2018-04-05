@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+
 <%-- <%@include file="../include/header.jsp" %> --%>
 
-
+<%-- 
 <div class="container-fluid">
 	<div class="page-header">
 		 <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><h3 style="text-decoration: underline;">${boardVO.bookname}</h3></a>
@@ -67,20 +71,45 @@
 	  		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button> 
 	  </c:if>
 	</div>
-
+ --%>
 
 
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+
     <!-- Main content -->
-<!--     <section class="content"> -->
-<!--       <div class="row"> -->
-<!--       left column -->
-<!--       <div class="col-md-12"> -->
-<!--         general form elements -->
-<!--         <div class="box box-primary"> -->
+    <section class="content">
+      <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+        <div class="box-header">
+          <h2 class="box-title">READ BOARD</h2>
+        </div><!-- /.box-header -->
     
 					
+					<font size="5px;" style="color:red;" id="heart">
+					<c:if test="${like eq false }">
+					
+<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span>
+        </a>
+        			<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span>
+        </a>
+					</c:if>
+					<c:if test="${like eq true}">
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span>
+        </a>
+					<a href="#">
+          <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span>
+        </a>
+					</c:if>
+</font>
+
+        <span id="info"></span>
 
 <%-- 
 				<c:choose>
@@ -95,92 +124,16 @@
 
 
 
-
-<!--   <div class="box-body"> -->
-<!--     <div class="form-group"> -->
-<%--       <h3>조회수 <small>${boardVO.viewcnt}</small></h3>  --%>
-<%--       <input type="text" name='title' class="form-control" 
-<%--          value="${boardVO.viewcnt}" readonly="readonly"> --%> 
-<!--     </div> -->
-  
-<!--     <div class="form-group"> -->
-<%--       <h3>Type <small>${boardVO.type}</small></h3> --%>
-      
-<%--    <%--    <label for="exampleInputEmail1">Type</label><br/> --%>
-<%--       <input type="text" name='type' class="form-control"  --%>
-<%--          value="${boardVO.type}" readonly="readonly"> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-    
-<%-- 							<h3>Tag <small>${mbv.ptag}</small></h3> <input type="text"
-<%-- 								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%> 
-<!-- 						</div> -->
-<!--     <div class="form-group"> -->
-<%--    <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <h3>BookName <small>${boardVO.bookname}</small></h3></a> --%>
-<%--       <label for="exampleInputEmail1">BookName</label><br/>
-<%--       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control"  --%>
-<%--          value="${boardVO.bookname}" readonly="readonly"></a> --%> 
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<%--    <h3>Title <small>${boardVO.title}</small></h3> --%>
-<%--       <label for="exampleInputEmail1">Title</label>
-<%--       <input type="text" name='title' class="form-control"  --%>
-<%--          value="${boardVO.title}" readonly="readonly"> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<!--      <h3>Content</h3> -->
-<%-- ${mbv.contents}      --%>
-      <%-- <label for="exampleInputPassword1">Content</label>
-       <textarea class="form-control"  name="content" rows="3" id="ck" 
-      readonly="readonly">${mbv.contents}</textarea>
-      <script type="text/javascript">
-							$(function() {
-								CKEDITOR.replace('ck', {
-									//width : '620px',  // 입력창의 넓이, 넓이는 config.js 에서 % 로 제어
-									height : '500px' // 입력창의 높이
-							
-								
-								});
-								
-							
-							});
-							
-		
-						</script> --%>
-      
-<!--     </div> -->
-    
-    
-    
-    
-<!--     					<font size="5px;" style="color:red;" id="heart"> -->
-<%-- 					<c:if test="${like eq false }"> --%>
-					
-<!--  <a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty"></span> -->
-<!-- </a> -->
-<!--         			<a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart" style="display:none;"></span> -->
-<!--         </a> -->
-<%-- 					</c:if> --%>
-<%-- 					<c:if test="${like eq true}"> --%>
-<!-- 					<a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요!" id="good" class="glyphicon glyphicon-heart-empty" style="display:none;"></span> -->
-<!--         </a> -->
-<!-- 					<a href="#"> -->
-<!--           <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span> -->
-<!--         </a> -->
-<%-- 					</c:if> --%>
-<!-- </font> -->
-
-<!--         <span id="info"></span> -->
-    					  <script>
+					  <script>
 					  $(document).ready(function(){
 						  $('[data-toggle="tooltip"]').tooltip();   
 						  
 					  });
-					  
+					  var c=0;
+					  var s=0;
 						  	$("#good").click(function(){
+						  		c++;
+						  		if(c==1){
 								$.get("${pageContext.request.contextPath}/board/like",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
 										var html="";
@@ -196,12 +149,16 @@
 											$("#info").html(html);
 											//$("#heart").html(html2);
 									})	;
-							
+							s=0;
 								    $('[data-toggle="tooltip"]').tooltip();   
+						  		}
+						  		
 								
 					  		});
 					  
 						  	$("#bad").click(function(){
+						  		s++;
+						  		if(s==1){
 								$.get("${pageContext.request.contextPath}/board/cancle",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
 										var html="";
@@ -217,29 +174,47 @@
 											//$("#heart").html(html2);
 							  			
 									})	;
-								 $('[data-toggle="tooltip"]').tooltip();   
+								c=0; 
+								$('[data-toggle="tooltip"]').tooltip();   
+						  		}
 					  		});
+						  	
+						  
 					  </script>
-   
-<!-- <<<<<<< HEAD -->
-<%-- 							<h3>Tag <small>${mbv.ptag}</small></h3> <input type="text"
+  <div class="box-body">
+    <div class="form-group">
+      <h3>조회수 <small>${boardVO.viewcnt}</small></h3> 
+      <%-- <input type="text" name='title' class="form-control" 
+         value="${boardVO.viewcnt}" readonly="readonly"> --%>
+    </div>
+  
+    <div class="form-group">
+      <h3>Type <small>${boardVO.type}</small></h3>
+      
+   <%--    <label for="exampleInputEmail1">Type</label><br/>
+      <input type="text" name='type' class="form-control" 
+         value="${boardVO.type}" readonly="readonly"> --%>
+    </div>
+    <div class="form-group">
+    
+							<h3>Tag <small>${mbv.ptag}</small></h3> <%-- <input type="text"
 								name='tag' class="form-control" value="${mbv.ptag}" readonly="readonly"> --%>
 						</div>
-<!--     <div class="form-group"> -->
-<%--    <h3>BookName <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><small>${boardVO.bookname}</small></a></h3> --%>
+    <div class="form-group">
+   <h3>BookName <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><small>${boardVO.bookname}</small></a></h3>
       <%-- <label for="exampleInputEmail1">BookName</label><br/>
       <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.bookname}" readonly="readonly"></a> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<%--    <h3>Title <small>${boardVO.title}</small></h3> --%>
+    </div>
+    <div class="form-group">
+   <h3>Title <small>${boardVO.title}</small></h3>
       <%-- <label for="exampleInputEmail1">Title</label>
       <input type="text" name='title' class="form-control" 
          value="${boardVO.title}" readonly="readonly"> --%>
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<!--      <h3>Content</h3> -->
-<%-- ${mbv.contents}      --%>
+    </div>
+    <div class="form-group">
+     <h3>Content</h3>
+${mbv.contents}     
       <%-- <label for="exampleInputPassword1">Content</label>
        <textarea class="form-control"  name="content" rows="3" id="ck" 
       readonly="readonly">${mbv.contents}</textarea>
@@ -258,21 +233,16 @@
 		
 						</script> --%>
       
-<!--     </div> -->
-<!--     <div class="form-group"> -->
-<%--    <h3>Writer  <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><small>${boardVO.writer}</small></a></h3> --%>
-<!-- ======= -->
-<!--     <div class="form-group"> -->
-<%--     <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><h3>Writer <small>${boardVO.writer}</small></h3></a> --%>
-<%-- >>>>>>> refs/heads/CSS--%>
+    </div>
+    <div class="form-group">
+   <h3>Writer  <a href="${pageContext.request.contextPath}/@${boardVO.writer}"><small>${boardVO.writer}</small></a></h3>
     
       <%-- <label for="exampleInputEmail1" >Writer</label></br>
       
        <a href="${pageContext.request.contextPath}/@${boardVO.writer}"> <input type="text" name='title' class="form-control" 
          value="${boardVO.writer}" readonly="readonly"></a> --%>
-<!--       </div> -->
-<%--
-    <div class="form-group">
+      </div>
+  <%--   <div class="form-group">
     <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
 		<c:forEach var="co" items="${comments }" varStatus="vs">
@@ -283,9 +253,8 @@
 
 		</c:forEach>
 	</c:if>
-	</div>
-	
-	<c:if test="${logon != null  }">
+	</div> --%>
+<%-- 	<c:if test="${logon != null  }">
 		<label for="exampleInputEmail1">댓글쓰기</label> 
 		  <textarea class="form-control" name="comments" id="comments" rows="3" cols="3" placeholder="댓글을 달아주세요." ></textarea>
                 <br/>
@@ -297,67 +266,111 @@
 <!--                 <br/> -->
 <!-- 		 <button type="button"  name="comments" class="btn btn-default"  -->
 <%-- 		 onclick="javascript: location.assign('${pageContext.request.contextPath}/member/log?uri=board/readPage&no=${NO }')" >댓글쓰기</button> --%>
-<%-- 	</c:if>
-<!-- 	</div> -->  --%>
-<!-- 	<div class="form-group"> -->
-
+<%-- 	</c:if> --%>
+	</div>
+	<div class="form-group">
 	
-<!--   </div>/.box-body -->
+  </div><!-- /.box-body -->
 
-<!--   <div class="box-footer"> -->
-<%--    <c:if test="${sessionScope.logon== boardVO.writer}" > --%>
-<!--     <button type="submit" class="btn btn-warning modifyBtn">Modify</button> -->
-<!--     <button type="submit" class="btn btn-danger removeBtn">REMOVE</button> -->
-<%--     </c:if> --%>
-<!--     <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button> -->
-<!--     <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button> -->
-<!--     <button type="submit" class="btn btn-primary goListBtn"> 목록 </button> -->
-<%--     <c:if test="${sessionScope.logon!= boardVO.writer}" > --%>
-<!--   		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button>  -->
-<%--   </c:if> --%>
+  <div class="box-footer">
+   <c:if test="${sessionScope.logon== boardVO.writer}" >
+    <button type="submit" class="btn btn-warning" id="modifyBtn">Modify</button>
+    <button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
+    </c:if>
+   <!--  <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글 </button>
+    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글  </button> -->
+    <button type="submit" class="btn btn-primary" id="goListBtn" >GO LIST </button>
+    <c:if test="${sessionScope.logon!= boardVO.writer}" >
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
+  </c:if>
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">report</button>  -->
-<!-- <<<<<<< HEAD -->
   </div>
   
-<!--   <div class="row"> -->
-<!-- 		<div class="col-md-12"> -->
+  <div class="row">
+		<div class="col-md-12">
 
-<!-- 			<div class="box box-success"> -->
-<!-- 				<div class="box-header"> -->
-<!-- 					<h3 class="box-title">ADD NEW REPLY</h3> -->
-<!-- 				</div> -->
-<!-- 				<div class="box-body"> -->
-<!-- 					<label for="exampleInputEmail1">Writer</label> <input -->
-<!-- 						class="form-control" type="text" placeholder="USER ID" -->
-<!-- 						id="newReplyWriter"> <label for="exampleInputEmail1">Reply -->
-<!-- 						Text</label> <input class="form-control" type="text" -->
-<!-- 						placeholder="REPLY TEXT" id="newReplyText"> -->
+<c:if test="${logon != null  }">
+			<div class="box box-success">
+				<div class="box-header">
+					<h3 class="box-title">ADD NEW REPLY</h3>
+				</div>
+				<div class="box-body">
+					<label for="exampleInputEmail1">Writer</label> <input
+						class="form-control" type="text" placeholder="USER ID"
+						id="newReplyWriter" readonly="readonly" value="${logon }"> <label for="exampleInputEmail1">Reply
+						Text</label> <input class="form-control" type="text"
+						placeholder="REPLY TEXT" id="newReplyText">
 
-<!-- 				</div> -->
-<!-- 				/.box-body -->
-<!-- 				<div class="box-footer"> -->
-<!-- 					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD -->
-<!-- 						REPLY</button> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
-<!-- 			<!-- The time line --> -->
-<!-- 			<ul class="timeline"> -->
-<!-- 				timeline time label -->
-<!-- 				<li class="time-label" id="repliesDiv"><span class="bg-green"> -->
-<!-- 						Replies List </span></li> -->
-<!-- 			</ul> -->
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
+						REPLY</button>
+				</div>
+			</div>
+</c:if>
 
-<!-- 			<div class='text-center'> -->
-<!-- 				<ul id="pagination" class="pagination pagination-sm no-margin "> -->
+			<!-- The time line -->
+			<ul class="timeline">
+				<!-- timeline time label -->
+				<button type="button" class="time-label" id="repliesDiv"><span class="bg-green">
+						Replies List </span></button></li>
+			</ul>
+<!-- 			$(".timeline").on("click", ".replyLi", function(event){
+	
+	var reply = $(this);
+	
+	$("#replytext").val(reply.find('.timeline-body').text());
+	$(".modal-title").html(reply.attr("data-rno"));
+	
+}); -->
 
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- ======= -->
-<!--   </div> -->
-  
-<!-- >>>>>>> refs/heads/CSS -->
+			<div class='text-center'>
+				<ul id="pagination" class="pagination pagination-sm no-margin ">
+
+				</ul>
+			</div>
+
+		</div>
+		<!-- /.col -->
+	</div>
+	
+	<!-- Modal -->
+ <div id="modifyModal" class="modal modal-primary fade" role="dialog">
+  <div class="modal-dialog">
+    Modal content
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body" data-rno>
+        <p><input type="text" id="replytext" class="form-control"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
+        <button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>      
+
+<!-- 	<div id='modDiv' style="display: none;">
+		<div class='modal-title'></div>
+		<div>
+			<input type='text' id='replytext'>
+		</div>
+		<div>
+			<button type="button" id="replyModBtn">Modify</button>
+			<button type="button" id="replyDelBtn">DELETE</button>
+			<button type="button" id='closeBtn'>Close</button>
+		</div>
+	</div>
+		 -->
+
 <div class="container" >
+ 
   <!-- Trigger the modal with a button -->
 
   <!-- Modal -->
@@ -396,7 +409,7 @@
  </form>   
         </div>
         <div class="modal-footer">
-        <button type="submit" class="btn btn-danger reportBtn">신고하기 </button>
+        <button type="submit" class="btn btn-danger" id="reportBtn">신고하기 </button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -404,30 +417,273 @@
   </div>
 </div>
 
+<!--   <a class="btn btn-primary btn-xs mo" 
+	    data-toggle="modal" data-target="#modifyModal" >Modify</a> -->
+
+<script id="template" type="text/x-handlebars-template">
+{{#each .}}
+<li class="replyLi" data-rno={{rno}}>
+<i class="fa fa-comments bg-blue"></i>
+ <div class="timeline-item" >
+  <span class="time">
+    <i class="fa fa-clock-o"></i>{{prettifyDate regdate}}
+  </span>
+  <h3 class="timeline-header"><strong>{{rno}}</strong> -<span class="rid">{{replyer}}</span></h3>
+  <div class="timeline-body">{{replytext}}</div>
+    <div class="timeline-footer modifyshow" >
+{{#eqReplyer replyer}}
+ <a class="btn btn-primary btn-xs mo" 
+	    data-toggle="modal" data-target="#modifyModal" >Modify</a>
+{{/eqReplyer}}
+    </div>
+</div>
+ 	
+
+</li>
+{{/each}}
+</script>
+
+<script>
+
+
+
+Handlebars.registerHelper("eqReplyer", function(replyer,block) {
+	var accum='';
+	if(replyer =='${logon}'){
+		accum+=block.fn();
+	}
+	return accum;
+});
+Handlebars.registerHelper("prettifyDate", function(timeValue) {
+	var dateObj = new Date(timeValue);
+	var year = dateObj.getFullYear();
+	var month = dateObj.getMonth() + 1;
+	var date = dateObj.getDate();
+	return year + "/" + month + "/" + date;
+});
+
+var printData = function(replyArr, target, templateObject) {
+
+	var template = Handlebars.compile(templateObject.html());
+
+	var html = template(replyArr);
+	$(".replyLi").remove();
+	target.after(html);
+	
+	/* var logon="${logon}";
+	$(".rid").each(function(){
+		if(logon==$(this).html()){
+			$(".modifyshow").each(function(){
+				$(this).show();
+			});
+			
+		}
+		else{
+			$(".modifyshow").each(function(){
+				$(this).hide();
+			});
+		}
+			
+		
+		
+	});
+ */
+	
+
+}
+
+
+var bno = ${boardVO.no};
+console.log(bno);
+var replyPage = 1;
+
+function getPage(pageInfo) {
+
+	$.getJSON(pageInfo, function(data) {
+		printData(data.list, $("#repliesDiv"), $('#template'));
+		printPaging(data.pageMaker, $(".pagination"));
+
+		$("#modifyModal").modal('hide');
+
+	});
+}
+
+var printPaging = function(pageMaker, target) {
+
+	var str = "";
+
+	if (pageMaker.prev) {
+		str += "<li><a href='" + (pageMaker.startPage - 1)
+				+ "'> << </a></li>";
+	}
+
+	for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+		var strClass = pageMaker.cri.page == i ? 'class=active' : '';
+		str += "<li "+strClass+"><a href='"+i+"'>" + i + "</a></li>";
+	}
+
+	if (pageMaker.next) {
+		str += "<li><a href='" + (pageMaker.endPage + 1)
+				+ "'> >> </a></li>";
+	}
+
+	target.html(str);
+};
+$("#repliesDiv").on("click", function() {
+console.log($(".timeline li").length );
+	if ($(".timeline li").length > 1) {
+	
+		return;
+	}
+	
+	getPage("/replies/" + bno + "/1");
+
+});
+
+$(".pagination").on("click", "li a", function(event){
+	
+	event.preventDefault();
+	
+	replyPage = $(this).attr("href");
+	
+	getPage("/replies/"+bno+"/"+replyPage);
+	
+});
+$("#replyAddBtn").on("click",function(){
+	 console.log("dfsd");
+	 var replyerObj = $("#newReplyWriter");
+	 var replytextObj = $("#newReplyText");
+	 var replyer = replyerObj.val();
+	 var replytext = replytextObj.val();
+	console.log(replyer+" "+replytext+" ");
+	  
+	  $.ajax({
+			type:'post',
+			url:'/replies/',
+			headers: { 
+			      "Content-Type": "application/json",
+			      "X-HTTP-Method-Override": "POST" },
+			dataType:'text',
+			data: JSON.stringify({bno:bno, replyer:replyer, replytext:replytext}),
+			success:function(result){
+				console.log("result: " + result);
+				if(result == 'SUCCESS'){
+					alert("등록 되었습니다.");
+					replyPage = 1;
+					getPage("/replies/"+bno+"/"+replyPage );
+					
+					replytextObj.val("");
+				}
+		}});
+});
+
+/* $(".timeline").on("click", ".replyLi button", function() {
+
+	var reply = $(this).parent();
+
+	var rno = reply.attr("data-rno");
+	var replytext = reply.text();
+
+	$(".modal-title").html(rno);
+	$("#replytext").val(replytext);
+	$("#modDiv").show("slow");
+
+}); */
+var id="";
+  $(".timeline").on("click", ".replyLi", function(event){
+	
+	var reply = $(this);
+	console.log(reply);
+	id=reply.find('.rid').text();
+	$("#replytext").val(reply.find('.timeline-body').text());
+	$(".modal-title").html(reply.attr("data-rno"));
+	
+});  
+$("#replyModBtn").on("click",function(){
+	  var log="${logon}";
+	  
+	  if(id!=log){
+		  alert('권한이 없습니다.');
+		  $("#modifyModal").modal('hide');
+		  
+		  return;
+	  }
+	  var rno = $(".modal-title").html();
+	  var replytext = $("#replytext").val();
+	  
+	  $.ajax({
+			type:'put',
+			url:'/replies/'+rno,
+			headers: { 
+			      "Content-Type": "application/json",
+			      "X-HTTP-Method-Override": "PUT" },
+			data:JSON.stringify({replytext:replytext}), 
+			dataType:'text', 
+			success:function(result){
+				console.log("result: " + result);
+				if(result == 'SUCCESS'){
+					alert("수정 되었습니다.");
+					getPage("/replies/"+bno+"/"+replyPage );
+				}
+		}});
+});
+
+$("#replyDelBtn").on("click",function(){
+	 var log="${logon}";
+	  
+	  if(id!=log){
+		  alert('권한이 없습니다.');
+		  $("#modifyModal").modal('hide');
+		  return;
+	  }
+	  var rno = $(".modal-title").html();
+	  var replytext = $("#replytext").val();
+	  
+	  $.ajax({
+			type:'delete',
+			url:'/replies/'+rno,
+			headers: { 
+			      "Content-Type": "application/json",
+			      "X-HTTP-Method-Override": "DELETE" },
+			dataType:'text', 
+			success:function(result){
+				console.log("result: " + result);
+				if(result == 'SUCCESS'){
+					alert("삭제 되었습니다.");
+					getPage("/replies/"+bno+"/"+replyPage );
+				}
+		}});
+});
+
+</script>
+
+
+
 <script>
 $(document).ready(function(){
+
 	
 	var formObj = $("form[role='form']");
 	
 	console.log(formObj);
 	
-	$(".btn-warning").on("click", function(){
+	$("#modifyBtn").on("click", function(){
 		formObj.attr("action", "/board/modifyPage");
 		formObj.attr("method", "get");		
 		formObj.submit();
 	});
 	
-	$(".btn-danger").on("click", function(){
+	$("#removeBtn").on("click", function(){
 		formObj.attr("action", "/board/removePage");
 		formObj.submit();
 	});
 	
-	$(".goListBtn").on("click", function(){
+	$("#goListBtn").on("click", function(){
 		formObj.attr("method", "get");
 		formObj.attr("action", "/board/listPage");
 		formObj.submit();
 	});
-	$(".reportBtn").on("click", function(){
+	$("#reportBtn").on("click", function(){
 		formObj.attr("method", "get");
 		formObj.attr("action", "/board/report");
 		formObj.submit();
@@ -437,7 +693,7 @@ $(document).ready(function(){
 });
 
 
-$('#comments-btn').click(function() {
+/* $('#comments-btn').click(function() {
 $.ajax({
     url: "/addComments",
     method: "post",
@@ -457,8 +713,8 @@ $.ajax({
 	});
 });
 
-
-$('#pre').click(function() {
+ */
+/* $('#pre').click(function() {
 	$.ajax({
 	    url: "/pre",
 	    method: "get",
@@ -471,6 +727,7 @@ $('#pre').click(function() {
 				alert(response.prev);
 				if(response.prev==null){
 					alert('이전 글이 존재하지 않습니다.');
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+${boardVO.no});
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.prev);
 				}
@@ -494,6 +751,7 @@ $('#next').click(function() {
 				if(response.result) {
 				if(response.next==null){
 					alert('다음 글이 존재하지 않습니다.');
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+${boardVO.no});
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.next);
 				}
@@ -505,7 +763,7 @@ $('#next').click(function() {
 	    }
 		});
 });
-
+ */
 
 
 /*
@@ -533,18 +791,25 @@ $('#comments-btn').click(function() {
 
   
   
-<!--         </div>/.box -->
-<!--       </div>/.col (left) -->
+        </div><!-- /.box -->
+      </div><!--/.col (left) -->
  
-<!--       </div>   /.row -->
-<!--     </section>/.content -->
-<!--     </div>/.content-wrapper -->
-    
-    </div>
-    
+      </div>   <!-- /.row -->
+    </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
 <%--     
 <%@include file="../include/footer.jsp" %> --%>
 
+
+
+
+
+
+
+
+
+
+   
 
 
 

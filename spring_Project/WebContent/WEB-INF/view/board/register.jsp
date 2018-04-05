@@ -16,25 +16,16 @@
 					<h3 class="box-title">REGISTER BOARD</h3>
 				</div>
 				<!-- /.box-header -->
-
-
 				<form role="form" method="post">
 
 
 					<div class="form-group">
 						<label for="exampleInputEmail1">Type</label><br /> <select
 							name="type">
-
 							<c:forEach items="${type}" var="v">
-
 								<option value="${v }">${v}</option>
-
-
 							</c:forEach>
-
-
 						</select>
-
 					</div>
 					<!-- <div class="box-body"> -->
 					<div class="form-group">
@@ -90,10 +81,11 @@
 					<div class="form-group">
 						<label for="exampleInputEmail1">bookname</label><br /> <select
 							name="book">
+
 							<c:forEach items="${listbook}" var="bookVO">
-								
-								<option value="${bookVO.bno },${bookVO.bookName}" ${param.bno == bookVO.bno ? 'selected':'' }>
-									${bookVO.bookName } </option>
+
+								<option value="${bookVO.bno },${bookVO.bookName}">
+									${bookVO.bookName }</option>
 
 
 							</c:forEach>
@@ -113,7 +105,7 @@
 					<div class="form-group">
 						<label for="exampleInputEmail1">Title</label> <input type="text"
 							name='title' class="form-control" placeholder="Enter Title"
-							required="required">
+							required="required" maxlength="300">
 					</div>
 
 
@@ -162,3 +154,4 @@
 <!-- Bootstrap 3.3.2 JS -->
 <%-- 
 <%@include file="../include/footer.jsp"%> --%>
+

@@ -96,6 +96,7 @@ public class BoardService {
 					System.out.println(s);
 				}
 			}
+			System.out.println(vo.getContent());
 
 			map.put("image", imgpath3);
 			sessions.setAttribute("imgpath", null);
@@ -466,7 +467,6 @@ public class BoardService {
 	}
 
 	public Map prenext(int no, String bookname) { 
-		System.out.println("nnn :" + no+bookname);
 		Map m = new HashMap<>();
 		m.put("no", no);
 		m.put("bookname", bookname);
@@ -475,8 +475,16 @@ public class BoardService {
 		return map;
 	}
 	
+	public Map prenext2(int no) { 
+		Map map = session.selectOne("prenext.read2",no);
+		return map;
+	}
+	
+	
 	
 	public void delete(Integer no) throws Exception {
+		session.delete("reply.totaldelete",no);
+		
 		session.delete("report.delete", no);
 		session.delete("board.delete", no);
 
