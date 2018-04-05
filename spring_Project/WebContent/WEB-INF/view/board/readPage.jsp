@@ -122,7 +122,7 @@
 						class="form-control" type="text" placeholder="USER ID"
 						id="newReplyWriter" readonly="readonly" value="${logon }"> <label for="exampleInputEmail1">Reply
 						Text</label> <input class="form-control" type="text"
-						placeholder="REPLY TEXT" id="newReplyText">
+						placeholder="REPLY TEXT" id="newReplyText" maxlength="1000">
 
 				</div><br/>
 				<!-- /.box-body -->

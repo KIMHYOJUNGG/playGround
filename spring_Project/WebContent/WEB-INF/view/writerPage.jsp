@@ -227,7 +227,7 @@
 										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h3 class="list-group-item-heading" style="margin-bottom: 15px">${c.TITLE}</h3></a>
 										<h4><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
 											<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp; 
-											<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h4>
+											<a href="${pageContext.request.contextPath }/board/listPage?stype=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h4>
 										
 										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> 
 										<fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd HH:mm"/></p>
