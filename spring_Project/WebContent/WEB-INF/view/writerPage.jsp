@@ -82,7 +82,7 @@
 						<p>
 							<input type="hidden" id="hwriter" value="${logon }" />
 							<button type="button" id="publish" class="btn btn-info">
-								<span class="glyphicon glyphicon-book"></span>출간신청
+								<span class="glyphicon glyphicon-book"></span> 출간신청
 							</button>
 						</p>
 					</c:if>
@@ -117,13 +117,13 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title" id="sendHead">메세지 보내기</h4>
+								<h4 class="modal-title" id="sendHead" align="left">메세지 보내기</h4>
 							</div>
 							<div class="modal-body">
 								<form class="form-horizontal"
 									action="${pageContext.request.contextPath }/message/send"
 									method="post">
-									<div class="form-group text-right">
+									<div class="form-group" align="left">
 										<label for="getid" class="control-label col-sm-2"> 받을
 											사람</label>
 										<div class="col-sm-10">
@@ -131,14 +131,14 @@
 												name="getid" required>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group" align="left">
 										<label for="msgtitle" class="control-label col-sm-2">제목</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="msgtitle"
 												name="title" required>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group" align="left">
 										<label for="msgBody" class="control-label col-sm-2">내용</label>
 										<div class="col-sm-10">
 											<textarea class="form-control" id="msgBody" rows="15"
@@ -286,8 +286,8 @@
 									<c:forEach var="ci" begin="0" end="9" varStatus="vs">
 										<c:set var="c" value="${contentList[ci] }" />
 										<li class="list-group-item"><a
-											href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h3
-													class="list-group-item-heading" style="margin-bottom: 15px">${c.TITLE}</h3></a>
+											href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}">
+											<h3	class="list-group-item-heading" style="margin-bottom: 15px">${c.TITLE}</h3></a>
 											<h4>
 												<a
 													href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
@@ -381,8 +381,7 @@
 																				.getHours()
 																				.toString()
 																				: dt
-																						.getHours()
-																						+ ":";
+																						.getHours();
 																		var mm = dt
 																				.getMinutes()
 																				.toString().length < 2 ? 0 + dt
@@ -449,7 +448,7 @@
 						<br>
 						<div align="center">
 							<p>등록된 글이 없습니다.</p>
-							<c:if test="${logon == wirterInfo.ID }">
+							<c:if test="${logon == writerInfo.ID }">
 								<p>글을 등록해 보세요.</p>
 								<a href="${pageContext.request.contextPath }/board/register"><button
 										type="button" class="btn btn-info">
@@ -485,7 +484,7 @@
 												&nbsp;
 												<c:forEach items="${b.tag }" var="tag">
 													<a
-														href="${pageContext.request.contextPath }/search?word=${tag}"><span
+														href="${pageContext.request.contextPath }/tag?tag=${tag}"><span
 														class="badge search"> ${tag}</span></a>
 												</c:forEach>
 											</h3>
@@ -523,7 +522,7 @@
 						<br>
 						<div align="center">
 							<p>등록된 책이 없습니다.</p>
-							<c:if test="${logon eq wirterInfo.ID }">
+							<c:if test="${logon eq writerInfo.ID }">
 								<p>책을 등록해 보세요.</p>
 								<a href="${pageContext.request.contextPath }/bookPage"><button
 										type="button" class="btn btn-info">

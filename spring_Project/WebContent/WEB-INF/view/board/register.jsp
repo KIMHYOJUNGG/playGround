@@ -31,7 +31,7 @@
 					<div class="form-group">
 						<label for="usr">Tag</label> <input type="text"
 							class="form-control" placeholder="작성양식: #aa #aa #aa" name="tag"
-							id="tag" onkeyup="checkTag()">
+							id="tag" onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
 						<button id="getTag">적합성판단하기</button>
 					</div>
 					<!--  <input type='hidden' id="ttag" name="tag" > -->
@@ -52,29 +52,35 @@
 							console.log($("#ttag").val());
 						});
 
+						function addHash() {
+							var tag = $("#tag").val();
+							if(tag.length >1 && tag.charCodeAt(0) != 35) {
+									$("#tag").val("#"+tag);
+							}
+						}
+						
 						function checkTag() {
 							var tag = $("#tag").val();
-							console.log($("#tag").val());
-							if (tag.charCodeAt(tag.length - 1) == 32) {
-								if (tag.charCodeAt(tag.length - 2) != 35) {
-									$("#tag")
-											.val(
-													tag.substr(0,
-															tag.length - 1)
-															+ "#");
-								} else {
-									$("#tag")
-											.val(tag.substr(0, tag.length - 1));
+							if(tag.charCodeAt(tag.length-1) == 32) {
+								if(tag.charCodeAt(tag.length-2)!=35){
+									$("#tag").val(tag.substr(0, tag.length-1)+"#");
+								}	else {
+									$("#tag").val(tag.substr(0, tag.length-1));
 								}
 							}
-							if (tag.indexOf("　") != -1) {
-								if (tag.charCodeAt(tag.indexOf("　") - 1) != 35) {
+							if(tag.length > 1 && tag.indexOf("　") != -1){
+								if(tag.charCodeAt(tag.indexOf("　")-1) != 35){
 									$("#tag").val(tag.replace("　", "#"));
 								} else {
-									$("#tag").val(
-											tag.substr(0, tag.indexOf("　")));
+									$("#tag").val(tag.substr(0,tag.indexOf("　")) );
 								}
 							}
+						}
+						
+						function finalCheck() {
+							addHash();
+							var tag = $("#tag").val();
+							$("#tag").val(tag.replace(/\s/gi, ""));
 						}
 					</script>
 
