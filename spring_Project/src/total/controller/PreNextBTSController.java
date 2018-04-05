@@ -22,6 +22,7 @@ public class PreNextBTSController {
 	@Autowired
 	Gson gson;
 	
+	// 밑에 두개는 책이름에서의  이전 후 페이지 
 	@RequestMapping(path="/pre", method = RequestMethod.GET, produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String preHandle(Model model,@RequestParam String id, @RequestParam int boardNo ,@RequestParam String bookname) {
@@ -30,6 +31,7 @@ public class PreNextBTSController {
 		System.out.println("prev : "+pre.get("PREV"));
 		Map map = new HashMap<String, String>();
 		map.put("result", true);
+		map.put("no", pre.get("NO"));
 		map.put("prev",pre.get("PREV"));
 		Gson gson = new Gson();
 		gson.toJson(map);
@@ -44,6 +46,39 @@ public class PreNextBTSController {
 		System.out.println("next : "+pre.get("NEXT"));
 		Map map = new HashMap<String, String>();
 		map.put("result", true);
+		map.put("no", pre.get("NO"));
+		map.put("next",pre.get("NEXT"));
+		Gson gson = new Gson();
+		gson.toJson(map);
+		return gson.toJson(map);
+		//return ((String)pre.get("next"));
+	}
+	
+	// 밑에 두개는 게시판에서 이전 후 페이지 
+	@RequestMapping(path="/pre2", method = RequestMethod.GET, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String pre2Handle(Model model,@RequestParam String id, @RequestParam int boardNo ,@RequestParam String bookname) {
+		System.out.println("prenext로 옴 ");
+		Map pre = boardService.prenext2(boardNo);
+		System.out.println("prev : "+pre.get("PREV"));
+		Map map = new HashMap<String, String>();
+		map.put("result", true);
+		map.put("no", pre.get("NO"));
+		map.put("prev",pre.get("PREV"));
+		Gson gson = new Gson();
+		gson.toJson(map);
+		return gson.toJson(map);
+	}
+	
+	
+	@RequestMapping(path="/next2", method = RequestMethod.GET, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String next2Handle(Model model,@RequestParam String id, @RequestParam int boardNo ,@RequestParam String bookname) {
+		Map pre = boardService.prenext2(boardNo);
+		System.out.println("next : "+pre.get("NEXT"));
+		Map map = new HashMap<String, String>();
+		map.put("result", true);
+		map.put("no", pre.get("NO"));
 		map.put("next",pre.get("NEXT"));
 		Gson gson = new Gson();
 		gson.toJson(map);

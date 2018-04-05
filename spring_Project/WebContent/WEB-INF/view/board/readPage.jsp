@@ -130,8 +130,11 @@
 						  $('[data-toggle="tooltip"]').tooltip();   
 						  
 					  });
-					  
+					  var c=0;
+					  var s=0;
 						  	$("#good").click(function(){
+						  		c++;
+						  		if(c==1){
 								$.get("${pageContext.request.contextPath}/board/like",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
 										var html="";
@@ -147,12 +150,16 @@
 											$("#info").html(html);
 											//$("#heart").html(html2);
 									})	;
-							
+							s=0;
 								    $('[data-toggle="tooltip"]').tooltip();   
+						  		}
+						  		
 								
 					  		});
 					  
 						  	$("#bad").click(function(){
+						  		s++;
+						  		if(s==1){
 								$.get("${pageContext.request.contextPath}/board/cancle",  {"targetboard": "${boardVO.no}"
 									}).done(function(rst){
 										var html="";
@@ -168,7 +175,9 @@
 											//$("#heart").html(html2);
 							  			
 									})	;
-								 $('[data-toggle="tooltip"]').tooltip();   
+								c=0; 
+								$('[data-toggle="tooltip"]').tooltip();   
+						  		}
 					  		});
 						  	
 						  
@@ -269,8 +278,8 @@ ${mbv.contents}
     <button type="submit" class="btn btn-warning" id="modifyBtn">Modify</button>
     <button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
     </c:if>
-    <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글 </button>
-    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글  </button>
+   <!--  <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글 </button>
+    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글  </button> -->
     <button type="submit" class="btn btn-primary" id="goListBtn" >GO LIST </button>
     <c:if test="${sessionScope.logon!= boardVO.writer}" >
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">report</button> 
@@ -422,12 +431,13 @@ ${mbv.contents}
   </span>
   <h3 class="timeline-header"><strong>{{rno}}</strong> -<span class="rid">{{replyer}}</span></h3>
   <div class="timeline-body">{{replytext}}</div>
-
     <div class="timeline-footer modifyshow" >
+{{#eqReplyer replyer}}
  <a class="btn btn-primary btn-xs mo" 
 	    data-toggle="modal" data-target="#modifyModal" >Modify</a>
+{{/eqReplyer}}
     </div>
-
+</div>
  	
 
 </li>
@@ -438,6 +448,13 @@ ${mbv.contents}
 
 
 
+Handlebars.registerHelper("eqReplyer", function(replyer,block) {
+	var accum='';
+	if(replyer =='${logon}'){
+		accum+=block.fn();
+	}
+	return accum;
+});
 Handlebars.registerHelper("prettifyDate", function(timeValue) {
 	var dateObj = new Date(timeValue);
 	var year = dateObj.getFullYear();
@@ -698,7 +715,7 @@ $.ajax({
 });
 
  */
-$('#pre').click(function() {
+/* $('#pre').click(function() {
 	$.ajax({
 	    url: "/pre",
 	    method: "get",
@@ -711,6 +728,7 @@ $('#pre').click(function() {
 				alert(response.prev);
 				if(response.prev==null){
 					alert('이전 글이 존재하지 않습니다.');
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+${boardVO.no});
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.prev);
 				}
@@ -734,6 +752,7 @@ $('#next').click(function() {
 				if(response.result) {
 				if(response.next==null){
 					alert('다음 글이 존재하지 않습니다.');
+					location.assign("${pageContext.request.contextPath}/board/readPage?no="+${boardVO.no});
 				}else{
 					location.assign("${pageContext.request.contextPath}/board/readPage?no="+response.next);
 				}
@@ -745,7 +764,7 @@ $('#next').click(function() {
 	    }
 		});
 });
-
+ */
 
 
 /*
