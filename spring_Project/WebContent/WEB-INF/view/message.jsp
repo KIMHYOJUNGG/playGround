@@ -165,7 +165,9 @@
 								<textarea class="form-control" id="msgBody"  rows="15" name="msg" style="resize: none; overflow-y: scroll;" required></textarea>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-default" formaction="${pageContext.request.contextPath }/message/send">보내기</button>
+						<div align="right">
+							<button type="submit" class="btn btn-default" formaction="${pageContext.request.contextPath }/message/send">보내기</button>
+						</div>
 					</form>
 				</div>
 			</div>
