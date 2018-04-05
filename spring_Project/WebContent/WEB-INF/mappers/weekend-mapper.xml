@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 우승자가 나올시 출간테이블(publish)에 정보저장 -->
 	<insert id="publish">
-		insert into publish values(publish_seq,{#bno},{#btitle},{#writer})
+		insert into publish values(publish_seq,{#bno},{#btitle},{#writer},'N','null')
 	</insert>
 	
 	<!-- 주간순위 리셋 -->
@@ -67,5 +67,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 출간신청을 할 수 있는지에 대한  -->
 	<select id="searchPublish" resultType="hashmap">
 		select * from publish where writer = #{id}
+	</select>
+	
+	<!-- 출간날짜 -->
+	<select id="searchYN" resultType="int">
+		select count(*) from publish where writer= #{id} and pdate != null; 
+	</select>
+	
+	<!-- 출간일 비교 -->
+	<select id="searchDate" resultType="hashmap">
+		select pdate - sysdate from publish where writer = 'yy';
 	</select>
 </mapper>
