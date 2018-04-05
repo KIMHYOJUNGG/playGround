@@ -290,7 +290,7 @@ public class BoardController {
 	public String read(@RequestParam("no") int no, @ModelAttribute("cri") SearchCriteria cri, Model model,
 			HttpSession session) throws Exception {
 		
-		if(cri.getKeyword()==null && cri.getSearchType() == null) {
+		/*if(cri.getKeyword()==null && cri.getSearchType() == null) {*/
 		
 			String id=(String)session.getAttribute("logon");
 			if(id!=null){
@@ -313,7 +313,7 @@ public class BoardController {
 			model.addAttribute("logon", id);
 			session.setAttribute("NO", no);
 			return "t_el_title";
-		} else {
+		/*} else {
 			String id=(String)session.getAttribute("logon");
 			if(id!=null){
 				GoodVO good=new GoodVO();
@@ -336,7 +336,7 @@ public class BoardController {
 			session.setAttribute("NO", no);
 			
 			return "t_el_title";
-		}
+		}*/
 			
 			/*
 			System.out.println("cricri: "+(cri == null));

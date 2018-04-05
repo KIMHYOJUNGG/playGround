@@ -1,7 +1,15 @@
+
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<style>
+.str{
+	text-overflow: ellipsis; 
+	white-space: nowrap; 
+	overflow: hidden
+	}
+</style>
 <!-- <body class="mainbody"> -->
 	<div class="alert alert-warning alert-dismissible" id="warn1"
 		style="display: none">
@@ -50,7 +58,7 @@
 													src="${pageContext.request.contextPath }/image/Desert.jpg"
 													alt="1" style="width: 500px; height: 400px;"></a>
 													<div class="carousel-caption">
-													<h3>${o.BTITLE }</h3>
+													<h3 class="str">${o.BTITLE }</h3>
 													<p>${o.WRITER  }</p>
 												</div>
 											</c:when>
@@ -60,7 +68,7 @@
 												${o.image[0]  }" alt="Paris"
 													style="width: 500px; height: 400px;"></a>
 												<div class="carousel-caption">
-													<h3>${o.BTITLE }</h3>
+													<h3 class="str">${o.BTITLE }</h3>
 													<p>${o.WRITER  }</p>
 												</div>
 											</c:otherwise>
@@ -75,7 +83,7 @@
 													src="${pageContext.request.contextPath }/image/Desert.jpg"
 													alt="1" style="width: 500px; height: 400px;"></a>
 													<div class="carousel-caption">
-													<h3>${o.BTITLE }</h3>
+													<h3 class="str">${o.BTITLE }</h3>
 													<p>${o.WRITER  }</p>
 												</div>
 											</c:when>
@@ -85,7 +93,7 @@
 												${o.image[0]  }" alt="Paris"
 													style="width: 500px; height: 400px;"></a>
 												<div class="carousel-caption">
-													<h3>${o.BTITLE }</h3>
+													<h3 class="str">${o.BTITLE }</h3>
 													<p>${o.WRITER  }</p>
 												</div>
 											</c:otherwise>
@@ -118,6 +126,7 @@
 					<div class="row text-center">
 				</c:if>
 				<div class="col-sm-3">
+				
 					<a href="/board/readPage?no=${o.NO}">
 						<div class="img_div-wrapper">
 						<div class="img_div">
@@ -288,7 +297,7 @@
 
 
 
-<!-- 	<!-- Container (Services Section) --> 
+	<!-- Container (Services Section) -->
 <!-- 	<div class="container-fluid text-center"> -->
 <!-- 		<h2>SERVICES</h2> -->
 <!-- 		<h4>What we offer</h4> -->
@@ -430,5 +439,3 @@
 	
 </body>
 --%>
-
-

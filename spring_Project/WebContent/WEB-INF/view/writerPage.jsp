@@ -224,10 +224,11 @@
 								<c:forEach var="ci" begin="0" end="9" varStatus="vs">
 									<c:set var="c" value="${contentList[ci] }"/>
 									<li class="list-group-item">
-										<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
+										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h3 class="list-group-item-heading" style="margin-bottom: 15px">${c.TITLE}</h3></a>
+										<h4><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
 											<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp; 
-											<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
-										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
+											<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h4>
+										
 										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> 
 										<fmt:formatDate value="${c.REGDATE}" pattern="yy/MM/dd HH:mm"/></p>
 									</li>
@@ -282,10 +283,11 @@
 							<div class="list-group"> 
 							<c:forEach var="c" items="${contentList}">
 								<li class="list-group-item">
-									<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
+									<h3 class="list-group-item-heading" style="margin-bottom: 15px"><a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}">${c.TITLE}</a></h3>
+									<h4><a href="${pageContext.request.contextPath }/bookPage/${c.BNO}">
 									<span class="glyphicon glyphicon-book" style="font-size:15pt"></span> &nbsp;${c.BOOKNAME}</a> &nbsp;
-									<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a></h3>
-										<a href="${pageContext.request.contextPath}/board/readPage?no=${c.NO}"><h4>${c.TITLE}</h4></a>
+									<a href="${pageContext.request.contextPath }/search?word=${c.TYPE}"><span class="badge bg_type">${c.TYPE}</span></a>
+										</h4>
 										<p class="list-group-item-text"><span class="glyphicon glyphicon-eye-open"></span> ${c.VIEWCNT} &nbsp; &nbsp; <span class="glyphicon glyphicon-pencil"></span> 
 										<fmt:formatDate value="${c.REGDATE }" pattern="yy/MM/dd HH:mm"/></p>
 								</li>
