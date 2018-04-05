@@ -10,7 +10,7 @@
 	<hr/>
 		<c:forEach var="m" items="${publish }">
 		<p>
-			<form action="/week/publishBook2?btitle=${m.BTITLE }" role="form" method="post">
+			<form action="/week/publishBook?btitle=${m.BTITLE }" role="form" method="post">
 				<b>${m.BTITLE }</b>
 				<button type="submit">신청</button>
 			</form> 

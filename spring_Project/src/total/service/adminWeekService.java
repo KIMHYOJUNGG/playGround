@@ -106,6 +106,15 @@ public class adminWeekService {
 		return template.selectList("week.searchPublish",id);
 	}
 
+/*	public int selectYN(String id) {
+		return template.selectOne("week.searchYN",id);
+	}
+*/
+	/*// cnt가 0이 아닐때의 비교
+	public int selectDate(String id) {
+		return template.selectOne("week.searchDate",);
+	}*/
+
 	
 	
 	

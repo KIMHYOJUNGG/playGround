@@ -73,7 +73,8 @@ public class MemberController {
 					if (rst) {
 						String id = param.get("id").toString();
 						Map map2 = memberservice.emailMember(id);
-						session.setAttribute("lv", map2.get("LV"));
+						int lv = Integer.parseInt(map2.get("LV").toString());
+						session.setAttribute("lv", lv);
 						session.setAttribute("email",map2.get("EMAIL"));
 						session.setAttribute("logon", param.get("id"));
 						System.out.println("email과 lv : " + map2.get("EMAIL") + " , " + map2.get("LV"));
@@ -177,7 +178,6 @@ public class MemberController {
 				Map map3 = memberservice.emailMember(id);
 				session.setAttribute("logon", param.get("id"));
 				session.setAttribute("email",map3.get("EMAIL"));
-				session.setAttribute("logon", param.get("id"));
 				Map map2 = memberservice.emailMember(param.get("id").toString());
 				System.out.println("lvup?");
 				int lv = Integer.parseInt((map2.get("LV").toString()));

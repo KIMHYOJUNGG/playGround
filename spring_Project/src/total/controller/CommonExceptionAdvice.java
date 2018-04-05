@@ -19,8 +19,8 @@ public class CommonExceptionAdvice {
   }
 */
 
-	/*
-  @ExceptionHandler(Exception.class)
+  /*@ExceptionHandler(Exception.class)
+>>>>>>> branch 'master' of https://github.com/KIMHYOJUNGG/playGround.git
   private ModelAndView errorModelAndView(Exception ex) {
 
     ModelAndView modelAndView = new ModelAndView();
@@ -30,7 +30,6 @@ public class CommonExceptionAdvice {
     return modelAndView;
 
   }*/
- 
 
 }
 

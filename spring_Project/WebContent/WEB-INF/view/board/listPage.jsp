@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="false"%>
 
 <%-- <%@include file="../include/header.jsp"%> --%>
@@ -218,11 +219,19 @@
   
 </form>
 
+<c:if test="${fn:length(tag) <= 10 }">
 <c:forEach items="${tag }" var="tag">
 	<button class="button button"
 		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
 </c:forEach>
-
+</c:if>
+<c:if test ="${fn:length(tag) > 10 }">
+<c:forEach var="t" begin="0" end="9">
+<c:set var="tag" value="${tag[t] }"/>
+<button class="button button"
+		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
+</c:forEach>
+</c:if>
 
 <script>
 	var result = '${msg}';
