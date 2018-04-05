@@ -6,7 +6,14 @@
 <%@ page session="false"%>
 
 <%-- <%@include file="../include/header.jsp"%> --%>
-
+<script>
+function showKw() {
+	if($("#kw").css("display") == "none")
+		$("#kw").css("display", "block");
+	else
+		$("#kw").css("display", "none");
+}
+</script>
 <div class="outer" style="max-height: 100px">
 	<div class="inner">
 		<div class="centered" style="width: 100%; height: 30%" >
@@ -60,7 +67,7 @@
 
 
 <%-- 							</c:forEach> --%>
-<!-- ======= -->
+<!-- =======ㅇㅇ -->
 						
 					<button id='searchBtn' class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
 					<a href="/board/register"><button class='btn btn-primary'><span class="glyphicon glyphicon-pencil"></span> 글쓰기</button></a>
@@ -282,13 +289,7 @@
 				});
 
 			});
-	
-	function showKw() {
-		if($("#kw").css("display") == "none")
-			$("#kw").css("display", "block");
-		else
-			$("#kw").css("display", "none");
-	}
+
 </script>
 
 <%-- <%@include file="../include/footer.jsp"%> --%>

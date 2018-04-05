@@ -191,6 +191,8 @@
 		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
 </c:forEach>
 
+
+
 <script>
 	var result = '${msg}';
 
@@ -205,7 +207,7 @@
 						"click",
 						function(event) {
 
-							self.location = "listAll"
+							self.location = "listPage"
 									+ '${pageMaker.makeQuery(1)}'
 									+ "&searchType="
 									+ $("select option:selected").val()
