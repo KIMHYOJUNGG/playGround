@@ -117,10 +117,12 @@
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
+		
+		<br>
 		<!-- Container (Portfolio Section) -->
-		<div class="container-fluid text-center bg-grey">
-			<h2>Now</h2>
-			<h4>What we have created</h4>
+		<div class="container-fluid text-center bg-grey" style="margin: 35px">
+			<h2>이번 주 TOP 8</h2>
+			<br>
 			<c:forEach var="o" items="${boardNo}" varStatus="vs">
 				<c:if test="${vs.count %4 == 1}">
 					<div class="row text-center">
@@ -171,10 +173,12 @@
 		</c:forEach>
 	</div>
 	</div>
+	
+<br>
 	<!-- Container (Services Section) -->
-	<div class="container-fluid text-center">
-		<h2>KEYWORD</h2>
-		<br> <br> <br>
+	<div class="container-fluid text-center"  style="margin: 35px">
+		<h2>장르별 보기</h2>
+		<br>
 		<div class="row">
 			<div class="col-sm-3">
 				<h4>
@@ -246,16 +250,12 @@
 						반려동물</a>
 				</h4>
 			</div>
-
 		</div>
 	</div>
+<br>
 
-
-<div class="container text-center">
-		<h3>WRITERS</h3>
-		<p>
-			<em>이달의 작가</em>
-		</p>
+<div class="container text-center" style="margin: 35px">
+		<h2>새로운 작가</h2>
 		<p>이달의 새로운 작가들을 만나보세요.</p>
 		<br>
 		<div class="row">
@@ -289,12 +289,6 @@
 
 
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-
 
 
 	<!-- Container (Services Section) -->
