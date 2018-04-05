@@ -25,7 +25,7 @@
 	function rm(){
 		var btitle = $("#btitle").val();
 		console.log(btitle);
-		$.get("${pageContext.request.contextPath }/week/publishBook?btitle="+ btitle,function(obj){
+		$.get("${pageContext.request.contextPath }/week/publishBook", { "btitle" : btitle}, function(obj){
 			console.log("get 진행..." + obj);
 		 	if (obj.rst) {
 				window.alert("출간신청 완료");

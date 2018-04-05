@@ -236,22 +236,28 @@ public class AdminWeekController {
 	@RequestMapping(path="/publishBook",method = RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String publishBook(Model model, @RequestParam String btitle, HttpSession session) {
+		System.out.println("publishBook");
 		String id = session.getAttribute("logon").toString();
 		int i = weekservice.selectYN(id);
+		System.out.println("i는? "+i);
 		boolean yn = false;
 		if (i == 0) {
+			System.out.println("0이래");
 			Map map = new HashMap();
 			map.put("id", session.getAttribute("logon"));
 			map.put("btitle", btitle);
 			boolean rst = weekservice.publishBook(map);
+			System.out.println("rst?? "+(rst) );
 			if (rst) {
 				yn=true;
 				System.out.println("성공");
-			} else {
+			} else if(!rst) {
 				System.out.println("실패");
-			}
+			} 
+			System.out.println("끝까지 오긴 하니?");
 			return "{\"rst\" : "+yn+"}";
 		}else {
+			System.out.println("0아니래");
 			int i2 = weekservice.selectDate(id);
 			if(i2 >30) {
 				Map map = new HashMap();
