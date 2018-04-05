@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="search">
 	
-	<select id="boardNo" resultType="hashmap">
+	<select id="boardNo" resultType="total.domain.BoardVO">
 		select * from board where no= #{no}
 	</select>
 	

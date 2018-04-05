@@ -211,6 +211,11 @@
   
 </form>
 
+<c:forEach items="${tag }" var="tag">
+	<button class="button button"
+		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
+</c:forEach>
+
 
 <script>
 	var result = '${msg}';
