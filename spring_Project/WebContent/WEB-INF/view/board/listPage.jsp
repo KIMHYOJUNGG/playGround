@@ -135,7 +135,14 @@
 	<div class="li"  style="margin-top: 10px; width: 80%">
 		<c:forEach items="${list}" var="boardVO">
 			<hr/>
+			<c:choose>
+			<c:when test="${empty nocri }">
 			<a href="/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&no=${boardVO.no}" style="text-align: center">
+			</c:when>
+			<c:otherwise>
+			<a href="/board/readPage?no=${boardVO.no}" style="text-align: center">
+			</c:otherwise>
+			</c:choose>
 			<div class="row">
 					 <h3 style="margin-bottom:25px">${boardVO.title} <span style="font-size: 12px; color: gray; font-style: italic;">by</span> <span style="font-size: 12pt">${boardVO.writer}</span> </p></h3>
 					 <p>
