@@ -341,7 +341,7 @@
 									<h3 class="list-group-item-heading" style="color: blue">${b.cnt } <span style="color:blue">contents</span></h3>
 									<c:if test="${logon eq b.writer }">
 										<p class="list-group-item-text">
-											<a href="${pageContext.request.contextPath }/board/register?${b.bno}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>쓰기</button></a>
+											<a href="${pageContext.request.contextPath }/board/register?bno=${b.bno}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>쓰기</button></a>
 											<a href="${pageContext.request.contextPath }/bookPage/${b.bno}/modify"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-book"></span> 관리</button></a>
 										</p>
 									</c:if>

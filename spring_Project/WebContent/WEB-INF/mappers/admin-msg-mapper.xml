@@ -41,18 +41,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 해당해원한테서 받은 메세지 내용보기 -->
 	<select id="getMessageId" resultType="hashmap">
-		select * from getmessage where sendid = #{sendid} and title = #{title}
+		select * from getmessage where no=#{no}
 	</select>
 	
 	<!-- 본 받은 메세지 no 카운트로 -->
 	<update id="updategetRead">
-		update getmessage set readcheck='Y' where title = #{title} and sendid = #{sendid}
+		update getmessage set readcheck='Y' where no=#{no}
 	</update>
+	
 	
 	<!-- 본 보낸 메세지 no 카운트로 -->
 	<update id="updatesendRead">
 		update sendmessage set readcheck='Y' where title = #{title} and getid = admin
 	</update>
+	
+	
 	
 
 </mapper>
