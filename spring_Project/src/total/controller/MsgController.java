@@ -27,13 +27,14 @@ public class MsgController {
 	Gson gson;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String msgHandle(Map map, HttpSession session) {
+	public String msgHandle(Map map, HttpSession session, @RequestParam(name="msg", required=false) String msg) {
 		String id = (String)session.getAttribute("logon");
 		map.put("info", myPageService.getInfo(id));
 		map.put("newMsgCnt", msgService.getNewMsgCntByIdFromGetBox(id));
 		map.put("getMsg", msgService.getMsgByIdFromGetBox(id));
 		map.put("title", "우편함");
 		map.put("body", "message.jsp");
+		map.put("msg", msg);	
 		return "t_el_title";
 	}
 	
@@ -71,14 +72,22 @@ public class MsgController {
 	}
 	
 	@RequestMapping(path="/send", method=RequestMethod.POST)
-	public String sendHandle(@RequestParam Map params, HttpSession session, Map map) {
+	public String sendHandle(@RequestParam Map<String,String> params, HttpSession session, Map map) {
 		System.out.println("sendHandle");
 		String id = (String)session.getAttribute("logon");
 		params.put("sendid", id);
-		boolean rst = msgService.send(params);
-		if(rst) {
-			return "redirect:/message/sendBox";
+		String get = params.get("getid");
+		System.out.println("getid??");
+		System.out.println(myPageService.getInfo(get));
+		if(myPageService.getInfo(get) != null) {
+			boolean rst = msgService.send(params);
+			if(rst) {
+				return "redirect:/message/sendBox";
+			} else {
+				return "redirect:/message";
+			}
 		} else {
+			map.put("msg", "window.alert('존재하지 않는 아이디입니다.')");
 			return "redirect:/message";
 		}
 	}

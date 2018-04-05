@@ -39,7 +39,7 @@ public class ModifyInfoController {
 				String fileName = modifyInfoService.imgModify(img, (String) session.getAttribute("logon"));
 				param.put("image", fileName);
 			} else {
-				map.put("msg", "window.alert('이미지 파일만 가능합니다.')");
+				map.put("msg", "이미지 파일만 가능합니다.");
 				return "redirect:/modifyInfo";
 			}
 		}

@@ -69,6 +69,8 @@
 		</table>
 		</div>
 						<script>
+						${msg};
+						
 							function sendMsg(sendid){
 								$("#getid").val(sendid);
 								$("#sendModal").modal();
