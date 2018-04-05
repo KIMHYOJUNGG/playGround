@@ -149,6 +149,7 @@
 			$("#msg_pw2").html("");
 			$("#password2").prop("required", false);
 		}
+			checkps();
 	}
 	
 	function passCheck2() {
@@ -162,6 +163,29 @@
 				$("#msg_pw2").css("color","red");
 				$("#msg_pw2").html("비밀번호가 다릅니다.	");
 			}		
+		}
+	}
+	
+	function checkps() {
+		console.log("checkps");
+		var pval = document.getElementById("password").value;
+		var pattern1 = /[0-9]/; // 숫자 
+		var pattern2 = /[a-zA-Z]/; // 문자 
+		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
+		if (!pattern1.test(pval) || !pattern2.test(pval)
+				|| !pattern3.test(pval) || pval.length < 8) {
+			console.log("if");
+// 			document.getElementById("rgd").style.color = "red";
+// 			document.getElementById("rgd").innerHTML = "<small>비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.</small>";
+// 			document.getElementById("sbt").disabled = true;
+			$("#msg_pw").html("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
+		} else if (pval == null) {
+// 			document.getElementById("rgd").style.color = "red";
+// 			document.getElementById("rgd").innerHTML = "<small>비밀번호 입력바랍니다..</small>";
+// 			document.getElementById("sbt").disabled = true;
+		} else {
+// 			document.getElementById("rgd").innerHTML = null;
+// 			document.getElementById("sbt").disabled = false;
 		}
 	}
 	
