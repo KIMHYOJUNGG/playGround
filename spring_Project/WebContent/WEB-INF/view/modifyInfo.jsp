@@ -69,7 +69,6 @@
 	</form>
 </div>
 <script>
-
 	function imgChange() {
 		$("#image").click();
 	}
