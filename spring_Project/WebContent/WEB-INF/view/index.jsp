@@ -150,6 +150,8 @@
 								</c:otherwise>
 						</c:choose>
 					</strong>
+					</p>
+					<p>
 					<c:choose>
 						<c:when test="${fn:length(o.BOOKNAME) > 10 }">
 									${fn:substring(o.BOOKNAME, 0,10) } ...
