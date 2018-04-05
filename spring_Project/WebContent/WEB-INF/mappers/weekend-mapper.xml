@@ -71,12 +71,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 출간신청 -->
 	<update id="publishupdateYN">
-		update publish set yn='Y' where writer=#{id} and btitle=#{btitle}
+		update publish set yn='Y',pdate=sysdate where writer=#{id} and btitle=#{btitle}
 	</update>
 	
 	<!-- 출간날짜 -->
 	<select id="searchYN" resultType="int">
-		select count(*) from publish where writer= #{id} and pdate != null
+		select count(*) from publish where writer= #{id} and yn='Y'
 	</select>
 	
 	<!-- 출간일 비교 -->

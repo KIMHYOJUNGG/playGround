@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 해원한테서 받은 메세지함 개수 -->
 	<select id="getMessageCnt" resultType="int">
-		select count(*) from getmessage where sendid != 'admin' and readcheck = 'N'
+		select count(*) from getmessage where getid = 'admin' and readcheck = 'N'
 	</select>
 	
 	<!-- 해원한테서 보낸 메세지함 개수 -->
@@ -62,4 +62,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="get">
 		insert into getmessage values(#{no}, 'admin', #{title}, #{text}, 'N', sysdate, #{id})
 	</insert>
+	
+	<!-- 메세지 선택 -->
+	<select id="selectMessageAll" resultType="hashmap">
+		select * from getmessage where no=#{no}
+	</select>
+	
+	<!-- 메세지 다 -->
+	<delete id="deleteMessage2">
+		delete from getmessage where no in
+		<foreach collection="no" item="n" open="(" close=")" separator=",">#{n}</foreach>
+	</delete>
+	
+	<!-- 메세지 하나 -->
+	<delete id="deleteMessage3">
+		delete from getmessage where no in #{no}
+	</delete>
 </mapper>

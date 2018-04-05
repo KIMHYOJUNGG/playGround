@@ -36,7 +36,8 @@ public class AdminWeekController {
 	public String WeekendTop(Model model, HttpSession session) {
 		if (session.getAttribute("admin") != null) {
 			List<Map> list = adminservice.weekend();
-			String wid = weekservice.weektop(); // 현재 1등
+			//String wid = weekservice.weektop(); // 현재 1등
+			String wid = list.get(0).get("WRITER").toString();
 			model.addAttribute("wlist", list);
 			model.addAttribute("wid", wid);
 			return "/admin/weekview";
@@ -237,11 +238,13 @@ public class AdminWeekController {
 	@ResponseBody
 	public String publishBook(Model model, @RequestParam String btitle, HttpSession session) {
 		String id = session.getAttribute("logon").toString();
+		System.out.println("진행상황1");
 		int i = weekservice.selectYN(id);
+		System.out.println("진행상황2");
 		boolean yn = false;
 		if (i == 0) {
 			Map map = new HashMap();
-			map.put("id", session.getAttribute("logon"));
+			map.put("id", id);
 			map.put("btitle", btitle);
 			boolean rst = weekservice.publishBook(map);
 			if (rst) {
@@ -255,7 +258,7 @@ public class AdminWeekController {
 			int i2 = weekservice.selectDate(id);
 			if(i2 >30) {
 				Map map = new HashMap();
-				map.put("id", session.getAttribute("logon"));
+				map.put("id", id);
 				map.put("btitle", btitle);
 				boolean rst = weekservice.publishUpdateBno(map);
 				boolean rst2 = weekservice.publishBook(map);

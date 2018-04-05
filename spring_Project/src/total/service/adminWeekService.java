@@ -117,6 +117,7 @@ public class adminWeekService {
 
 	// 출간하기
 	public boolean publishBook(Map map) {
+		System.out.println("안돼?");
 		int i = template.update("week.publishupdateYN",map);
 		if(i!=0) {
 			return true ;
