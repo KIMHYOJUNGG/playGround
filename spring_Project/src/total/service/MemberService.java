@@ -90,7 +90,6 @@ public class MemberService {
 			if(map.get("BNO")!=null) {
 				System.out.println("삭제  bno->" + map.get("BNO"));
 				String bno = map.get("BNO").toString();
-				template.delete("reply.replybno",bno);
 				template.delete("week.deletebno",bno);
 				template.delete("week.deletepublish",bno);
 				session.remove(new Query(Criteria.where("bno").is(bno)), "book");			
@@ -102,6 +101,7 @@ public class MemberService {
 			if (map.get("NO") != null) {
 				System.out.println("삭제  no -> " + map.get("NO"));
 				int no = Integer.parseInt(map.get("NO").toString());
+				template.delete("reply.replybno",no);
 				template.delete("report.delete",no);
 				template.delete("good.deleteAll",no);
 				int i = template.delete("board.delete", no);

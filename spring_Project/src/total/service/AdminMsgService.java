@@ -20,9 +20,6 @@ public class AdminMsgService {
 		return template.selectList("admin.getMessage");
 	}
 
-	public List<Map> sendmessage(){
-		return template.selectList("admin.sendMessage");
-	}
 	
 	public Map getmessageId(int no) {
 		int rst = template.update("admin.updategetRead",no);
@@ -36,6 +33,13 @@ public class AdminMsgService {
 		}
 	}
 	
-	
-
+	public int sendmessage(Map map) {
+		int no = template.selectOne("admin.selectNo");
+		map.put("no", no);
+		int i = template.insert("admin.get",map);
+		if(i!=0) {
+			System.out.println("겟메일함에 넣기 실패");
+		}
+		return  template.insert("admin.send",map);
+	}
 }

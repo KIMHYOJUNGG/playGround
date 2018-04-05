@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="boardWinnerNo" resultType="hashmap">
 		select * from time order
-		by cnt desc
+		by lastcnt desc
 	</select>
 	
 	<select id="boardWinnerNo2" resultType="hashmap">
@@ -221,5 +221,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="searchId" resultType="String">
 		select bno from board where no = #{no}
 	</select>
+	
 
 </mapper>

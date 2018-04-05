@@ -28,7 +28,7 @@
 				</c:if>
 				<p>
 					<b>ID(*)</b><br />  <input type="text"
-						name="id" id="id" pattern="[a-zA-Z1-9]+" onblur="idCheck()" style="width:100%" required><small><span class="checkid"></span></small>
+						name="id" id="id" onblur="idCheck()" style="width:100%" required><small><span class="checkid"></span></small>
 				</p>
 				<p>
 					<b>PASS(*)</b><br /> <input type="password" name="password"

@@ -242,7 +242,7 @@ public class BoardController {
 		return "t_board";
 	}*/
 	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
-	public String listPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
+	public String listPage(@ModelAttribute("cri") SearchCriteria cri, Model model, String stype ) throws Exception {
 
 		String[] type = "세계여행,글쓰기,문화·예술,그림·웹툰,직장인 현실조언,건축·설계,시사·이슈,스타트업 경험담,인문학·철학,IT트렌드,육아이야기,쉽게읽는 역사,사진·촬영,요리·레시피,우리집 반려동물,건강·운동,사랑·이별,디자인 스토리"
 				.split(",");
@@ -265,6 +265,7 @@ public class BoardController {
 		model.addAttribute("body", "board/listPage.jsp");
 		model.addAttribute("type",type);
 		model.addAttribute("title", "글 목록");
+		
 		return "t_el_title";
 	}
 	/* @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -290,7 +291,7 @@ public class BoardController {
 	public String read(@RequestParam("no") int no, @ModelAttribute("cri") SearchCriteria cri, Model model,
 			HttpSession session) throws Exception {
 		
-		if(cri.getKeyword()==null && cri.getSearchType() == null) {
+		/*if(cri.getKeyword()==null && cri.getSearchType() == null) {*/
 		
 			String id=(String)session.getAttribute("logon");
 			if(id!=null){
@@ -313,7 +314,7 @@ public class BoardController {
 			model.addAttribute("logon", id);
 			session.setAttribute("NO", no);
 			return "t_el_title";
-		} else {
+		/*} else {
 			String id=(String)session.getAttribute("logon");
 			if(id!=null){
 				GoodVO good=new GoodVO();
@@ -336,7 +337,7 @@ public class BoardController {
 			session.setAttribute("NO", no);
 			
 			return "t_el_title";
-		}
+		}*/
 			
 			/*
 			System.out.println("cricri: "+(cri == null));

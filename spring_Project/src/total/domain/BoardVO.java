@@ -31,7 +31,14 @@ public class BoardVO {
 	private Date regdate;
 	private int viewcnt;
 	private int good;
+	private int replycnt;
 
+	public int getReplycnt() {
+		return replycnt;
+	}
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
 	public int getNo() {
 		return no;
 	}
@@ -108,7 +115,7 @@ public class BoardVO {
 	public String toString() {
 		return "BoardVO [no=" + no + ", bno=" + bno + ", tag=" + tag + ", title=" + title + ", type=" + type + ", book="
 				+ book + ", bookname=" + bookname + ", writer=" + writer + ", content=" + content + ", regdate="
-				+ regdate + ", viewcnt=" + viewcnt + ", good=" + good + "]";
+				+ regdate + ", viewcnt=" + viewcnt + ", good=" + good + ", replycnt=" + replycnt + "]";
 	}
 	
 

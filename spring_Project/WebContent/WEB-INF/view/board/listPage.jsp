@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="false"%>
 
 <%-- <%@include file="../include/header.jsp"%> --%>
@@ -63,7 +64,7 @@
 						
 					<button id='searchBtn' class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
 					<a href="/board/register"><button class='btn btn-primary'><span class="glyphicon glyphicon-pencil"></span> 글쓰기</button></a>
-					<button class='btn btn-primary' onclick="showKw()">키워드</button>
+					<button class='btn btn-primary' onclick="showKw()">장르</button>
 				</p>
 			</div>
 		</div>
@@ -135,7 +136,14 @@
 	<div class="li"  style="margin-top: 10px; width: 80%">
 		<c:forEach items="${list}" var="boardVO">
 			<hr/>
+			<c:choose>
+			<c:when test="${empty nocri }">
 			<a href="/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&no=${boardVO.no}" style="text-align: center">
+			</c:when>
+			<c:otherwise>
+			<a href="/board/readPage?no=${boardVO.no}" style="text-align: center">
+			</c:otherwise>
+			</c:choose>
 			<div class="row">
 					 <h3 style="margin-bottom:25px">${boardVO.title} <span style="font-size: 12px; color: gray; font-style: italic;">by</span> <span style="font-size: 12pt">${boardVO.writer}</span> </p></h3>
 					 <p>
@@ -211,6 +219,19 @@
   
 </form>
 
+<c:if test="${fn:length(tag) <= 10 }">
+<c:forEach items="${tag }" var="tag">
+	<button class="button button"
+		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
+</c:forEach>
+</c:if>
+<c:if test ="${fn:length(tag) > 10 }">
+<c:forEach var="t" begin="0" end="9">
+<c:set var="tag" value="${tag[t] }"/>
+<button class="button button"
+		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
+</c:forEach>
+</c:if>
 
 <script>
 	var result = '${msg}';

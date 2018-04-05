@@ -96,6 +96,7 @@ public class BoardService {
 					System.out.println(s);
 				}
 			}
+			System.out.println(vo.getContent());
 
 			map.put("image", imgpath3);
 			sessions.setAttribute("imgpath", null);
@@ -193,7 +194,7 @@ public class BoardService {
 
 	}
 
-	public List<Map> mongoSearch(String word) {
+	public List<BoardVO> mongoSearch(String word) {
 
 		Criteria cri = new Criteria();
 		cri.orOperator(Criteria.where("contents").regex(word), Criteria.where("tag").regex(word));
@@ -210,7 +211,7 @@ public class BoardService {
 
 		Set set = new TreeSet<>();
 
-		List<Map> list = new ArrayList<>();
+		List<BoardVO> list = new ArrayList<>();
 
 		for (Map ora : oracle) {
 			set.add(ora.get("NO").toString());
@@ -224,16 +225,16 @@ public class BoardService {
 
 		for (Object no : set) {
 			Map map = new HashMap<>();
-			Map result = session.selectOne("search.boardNo", no);
+			BoardVO result = session.selectOne("search.boardNo", no);
 			// System.out.println("result : "+result);
-			map.put("NO", result.get("NO"));
-			map.put("TITLE", result.get("TITLE"));
-			map.put("REGDATE", result.get("REGDATE"));
-			map.put("WRITER", result.get("WRITER"));
-			map.put("VIEWCNT", result.get("VIEWCNT"));
-			map.put("GOOD", result.get("GOOD"));
+//			map.put("NO", result.get("NO"));
+//			map.put("TITLE", result.get("TITLE"));
+//			map.put("REGDATE", result.get("REGDATE"));
+//			map.put("WRITER", result.get("WRITER"));
+//			map.put("VIEWCNT", result.get("VIEWCNT"));
+//			map.put("GOOD", result.get("GOOD"));
 
-			list.add(map);
+			list.add(result);
 		}
 
 		// System.out.println("list :"+list);

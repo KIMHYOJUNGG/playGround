@@ -24,6 +24,21 @@
 	href="https://fonts.googleapis.com/css?family=Karma">
 
 <style>
+@font-face{ 
+	font-family:ng; 
+	src:url(NanumGothic.eot); 
+	src:url('fonts/NanumGothic.eot'); 
+	src:url('fonts/NanumGothic.eot?#iefix') format(‘embedded-opentype’), 
+			url('fonts/NanumGothic.woff') format(‘woff’), 
+			url('fonts/NanumGothic.ttf') format('truetype'), 
+			url('fonts/NanumGothic.svg') format('svg');
+	src:local(※), url(NanumGothic.woff) format(‘woff’) 
+} 
+
+body{
+	font-family:'나눔고딕', 'NanumGothic', ng
+	}
+
 .main_keywords {
 	border-collapse: collapse;
 	height: 600px;
@@ -310,13 +325,18 @@ img {
 							class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 				</c:if>
 
-					<li><form class="navbar-form navbar-left" action="/search">
+					<li>
+					<form class="navbar-form navbar-left" action="/search">
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Search"
 									name="word">
 							</div>
 							<button type="submit" class="btn btn-default">Search</button>
-						</form></li>
+						</form>
+						</li>
+  
+						
+						
 				</ul>
 			</div>
 		</div>

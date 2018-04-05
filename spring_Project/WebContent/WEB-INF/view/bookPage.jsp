@@ -238,7 +238,6 @@
 									}
 											imgClass();
 									
-									$(function(){
 										function imgClass() {
 											console.log("imgclass");
 											$(".img-centered").each(function(){
@@ -265,7 +264,6 @@
 												}
 											});
 										}
-									});
 								</script>
 						<c:if test="${logon != writerInfo.ID || logon== null}">
 							<c:forEach items="${follower }" var="fer">

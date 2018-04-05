@@ -31,13 +31,12 @@
 									</c:if>
 								</a>
 							</div>
-							<div class="col-sm-8 outer" style="padding: 15px; ">
-										<div class="inner" >
-											<div class="centered" style="width: 100%; padding-top: 0px;">
+							<div class="col-sm-8" style="padding: 15px; ">
+											<div>
 												<a href="${pageContext.request.contextPath }/@${f.ID}">
-													<h3>${f.NICKNAME}</h3> 
+													<h3 style="margin-top:0">${f.NICKNAME}</h3> 
 													<c:if	test="${fn:length(f.WELCOME) > 0}">
-														<p style="margin: 0px;">${f.WELCOME}</p>
+														<p style="margin: 0px;"><span style="color: gray">${f.WELCOME}</span></p>
 													</c:if> <c:if test="${fn:length(f.WELCOME) <= 0}">
 														<p style="margin: 0px;">
 															<span style="color: gray">등록된 인사말이 없습니다.</span>
@@ -45,13 +44,11 @@
 													</c:if>
 												</a>
 											</div>
-										</div>
-										<div class="inner" >
-											<div class="centered" style="width: 100%">
+											<div>
 												<c:forEach var="fb" items="${followingBookList}">
 													<c:if test="${fb.writer eq f.ID }">
 														<c:set var="list" value="${fb.list }" />
-														<h3>
+														<h4>
 															<c:choose>
 																<c:when test="${fn:length(list) > 2 }">
 																	<c:forEach var="bi" begin="0" end="1" varStatus="vs">
@@ -67,32 +64,34 @@
 																	</c:forEach>
 																</c:otherwise>
 															</c:choose>
-														</h3>
+														</h4>
 													</c:if>
 												</c:forEach>
+												<c:if test="${empty regList }">
+													<p>	<span style="font-size: 10pt">등록된 글 없음</span></p>
+												</c:if>
+												<c:if test="${!empty regList }">
 												<c:forEach var="map" items="${regList }" varStatus="vs">
 													<c:choose>
 														<c:when  test="${map.WRITER eq f.ID }">
 														<c:set var="m" value="${map }"/>
-															<p>	최근 글 등록일 <span style="color: gray"><fmt:formatDate value="${ m.REGDATE}" pattern="yy/MM/dd HH:mm"/></span></p>
+															<p><span style="font-size: 10pt">	최근 글 등록일</span> <span style="color: gray"><fmt:formatDate value="${ m.REGDATE}" pattern="yy/MM/dd HH:mm"/></span></p>
 														</c:when>
 														<c:otherwise>
 															<c:if test="${vs.last }">
-																<p>	등록된 글 없음</p>
+																<p>	<span style="font-size: 10pt">등록된 글 없음</span></p>
 															</c:if>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
+												</c:if>
 											</div>
-										</div>
-										<div class="inner" >
-											<div class="centered" style="width: 100%">
+											<div>
 											<p class="list-group-item-text">
 												<button class="btn btn-info canclebt" id="${f.ID }" value="${f.NICKNAME }">구독 취소</button>
 											</p>
 											</div>
 										</div>
-								</div>
 					</li>
 								<!-- Modal -->
 								<div class="modal fade" id="cancle" role="dialog">
