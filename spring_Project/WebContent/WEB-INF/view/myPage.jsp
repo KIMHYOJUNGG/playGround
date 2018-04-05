@@ -15,9 +15,8 @@
 			</c:if>
 			<p>${info.NICKNAME} 님</p>
 		</div>
-		<div class="col-sm-8 outer">
-			<div class="list-group inner">
-				<div class="centered"  style="width: 100%;">
+		<div class="col-sm-8">
+				<div style="width: 100%;">
 					<a href="${pageContext.request.contextPath }/modifyInfo" class="list-group-item"><b>개인정보 수정</b></a> 
 					<a href="${pageContext.request.contextPath }/message" class="list-group-item " ><b>우편함 </b><span>새 메세지 ${newMsgCnt } 건</span></a> 
 					<a href="${pageContext.request.contextPath }/@${logon}" class="list-group-item"><b>연재 중인 글</b></a>
