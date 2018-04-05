@@ -41,10 +41,10 @@
 		</div>
 		<div align="center" style="padding:15px">
 			<c:if test="${!empty info.IMAGE }">
-				<img src="${info.IMAGE }" style="width: 240px; height: 240px;" class="img-circle">
+				<img src="${info.IMAGE }" style="width: 240px; height: 240px;" class="img-circle" onclick="imgChange()">
 			</c:if>
 			<c:if test="${empty info.IMAGE }">
-				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
+				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle" onclick="imgChange()">
 			</c:if>
 		</div>
 		<div class="form-group">
@@ -69,6 +69,10 @@
 	</form>
 </div>
 <script>
+	function imgChange() {
+		$("#image").click();
+	}
+	
 	function nickCheck() {
 		console.log("nickCheck");
 		var nick = $("#nickname").val();

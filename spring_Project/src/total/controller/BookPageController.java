@@ -112,6 +112,11 @@ public class BookPageController {
 		if( (Integer)session.getAttribute("lv") == 1) {
 			System.out.println("delBookHandle");
 			boolean rst = bookPageService.delBookByBno(bno);
+			
+			// okt
+			boolean rst2 = weekservice.deletePublish(bno);
+			System.out.println("성공?");
+			
 			return "{\"rst\":"+rst+"}";
 		} else {
 			return "redirect:/member/lvup";

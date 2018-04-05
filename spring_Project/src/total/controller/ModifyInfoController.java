@@ -22,34 +22,39 @@ public class ModifyInfoController {
 	MyPageService myPageService;
 	@Autowired
 	ModifyInfoService modifyInfoService;
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public String modifyHandle(Map map, HttpSession session) {
-		map.put("info", myPageService.getInfo((String)session.getAttribute("logon")) );
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String modifyHandle(Map map, HttpSession session, @RequestParam(name="msg", required=false) String msg) {
+		map.put("info", myPageService.getInfo((String) session.getAttribute("logon")));
 		map.put("title", "정보 수정");
 		map.put("body", "modifyInfo.jsp");
+		map.put("msg", msg);
 		return "t_el_title";
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public String modifyHandle2(Map map, HttpSession session, @RequestParam Map<String,String> param, @RequestParam(name="image", required=false) MultipartFile img) {
-		if( img != null && !img.isEmpty()) {
-			String fileName = modifyInfoService.imgModify(img, (String)session.getAttribute("logon"));
-			param.put("image", fileName);
+
+	@RequestMapping(method = RequestMethod.POST)
+	public String modifyHandle2(Map map, HttpSession session, @RequestParam Map<String, String> param, @RequestParam(name = "image", required = false) MultipartFile img) {
+		if (img != null && !img.isEmpty()) {
+			if (img.getContentType().contains("image")) {
+				String fileName = modifyInfoService.imgModify(img, (String) session.getAttribute("logon"));
+				param.put("image", fileName);
+			} else {
+				map.put("msg", "window.alert('이미지 파일만 가능합니다.')");
+				return "redirect:/modifyInfo";
+			}
 		}
-		if(param.get("password") != null && param.get("password").length() <1) {
+		if (param.get("password") != null && param.get("password").length() < 1) {
 			param.remove("password");
 		}
-		boolean rst = modifyInfoService.infoModify(param, (String)session.getAttribute("logon"));
-		
+		boolean rst = modifyInfoService.infoModify(param, (String) session.getAttribute("logon"));
+
 		return "redirect:/modifyInfo";
 	}
-	
-	@RequestMapping(path="/check", produces="application/json; charset=utf-8")
+
+	@RequestMapping(path = "/check", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String checkHandle(@RequestParam Map<String, String> param) {
-		return "{\"rst\" : "+modifyInfoService.check(param)+"}";
+		return "{\"rst\" : " + modifyInfoService.check(param) + "}";
 	}
-	
-	
+
 }

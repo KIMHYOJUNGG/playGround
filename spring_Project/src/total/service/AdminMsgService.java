@@ -24,10 +24,10 @@ public class AdminMsgService {
 		return template.selectList("admin.sendMessage");
 	}
 	
-	public Map getmessageId(Map map) {
-		int rst = template.update("admin.updategetRead",map);
+	public Map getmessageId(int no) {
+		int rst = template.update("admin.updategetRead",no);
 		if(rst!=0) {
-			return template.selectOne("admin.getMessageId",map);
+			return template.selectOne("admin.getMessageId",no);
 		}
 		else {
 			Map map2 = new HashMap<>();
@@ -35,7 +35,6 @@ public class AdminMsgService {
 			return map2;
 		}
 	}
-	
 	
 
 }
