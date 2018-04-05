@@ -13,11 +13,10 @@
 			<c:if test="${empty info.IMAGE }">
 				<img src="${pageContext.request.contextPath }/image/default_profile.png" style="width: 240px; height: 240px;" class="img-circle">
 			</c:if>
-			<p>${info.NICKNAME} 님</p>
+			<p style="margin:15px"><b>${info.NICKNAME} 님</b></p>
 		</div>
-		<div class="col-sm-8 outer">
-			<div class="list-group inner">
-				<div class="centered"  style="width: 100%;">
+		<div class="col-sm-8">
+				<div style="width: 100%;">
 					<a href="${pageContext.request.contextPath }/modifyInfo" class="list-group-item"><b>개인정보 수정</b></a> 
 					<a href="${pageContext.request.contextPath }/message" class="list-group-item " ><b>우편함 </b><span>새 메세지 ${newMsgCnt } 건</span></a> 
 					<a href="${pageContext.request.contextPath }/@${logon}" class="list-group-item"><b>연재 중인 글</b></a>
@@ -26,15 +25,15 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
-		<p><h3><a href="${pageContext.request.contextPath }/@${logon }/following">관심 작가</a>의 새 글</h3></p>
-		<div class="list-group">
+
+		<p style="margin:20px'"><h3><a href="${pageContext.request.contextPath }/@${logon }/following">관심 작가</a>의 새 글</h3></p>
+		<div class="container list-group">
 			<c:if test="${!empty article }">
 			<c:forEach  var="ai" begin="0" end="${fn:length(article) >= 15 ? 14 : fn:length(article)-1}">
 						<li  class="list-group-item">
 							<h4 class="list-group-item-heading">
-							<a href="${pageContext.request.contextPath }/search?search=${article[ai].TYPE}"><span class="badge">${article[ai].TYPE }</span></a>
+							<a href="${pageContext.request.contextPath }/board/listPage?stype=${article[ai].TYPE}"><span class="badge bg_type">${article[ai].TYPE }</span></a>
 							<a href="${pageContext.request.contextPath }/board/readPage?no=${article[ai].NO}&stype=${article[ai].TYPE}">${article[ai].TITLE} 
 							<span style="font-size:12px; color: gray;">${article[ai].REGDATE }</span>
 							</a></h4>
@@ -54,10 +53,9 @@
 
 
 		</div>
+	</div>
 
 
 
 
-
-</div>
 <br>
