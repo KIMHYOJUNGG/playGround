@@ -103,9 +103,15 @@
    
 	
 	<div id="cmt">
-	<div class="row">
-		<div class="col-md-12">
+<!-- 	 <div class="row">
+		<div class="col-md-12">  -->
 
+			
+<ul class="timeline">
+				<!-- timeline time label -->
+				<button type="button" class="time-label" id="repliesDiv"><span class="bg-green">
+						Replies List </span></button></li>
+			</ul>
 <c:if test="${logon != null  }">
 			<div class="box box-success">
 				<div class="box-header">
@@ -128,11 +134,11 @@
 </c:if>
 
 			<!-- The time line -->
-			<ul class="timeline">
-				<!-- timeline time label -->
+			<!-- <ul class="timeline">
+				timeline time label
 				<button type="button" class="time-label" id="repliesDiv"><span class="bg-green">
 						Replies List </span></button></li>
-			</ul>
+			</ul> -->
 
 			<div class='text-center'>
 				<ul id="pagination" class="pagination pagination-sm no-margin ">
@@ -140,14 +146,14 @@
 				</ul>
 			</div>
 
-		</div>
-		<!-- /.col -->
-	</div>
+<!-- 		</div>
+		/.col
+	</div> -->
 	</div>
 
 	 <div id="btn-div" style="margin-bottom: 15px" align="center">
-	    <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button>
-	    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button>
+	    <!-- <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button>
+	    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button> -->
 	    <button type="submit" class="btn btn-primary" id="goListBtn"> 목록 </button>
 	    <c:if test="${sessionScope.logon!= boardVO.writer}" >
 	  		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button> 
@@ -290,7 +296,7 @@
   <span class="time">
     <i class="fa fa-clock-o"></i>{{prettifyDate regdate}}
   </span>
-  <h3 class="timeline-header"><strong>{{rno}}</strong> -<span class="rid">{{replyer}}</span></h3>
+  <h3 class="timeline-header"><span>댓글번호:</span><strong>{{rno}}</strong> -<span>글쓴이:</span><span class="rid">{{replyer}}</span></h3>
   <div class="timeline-body">{{replytext}}</div>
     <div class="timeline-footer modifyshow" >
 {{#eqReplyer replyer}}

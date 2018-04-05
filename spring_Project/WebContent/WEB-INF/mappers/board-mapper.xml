@@ -221,5 +221,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="searchId" resultType="String">
 		select bno from board where no = #{no}
 	</select>
+	
 
 </mapper>

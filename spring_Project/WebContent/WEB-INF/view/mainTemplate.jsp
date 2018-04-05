@@ -310,13 +310,18 @@ img {
 							class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 				</c:if>
 
-					<li><form class="navbar-form navbar-left" action="/search">
+					<li>
+					<form class="navbar-form navbar-left" action="/search">
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Search"
 									name="word">
 							</div>
 							<button type="submit" class="btn btn-default">Search</button>
-						</form></li>
+						</form>
+						</li>
+  
+						
+						
 				</ul>
 			</div>
 		</div>
