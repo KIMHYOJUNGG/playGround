@@ -25,16 +25,12 @@
 	function rm(){
 		var btitle = $("#btitle").val();
 		console.log(btitle);
-		$.get("${pageContext.request.contextPath }/week/publishBook", { "btitle" : btitle}, function(obj){
+		$.get("${pageContext.request.contextPath }/week/publishBook?btitle="+btitle,function(obj){
 			console.log("get 진행..." + obj);
 		 	if (obj.rst) {
 				window.alert("출간신청 완료");
 			} else {
-				/* if (obj.failp != null) {
-					window.alert("30일 기준으로 출간신청을 하여 더이상의 출간신청을 할 수 없습니다.");
-				} else { */
-					window.alert("출간신청을 하실 수 없습니다.");
-				/* } */
+				window.alert("30일 기준으로 출간신청을 하여 더이상의 출간신청을 할 수 없거나, 출간신청을 하실 수 없습니다.");
 			} 
 			window.close();
 			opener.location.reload();
