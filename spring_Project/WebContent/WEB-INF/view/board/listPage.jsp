@@ -63,7 +63,7 @@
 						
 					<button id='searchBtn' class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
 					<a href="/board/register"><button class='btn btn-primary'><span class="glyphicon glyphicon-pencil"></span> 글쓰기</button></a>
-					<button class='btn btn-primary' onclick="showKw()">키워드</button>
+					<button class='btn btn-primary' onclick="showKw()">장르</button>
 				</p>
 			</div>
 		</div>
