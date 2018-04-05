@@ -155,7 +155,7 @@
 	    <!-- <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button>
 	    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button> -->
 	    <button type="submit" class="btn btn-primary" id="goListBtn"> 목록 </button>
-	    <c:if test="${sessionScope.logon!= boardVO.writer}" >
+	    <c:if test="${sessionScope.logon!= boardVO.writer and sessionScope.logon!=null}" >
 	  		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button> 
 	  </c:if>
 	</div> 

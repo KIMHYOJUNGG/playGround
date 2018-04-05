@@ -6,21 +6,20 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class CommonExceptionAdvice {
 
-/*
-  @ExceptionHandler(Exception.class)
+
+/*  @ExceptionHandler(Exception.class)
   public String common(Exception e) {
 
     System.out.println(e.toString());
 
     return "error_common";
-  }*/
+  }
+*/
 
-
- /* @ExceptionHandler(Exception.class)
->>>>>>> branch 'master' of https://github.com/KIMHYOJUNGG/playGround
+  @ExceptionHandler(Exception.class)
   private ModelAndView errorModelAndView(Exception ex) {
 
     ModelAndView modelAndView = new ModelAndView();
@@ -29,7 +28,7 @@ public class CommonExceptionAdvice {
 
     return modelAndView;
 
-  }*/
+  }
  
 
 }
