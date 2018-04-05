@@ -77,7 +77,7 @@
 							type="button" class="btn btn-info">
 							<span class="glyphicon glyphicon-book"></span> 등록
 						</button></a>
-					<c:if test="${publish !=null}">
+					<c:if test="${!empty publish }">
 						<p></p>
 						<p>
 							<input type="hidden" id="hwriter" value="${logon }" />

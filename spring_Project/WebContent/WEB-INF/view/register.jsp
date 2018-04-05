@@ -105,7 +105,7 @@
 			document.getElementById("checkemail").value = 1;
 		} else {
 			var formObj = $("form[role='form']");
-			var s = window.confirm("이메일 인증을 안해?");
+			var s = window.confirm("이메일 인증을 하지 않으시면 행동에 제약이 걸립니다. 인증을 안하실겁니까?");
 			if (s) {
 				formObj.submit();
 			} else {
