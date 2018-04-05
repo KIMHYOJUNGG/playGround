@@ -58,16 +58,18 @@
 	function showKw() {
 		if($("#kw").css("display") == "none")
 			$("#kw").css("display", "block");
-		else
+		else 
 			$("#kw").css("display", "none");
+		
 	}
 	
 </script>
 
+<div class="container">
 
 <div class="outer" style="max-height: 100px">
 	<div class="inner">
-		<div class="centered" style="width: 100%; height: 70%" align="center" >
+		<div class="centered" style="width: 100%; height: 30%" align="center" >
 			<div class="row" align="center"  style="margin: 10px">
 				<div class="col-sm-7" >
 
@@ -105,25 +107,6 @@
 						
 						
 // 					});
-						var responsive;
-							
-							function setResponsive() {
-							    if ($('div#media-320').css('display') == 'block') responsive = 1;
-							    else if ($('div#media-768').css('display') == 'block') responsive = 2; // 모바일
-							    else if ($('div#media-1024').css('display') == 'block') responsive = 3;
-							    else if ($('div#media-1025').css('display') == 'block') responsive = 0;
-							    else responsive = 4;
-								console.log("responsive?"+ responsive);
-							}
-							
-							$(window).on('load', function () {
-							    setResponsive();
-							});
-							  
-							$(window).on('resize', function () {
-							    setResponsive();
-							});
-							
  					</script> 
 <!-- 					<a href="/board/register"><button class='btn btn-primary'>New Board</button></a> -->
 					
@@ -147,12 +130,15 @@
 				</div>
 			</div>
 
+		</div>
+	</div>
+</div>
 				<div id="kw" class="container-fulid" align="center" style="display: none;">
-					<p style="margin: 10 0 0 10">
+					<p style="margin: 0 0 0 10">
 						<c:forEach items="${type}" var="v" varStatus="vs">
 							<a href="/board/listPage?stype=${v }">
 							<button type="button"  	class="btn btn-info btn-sm bb" >${v }</button></a>&nbsp;
-							<c:if test="${vs.count == 9 }"></p><p></c:if>
+							<c:if test="${vs.count == 9 }"></p><p style="margin: 10 0 0 10"></c:if>
 						</c:forEach>
 <!-- >>>>>>> refs/heads/CSS -->
 						<a href="/board/listPage"><button type="button"  
@@ -183,8 +169,7 @@
 			</h3>
 		</div>
 		</div><!-- centered -->
-	</div> <!-- inner -->
-</div>	<!-- outer -->
+
 <!-- <<<<<<< HEAD -->
 <!-- 			<div class="box"> -->
 <!-- 				<div class="box-header with-border"> -->
@@ -232,6 +217,8 @@
 
 <!-- 					</table> -->
 <!-- 				</div> -->
+<div id="space">
+</div>
 
 <div class="container-fluid"  align="center" style="padding-top: 10px">
 	<div class="li"  style="margin-top: 10px; width: 80%">
@@ -305,12 +292,12 @@
 				</div>
 				<!-- /.box-footer-->
 			</div>
-		</div>
+<!-- 		</div> -->
 		<!--/.col (left) -->
 
-	</div>
+<!-- 	</div> -->
 	<!-- /.row -->
-</section>
+<!-- </section> -->
 <!-- /.content -->
 
 <form id="jobForm">
@@ -318,7 +305,7 @@
   <input type='hidden' name="perPageNum" value=${pageMaker.cri.perPageNum}>
 </form>
 
-
+<!-- </div> -->
 
 <script>
 // 	var result = '${msg}';

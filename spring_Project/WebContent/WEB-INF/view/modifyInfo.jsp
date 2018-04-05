@@ -35,7 +35,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="email">EMAIL:</label>
 			<div class="col-sm-10">
-				<input type="email" class="form-control" id="email" name="email" value="${info.EMAIL }" required>
+				<input type="email" class="form-control" id="email" name="email" value="${info.EMAIL }" required onblur="mailOnblur()">
 				<span id="msg_email"></span>
 			</div>
 		</div>
@@ -101,22 +101,29 @@
 	    return (email != '' && email != 'undefined' && regex.test(email));
 	}
 	
-	 $("input[name='email']").blur(function(){
-	        var email = $(this).val();
-	 
+// 	 $("input[name='email']").blur(function(){
+	function mailOnblur() {
+		console.log("mailOnblur");
+	        var email = $("#email").val();
 	        // 값을 입력안한경우는 아예 체크를 하지 않는다.
-	        if( email == '' || email == 'undefined') return;
+	        if( email == '' || email == 'undefined') {
+	        	confirm();
+	        	return;
+	        }
 	 
 	        // 이메일 유효성 검사
 	        if( email_check(email) ) {
+	        	$("#msg_email").html("");
 	        	emailCheck();
 	        } else {
-	            alert('잘못된 형식의 이메일 주소입니다.');
-	            $(this).focus();
+	        	$("#msg_email").css("color", "red");
+	            $("#msg_email").html("잘못된 형식의 이메일 주소입니다.");
+	            $("#email").focus();
 	            $("#btn").prop("disabled", true);
 	            return false;
 	        }
-	    });
+	};
+// 	    });
 	
 	function emailCheck() {
 		console.log("emailCheck");
