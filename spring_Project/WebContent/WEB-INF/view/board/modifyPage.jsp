@@ -37,7 +37,7 @@
 
 						<div class="form-group">
 							<label for="exampleInputEmail1">Title</label> <input type="text"
-								name='title' class="form-control" value="${boardVO.title}">
+								name='title' class="form-control" value="${boardVO.title}" maxlengh="300">
 						</div>
 						<%-- <div class="form-group">
 							<label for="exampleInputEmail1">Type</label> <input type="text"

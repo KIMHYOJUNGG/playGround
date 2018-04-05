@@ -96,6 +96,7 @@ public class BoardService {
 					System.out.println(s);
 				}
 			}
+			System.out.println(vo.getContent());
 
 			map.put("image", imgpath3);
 			sessions.setAttribute("imgpath", null);

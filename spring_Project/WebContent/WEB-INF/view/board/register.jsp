@@ -16,25 +16,16 @@
 					<h3 class="box-title">REGISTER BOARD</h3>
 				</div>
 				<!-- /.box-header -->
-
-
 				<form role="form" method="post">
 
 
 					<div class="form-group">
 						<label for="exampleInputEmail1">Type</label><br /> <select
 							name="type">
-
 							<c:forEach items="${type}" var="v">
-
 								<option value="${v }">${v}</option>
-
-
 							</c:forEach>
-
-
 						</select>
-
 					</div>
 					<!-- <div class="box-body"> -->
 					<div class="form-group">
@@ -114,7 +105,7 @@
 					<div class="form-group">
 						<label for="exampleInputEmail1">Title</label> <input type="text"
 							name='title' class="form-control" placeholder="Enter Title"
-							required="required">
+							required="required" maxlength="300">
 					</div>
 
 
