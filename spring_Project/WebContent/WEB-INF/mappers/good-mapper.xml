@@ -22,8 +22,8 @@ update board set good=good+1
 		where no = #{no}
 </update>
 <update id="updateMin" >
-update board set good=good-1
-		where no = #{no}
+update board set good=good-1 
+		where no = #{no} 
 </update>
 
 <!--  okt(회원탈퇴시의 해당게시글의 good지우기  -->

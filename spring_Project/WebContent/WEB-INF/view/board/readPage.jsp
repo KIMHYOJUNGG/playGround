@@ -8,7 +8,7 @@
 
 <%-- <%@include file="../include/header.jsp" %> --%>
 
-<%-- 
+ <%-- 
 <div class="container-fluid">
 	<div class="page-header">
 		 <a href="${pageContext.request.contextPath}/bookPage/${boardVO.bno}"><h3 style="text-decoration: underline;">${boardVO.bookname}</h3></a>
@@ -18,6 +18,7 @@
 	 &nbsp;<span class="glyphicon glyphicon-pencil"  style="color: gray;"></span> 
 	 <span style="font-size: 12px; color: gray; font-style: italic;"><fmt:formatDate value="${boardVO.regdate }" pattern="yy/MM/dd HH:mm"/></span> </p> 
 	</div>
+
 	<div align="right">
 		<c:if test="${sessionScope.logon== boardVO.writer}" >
 		    <button type="submit" class="btn btn-primary modifyBtn">수정</button>
@@ -40,8 +41,8 @@
           <span data-toggle="tooltip" title="좋아요취소!" id="bad" class="glyphicon glyphicon-heart"></span>
 		</c:if>
 	</font>
-    <span id="info"></span>
-
+    <span id="info"></span> --%>
+<%--
 <div class="form-group">
     <c:if test="${ !empty comments  }">
 		<label for="exampleInputEmail1">comments</label> 
@@ -62,22 +63,22 @@
 	<p align="right" style="margin-top: 15px; margin-bottom:0px"><button type="button" id="comments-btn" name="comments" class="btn btn-default" >댓글쓰기</button></p>
 	</c:if>
 	</div>
-
-	<div id="btn-div" style="margin-bottom: 15px" align="center">
+--%>
+	<%-- <div id="btn-div" style="margin-bottom: 15px" align="center">
 	    <button type="submit" class="btn btn-primary goListBtn" id="pre">이전글</button>
 	    <button type="submit" class="btn btn-primary goListBtn" id="next">다음글 </button>
 	    <button type="submit" class="btn btn-primary goListBtn"> 목록 </button>
 	    <c:if test="${sessionScope.logon!= boardVO.writer}" >
 	  		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">신고</button> 
 	  </c:if>
-	</div>
- --%>
+	</div> --%>
+
 
 
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
 
-    <!-- Main content -->
+     <!-- Main content -->
     <section class="content">
       <div class="row">
       <!-- left column -->
@@ -109,7 +110,7 @@
 					</c:if>
 </font>
 
-        <span id="info"></span>
+        <span id="info"></span> 
 
 <%-- 
 				<c:choose>

@@ -15,6 +15,7 @@ public class GoodService {
 		int result=0;	
 		result+=template.update("good.updatePlus",good.getTargetboard());
 		 result+=template.insert("good.insert", good);
+		 
 		return  result==2;
 
 	}
@@ -23,6 +24,7 @@ public class GoodService {
 		int result=0;
 		result+=template.update("good.updateMin",good.getTargetboard());
 		result+=template.delete("good.delete", good);
+		
 		return result==2;
 	}
 	public boolean find(GoodVO good)throws Exception{
