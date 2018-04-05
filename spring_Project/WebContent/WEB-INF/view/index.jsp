@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -142,9 +141,24 @@
 						</div>
 						</a>
 						<p>
-							<strong>${o.TITLE }</strong>
-						</p>
-						<p>${o.BOOKNAME }</p>
+							<strong> <c:choose>
+							<c:when test="${fn:length(o.TITLE) > 10 }">
+									${fn:substring(o.TITLE, 0,10) } ...
+								</c:when>
+							<c:otherwise>
+									${o.TITLE }
+								</c:otherwise>
+						</c:choose>
+					</strong>
+					<c:choose>
+						<c:when test="${fn:length(o.BOOKNAME) > 10 }">
+									${fn:substring(o.BOOKNAME, 0,10) } ...
+								</c:when>
+						<c:otherwise>
+									${o.TITLE }
+								</c:otherwise>
+					</c:choose>
+				</p>
 				</div>
 				<c:if test="${vs.count %4 == 0 or vs.last}">
 		</div>
@@ -337,13 +351,10 @@
 	<%--
 			<div id="menu1" class="tab-pane fade">
 				<div class="main_keywords">
-
 					<div class="keyword_list_wrap">
 						<div class="keyword_list #home_keyword"></div>
 					</div>
-
 					<div class="cl_b"></div>
-
 					<table class="main_keyword">
 						<tr class="main_tr">
 							<th class="main_th"><a
@@ -377,7 +388,6 @@
 							<td class="main_td"><a href="">디자인 스토리</a></td>
 						</tr>
 					</table>
-
 				</div>
 			</div>
 --%>
@@ -405,7 +415,6 @@
 	}
 </script>
 <%-- 
-
 				<!-- First Photo Grid-->
 				<div class="w3-row-padding w3-padding-16 w3-center" id="food">
 					<c:forEach var="o" items="${boardNo}" varStatus="vs">
@@ -426,10 +435,7 @@
 							</c:when>
 						</c:choose>
 					</c:forEach>
-
 				</div>
-
-
 	
 </body>
 --%>
