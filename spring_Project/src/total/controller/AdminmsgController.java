@@ -52,9 +52,10 @@ public class AdminmsgController {
 
 	// 받은 메세지함에서 본메일 체크
 	@RequestMapping("/getmessageCheck")
-	public String GetMessageId(Model model, HttpSession session, @RequestParam Map param) {
-		Map map = adminmsgservice.getmessageId(param);
+	public String GetMessageId(Model model, HttpSession session, @RequestParam int no) {
+		Map map = adminmsgservice.getmessageId(no);
 		model.addAttribute("msgId", map);
+		System.out.println(map);
 		return "/admin/admin_messageId";
 	}
 }

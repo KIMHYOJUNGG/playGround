@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 해원한테서 받은 메세지함 제목 보기  -->
 	<select id="getMessage" resultType="hashmap">
-		select no, sendid, title from getmessage where getid = 'admin'
+		select * from getmessage where getid = 'admin'
 	</select>
 	
 	<!-- 해원한테 보낸 메세지함 제목보기 -->
@@ -41,17 +41,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 해당해원한테서 받은 메세지 내용보기 -->
 	<select id="getMessageId" resultType="hashmap">
-		select * from getmessage where sendid = #{sendid} and title = #{title}
+		select * from getmessage where no =#{no}
 	</select>
 	
 	<!-- 본 받은 메세지 no 카운트로 -->
 	<update id="updategetRead">
-		update getmessage set readcheck='Y' where title = #{title} and sendid = #{sendid}
+		update getmessage set readcheck='Y' where no = #{no}
 	</update>
 	
 	<!-- 본 보낸 메세지 no 카운트로 -->
 	<update id="updatesendRead">
-		update sendmessage set readcheck='Y' where title = #{title} and getid = admin
+		update sendmessage set readcheck='Y' where no = #{no}
 	</update>
 	
 
