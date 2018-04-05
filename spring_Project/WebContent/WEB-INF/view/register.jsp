@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 회원가입 -->
+<body>
 	<div align="center">
 		<div id="checkresult"></div>
 		<form action="/member/regist" role="form" method="post"
@@ -11,11 +12,12 @@
 					type="text" name="id" id="id" placeholder="아이디" pattern="[a-zA-Z]+">
 			</div>
 			<p>
-				<b>PASS(*)</b><br /> <input type="password" name="password" id="password">
+				<b>PASS(*)</b><br /> <input type="password" name="password"
+					id="password" onblur="checkps();"><span id="rgd"></span>
 			</p>
 			<p></p>
 			<b>REPASS(*)</b><br /> <input type="password" name="repassword"
-				id="repass" onblur="checkps();"><br /> <span id="rgd2"></span>
+				id="repass" onblur="checkps2();"><br /> <span id="rgd2"></span>
 			<p>
 			<p>
 				<b>NICKNAME(*)</b><br /> <input type="nickname" name="nickname"
@@ -36,15 +38,31 @@
 			</p>
 		</form>
 	</div>
+</body>
 <script>
-	// 패스워드 재확인
 	function checkps() {
-		if (document.getElementById("password").value == null) {
-			document.getElementById("rgd2").style.color = "red";
-			document.getElementById("rgd2").innerHTML = "<small>비밀번호 입력바랍니다..</small>";
+		var pval = document.getElementById("password").value;
+		var pattern1 = /[0-9]/; // 숫자 
+		var pattern2 = /[a-zA-Z]/; // 문자 
+		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
+		if (!pattern1.test(pval) || !pattern2.test(pval)
+				|| !pattern3.test(pval) || pval.length < 8) {
+			document.getElementById("rgd").style.color = "red";
+			document.getElementById("rgd").innerHTML = "<small>비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.</small>";
 			document.getElementById("sbt").disabled = true;
-		} else if (document.getElementById("repass").value != document
-				.getElementById("password").value) {
+		} else if (pval == null) {
+			document.getElementById("rgd").style.color = "red";
+			document.getElementById("rgd").innerHTML = "<small>비밀번호 입력바랍니다..</small>";
+			document.getElementById("sbt").disabled = true;
+		} else {
+			document.getElementById("rgd").innerHTML = null;
+			document.getElementById("sbt").disabled = false;
+		}
+	}
+
+	function checkps2() {
+		var pval = document.getElementById("password").value;
+		if (document.getElementById("repass").value != pval) {
 			document.getElementById("rgd2").style.color = "red";
 			document.getElementById("rgd2").innerHTML = "<small>비밀번호가 다릅니다.</small>";
 			document.getElementById("sbt").disabled = true;
@@ -91,6 +109,8 @@
 			var s = window.confirm("이메일 인증을 안해?");
 			if (s) {
 				formObj.submit();
+			} else {
+				window.close();
 			}
 		}
 	});
@@ -131,36 +151,31 @@
 		} else {
 			var xhr = new XMLHttpRequest();
 			var id = $("#email").val();
-			xhr.open("get", "/member/checkemail?email=" + email, true);
-			xhr.onreadystatechange = function() {
-				if (this.readyState == 4) {
-					var obj = JSON.parse(this.responseText);
-					if (obj == false) {
-						$(".ename").html("이메일 사용이 가능합니다..");
-						$(".ename").css("color", "green");
-						document.getElementById("sbt").disabled = false;
-					} else {
-						$(".ename").html("이메일 사용이 중복됩니다..");
-						$(".ename").css("color", "red");
-						document.getElementById("sbt").disabled = true;
+			var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+			if (!regex.test(id)) {
+				$(".ename").html("이메일을 형식에 맞지 않습니다.(예 : okt@naver.com)")
+				$(".ename").css("color", "red");
+				document.getElementById("sbt").disabled = true;
+			} else {
+				xhr.open("get", "/member/checkemail?email=" + email, true);
+				xhr.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						var obj = JSON.parse(this.responseText);
+						if (obj == false) {
+							$(".ename").html("이메일 사용이 가능합니다..");
+							$(".ename").css("color", "green");
+							document.getElementById("sbt").disabled = false;
+						} else {
+							$(".ename").html("이메일 사용이 중복됩니다..");
+							$(".ename").css("color", "red");
+							document.getElementById("sbt").disabled = true;
+						}
 					}
 				}
+				xhr.send();
 			}
-			xhr.send();
 		}
-	}
-
-// 	function checkPasswordPattern(str) {
-// 		var pattern1 = /[0-9]/; // 숫자 
-// 		var pattern2 = /[a-zA-Z]/; // 문자 
-// 		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
-// 		if (!pattern1.test(str) || !pattern2.test(str) || !pattern3.test(str)
-// 				|| str.length < 8) {
-// 			alert("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
-// 			return false;
-// 		} else {
-// 			return true;
-// 		}
 	}
 </script>
 

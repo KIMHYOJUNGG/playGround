@@ -50,11 +50,20 @@ public class AdminmsgController {
 		return "/admin/admin_sendmessage";
 	}
 
-	// 받은 메세지함에서 본메일 체크
+	/*// 받은 메세지함에서 본메일 체크
 	@RequestMapping("/getmessageCheck")
 	public String GetMessageId(Model model, HttpSession session, @RequestParam Map param) {
 		Map map = adminmsgservice.getmessageId(param);
 		model.addAttribute("msgId", map);
+		return "/admin/admin_messageId";
+	}*/
+	
+	// 받은 메세지함에서 본메일 체크
+	@RequestMapping("/getmessageCheck")
+	public String GetMessageId(Model model, HttpSession session, @RequestParam int no) {
+		Map map = adminmsgservice.getmessageId(no);
+		model.addAttribute("msgId", map);
+		System.out.println(map);
 		return "/admin/admin_messageId";
 	}
 }
