@@ -64,4 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from publish where bno=#{bno}
 	</delete>
 	
+	<!-- 출간신청을 할 수 있는지에 대한  -->
+	<select id="searchPublish" resultType="hashmap">
+		select * from publish where writer = #{id}
+	</select>
 </mapper>

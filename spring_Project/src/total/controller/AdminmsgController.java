@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import total.domain.WebSocketMap;
 import total.service.AdminMsgService;
@@ -38,17 +40,6 @@ public class AdminmsgController {
 		return "/admin/admin_getmessage";
 	}
 
-	// 보낸 메세지함 보기
-	@RequestMapping("/sendmessage")
-	public String SendMessage(Model model, HttpSession session, @RequestParam Map param) {
-		int scnt = Integer.parseInt(param.get("gcnt").toString());
-		int gcnt = adminservice.getMessageCnt();
-		List<Map> list = adminmsgservice.sendmessage();
-		model.addAttribute("getmessage", list);
-		model.addAttribute("gcnt", gcnt);
-		model.addAttribute("scnt2", scnt);
-		return "/admin/admin_sendmessage";
-	}
 
 	
 	// 받은 메세지함에서 본메일 체크
@@ -60,10 +51,28 @@ public class AdminmsgController {
 		return "/admin/admin_messageId";
 	}
 	
-	// 받은메세지에서 답장보내기
+	// 받은메세지에서 답장보내기창
 	@RequestMapping("/sendAnswer")
-	public String SendAnswer(Model model,@RequestParam String id) {
+	public String SendAnswer(Model model,@RequestParam Map map) {
+		String id = map.get("id").toString();
+		String title = map.get("title").toString();
 		model.addAttribute("id",id);
+		model.addAttribute("title",title);
 		return "/admin/admin_sendAnswer";
+	}
+	
+	// 답장보내기
+	@RequestMapping(path = "/sendmsg", method = RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String Sendmsg(Model model,@RequestParam Map map) {
+		System.out.println(map);
+		int i = adminmsgservice.sendmessage(map);
+		boolean rst = false;
+		if(i!=0) {
+			rst = true;
+			return "{\"rst\" : "+rst+"}";
+		}else {
+			return "{\"rst\" : "+rst+"}";
+		}
 	}
 }

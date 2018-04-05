@@ -68,7 +68,7 @@ bno=#{bno}
 
 	<!-- okt 회원탈퇴시 -->
 	<delete id="replybno">
-		delete reply where bno=#{bno}
+		delete from reply where bno=#{bno}
 	</delete>
 </mapper>
 

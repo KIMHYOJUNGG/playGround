@@ -5,10 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="admin">
 	<!-- 메세지 번호 -->
-	<select id="selectNo" resultType="int">
-		select message_seq.nextval from dual
+	<select id="selectNo" resultType="_int">
+		select message_seq.nextval as no from dual
 	</select>
-	
 	<!-- 해당회원한테 보낼 메세지 저장 -->
 	<insert id="msg">
 		insert into sendmessage(no,sendid,title,msg,getid,regdate) values(#{no},'admin',#{title},#{msg},#{id},sysdate)
@@ -52,10 +51,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 본 보낸 메세지 no 카운트로 -->
 	<update id="updatesendRead">
-		update sendmessage set readcheck='Y' where title = #{title} and getid = admin
+		update sendmessage set readcheck='Y' where title = #{title} and getid = 'admin'
 	</update>
 	
-	
-	
-
+	<!-- 메세지 답장 -->
+	<insert id="send">
+		insert into sendmessage values(#{no}, 'admin', #{title}, #{text}, 'N', sysdate, #{id})
+	</insert>
+	<!--  -->
+	<insert id="get">
+		insert into getmessage values(#{no}, 'admin', #{title}, #{text}, 'N', sysdate, #{id})
+	</insert>
 </mapper>

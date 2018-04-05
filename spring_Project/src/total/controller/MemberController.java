@@ -25,6 +25,7 @@ import total.domain.WebSocketMap;
 import total.service.BoardService;
 import total.service.MailService;
 import total.service.MemberService;
+import total.service.adminWeekService;
 
 @Controller
 @RequestMapping("/member")
@@ -40,6 +41,9 @@ public class MemberController {
 
 	@Autowired
 	BoardService boardservice;
+	
+	@Autowired
+	adminWeekService weekservice;
 	// 회원등록 페이지
 	@RequestMapping("/registpage")
 	public String memberPage(Map map) {
@@ -230,6 +234,10 @@ public class MemberController {
 		String id = (String) param.get("id");
 		String uri = (String) session.getAttribute("uri");
 		Map map2 = memberservice.loginMember(param);
+		List<Map> publish = weekservice.loginMember(id);
+		if(publish != null) {
+			session.setAttribute("publish", publish);
+		}
 		try {
 			if (map2 != null) {
 				session.setAttribute("logon", param.get("id"));

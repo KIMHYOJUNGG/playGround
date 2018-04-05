@@ -31,6 +31,7 @@
 			<c:forEach var="m" items="${getmessage }">
 				<tr align="center">
 					<input type="hidden" id="hidden" value="${m.SENDID }" />
+					<input type="hidden" id="htitle" value="${m.TITLE }"/>
 					<td><input type="checkbox" class="item" id="check"
 						value="${m.NO }" onchange="check()" /></td>
 					<td>${m.SENDID }</td>
@@ -119,7 +120,8 @@
 	function post(){
 		console.log("답장 호출");
 		var id = $('#hidden').val();
+		var title = $('#htitle').val();
 		console.log(id);
-		window.open("/admin/sendAnswer?id="+id,"m","left=100,top=200,width=400,height=300");
+		window.open("/admin/sendAnswer?id="+id+"&title="+title,"m","left=100,top=200,width=400,height=300");
 	}
 </script>
