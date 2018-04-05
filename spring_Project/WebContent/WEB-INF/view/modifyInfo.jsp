@@ -84,6 +84,7 @@
 				if(!obj.rst) {
 					$("#msg_nick").css("color", "red");
 					$("#msg_nick").html("이미 사용 중 입니다.");
+					$("#btn").prop("disabled", true);
 				} else {
 					$("#msg_nick").css("color", "green");
 					$("#msg_nick").html("사용 가능합니다.");
@@ -127,6 +128,7 @@
 				if(!obj.rst) {
 					$("#msg_email").css("color", "red");
 					$("#msg_email").html("이미 사용 중 입니다.");
+					$("#btn").prop("disabled", true);
 				} else {
 					$("#msg_email").css("color", "green");
 					$("#msg_email").html("사용 가능합니다.");
@@ -156,13 +158,23 @@
 		if($("#password2").prop("required")) {
 			var pw = $("#password").val();
 			var pw2 = $("#password2").val();
-			if(pw == pw2) {
+			if( (checkps() == true) ) {
+				if(pw == pw2) {
+					console.log("같아!");
+					$("#msg_pw2").html("");
+					confirm();
+				}	else {
+					$("#msg_pw2").css("color","red");
+					$("#msg_pw2").html("비밀번호가 다릅니다.	");
+					$("#btn").prop("disabled", true);
+				}	
+			} else if(pw != pw2) {
+					$("#msg_pw2").css("color","red");
+					$("#msg_pw2").html("비밀번호가 다릅니다.	");
+					$("#btn").prop("disabled", true);
+			} else if(pw == pw2) {
 				$("#msg_pw2").html("");
-				confirm();
-			}	else {
-				$("#msg_pw2").css("color","red");
-				$("#msg_pw2").html("비밀번호가 다릅니다.	");
-			}		
+			}
 		}
 	}
 	
@@ -175,17 +187,15 @@
 		if (!pattern1.test(pval) || !pattern2.test(pval)
 				|| !pattern3.test(pval) || pval.length < 8) {
 			console.log("if");
-// 			document.getElementById("rgd").style.color = "red";
-// 			document.getElementById("rgd").innerHTML = "<small>비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.</small>";
-// 			document.getElementById("sbt").disabled = true;
+			$("#msg_pw").css("color","red");
 			$("#msg_pw").html("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
+			$("#btn").prop("disabled", true);
+			return false;
 		} else if (pval == null) {
-// 			document.getElementById("rgd").style.color = "red";
-// 			document.getElementById("rgd").innerHTML = "<small>비밀번호 입력바랍니다..</small>";
-// 			document.getElementById("sbt").disabled = true;
+			$("#msg_pw").html("");
 		} else {
-// 			document.getElementById("rgd").innerHTML = null;
-// 			document.getElementById("sbt").disabled = false;
+			$("#msg_pw").html("");
+			return true;
 		}
 	}
 	
