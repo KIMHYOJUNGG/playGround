@@ -155,8 +155,13 @@
 				</div>
 				<script>
 					function sendMsg(getid) {
-						$("#getid").val(getid);
-						$("#sendModal").modal();
+						if("${logon}" == "") {
+							alert("로그인이 필요한 서비스입니다.");
+// 							location.assign("${pageContext.request.contextPath }/member/log");
+						} else {
+							$("#getid").val(getid);
+							$("#sendModal").modal();
+						}
 					}
 				</script>
 				<c:choose>
@@ -211,26 +216,29 @@
 			</div>
 		</div>
 		<script>
-			$("#followbt")
-					.click(
-							function() {
-								$
-										.get(
-												"${pageContext.request.contextPath}/follow",
+			$("#followbt").click(	function() {
+								if("${logon}" == "") {
+									alert("로그인이 필요한 서비스입니다.");
+								} else {
+								$.get("${pageContext.request.contextPath}/follow",
 												{
 													"target" : "${writerInfo.ID}"
 												})
-										.done(
-												function(rst) {
+									.done(function(rst) {
 													var html = "";
 													if (rst.result) {
 														html = "${writerInfo.NICKNAME} 님을 관심 작가로 등록하였습니다. "
 													} else {
-														html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+														if(rst.msg != null) {
+															html =rst.msg;
+														} else {
+															html = "<span style='color: red'>관심 작가 등록실패. 다시 시도해 주세요.</span> "
+														}
 													}
 													$("#mbody").html(html);
 													$("#result").modal();
 												});
+								}
 							});
 
 			$("#rClose")
