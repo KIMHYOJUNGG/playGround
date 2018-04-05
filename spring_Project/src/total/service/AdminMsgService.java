@@ -24,17 +24,6 @@ public class AdminMsgService {
 		return template.selectList("admin.sendMessage");
 	}
 	
-	/*public Map getmessageId(Map map) {
-		int rst = template.update("admin.updategetRead",map);
-		if(rst!=0) {
-			return template.selectOne("admin.getMessageId",map);
-		}
-		else {
-			Map map2 = new HashMap<>();
-			map2.put("fail", "실패");
-			return map2;
-		}
-	}*/
 	public Map getmessageId(int no) {
 		int rst = template.update("admin.updategetRead",no);
 		if(rst!=0) {

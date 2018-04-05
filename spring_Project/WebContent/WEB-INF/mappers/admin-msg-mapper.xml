@@ -38,17 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="sendMessage" resultType="hashmap">
 		select no, getdid, title form sendmessage where getid =='admin'
 	</select>
-	<!-- /////////////////////////////////////////// -->
-	<!-- 해당해원한테서 받은 메세지 내용보기 -->
-	<select id="getMessageId" resultType="hashmap">
-		select * from getmessage where sendid = #{sendid} and title = #{title}
-	</select>
 	
-	<!-- 본 받은 메세지 no 카운트로 -->
-	<update id="updategetRead">
-		update getmessage set readcheck='Y' where title = #{title} and sendid = #{sendid}
-	</update>
-	<!-- /////////////////////////////////////// -->
 	<!-- 해당해원한테서 받은 메세지 내용보기 -->
 	<select id="getMessageId" resultType="hashmap">
 		select * from getmessage where no=#{no}
