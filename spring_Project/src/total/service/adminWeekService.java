@@ -106,15 +106,35 @@ public class adminWeekService {
 		return template.selectList("week.searchPublish",id);
 	}
 
-/*	public int selectYN(String id) {
+	public int selectYN(String id) {
 		return template.selectOne("week.searchYN",id);
 	}
-*/
-	/*// cnt가 0이 아닐때의 비교
-	public int selectDate(String id) {
-		return template.selectOne("week.searchDate",);
-	}*/
 
+	// cnt가 0이 아닐때의 비교
+	public int selectDate(String id) {
+		return template.selectOne("week.searchDate",id);
+	}
+
+	// 출간하기
+	public boolean publishBook(Map map) {
+		int i = template.update("week.publishupdateYN",map);
+		if(i!=0) {
+			return true ;
+		}else {
+			return false;
+		}
+	}
+
+	// 30일이 넘었으면 업데이트 (ok를 y로)
+	public boolean publishUpdateBno(Map map) {
+		int i = template.update("week.publishUpdatBno",map);
+		if(i!=0) {
+			System.out.println("OK업데이트 성공");
+		}else {
+			System.out.println("OK업데이트 실패");
+		}
+		return true;
+	}
 	
 	
 	

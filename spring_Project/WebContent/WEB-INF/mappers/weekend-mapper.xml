@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--regdate와 lastweek날짜 비교  -->
 	<select id="castweek" resultType="int">
-		select cast((min(regdate) - sysdate)as int) col from time where rownum= 1
+		select cast(sysdate-(min(regdate))as int) col from time where rownum= 1
 	</select>
 	
 	<!-- 이번주 우승자 정보찾기 -->
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 우승자가 나올시 출간테이블(publish)에 정보저장 -->
 	<insert id="publish">
-		insert into publish values(publish_seq,{#bno},{#btitle},{#writer},'N','null')
+		insert into publish values(publish_seq,{#bno},{#btitle},{#writer},'N','null','N')
 	</insert>
 	
 	<!-- 주간순위 리셋 -->
@@ -69,13 +69,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from publish where writer = #{id}
 	</select>
 	
+	<!-- 출간신청 -->
+	<update id="publishupdateYN">
+		update publish set yn='Y' where writer=#{id} and btitle=#{btitle}
+	</update>
+	
 	<!-- 출간날짜 -->
 	<select id="searchYN" resultType="int">
-		select count(*) from publish where writer= #{id} and pdate != null; 
+		select count(*) from publish where writer= #{id} and pdate != null
 	</select>
 	
 	<!-- 출간일 비교 -->
-	<select id="searchDate" resultType="hashmap">
-		select pdate - sysdate from publish where writer = 'yy';
+	<select id="searchDate" resultType="int">
+		select cast((sysdate-pdate)as int) col from publish where writer=#{id} and ok = 'N'
 	</select>
+	
+	<!-- 30일이 넘었을 때 -->
+	<update id="publishUpdatBno">
+		update publish set ok='Y' where writer=#{id} and btitle=#{btitle}
+	</update>
+	
+	
 </mapper>
