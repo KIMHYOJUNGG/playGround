@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -11,12 +11,15 @@
 .postTr {
 	display: none;
 }
+a {
+	text-decoration: none;
+}
 </style>
 <title>메세지함</title>
 </head>
 <body>
-	<div style="width:25%">  
-	<h3>메세지함</h3>
+	<div style="width: 60%">
+		<h3>메세지함(${fn:length(getmessage) })</h3>
 		<hr />
 		<table>
 			<thead>
@@ -27,22 +30,19 @@
 					<th style="width: 150px;">제목</th>
 				</tr>
 			</thead>
-			<c:forEach var="m" items="${getmessage }">
+			<c:forEach var="m" items="${getmessage }" varStatus="c">
 				<tr align="center">
 					<input type="hidden" id="hidden" value="${m.SENDID }" />
 					<input type="hidden" id="htitle" value="${m.TITLE }" />
 					<td><input type="checkbox" class="item" id="check"
 						value="${m.NO }" onchange="check()" /></td>
 					<td>${m.SENDID }</td>
-					<td>${m.TITLE }</td>
-					<td onclick="javascript:postnTr()"><div id="postnTab"
-						class="postnTab">▼</div></td>
+					<td align="left"><a href="javascript:postnTr('c_${c.index}')">▼</a> ${m.TITLE }  </td>
 				</tr>
-				<tr id=m class="postTr">
-					<td></td>
-					<td>내용</td>
-					<td>${m.MSG }</td>
-					<td><a href="javascript:post()">답장</a></td>
+				<tr id="c_${c.index }" class="postTr" style="min-height: 50px;">
+					<td colspan="3">
+					${m.MSG }
+					<a href="javascript:post()">답장</a></td>
 				</tr>
 			</c:forEach>
 			<tr>
@@ -63,24 +63,9 @@
 	 }
 	 }
 	 */
-	function postnTr() {
-		var ar = $(".postnTab");
-		for (var i = 0; i < ar.length; i++) {
-			console.log(ar[0].innerHtml);
-			if (i == i) {
-				if (ar[i].innerHtml =="▼") {
-				
-					document.getElementById(i).show();
-					ar[i].innerHtml="▲";
-				} else {
-					document.getElementById(i).hide();
-					ar[i].innerHtml="▼";
-				}
-			}
-		}
-	} 
-
-
+	function postnTr(target) {
+		$("#"+target).toggle();
+	}
 	function allcheck() {
 		var ar = document.getElementsByClassName("item");
 		if (document.getElementById("all").checked) {
