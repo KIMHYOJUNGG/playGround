@@ -7,18 +7,73 @@
 
 <%-- <%@include file="../include/header.jsp"%> --%>
 <script>
-function showKw() {
-	if($("#kw").css("display") == "none")
-		$("#kw").css("display", "block");
-	else
-		$("#kw").css("display", "none");
-}
+	var result = '${msg}';
+
+	if (result == 'success') {
+		alert("처리가 완료되었습니다.");
+	}
+	
+/* 	$(".pagination li a").on("click", function(event){
+		
+		event.preventDefault(); 
+		
+		var targetPage = $(this).attr("href");
+		
+		var jobForm = $("#jobForm");
+		jobForm.find("[name='page']").val(targetPage);
+		jobForm.attr("action","/board/listPage").attr("method", "get");
+		jobForm.submit();
+	}); */
+	$(document).ready(
+			function() {
+
+				$("#keywordInput").on("change",function(event){
+					self.location = "listPage"
+						+ '${pageMaker.makeQuery(1)}'
+						+ "&searchType="
+						+ $("select option:selected").val()
+						+ "&keyword=" + $('#keywordInput').val();
+					$(this).focus();
+					
+				});
+				$('#searchBtn').on(
+						"click",
+						function(event) {
+
+							self.location = "listPage"
+									+ '${pageMaker.makeQuery(1)}'
+									+ "&searchType="
+									+ $("select option:selected").val()
+									+ "&keyword=" + $('#keywordInput').val();
+
+						});
+
+				$('#newBtn').on("click", function(evt) {
+
+					self.location = "register";
+
+				});
+			});
+
+	function showKw() {
+		if($("#kw").css("display") == "none")
+			$("#kw").css("display", "block");
+		else 
+			$("#kw").css("display", "none");
+		
+	}
+	
 </script>
+
+<div class="container">
+
 <div class="outer" style="max-height: 100px">
 	<div class="inner">
-		<div class="centered" style="width: 100%; height: 30%" >
-				<p>
-					<select name="searchType" style="height: 33.6px">
+		<div class="centered" style="width: 100%; height: 30%" align="center" >
+			<div class="row" align="center"  style="margin: 10px">
+				<div class="col-sm-7" >
+
+					<select name="searchType" style="height: 33.6px; width: 15%">
 						<option value="n"
 							<c:out value="${cri.searchType == null?'selected':''}"/>>
 							---</option>
@@ -42,6 +97,8 @@ function showKw() {
 							Title OR Writer</option>
 					</select> 
 					<input type="text" name='keyword' id="keywordInput" value='${cri.keyword }' style="height: 33.6px">
+					<button id='searchBtn' class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+				</div>
 <!-- <<<<<<< HEAD -->
 <%-- 						value='${cri.keyword }'> --%>
 <!-- 					<button id='searchBtn'>Search</button> -->
@@ -50,7 +107,6 @@ function showKw() {
 						
 						
 // 					});
-					
  					</script> 
 <!-- 					<a href="/board/register"><button class='btn btn-primary'>New Board</button></a> -->
 					
@@ -67,30 +123,53 @@ function showKw() {
 
 
 <%-- 							</c:forEach> --%>
-<!-- =======ㅇㅇ -->
-						
-					<button id='searchBtn' class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+<!-- ======= -->
+				<div class="col-sm-5" >		
 					<a href="/board/register"><button class='btn btn-primary'><span class="glyphicon glyphicon-pencil"></span> 글쓰기</button></a>
-					<button class='btn btn-primary' onclick="showKw()">장르</button>
-				</p>
+					<button class='btn btn-primary' onclick="showKw()">장르보기</button>
+				</div>
 			</div>
+
 		</div>
 	</div>
-	
+</div>
 				<div id="kw" class="container-fulid" align="center" style="display: none;">
-					<p style="margin: 10 0 0 10">
+					<p style="margin: 0 0 0 10">
 						<c:forEach items="${type}" var="v" varStatus="vs">
 							<a href="/board/listPage?stype=${v }">
 							<button type="button"  	class="btn btn-info btn-sm bb" >${v }</button></a>&nbsp;
-							<c:if test="${vs.count == 9 }"></p><p></c:if>
+							<c:if test="${vs.count == 9 }"></p><p style="margin: 10 0 0 10"></c:if>
 						</c:forEach>
 <!-- >>>>>>> refs/heads/CSS -->
 						<a href="/board/listPage"><button type="button"  
 						class="btn btn-info btn-sm bb">전체목록</button></a>
 						</p>
 					</div>
-					
-			
+		
+		
+		
+		<div id="tg" align="center"  style="margin: 10px">
+			<h3>
+			<c:if test="${fn:length(tag) <= 10 }">
+				<c:forEach items="${tag }" var="tag">
+<!-- 					<button class="button button" -->
+<%-- 						onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button> --%>
+						<a href="${pageContext.request.contextPath }/tag?tag=${tag}">
+						<button class="btn" style="background-color: #f0ad4e; color: white">${tag }</button></a>
+				</c:forEach>
+			</c:if>
+			<c:if test ="${fn:length(tag) > 10 }">
+				<c:forTokens items="${fn:replace(tag, '[', '' )}" delims="," var="t" varStatus="vs">
+					<c:if test="${vs.count <= 10 }">
+						<a href="${pageContext.request.contextPath }/tag?tag=${t}">
+						<button class="btn" style="background-color: #f0ad4e; color: white">${t }</button></a>
+					</c:if>
+				</c:forTokens>
+			</c:if>
+			</h3>
+		</div>
+		</div><!-- centered -->
+
 <!-- <<<<<<< HEAD -->
 <!-- 			<div class="box"> -->
 <!-- 				<div class="box-header with-border"> -->
@@ -138,8 +217,10 @@ function showKw() {
 
 <!-- 					</table> -->
 <!-- 				</div> -->
+<div id="space">
+</div>
 
-<div class="container-fluid"  align="center">
+<div class="container-fluid"  align="center" style="padding-top: 10px">
 	<div class="li"  style="margin-top: 10px; width: 80%">
 		<c:forEach items="${list}" var="boardVO">
 			<hr/>
@@ -211,85 +292,77 @@ function showKw() {
 				</div>
 				<!-- /.box-footer-->
 			</div>
-		</div>
+<!-- 		</div> -->
 		<!--/.col (left) -->
 
-	</div>
+<!-- 	</div> -->
 	<!-- /.row -->
-</section>
+<!-- </section> -->
 <!-- /.content -->
 
 <form id="jobForm">
   <input type='hidden' name="page" value=${pageMaker.cri.perPageNum}>
   <input type='hidden' name="perPageNum" value=${pageMaker.cri.perPageNum}>
-  
-  
 </form>
 
-<c:if test="${fn:length(tag) <= 10 }">
-<c:forEach items="${tag }" var="tag">
-	<button class="button button"
-		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
-</c:forEach>
-</c:if>
-<c:if test ="${fn:length(tag) > 10 }">
-<c:forEach var="t" begin="0" end="9">
-<c:set var="tag" value="${tag[t] }"/>
-<button class="button button"
-		onclick="javascript: location.assign('${pageContext.request.contextPath}/tag?tag=${tag }')">${tag }</button>
-</c:forEach>
-</c:if>
+<!-- </div> -->
 
 <script>
-	var result = '${msg}';
+// 	var result = '${msg}';
 
-	if (result == 'success') {
-		alert("처리가 완료되었습니다.");
-	}
+// 	if (result == 'success') {
+// 		alert("처리가 완료되었습니다.");
+// 	}
 	
-/* 	$(".pagination li a").on("click", function(event){
+// /* 	$(".pagination li a").on("click", function(event){
 		
-		event.preventDefault(); 
+// 		event.preventDefault(); 
 		
-		var targetPage = $(this).attr("href");
+// 		var targetPage = $(this).attr("href");
 		
-		var jobForm = $("#jobForm");
-		jobForm.find("[name='page']").val(targetPage);
-		jobForm.attr("action","/board/listPage").attr("method", "get");
-		jobForm.submit();
-	}); */
-	$(document).ready(
-			function() {
+// 		var jobForm = $("#jobForm");
+// 		jobForm.find("[name='page']").val(targetPage);
+// 		jobForm.attr("action","/board/listPage").attr("method", "get");
+// 		jobForm.submit();
+// 	}); */
+// 	$(document).ready(
+// 			function() {
 
-				$("#keywordInput").on("change",function(event){
-					self.location = "listPage"
-						+ '${pageMaker.makeQuery(1)}'
-						+ "&searchType="
-						+ $("select option:selected").val()
-						+ "&keyword=" + $('#keywordInput').val();
-					$(this).focus();
+// 				$("#keywordInput").on("change",function(event){
+// 					self.location = "listPage"
+// 						+ '${pageMaker.makeQuery(1)}'
+// 						+ "&searchType="
+// 						+ $("select option:selected").val()
+// 						+ "&keyword=" + $('#keywordInput').val();
+// 					$(this).focus();
 					
-				});
-				$('#searchBtn').on(
-						"click",
-						function(event) {
+// 				});
+// 				$('#searchBtn').on(
+// 						"click",
+// 						function(event) {
 
-							self.location = "listPage"
-									+ '${pageMaker.makeQuery(1)}'
-									+ "&searchType="
-									+ $("select option:selected").val()
-									+ "&keyword=" + $('#keywordInput').val();
+// 							self.location = "listPage"
+// 									+ '${pageMaker.makeQuery(1)}'
+// 									+ "&searchType="
+// 									+ $("select option:selected").val()
+// 									+ "&keyword=" + $('#keywordInput').val();
 
-						});
+// 						});
 
-				$('#newBtn').on("click", function(evt) {
+// 				$('#newBtn').on("click", function(evt) {
 
-					self.location = "register";
+// 					self.location = "register";
 
-				});
+// 				});
 
-			});
-
-</script>
+// 	function showKw() {
+// 		if($("#kw").css("display") == "none")
+// 			$("#kw").css("display", "block");
+// 		else
+// 			$("#kw").css("display", "none");
+// 	}
+// 			});
+	
+ </script>
 
 <%-- <%@include file="../include/footer.jsp"%> --%>

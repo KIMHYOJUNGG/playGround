@@ -118,17 +118,15 @@
 					<h3 class="box-title">댓글 추가</h3>
 				</div>
 				<div class="box-body">
-					<label for="exampleInputEmail1">Writer</label> <input
+					<label for="exampleInputEmail1">닉네임</label> <input
 						class="form-control" type="text" placeholder="USER ID"
-						id="newReplyWriter" readonly="readonly" value="${logon }"> <label for="exampleInputEmail1">Reply
-						Text</label> <input class="form-control" type="text"
-						placeholder="REPLY TEXT" id="newReplyText" maxlength="1000">
+						id="newReplyWriter" readonly="readonly" value="${logon }"> <label for="exampleInputEmail1">댓글 입력</label> <input class="form-control" type="text"
+						placeholder="댓글을 입력하세요" id="newReplyText" maxlength="1000">
 
 				</div><br/>
 				<!-- /.box-body -->
 				<div class="box-footer">
-					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
-						REPLY</button>
+					<button type="button" class="btn btn-primary" id="replyAddBtn">댓글 달기</button>
 				</div>
 			</div><br/>
 </c:if>
@@ -215,8 +213,8 @@
         <p><input type="text" id="replytext" class="form-control"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
-        <button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
+        <button type="button" class="btn btn-info" id="replyModBtn">수정</button>
+        <button type="button" class="btn btn-danger" id="replyDelBtn">삭제</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

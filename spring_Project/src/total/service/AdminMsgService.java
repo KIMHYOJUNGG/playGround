@@ -42,4 +42,29 @@ public class AdminMsgService {
 		}
 		return  template.insert("admin.send",map);
 	}
+	
+	public Map getmessageAll(String no) {
+		return template.selectOne("admin.selectMessageAll",no);
+	}
+	
+	public boolean deletemessage2(String[] no) {
+		Map map = new HashMap<>();
+		map.put("no", no);
+		int i = template.delete("admin.deleteMessage2",map);
+		if(i!=0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean deletemessage3(String no) {
+		int i = template.delete("admin.deleteMessage3",no);
+		if(i!=0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

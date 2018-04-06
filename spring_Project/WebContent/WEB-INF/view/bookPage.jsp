@@ -50,7 +50,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="tag">TAG:</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
+						<input type="text" class="form-control" id="tag" placeholder="#태그#입력" name="tag" onkeyup="checkTag()" onclick="addHash()">
 					</div>
 				</div>
 				<div class="form-group" align="right">
@@ -69,9 +69,7 @@
 			}
 			
 			function checkTag() {
-				console.log("checkTag");
 				var tag = $("#tag").val();
-				console.log($("#tag").val());
 				if(tag.charCodeAt(tag.length-1) == 32) {
 					if(tag.charCodeAt(tag.length-2)!=35){
 						$("#tag").val(tag.substr(0, tag.length-1)+"#");
@@ -86,10 +84,9 @@
 						$("#tag").val(tag.substr(0,tag.indexOf("　")) );
 					}
 				}
-				if(tag.length == 1 && tag.indexOf("#") != 1) {
-					$("#tag").val("");
+				if(tag.length > 2) {
+					finalCheck();
 				}
-				
 			}
 			
 			function finalCheck() {
