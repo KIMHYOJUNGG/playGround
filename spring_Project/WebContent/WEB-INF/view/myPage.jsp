@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <div class="container text-center " style="width:100%">
 	<br>
@@ -35,7 +36,7 @@
 							<h4 class="list-group-item-heading">
 							<a href="${pageContext.request.contextPath }/board/listPage?stype=${article[ai].TYPE}"><span class="badge bg_type">${article[ai].TYPE }</span></a>
 							<a href="${pageContext.request.contextPath }/board/readPage?no=${article[ai].NO}&stype=${article[ai].TYPE}">${article[ai].TITLE} 
-							<span style="font-size:12px; color: gray;">${article[ai].REGDATE }</span>
+							<span style="font-size:12px; color: gray;"><fmt:formatDate value="${article[ai].REGDATE }" pattern="yy/MM/dd HH:mm"/></span>
 							</a></h4>
    							<p class="list-group-item-text">
    							<span style="font-size:12px; color: gray; font-style: italic;">by</span> 

@@ -35,7 +35,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="email">EMAIL:</label>
 			<div class="col-sm-10">
-				<input type="email" class="form-control" id="email" name="email" value="${info.EMAIL }" required>
+				<input type="email" class="form-control" id="email" name="email" value="${info.EMAIL }" required onblur="mailOnblur()">
 				<span id="msg_email"></span>
 			</div>
 		</div>
@@ -84,6 +84,7 @@
 				if(!obj.rst) {
 					$("#msg_nick").css("color", "red");
 					$("#msg_nick").html("이미 사용 중 입니다.");
+					$("#btn").prop("disabled", true);
 				} else {
 					$("#msg_nick").css("color", "green");
 					$("#msg_nick").html("사용 가능합니다.");
@@ -100,22 +101,29 @@
 	    return (email != '' && email != 'undefined' && regex.test(email));
 	}
 	
-	 $("input[name='email']").blur(function(){
-	        var email = $(this).val();
-	 
+// 	 $("input[name='email']").blur(function(){
+	function mailOnblur() {
+		console.log("mailOnblur");
+	        var email = $("#email").val();
 	        // 값을 입력안한경우는 아예 체크를 하지 않는다.
-	        if( email == '' || email == 'undefined') return;
+	        if( email == '' || email == 'undefined') {
+	        	confirm();
+	        	return;
+	        }
 	 
 	        // 이메일 유효성 검사
 	        if( email_check(email) ) {
+	        	$("#msg_email").html("");
 	        	emailCheck();
 	        } else {
-	            alert('잘못된 형식의 이메일 주소입니다.');
-	            $(this).focus();
+	        	$("#msg_email").css("color", "red");
+	            $("#msg_email").html("잘못된 형식의 이메일 주소입니다.");
+	            $("#email").focus();
 	            $("#btn").prop("disabled", true);
 	            return false;
 	        }
-	    });
+	};
+// 	    });
 	
 	function emailCheck() {
 		console.log("emailCheck");
@@ -127,6 +135,7 @@
 				if(!obj.rst) {
 					$("#msg_email").css("color", "red");
 					$("#msg_email").html("이미 사용 중 입니다.");
+					$("#btn").prop("disabled", true);
 				} else {
 					$("#msg_email").css("color", "green");
 					$("#msg_email").html("사용 가능합니다.");
@@ -140,14 +149,17 @@
 	
 	function passCheck() {
 		console.log("passCheck");
-		if($("#password").val().length > 1) {
+		if($("#password").val().length >= 1) {
 			console.log("pw.length > 1");
 			$("#password2").prop("required", true);
 			var pw = $("#password").val();
+			checkps();
 		} else {
+			$("#msg_pw").html("");
 			$("#password2").val("");
 			$("#msg_pw2").html("");
 			$("#password2").prop("required", false);
+			confirm()
 		}
 	}
 	
@@ -155,13 +167,44 @@
 		if($("#password2").prop("required")) {
 			var pw = $("#password").val();
 			var pw2 = $("#password2").val();
-			if(pw == pw2) {
+			if( (checkps() == true) ) {
+				if(pw == pw2) {
+					console.log("같아!");
+					$("#msg_pw2").html("");
+					confirm();
+				}	else {
+					$("#msg_pw2").css("color","red");
+					$("#msg_pw2").html("비밀번호가 다릅니다.	");
+					$("#btn").prop("disabled", true);
+				}	
+			} else if(pw != pw2) {
+					$("#msg_pw2").css("color","red");
+					$("#msg_pw2").html("비밀번호가 다릅니다.	");
+					$("#btn").prop("disabled", true);
+			} else if(pw == pw2) {
 				$("#msg_pw2").html("");
-				confirm();
-			}	else {
-				$("#msg_pw2").css("color","red");
-				$("#msg_pw2").html("비밀번호가 다릅니다.	");
-			}		
+			}
+		}
+	}
+	
+	function checkps() {
+		console.log("checkps");
+		var pval = document.getElementById("password").value;
+		var pattern1 = /[0-9]/; // 숫자 
+		var pattern2 = /[a-zA-Z]/; // 문자 
+		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
+		if(pval == null) {
+			$("#msg_pw").html("");
+		} else if (!pattern1.test(pval) || !pattern2.test(pval)
+				|| !pattern3.test(pval) || pval.length < 8) {
+			console.log("if");
+			$("#msg_pw").css("color","red");
+			$("#msg_pw").html("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
+			$("#btn").prop("disabled", true);
+			return false;
+		} else {
+			$("#msg_pw").html("");
+			return true;
 		}
 	}
 	
