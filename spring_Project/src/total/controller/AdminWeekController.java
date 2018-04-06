@@ -36,65 +36,14 @@ public class AdminWeekController {
 	public String WeekendTop(Model model, HttpSession session) {
 		if (session.getAttribute("admin") != null) {
 			List<Map> list = adminservice.weekend();
-			String wid = weekservice.weektop(); // 현재 1등
+			//String wid = weekservice.weektop(); // 현재 1등
+			String wid = list.get(0).get("WRITER").toString();
 			model.addAttribute("wlist", list);
 			model.addAttribute("wid", wid);
 			return "/admin/weekview";
 		} else {
 			return "redirect:/admin";
 		}
-	}
-
-	// 책에 속한 게시글의 좋아요가 늘어날때
-	@RequestMapping("/goodincrease")
-	public String goodincre(Model model, @RequestParam("bno") String bno) {
-		int i = weekservice.goodincre(bno);
-		if (i != 0) {
-			System.out.println("좋아요수 업데이트 완료");
-		} else {
-			System.out.println("좋아요수 업데이트 실패");
-		}
-		return "";
-	}
-
-	// 책에 속한 게시글의 좋아요를 취소할 때
-	@RequestMapping("/gooddecrease")
-	public String decrease(Model model, @RequestParam("bno") String bno) {
-		int i = weekservice.gooddecre(bno);
-		if (i != 0) {
-			System.out.println("좋아요 수 감소 완료");
-		} else {
-			System.out.println("좋아요 수 감소 실패");
-		}
-		return "";
-	}
-
-	// 책 삭제시 주간순위에 등록되어 있을 시 삭제
-	@RequestMapping("/deleteBno")
-	public String deleteBno(Model model, @RequestParam Map param) {
-		String bno = param.get("bno").toString();
-		boolean rst = weekservice.deleteBno(bno);
-		if (rst) {
-			System.out.println("작동완료?");
-		} else {
-			System.out.println("에러겠지");
-		}
-		model.addAttribute("bno", bno);
-		return "redirect:/week/deletePublish";
-	}
-
-	// 책 삭제시 해당 책의 출간 삭제
-	@RequestMapping("/deletePublish")
-	public String deletePublish(Model model, @RequestParam Map param) {
-		String bno = param.get("bno").toString();
-		boolean rst = weekservice.deletePublish(bno);
-		if (rst) {
-			System.out.println("작동완료2?");
-		} else {
-			System.out.println("에러겠지2");
-		}
-		model.addAttribute("bno", bno);
-		return "";
 	}
 
 	// ============================ 어드민 ================================
@@ -233,24 +182,52 @@ public class AdminWeekController {
 	}
 
 	// 출간신청시
-	@RequestMapping("/publishBook")
-	public String publishBook(@RequestParam String btitle, HttpSession session) {
+	@RequestMapping(path="/publishBook",method = RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String publishBook(Model model, @RequestParam String btitle, HttpSession session) {
+		System.out.println("publishBook");
 		String id = session.getAttribute("logon").toString();
+		System.out.println("진행상황1");
 		int i = weekservice.selectYN(id);
+		System.out.println("진행상황2");
+		boolean yn = false;
 		if (i == 0) {
+			System.out.println("0이래");
 			Map map = new HashMap();
-			map.put("id", session.getAttribute("logon"));
+			map.put("id", id);
 			map.put("btitle", btitle);
 			boolean rst = weekservice.publishBook(map);
+			System.out.println("rst?? "+(rst) );
 			if (rst) {
+				yn=true;
 				System.out.println("성공");
-			} else {
+			} else if(!rst) {
 				System.out.println("실패");
-			}
+			} 
+			System.out.println("끝까지 오긴 하니?");
+			return "{\"rst\" : "+yn+"}";
 		}else {
-			int i2 = weekservice.selectDate(id);
+			System.out.println("0아니래");
+			Map map = new HashMap();
+			map.put("id", id);
+			map.put("btitle", btitle);
+			int i2 = weekservice.selectDate(map);
 			if(i2 >30) {
 				
+				boolean rst = weekservice.publishUpdateBno(map);
+				System.out.println("실패1" +rst);
+				boolean rst2 = weekservice.publishBook(map);
+				System.out.println("실패2"+rst);
+				if(rst2) {
+					yn=true;
+					System.out.println("성공2");
+				}else {
+					System.out.println("실패2");
+				}
+				return "{\"rst\" : "+yn+"}";
+			}
+			else {
+				return "{\"rst\" : "+yn+"}";
 			}
 		}
 

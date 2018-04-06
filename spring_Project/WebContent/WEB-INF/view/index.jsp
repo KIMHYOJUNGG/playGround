@@ -238,7 +238,7 @@
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/board/listPage?stype=시사·이슈">쉽게읽는
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=쉽게읽는 역사">쉽게읽는
 						역사</a>
 				</h4>
 			</div>
@@ -262,7 +262,7 @@
 			</div>
 			<div class="col-sm-3">
 				<h4>
-					<a href="${pageContext.request.contextPath }/board/listPage?stype=건강·운동">우리집
+					<a href="${pageContext.request.contextPath }/board/listPage?stype=우리집 반려동물">우리집
 						반려동물</a>
 				</h4>
 			</div>

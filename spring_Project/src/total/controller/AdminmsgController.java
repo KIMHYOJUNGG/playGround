@@ -75,4 +75,35 @@ public class AdminmsgController {
 			return "{\"rst\" : "+rst+"}";
 		}
 	}
+	
+	// 메세지 삭제
+	// 신고된 글을 삭제시
+		@RequestMapping(path = "/removeMessage", method = RequestMethod.GET,produces="application/json;charset=utf-8")
+		@ResponseBody
+		public String removeRep(@RequestParam("no") String no, Model model) {
+			boolean rst = false;
+			if (no.contains(",")) {
+				String[] no2 = no.split(",");
+				Map map = adminmsgservice.getmessageAll(no2[0]);
+				System.out.println("게시글삭제시의 넘버 "+map.get("NO"));
+				String no3 = map.get("NO").toString();
+				rst = adminmsgservice.deletemessage2(no2);
+				if (rst) {
+						return "{\"rst\" : "+rst+"}";
+				} else {
+					return "{\"rst\" : "+rst+"}";
+				}
+			}
+			else {
+				Map map = adminmsgservice.getmessageAll(no);
+				System.out.println("게시글삭제시의 넘버 "+map.get("NO"));
+				String no2 = map.get("NO").toString();
+				rst = adminmsgservice.deletemessage3(no);
+				if (rst) {
+						return "{\"rst\" : "+rst+"}";
+				} else {
+					return "{\"rst\" : "+rst+"}";
+				}
+			}
+		}
 }

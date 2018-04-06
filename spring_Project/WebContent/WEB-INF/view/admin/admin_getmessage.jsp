@@ -12,11 +12,11 @@
 	display: none;
 }
 </style>
-<title>회원관리</title>
+<title>메세지함</title>
 </head>
 <body>
-	<div>
-		<%@include file="/WEB-INF/view/admin/msg_top.jsp"%>
+	<div style="width:25%">  
+	<h3>메세지함</h3>
 		<hr />
 		<table>
 			<thead>
@@ -25,26 +25,20 @@
 						onchange="allcheck()" /></th>
 					<th style="width: 150px;">보낸이</th>
 					<th style="width: 150px;">제목</th>
-					<th style="width: 50px">상태</th>
 				</tr>
 			</thead>
 			<c:forEach var="m" items="${getmessage }">
 				<tr align="center">
 					<input type="hidden" id="hidden" value="${m.SENDID }" />
-					<input type="hidden" id="htitle" value="${m.TITLE }"/>
+					<input type="hidden" id="htitle" value="${m.TITLE }" />
 					<td><input type="checkbox" class="item" id="check"
 						value="${m.NO }" onchange="check()" /></td>
 					<td>${m.SENDID }</td>
 					<td>${m.TITLE }</td>
-					<c:if test="${m.READCHECK == 'Y' }">
-						<td><b>읽음</b></td>
-					</c:if>
-					<c:if test="${m.READCHECK == 'N' }">
-						<td>안읽음</td>
-					</c:if>
-					<td onclick="javascript:postnTr()"><font id="postnTab">▼</font></td>
+					<td onclick="javascript:postnTr()"><div id="postnTab"
+						class="postnTab">▼</div></td>
 				</tr>
-				<tr id="postnTr" class="postTr">
+				<tr id=m class="postTr">
 					<td></td>
 					<td>내용</td>
 					<td>${m.MSG }</td>
@@ -59,15 +53,34 @@
 </body>
 </html>
 <script>
-	function postnTr(){
-		if($('#postnTab').text()=="▼"){
-			$('#postnTr').show();
-			$('#postnTab').text("▲");
-		}else{
-			$('#postnTr').hide();
-			$('#postnTab').text("▼");
+	/*  	function postnTr() {
+	 if ($('.postnTab').text() == "▼") {
+	 $('.postTr').show();
+	 $('.postnTab').text("▲");
+	 } else {
+	 $('.postTr').hide();
+	 $('.postnTab').text("▼");
+	 }
+	 }
+	 */
+	function postnTr() {
+		var ar = $(".postnTab");
+		for (var i = 0; i < ar.length; i++) {
+			console.log(ar[0].innerHtml);
+			if (i == i) {
+				if (ar[i].innerHtml =="▼") {
+				
+					document.getElementById(i).show();
+					ar[i].innerHtml="▲";
+				} else {
+					document.getElementById(i).hide();
+					ar[i].innerHtml="▼";
+				}
+			}
 		}
-	}
+	} 
+
+
 	function allcheck() {
 		var ar = document.getElementsByClassName("item");
 		if (document.getElementById("all").checked) {
@@ -95,20 +108,21 @@
 			document.getElementById("all").checked = true;
 		}
 	}
-	
+
 	function rm() {
 		console.log("del 호출");
 		var dels = [];
 		var cnt = 0;
 		console.log($(".item:checked"));
-		$(".item:checked").each(function(){
+		$(".item:checked").each(function() {
 			cnt = dels.push($(this).val());
 		});
 		console.log(dels);
-		$.get("${pageContext.request.contextPath }/admin/removeMessage?no="+dels, function(obj){
-			console.log("get 진행..."+obj);
+		$.get("${pageContext.request.contextPath }/admin/removeMessage?no="
+				+ dels, function(obj) {
+			console.log("get 진행..." + obj);
 			if (obj.rst) {
-				window.alert("총 "+cnt+" 건이 삭제되었습니다.");
+				window.alert("총 " + cnt + " 건이 삭제되었습니다.");
 			} else {
 				window.alert("삭제 실패. \r\n다시 시도해 주세요.");
 			}
@@ -116,12 +130,13 @@
 			opener.location.reload();
 		});
 	}
-	
-	function post(){
+
+	function post() {
 		console.log("답장 호출");
 		var id = $('#hidden').val();
 		var title = $('#htitle').val();
 		console.log(id);
-		window.open("/admin/sendAnswer?id="+id+"&title="+title,"m","left=100,top=200,width=400,height=300");
+		window.open("/admin/sendAnswer?id=" + id + "&title=" + title, "m",
+				"left=100,top=200,width=400,height=300");
 	}
 </script>
