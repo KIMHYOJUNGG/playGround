@@ -12,11 +12,11 @@
 	display: none;
 }
 </style>
-<title>회원관리</title>
+<title>메세지함</title>
 </head>
 <body>
-	<div>
-		<%@include file="/WEB-INF/view/admin/msg_top.jsp"%>
+	<div style="width:25%">  
+	<h3>메세지함</h3>
 		<hr />
 		<table>
 			<thead>

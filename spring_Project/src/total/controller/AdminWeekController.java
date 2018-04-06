@@ -214,7 +214,9 @@ public class AdminWeekController {
 				map.put("id", id);
 				map.put("btitle", btitle);
 				boolean rst = weekservice.publishUpdateBno(map);
+				System.out.println("실패1" +rst);
 				boolean rst2 = weekservice.publishBook(map);
+				System.out.println("실패2"+rst);
 				if(rst2) {
 					yn=true;
 					System.out.println("성공2");
