@@ -32,10 +32,10 @@
 						<label for="usr">Tag</label> <input type="text"
 							class="form-control" placeholder="작성양식: #aa #aa #aa" name="tag"
 							id="tag" onkeyup="checkTag()" onclick="addHash()" onblur="finalCheck()">
-						<button id="getTag">적합성판단하기</button>
+						<!-- <button id="getTag">적합성판단하기</button> -->
 					</div>
 					<!--  <input type='hidden' id="ttag" name="tag" > -->
-					<div id="tags"></div>
+					<!-- <div id="tags"></div> -->
 					<script>
 						$("#getTag").on("click", function() {
 							var txt = $("#tag").val();

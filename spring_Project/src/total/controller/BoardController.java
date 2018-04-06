@@ -293,6 +293,7 @@ public class BoardController {
 		
 		/*if(cri.getKeyword()==null && cri.getSearchType() == null) {*/
 		
+		try{
 			String id=(String)session.getAttribute("logon");
 			if(id!=null){
 				GoodVO good=new GoodVO();
@@ -305,7 +306,7 @@ public class BoardController {
 			MongoBoardVo mbv= service.mongoFind(no);
 			List<Map> comments = service.mongoFindComment(no);
 			Map binfo = service.getBoardInfo(no);
-			//System.out.println(service.read(no));
+			//System.out.println(service.read(no));s
 			model.addAttribute(service.read(no));
 			model.addAttribute("mbv", mbv);
 			model.addAttribute("body", "board/readPage.jsp");
@@ -313,7 +314,13 @@ public class BoardController {
 			model.addAttribute("comments", comments);
 			model.addAttribute("logon", id);
 			session.setAttribute("NO", no);
+			
 			return "t_el_title";
+		}catch(Exception e){
+			
+			return "redirect:/index";
+			
+		}
 		/*} else {
 			String id=(String)session.getAttribute("logon");
 			if(id!=null){

@@ -13,6 +13,7 @@
 	<hr />
 	<c:forEach var="m" items="${publish }">
 		<p>
+		
 			<input type="radio" class="item" id="radioName" name="radioName" value="${m.BTITLE }" />
 			<b>${m.BTITLE }</b> 
 		</p>
@@ -24,8 +25,8 @@
 	
 	function rm(){
 		var val = $("#radioName");
-		var btitle=$("#radioName:checked").val();
-		
+		var btitle=$(".item:checked").val();
+	
 		console.log(btitle);
 		$.get("${pageContext.request.contextPath }/week/publishBook?btitle="+btitle,function(obj){
 			console.log("get 진행..." + obj);
