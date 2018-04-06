@@ -232,7 +232,7 @@ public class AdminWeekController {
 		return "/publish";
 	}
 
-/*	// 출간신청시
+	// 출간신청시
 	@RequestMapping("/publishBook")
 	public String publishBook(@RequestParam String btitle, HttpSession session) {
 		String id = session.getAttribute("logon").toString();
@@ -249,7 +249,10 @@ public class AdminWeekController {
 			}
 		}else {
 			int i2 = weekservice.selectDate(id);
+			if(i2 >30) {
+				
+			}
 		}
 
-	}*/
+	}
 }

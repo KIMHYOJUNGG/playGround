@@ -106,14 +106,19 @@ public class adminWeekService {
 		return template.selectList("week.searchPublish",id);
 	}
 
-/*	public int selectYN(String id) {
+	public int selectYN(String id) {
 		return template.selectOne("week.searchYN",id);
 	}
-*/
-	/*// cnt가 0이 아닐때의 비교
+
+	// cnt가 0이 아닐때의 비교
 	public int selectDate(String id) {
-		return template.selectOne("week.searchDate",);
-	}*/
+		return template.selectOne("week.searchDate",id);
+	}
+
+	// 출간하기
+	public boolean publishBook(Map map) {
+		return false;
+	}
 
 	
 	

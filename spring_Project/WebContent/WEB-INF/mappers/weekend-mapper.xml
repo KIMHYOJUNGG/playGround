@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 출간일 비교 -->
-	<select id="searchDate" resultType="hashmap">
-		select pdate - sysdate from publish where writer = 'yy';
+	<select id="searchDate" resultType="int">
+		select cast((min(pdate)-sysdate)as int) col from publish where writer=#{id};
 	</select>
 </mapper>
