@@ -111,8 +111,8 @@ public class adminWeekService {
 	}
 
 	// cnt가 0이 아닐때의 비교
-	public int selectDate(String id) {
-		return template.selectOne("week.searchDate",id);
+	public int selectDate(Map map) {
+		return template.selectOne("week.searchDate",map);
 	}
 
 	// 출간하기

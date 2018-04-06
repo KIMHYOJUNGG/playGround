@@ -208,11 +208,12 @@ public class AdminWeekController {
 			return "{\"rst\" : "+yn+"}";
 		}else {
 			System.out.println("0아니래");
-			int i2 = weekservice.selectDate(id);
+			Map map = new HashMap();
+			map.put("id", id);
+			map.put("btitle", btitle);
+			int i2 = weekservice.selectDate(map);
 			if(i2 >30) {
-				Map map = new HashMap();
-				map.put("id", id);
-				map.put("btitle", btitle);
+				
 				boolean rst = weekservice.publishUpdateBno(map);
 				System.out.println("실패1" +rst);
 				boolean rst2 = weekservice.publishBook(map);

@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 출간일 비교 -->
 	<select id="searchDate" resultType="int">
-		select cast((sysdate-pdate)as int) col from publish where writer=#{id} and ok = 'N'
+		select cast((sysdate-pdate)as int) col from publish where writer=#{id} and btitle=#{btitle} and ok = 'N'
 	</select>
 	
 	<!-- 30일이 넘었을 때 -->

@@ -35,10 +35,10 @@
 						value="${m.NO }" onchange="check()" /></td>
 					<td>${m.SENDID }</td>
 					<td>${m.TITLE }</td>
-					<td onclick="javascript:postnTr()"><font id="postnTab"
-						class="postnTab">▼</font></td>
+					<td onclick="javascript:postnTr()"><div id="postnTab"
+						class="postnTab">▼</div></td>
 				</tr>
-				<tr id="postnTr" class="postTr">
+				<tr id=m class="postTr">
 					<td></td>
 					<td>내용</td>
 					<td>${m.MSG }</td>
@@ -65,19 +65,21 @@
 	 */
 	function postnTr() {
 		var ar = $(".postnTab");
-		var ar2 = $(".postTr");
 		for (var i = 0; i < ar.length; i++) {
+			console.log(ar[0].innerHtml);
 			if (i == i) {
-				if (ar[i].text() == "▼") {
-					ar2[i].show();
-					ar[i].text("▲");
+				if (ar[i].innerHtml =="▼") {
+				
+					document.getElementById(i).show();
+					ar[i].innerHtml="▲";
 				} else {
-					ar2[i].hide();
-					ar[i].text("▼");
+					document.getElementById(i).hide();
+					ar[i].innerHtml="▼";
 				}
 			}
 		}
-	}
+	} 
+
 
 	function allcheck() {
 		var ar = document.getElementsByClassName("item");

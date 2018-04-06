@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -13,7 +14,6 @@
 	<hr />
 	<c:forEach var="m" items="${publish }">
 		<p>
-		
 			<input type="radio" class="item" id="radioName" name="radioName" value="${m.BTITLE }" />
 			<b>${m.BTITLE }</b> 
 		</p>
@@ -25,8 +25,7 @@
 	
 	function rm(){
 		var val = $("#radioName");
-		var btitle=$(".item:checked").val();
-	
+		var btitle=$("#radioName:checked").val();
 		console.log(btitle);
 		$.get("${pageContext.request.contextPath }/week/publishBook?btitle="+btitle,function(obj){
 			console.log("get 진행..." + obj);
@@ -41,4 +40,5 @@
 		
 	}
 	
+
 </script>
