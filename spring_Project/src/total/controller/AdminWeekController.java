@@ -46,58 +46,6 @@ public class AdminWeekController {
 		}
 	}
 
-	// 책에 속한 게시글의 좋아요가 늘어날때
-	@RequestMapping("/goodincrease")
-	public String goodincre(Model model, @RequestParam("bno") String bno) {
-		int i = weekservice.goodincre(bno);
-		if (i != 0) {
-			System.out.println("좋아요수 업데이트 완료");
-		} else {
-			System.out.println("좋아요수 업데이트 실패");
-		}
-		return "";
-	}
-
-	// 책에 속한 게시글의 좋아요를 취소할 때
-	@RequestMapping("/gooddecrease")
-	public String decrease(Model model, @RequestParam("bno") String bno) {
-		int i = weekservice.gooddecre(bno);
-		if (i != 0) {
-			System.out.println("좋아요 수 감소 완료");
-		} else {
-			System.out.println("좋아요 수 감소 실패");
-		}
-		return "";
-	}
-
-	// 책 삭제시 주간순위에 등록되어 있을 시 삭제
-	@RequestMapping("/deleteBno")
-	public String deleteBno(Model model, @RequestParam Map param) {
-		String bno = param.get("bno").toString();
-		boolean rst = weekservice.deleteBno(bno);
-		if (rst) {
-			System.out.println("작동완료?");
-		} else {
-			System.out.println("에러겠지");
-		}
-		model.addAttribute("bno", bno);
-		return "redirect:/week/deletePublish";
-	}
-
-	// 책 삭제시 해당 책의 출간 삭제
-	@RequestMapping("/deletePublish")
-	public String deletePublish(Model model, @RequestParam Map param) {
-		String bno = param.get("bno").toString();
-		boolean rst = weekservice.deletePublish(bno);
-		if (rst) {
-			System.out.println("작동완료2?");
-		} else {
-			System.out.println("에러겠지2");
-		}
-		model.addAttribute("bno", bno);
-		return "";
-	}
-
 	// ============================ 어드민 ================================
 	// 어드민 로그인페이지로 갈시의 날짜 비교
 	@RequestMapping("/castadmin")

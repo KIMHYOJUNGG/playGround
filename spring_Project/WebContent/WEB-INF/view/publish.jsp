@@ -15,7 +15,7 @@
 		<p>
 			<input type="hidden" id="btitle" name="btitle" value="${m.BTITLE }" />
 			<b>${m.BTITLE }</b>
-			<button type="submit" id="sbt" onclick="rm()">신청</button>
+			<button type="submit" id="sbt" onclick="rm()"><span class="glyphicon glyphicon-book"></span>신청</button> 
 		</p>
 	</c:forEach>
 </body>
