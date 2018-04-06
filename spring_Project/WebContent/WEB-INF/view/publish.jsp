@@ -25,7 +25,6 @@
 	function rm(){
 		var val = $("#radioName");
 		var btitle=$("#radioName:checked").val();
-		
 		console.log(btitle);
 		$.get("${pageContext.request.contextPath }/week/publishBook?btitle="+btitle,function(obj){
 			console.log("get 진행..." + obj);
