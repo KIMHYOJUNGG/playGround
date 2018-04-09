@@ -18,7 +18,7 @@ public class CommonExceptionAdvice {
     return "error_common";
   }
 */
-
+/*
   @ExceptionHandler(Exception.class)
   private ModelAndView errorModelAndView(Exception ex) {
 
@@ -28,7 +28,7 @@ public class CommonExceptionAdvice {
 
     return modelAndView;
 
-  }
+  }*/
 
 }
 

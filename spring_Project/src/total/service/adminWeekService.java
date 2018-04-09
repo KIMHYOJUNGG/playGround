@@ -43,12 +43,20 @@ public class adminWeekService {
 
 	// publish테이블에 해당 bno가 있는지를 확인
 	public boolean selectBno(String bno) {
-		return template.selectOne("week.selectBno", bno);
+		Map map= template.selectOne("week.selectBno", bno);
+		if(map==null) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 
 	// 우승자가 나올시 출간테이블(publish)에 정보저장
 	public boolean insertPb(Map param) {
+		System.out.println("여기로는 오냐");
+		System.out.println(param);
 		int i = template.insert("week.publish", param);
+		System.out.println("이거 실행됨?"+i);
 		if (i != 0) {
 			return true;
 		} else {

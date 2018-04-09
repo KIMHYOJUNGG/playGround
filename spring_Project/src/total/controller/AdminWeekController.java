@@ -51,8 +51,10 @@ public class AdminWeekController {
 	@RequestMapping("/castadmin")
 	public String castadmin() {
 		int i = weekservice.castweek();
+		System.out.println(i);
 		// 원래는 7일이지만 시간관계상으로 3, 테스트 할 때면 아무거나
-		if (i == 3) {
+		if (i >= 3) {
+			System.out.println("3이나오나");
 			return "redirect:/week/writersearch";
 		} else {
 			return "admin/admin_log";
@@ -82,9 +84,15 @@ public class AdminWeekController {
 	@RequestMapping("/publish")
 	public String publish(@RequestParam Map param) {
 		// publish테이블에 이미 있는 책인가
+		System.out.println("우승자 나옴");
 		boolean rst = weekservice.selectBno(param.get("bno").toString());
+		System.out.println("우승자 선택");
+		System.out.println(param);
+		System.out.println(rst);
 		if (rst == false) {
+			System.out.println("false나오지");
 			boolean rst2 = weekservice.insertPb(param);
+			System.out.println("publish에 데이터 삽입");
 			if (rst2) {
 				System.out.println("삽입성공");
 			} else {

@@ -41,12 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 우승자가 나올시 출간테이블(publish)에 정보저장 -->
 	<insert id="publish">
-		insert into publish values(publish_seq,{#bno},{#btitle},{#writer},'N','null','N')
+		insert into publish(no,bno,btitle,writer,yn,ok) values(publish_seq.nextval,#{bno},#{btitle},#{writer},'N','N')
 	</insert>
 	
 	<!-- 주간순위 리셋 -->
 	<update id="updateWeek">
-		update time3 set lastweek=regdate, regdate=sysdate ,cnt=0, lastcnt=cnt
+		update time set lastweek=regdate, regdate=sysdate ,cnt=0, lastcnt=cnt
 	</update>
 	
 	<!-- 게시글 삭제시 주간순위에 있을 때 해당 게시글의 좋아요수만큼 감소-->
